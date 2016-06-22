@@ -60,3 +60,5 @@ C:\Users\power\Desktop\scripting\WIP - Text To Speech Mod\Text To Speech Mod\bin
 C:\Users\power\Desktop\scripting\WIP - Text To Speech Mod\Text To Speech Mod\bin\Debug\TextToSpeechMod.exe.lastcodeanalysissucceeded
 C:\Users\power\Desktop\scripting\WIP - Text To Speech Mod\Text To Speech Mod\obj\Debug\TextToSpeechMod.exe
 C:\Users\power\Desktop\scripting\WIP - Text To Speech Mod\Text To Speech Mod\obj\Debug\TextToSpeechMod.pdb
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\obj\Debug\TextToSpeechMod.exe
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\obj\Debug\TextToSpeechMod.pdb
