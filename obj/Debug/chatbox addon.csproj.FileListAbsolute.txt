@@ -1,0 +1,92 @@
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\obj\Debug\chatbox addon.csprojResolveAssemblyReference.cache
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\chatbox addon.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\chatbox addon.pdb
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\Sandbox.Common.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\Sandbox.Game.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SpaceEngineers.ObjectBuilders.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Game.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Math.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Library.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\Sandbox.Graphics.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Native.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\MedievalEngineers.ObjectBuilders.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SteamSDK.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\InfinarioSDK.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\HavokWrapper.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.DXGI.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Toolkit.Graphics.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Input.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Audio.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\System.Data.SQLite.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Toolkit.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.DirectInput.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\Sandbox.Common.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Game.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Math.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Library.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\HavokWrapper.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.DXGI.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Toolkit.Graphics.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\System.Data.SQLite.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Toolkit.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.DirectInput.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\SpaceEngineers.ObjectBuilders.XmlSerializers.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\VRage.Game.XmlSerializers.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\bin\Debug\MedievalEngineers.ObjectBuilders.XmlSerializers.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\obj\Debug\chatbox addon.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox addon\obj\Debug\chatbox addon.pdb
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\obj\Debug\chatbox addon.csprojResolveAssemblyReference.cache
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\obj\Debug\chatbox addon.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\chatbox addon.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\chatbox addon.pdb
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\Sandbox.Common.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\Sandbox.Game.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SpaceEngineers.ObjectBuilders.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Audio.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Game.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Math.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Library.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\Sandbox.Graphics.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Native.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SteamSDK.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\InfinarioSDK.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\HavokWrapper.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.DXGI.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Toolkit.Graphics.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Input.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\System.Data.SQLite.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Toolkit.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.DirectInput.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\Sandbox.Common.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Game.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Math.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Library.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\HavokWrapper.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.DXGI.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Toolkit.Graphics.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\System.Data.SQLite.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Toolkit.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SharpDX.DirectInput.xml
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\SpaceEngineers.ObjectBuilders.XmlSerializers.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\bin\Debug\VRage.Game.XmlSerializers.dll
+C:\Users\power\Desktop\scripting\WIP - chatbox\samuels mod script attempt\obj\Debug\chatbox addon.pdb

@@ -1,0 +1,1500 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sandbox.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Sandbox.ModAPI.IMyGridProgram">
+            <summary>
+            The interface for the grid program provides extra access for the game and for mods. See <see cref="T:Sandbox.ModAPI.Ingame.MyGridProgram"/> for the class the scripts
+            actually derive from.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGridProgram.Main(System.String)">
+            <summary>
+            Invokes this grid program.
+            </summary>
+            <param name="argument"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyGridProgram.Save">
+            <summary>
+            If this grid program has state saving capability, calling this method
+            will invoke it.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.GridTerminalSystem">
+            <summary>
+            Gets or sets the GridTerminalSystem available for the grid programs.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.Me">
+            <summary>
+            Gets or sets the programmable block which is currently running this grid program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.ElapsedTime">
+            <summary>
+            Gets or sets the amount of time elapsed since the last time this grid program was run.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.Storage">
+            <summary>
+            Gets or sets the storage string for this grid program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.Runtime">
+            <summary>
+            Gets or sets the object used to provide runtime information for the running grid program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.Echo">
+            <summary>
+            Gets or sets the action which prints out text onto the currently running programmable block's detail info area.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.HasMainMethod">
+            <summary>
+            Determines whether this grid program has a valid Main method.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyGridProgram.HasSaveMethod">
+            <summary>
+            Determines whether this grid program has a valid Save method.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
+            <summary>
+            Raises AppendingCustomInfo so every subscriber can append custom info.
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyTerminalBlock.AppendingCustomInfo">
+            <summary>
+            Event to append custom info.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyLaserAntenna">
+            <summary>
+            ModAPI laserantenna block interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyLaserAntenna">
+            <summary>
+            Laser antenna block interface
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.SetTargetCoords(System.String)">
+            <summary>
+            Set coordinates of target
+            </summary>
+            <param name="coords">GPS coordinates string</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.Connect">
+            <summary>
+            Connect to target defined by SetTargetCoords
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TargetCoords">
+            <summary>
+            get target coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsPermanent">
+            <summary>
+            Connection is permanent
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.IsOutsideLimits">
+            <summary>
+            Target is outside movement limits of antenna
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyLaserAntenna.RequireLoS">
+            <summary>
+            Flag if antenna requires LoS - for modded antenas
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
+            <summary>
+            Indicates whether door is opened or closed. True when door is opened.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
+            <summary>
+            Door state, zero is fully closed. One is fully opened.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Attach">
+            <summary>
+            Attempts to attach to a nearby rotor/wheel
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Detach">
+            <summary>
+            Detaches the rotor/wheel from the stator/suspension
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorBase.IsAttached">
+            <summary>
+            Gets if the piston top is attached to something
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorBase.PendingAttachment">
+            <summary>
+            Gets if the motor stator is looking for a rotor
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyMotorBase.Attach(Sandbox.ModAPI.IMyMotorRotor)">
+            <summary>
+            Attaches a specified nearby rotor/wheel to the stator/suspension block
+            </summary>
+            <param name="rotor">Entity to attach</param>
+            <remarks>The rotor to attach must already be in position before calling this method.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.RotorGrid">
+            <summary>
+            Gets the grid attached to the rotor part
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.Rotor">
+            <summary>
+            Gets the attached rotor part entity
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "E:Sandbox.ModAPI.IMyMotorBase.AttachedEntityChanged" -->
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.DummyPosition">
+            <summary>
+            Gets the dummy position, to aid in attachment
+            </summary>
+            <remarks>Gets the location where the top rotor piece will attach.</remarks>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyOxygenGenerator">
+            <summary>
+            Oxygen generator interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyOxygenGenerator">
+            <summary>
+            Oxygen generator interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyOxygenGenerator.AutoRefill">
+            <summary>
+            Autorefill enabled
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.ProductionCapacityMultiplier">
+            <summary>
+            Increase/decrese O2 produced
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.PowerConsumptionMultiplier">
+            <summary>
+            Increase/decrese power consumption
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Attach">
+            <summary>
+            Attaches a nearby top part to the piston block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Detach">
+            <summary>
+            Detaches the top from the piston
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
+            <summary>
+            Param - limit is top
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.CurrentPosition">
+            <summary>
+            Gets the current position of the piston head relative to the base.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Status">
+            <summary>
+            Gets the current status.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.IsAttached">
+            <summary>
+            Gets if the piston base is attached to the top piece
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.IsLocked">
+            <summary>
+            Gets if the piston is safety locked (welded)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.PendingAttachment">
+            <summary>
+            Gets if the piston is looking for a top part
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyPistonBase.Attach(Sandbox.ModAPI.IMyPistonTop)">
+            <summary>
+            Attaches a specified nearby top part to the piston block
+            </summary>
+            <param name="top">Entity to attach</param>
+            <remarks>The top to attach must already be in position before calling this method.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonBase.TopGrid">
+            <summary>
+            Gets the grid attached to the piston top part
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonBase.Top">
+            <summary>
+            Gets the attached piston top part entity
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyPistonBase.AttachedEntityChanged">
+            <summary>
+            Notifies when the top grid is attached or detached
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonTop.Piston">
+            <summary>
+            Gets the attached piston block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.CanUseBlueprint(VRage.Game.MyDefinitionBase)">
+            <summary>
+            Can this production block produce this blueprint?
+            </summary>
+            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.AddQueueItem(VRage.Game.MyDefinitionBase,VRage.MyFixedPoint)">
+            <summary>
+            Adds a blueprint to the production queue
+            </summary>
+            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.InsertQueueItem(System.Int32,VRage.Game.MyDefinitionBase,VRage.MyFixedPoint)">
+            <summary>
+            Inserts a blueprint into the production queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="blueprint">A MyBlueprintDefinition that defines the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.GetQueue">
+            <summary>
+            Gets the current production queue
+            </summary>
+            <returns>List of MyProductionQueueItems</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.RemoveQueueItem(System.Int32,VRage.MyFixedPoint)">
+            <summary>
+            Removes an item from the queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="amount">Amount to remove</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProductionBlock.ClearQueue">
+            <summary>
+            Clears the Queue
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProjector.UpdateOffsetAndRotation">
+            <summary>
+            Call this after setting ProjectionOffset and ProjectionRotation to update the projection
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.IsProjecting">
+            <summary>
+            Checks if there is an active projection
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.TotalBlocks">
+            <summary>
+            Total number of blocks in the projection
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.RemainingBlocks">
+            <summary>
+            Number of blocks left to be welded
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.RemainingBlocksPerType">
+            <summary>
+            A comprehensive list of blocks left to be welded
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.RemainingArmorBlocks">
+            <summary>
+            Number of armor blocks left to be welded
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.BuildableBlocksCount">
+            <summary>
+            Count of blocks which can be welded now
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProjector.ProjectionRotation">
+            <summary>
+            These values are not in degrees. 1 = 90 degrees, 2 = 180 degrees
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProjector.CanBuild(VRage.Game.ModAPI.IMySlimBlock,System.Boolean)">
+            <summary>
+            Checks if it's possible to build this block.
+            </summary>
+            <param name="projectedBlock"></param>
+            <param name="checkHavokIntersections"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProjector.Build(VRage.Game.ModAPI.IMySlimBlock,System.Int64,System.Int64)">
+            <summary>
+            Adds the first component to construction stockpile and creates the block.
+            This doesn't remove materials from inventory on its own.
+            </summary>
+            <param name="cubeBlock"></param>
+            <param name="owner"></param>
+            <param name="builder"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyProjector.ProjectedGrid">
+            <summary>
+            The grid currently being projected. Will return null if there is no active projection.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.CurrentOutput">
+            <summary>
+            Current output of reactor in Megawatts
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.MaxOutput">
+            <summary>
+            Maximum output of reactor in Megawatts
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorRotor.IsAttached">
+            <summary>
+            Gets whether the rotor is attached to a stator/suspension block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorRotor.Stator">
+            <summary>
+            Gets the attached stator/suspension block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
+            <summary>
+            Param - active
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyShipWelder">
+            <summary>
+            Ship welder interface
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyShipWelder">
+            <summary>
+            Ship welder interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipWelder.HelpOthers">
+            <summary>
+            True if welder is set to helper mode
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.CustomControlGetDelegate">
+            <summary>
+            Allows you to modify the terminal control list before it is displayed to the user.  Modifying controls will change which controls are displayed.
+            </summary>
+            <param name="block">The block that was selected</param>
+            <param name="controls"></param>
+        </member>
+        <member name="T:Sandbox.ModAPI.CustomActionGetDelegate">
+            <summary>
+            Allows you to modify the actions associated with a block before it's displayed to user. 
+            </summary>
+            <param name="block">The block actions are associated with</param>
+            <param name="actions">The list of actions for this block</param>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyTerminalControls">
+            <summary>
+            This interface allows you to query, add or remove terminal controls for a block.  The terminal controls are the controls that appear
+            in the terminal screen when you select a block.  You may add new controls, remove existing controls, or modify existing controls.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.GetControls``1(System.Collections.Generic.List{Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl}@)">
+            <summary>
+            Gets the controls associated with a block.
+            </summary>
+            <typeparam name="TBlock">This is the object builder type of the associated block you want to get terminal controls for</typeparam>
+            <param name="items">The list that contains the terminal controls for this block</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.AddControl``1(Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl)">
+            <summary>
+            Adds a terminal control to a block.
+            </summary>
+            <typeparam name="TBlock">This is the ModAPI interface of the associated block you want to add a terminal control to</typeparam>
+            <param name="item">This is the control you're adding, created with CreateControl or CreateProperty</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.RemoveControl``1(Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl)">
+            <summary>
+            Removes a terminal control from a block.
+            </summary>
+            <typeparam name="TBlock">This is the ModAPI interface of the associated block you want to remove a terminal control from</typeparam>
+            <param name="item">This is the control you're removing.  Use GetControls to get the item itself.</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.CreateControl``2(System.String)">
+            <summary>
+            This creates a control that can be added to a block.
+            </summary>
+            <typeparam name="TControl">The type of control you're creating</typeparam>
+            <typeparam name="TBlock">The ModAPI interface of the associated block</typeparam>
+            <param name="id">A unique identifier for this control</param>
+            <returns>Returns an interface to the control you've created depending on TControl</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.CreateProperty``2(System.String)">
+            <summary>
+            This creates a property that can be added to a block.  A property is not visible on the terminal screen but can hold a value that can be used in
+            programmable blocks.
+            </summary>
+            <typeparam name="TValue">The type of property you're creating</typeparam>
+            <typeparam name="TBlock">The ModAPI interface of the associated block</typeparam>
+            <param name="id">A unique identifier for this property</param>
+            <returns>Returns an IMyTerminalControlProperty that can be added to a block via AddControl</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.GetActions``1(System.Collections.Generic.List{Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction}@)">
+            <summary>
+            This allows you to get all actions associated with this block.
+            </summary>
+            <typeparam name="TBlock">The ModAPI interface of the associated block</typeparam>
+            <param name="items">The list that contains the actions associated with this block</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.AddAction``1(Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction)">
+            <summary>
+            This allows you to add an action to an assocated block
+            </summary>
+            <typeparam name="TBlock">The ModAPI interface of the associated block</typeparam>
+            <param name="action">An IMyTerminalAction object returned from CreateAction</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.RemoveAction``1(Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction)">
+            <summary>
+            This allows you to remove an action from a block
+            </summary>
+            <typeparam name="TBlock">The ModAPI interface of the associated block</typeparam>
+            <param name="action">An IMyTerminalAction object</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyTerminalControls.CreateAction``1(System.String)">
+            <summary>
+            This allows you to create an action to associate with a block
+            </summary>
+            <typeparam name="TBlock">The ModAPI interface of the associated block</typeparam>
+            <param name="id">A unique identifier for this action</param>
+            <returns>An IMyTerminalAction object</returns>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyTerminalControls.CustomControlGetter">
+            <summary>
+            This event allows you to modify the list of controls that the game displays when a user selects a block.  Each time terminal controls are 
+            enumerated for a block, this delegate is called, which allows you to modify the control list directly, and remove/add as you see fit before 
+            the controls are dispalyed.  This is to allow fine grain control of the controls being displayed, so you can display only controls you want to
+            in specific situations (like blocks with different subtypes, or even on specific blocks by entityId)
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyTerminalControls.CustomActionGetter">
+            <summary>
+            This event allows you to modify the list of actions available when a user wants to select an action for a block in the toolbar.  Modifying the list
+            in this event modifies the list displayed to the user so that you can customize it in specific situations (like blocks with different subtypes, 
+            or even on specific blocks by entityId)
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyUpgradableBlock">
+            <summary>
+            interface to retrieve upgrade effects from block <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock"/>
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradableBlock">
+            <summary>
+            interface to retrieve upgrade effects on block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.GetUpgrades(System.Collections.Generic.Dictionary{System.String,System.Single}@)">
+            <summary>
+            get list of upgrades (r/o);
+            string - upgrade type, float - effect value as float (1 = 100%)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.UpgradeCount">
+            <summary>
+            number of upgrades applied
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo">
+            <summary>
+            Provides runtime info for a running grid program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.TimeSinceLastRun">
+            <summary>
+            Gets the time elapsed since the last time the Main method of this program was run. This property returns no
+            valid data neither in the constructor nor the Save method.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.LastRunTimeMs">
+            <summary>
+            Gets the number of milliseconds it took to execute the Main method the last time it was run. This property returns no valid
+            data neither in the constructor nor the Save method.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.MaxInstructionCount">
+            <summary>
+            Gets the maximum number of significant instructions that can be executing during a single run, including
+            any other programmable blocks invoked immediately.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.CurrentInstructionCount">
+            <summary>
+            Gets the current number of significant instructions executed.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.MaxMethodCallCount">
+            <summary>
+            Gets the maximum number of method calls that can be executed during a single run, including
+            any other programmable blocks invoked immediately.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo.CurrentMethodCallCount">
+            <summary>
+            Gets the current number of method calls.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyRadioAntenna">
+            <summary>
+            Antenna block interface
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.Radius">
+            <summary>
+            Broadcasting/Receiving range (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.ShowShipName">
+            <summary>
+            Show shipname on hud (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IsBroadcasting">
+            <summary>
+            Returns true if antena is broadcasting (read-only)
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetNaturalGravity">
+            <summary>
+            Gets the detected natural gravity vector and power at the current location.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetArtificialGravity">
+            <summary>
+            Gets the detected artificial gravity vector and power at the current location.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetTotalGravity">
+            <summary>
+            Gets the total accumulated gravity vector and power at the current location, 
+            taking both natural and artificial gravity into account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetShipSpeed">
+            <summary>
+            Gets the basic ship speed in meters per second, for when you just need to know how fast you're going.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetShipVelocities">
+            <summary>
+            Determines the linear velocities in meters per second and angular velocities in radians per second. 
+            Provides a more accurate representation of the directions and axis speeds.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.CalculateShipMass">
+            <summary>
+            Gets information about the current mass of the ship.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
+            <summary>
+            Indicates whether a block is locally or remotely controlled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlWheels">
+            <summary>
+            Indicates whether wheels are being controlled by this controller.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlThrusters">
+            <summary>
+            Indicates whether thrusters are being controlled by this controller.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.HandBrake">
+            <summary>
+            Indicates the current state of the handbrake.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.DampenersOverride">
+            <summary>
+            Indicates whether dampeners are currently enabled.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRage.ModAPI.IMyEntity)">
+            <summary>
+            Tracks entity with enabled position prediction
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRageMath.Vector3D,VRageMath.Vector3)">
+            <summary>
+            Tracks given target with enabled position prediction
+            </summary>
+            <param name="pos"></param>
+            <param name="velocity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRage.ModAPI.IMyEntity)">
+            <summary>
+            Tracks target without position prediction
+            </summary>
+            <param name="Entity"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SetTarget(VRageMath.Vector3D)">
+            <summary>
+            Targets given position
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncElevation">
+            <summary>
+            method used to sync elevation of turret , you need to call it to sync elevation for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncAzimuth">
+            <summary>
+            method used to sync azimuth, you need to call it to sync azimuth for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.SyncEnableIdleRotation">
+            <summary>
+            method used to sync idle rotation and elevation, you need to call it to sync rotation and elevation for other clients/server
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.ResetTargetingToDefault">
+            <summary>
+            resert targeting to default values
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.IsUnderControl">
+            <summary>
+            Indicates whether a block is locally or remotely controlled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
+            <summary>
+            Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Azimuth">
+            <summary>
+            Sets/gets azimuth of turret, this method is not synced, you need to sync azimuth manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.EnableIdleRotation">
+            <summary>
+            enable/disable idle rotation for turret, this method is not synced, you need to sync manually
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.AIEnabled">
+            <summary>
+            Checks is AI is enabled for turret
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
+            <summary>
+            Wheel's current steering angle
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.MaxSteerAngle">
+            <summary>
+            Max steering angle in radians.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerSpeed">
+            <summary>
+            Speed at which wheel steers.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerReturnSpeed">
+            <summary>
+            Speed at which wheel returns from steering.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SuspensionTravel">
+            <summary>
+            Suspension travel, value from 0 to 1.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.Brake">
+            <summary>
+            Set/get brake applied to the wheel.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
+            <summary>
+            Attempts to run this programmable block using the given argument. An already running
+            programmable block cannot be run again.
+            This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
+            </summary>
+            <param name="argument"></param>
+            <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.IsRunning">
+            <summary>
+            This programmable block is currently running its program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TerminalRunArgument">
+            <summary>
+            Contains the value of the default terminal argument.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyWaypointInfo">
+            <summary>
+            Provides basic information about a waypoint.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyWaypointInfo.Name">
+            <summary>
+            The waypoint name
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyWaypointInfo.Coords">
+            <summary>
+            The coordinates of this waypoint
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.ClearWaypoints">
+            <summary>
+            Removes all existing waypoints.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.GetWaypointInfo(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyWaypointInfo})">
+            <summary>
+            Gets basic information about the currently configured waypoints.
+            </summary>
+            <param name="waypoints"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.AddWaypoint(VRageMath.Vector3D,System.String)">
+            <summary>
+            Adds a new waypoint.
+            </summary>
+            <param name="coords"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.SetAutoPilotEnabled(System.Boolean)">
+            <summary>
+            Enables or disables the autopilot.
+            </summary>
+            <param name="enabled"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRemoteControl.IsAutoPilotEnabled">
+            <summary>
+            Determines whether the autopilot is currently enabled.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.BaseMass">
+            <summary>
+            Gets the base mass of the ship.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.TotalMass">
+            <summary>
+            Gets the total mass of the ship, including cargo.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipVelocities.LinearVelocity">
+            <summary>
+            Gets the ship's linear velocity (motion).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipVelocities.AngularVelocity">
+            <summary>
+            Gets the ship's angular velocity (rotation).
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyTextPanel.GetSelectedImages(System.Collections.Generic.List{System.String})">
+            <summary>
+            Outputs the selected image ids to the specified list.
+            
+            NOTE: List is not cleared internally.
+            </summary>
+            <param name="output"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTextPanel.CurrentlyShownImage">
+            <summary>
+            The image that is currently shown on the screen.
+            
+            Returns NULL if there are no images selected OR the screen is in text mode.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTextPanel.ShowOnScreen">
+            <summary>
+            Indicates what should be shown on the screen, none being an image.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTextPanel.ShowText">
+            <summary>
+            Returns true if the ShowOnScreen flag is set to either PUBLIC or PRIVATE
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.PistonStatus">
+            <summary>
+            Describes the current status of the piston.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Stopped">
+            <summary>
+            The piston velocity is 0 (stationary).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Extending">
+            <summary>
+            The piston is being extended (moving).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Extended">
+            <summary>
+            The piston is in its extended position (stationary).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Retracting">
+            <summary>
+            The piston is being retracted (moving).
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.PistonStatus.Retracted">
+            <summary>
+            The piston is in its retracted position (stationary).
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyGridProgram">
+            <summary>
+                All programmable block scripts derive from this class, meaning that all properties in this
+                class are directly available for use in your scripts.
+                If you use Visual Studio or other external editors to write your scripts, you can derive
+                directly from this class and have a compatible script template.
+            </summary>
+            <example>
+                <code>
+            public void Main()
+            {
+                // Print out the time elapsed since the currently running programmable block was run
+                // the last time.
+                Echo(Me.CustomName + " was last run " + Runtime.TimeSinceLastRun.TotalSeconds + " seconds ago.");
+            }
+            </code>
+            </example>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.GridTerminalSystem">
+            <summary>
+                Provides access to the grid terminal system as viewed from this programmable block.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.Me">
+            <summary>
+                Gets a reference to the currently running programmable block.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.ElapsedTime">
+            <summary>
+                Gets the amount of in-game time elapsed from the previous run.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.Runtime">
+            <summary>
+            Gets runtime information for the running grid program.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.Storage">
+            <summary>
+                Allows you to store data between game sessions.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.MyGridProgram.Echo">
+            <summary>
+                Prints out text onto the currently running programmable block's detail info area.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.TerminalActionParameter.Empty">
+            <summary>
+            Gets an empty parameter.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.TerminalActionParameter.Deserialize(System.String,System.TypeCode)">
+            <summary>
+            Creates a <see cref="T:Sandbox.ModAPI.Ingame.TerminalActionParameter"/> from a serialized value in a string and a type code.
+            </summary>
+            <param name="serializedValue"></param>
+            <param name="typeCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.TerminalActionParameter.Get(System.Object)">
+            <summary>
+            Creates a <see cref="T:Sandbox.ModAPI.Ingame.TerminalActionParameter"/> from the given value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.ITerminalProperty">
+            <summary>
+            Terminal block property definition
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.Id">
+            <summary>
+            Property Id (value name)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName">
+            <summary>
+            Property type (bool - <see cref="T:System.Boolean"/>, float - <see cref="T:System.Single"/>, color - <see cref="T:VRageMath.Color"/>)
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1">
+            <summary>
+            Terminal block property access
+            </summary>
+            <typeparam name="TValue">Property type (<see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>)</typeparam>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetValue(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Retrieve property value
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.SetValue(VRage.Game.ModAPI.Ingame.IMyCubeBlock,`0)">
+            <summary>
+            Set property value
+            </summary>
+            <param name="block">block reference</param>
+            <param name="value">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetDefaultValue(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Default value of property (if value is not set, or value from block definition)
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetMininum(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Minimum value of property (value from block definition) - this function is obsolete, because it contains typo in name, use <see cref="!:GetMinimum(Sandbox.ModAPI.Ingame.IMyCubeBlock)"/>
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetMinimum(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Minimum value of property (value from block definition)
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.ITerminalProperty`1.GetMaximum(VRage.Game.ModAPI.Ingame.IMyCubeBlock)">
+            <summary>
+            Maximum value of property (value from block definition)
+            </summary>
+            <param name="block">block reference</param>
+            <returns>value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions">
+            <summary>
+            Terminal block extension for property access
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.As``1(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
+            <summary>
+            Property type cast
+            </summary>
+            <typeparam name="TValue">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.Cast``1(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
+            <summary>
+            Property type cast
+            </summary>
+            <typeparam name="TValue">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.Is``1(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
+            <summary>
+            Check property type
+            </summary>
+            <typeparam name="TValue">value of type <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>true if type matches</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.AsFloat(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
+            <summary>
+            Property type cast
+            </summary>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type (float)</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.AsColor(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
+            <summary>
+            Property type cast
+            </summary>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type (Color)</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.AsBool(Sandbox.ModAPI.Interfaces.ITerminalProperty)">
+            <summary>
+            Property type cast
+            </summary>
+            <param name="property"><see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> reference</param>
+            <returns>reference to <see cref="T:Sandbox.ModAPI.Interfaces.ITerminalProperty`1"/> value of specified type (bool)</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValueFloat(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns value of specified property
+            </summary>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as float</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValueFloat(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,System.Single)">
+            <summary>
+            Set float value of property
+            </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValueBool(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns value of specified property
+            </summary>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as bool</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValueBool(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,System.Boolean)">
+            <summary>
+            Set bool value of property
+            </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValueColor(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns value of specified property
+            </summary>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as Color</returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValueColor(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,VRageMath.Color)">
+            <summary>
+            Set bool value of property
+            </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetValue``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
+            </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetDefaultValue``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns default value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
+            </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMininum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns minimum value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/> - this call is obsolete due typo in name, use <see cref="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMinimum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)"/>
+            </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMinimum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns minimum value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
+            </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.GetMaximum``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String)">
+            <summary>
+            Returns maximum value of specified property as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
+            </summary>
+            <typeparam name="T">required value type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <returns>property value as <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.TerminalPropertyExtensions.SetValue``1(Sandbox.ModAPI.Ingame.IMyTerminalBlock,System.String,``0)">
+            <summary>
+            Set value of property with type of <see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/>
+            </summary>
+            <typeparam name="T"><see cref="P:Sandbox.ModAPI.Interfaces.ITerminalProperty.TypeName"/></typeparam>
+            <param name="block">block reference</param>
+            <param name="propertyId">property id (name)</param>
+            <param name="value">value to set</param>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction">
+            <summary>
+            This is an interface wrapper for terminal actions that appear on a toolbar.  An instance of this interface is created via 
+            MyAPIGateway.TerminalControls.CreateAction.  Once created, you may modify various fields to control how the action behaves.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.Enabled">
+            <summary>
+            Allows you to set if this action is enabled or disabled
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.InvalidToolbarTypes">
+            <summary>
+            Allows you to set which toolbar type this action is invalid for.  Adding to this means this action may not be added to that toolbar type.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.ValidForGroups">
+            <summary>
+            Allows you to set if this action is valid in groups
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.Name">
+            <summary>
+            Allows you to set the name of the Action
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.Icon">
+            <summary>
+            Allows you to set the Icon of this action.  It's a link to an icon texture.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.Action">
+            <summary>
+            This is the action taken when an action is performed.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalAction.Writer">
+            <summary>
+            This allows you to set the "Icon Text" of an action (the text that appears under the icon in the toolbar)
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl">
+            <summary>
+            This is the base terminal control interface.  All controls implement this.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.RedrawControl">
+            <summary>
+            Recreates the control GUI.  This allows you to update the Title of some controls.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.UpdateVisual">
+            <summary>
+            This updates a control that is currently displayed, allowing you to refresh it's state
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.Id">
+            <summary>
+            Identifier of control
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.Enabled">
+            <summary>
+            Allows you to set if the control is enabled
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.Visible">
+            <summary>
+            Allows you to set if the control is visible
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControl.SupportsMultipleBlocks">
+            <summary>
+            Allows you to set if the control is visible when the block is selected as a group
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlButton">
+            <summary>
+            This is a control button.  When a button is clicked an action is performed.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlTitleTooltip">
+            <summary>
+            This is a base interface for other interfaces.  Almost all controls implement this, and allows you to set the label (Title) of the control and also
+            the tooltip that appears when hovering over the control.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlTitleTooltip.Title">
+            <summary>
+            Allows you to get or set the Label that appears on the control
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlTitleTooltip.Tooltip">
+            <summary>
+            Allows you to get or set the tooltip that appears when you hover over the control
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlButton.Action">
+            <summary>
+            The action taken when a button is clicked
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlCheckbox">
+            <summary>
+            This is a checkbox.  A label appears and a box appears next to it
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalValueControl`1">
+            <summary>
+            This is a value control interface that a few controls implement.  When a value changes, the Setter action is performed.  When a value is queried the Getter action
+            is performed.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalValueControl`1.Getter">
+            <summary>
+            This is triggered when the value of the control is required.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalValueControl`1.Setter">
+            <summary>
+            This is triggered when the value of the control is set by the user.  Depending on the control, this may be called a lot.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlCheckbox.OnText">
+            <summary>
+            The "on" label text
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlCheckbox.OffText">
+            <summary>
+            The "off" label text
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlColor">
+            <summary>
+            This is a color control.  This terminal controls allows you to select colors. 
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlCombobox">
+            <summary>
+            This is a combobox control.  It is a field that gives a drop down list that contains options that you can select.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlCombobox.ComboBoxContent">
+            <summary>
+            This allows you to set the content of the combo box itself.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlLabel">
+            <summary>
+            This is a simple label control.  
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlLabel.Label">
+            <summary>
+            The text on the label
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlListbox">
+            <summary>
+            This is a list box.  It contains a list of items that a user can select.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlListbox.Multiselect">
+            <summary>
+            This allows you to enable/disable multiple item selection
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlListbox.VisibleRowsCount">
+            <summary>
+            This allows you to set how many rows are visible in the list box.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlListbox.ListContent">
+            <summary>
+            This is triggered when you need to populate the list with list items.  The first list is the items in the list box, and the second list is 
+            the selected items in the list.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlListbox.ItemSelected">
+            <summary>
+            This is triggered when an item is selected.  Can contain more than one item if Multiselect is true.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlOnOffSwitch">
+            <summary>
+            This is an on / off switch or toggle button.  It gives two options that a user can toggled between.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlOnOffSwitch.OnText">
+            <summary>
+            The label for the "on" switch
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlOnOffSwitch.OffText">
+            <summary>
+            The label for the "off" switch
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlProperty`1">
+            <summary>
+            This is a control property.  This is use to set properties on a block that can be referenced in the ProgrammableBlock.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSeparator">
+            <summary>
+            This is a simple line separator used to separate controls in a visible manner.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider">
+            <summary>
+            This is a value slider.  A slider can be moved by a user and a value selected.  
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.SetLimits(System.Single,System.Single)">
+            <summary>
+            Allows you to set the upper and lower limits of the slider
+            </summary>
+            <param name="min">Minimum value</param>
+            <param name="max">Maximum value</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.SetLogLimits(System.Single,System.Single)">
+            <summary>
+            Allows you to set the upper and lower limits of the slider, interpolating on a logarithmic scale
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.SetDualLogLimits(System.Single,System.Single,System.Single)">
+            <summary>
+            Allows you to set the upper and lower limits of the slider, interpolating on a logarithmic scale at both ends
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.SetLimits(System.Func{Sandbox.ModAPI.IMyTerminalBlock,System.Single},System.Func{Sandbox.ModAPI.IMyTerminalBlock,System.Single})">
+            <summary>
+            Allows you to set the upper and lower limits of the slider with delegates
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.SetLogLimits(System.Func{Sandbox.ModAPI.IMyTerminalBlock,System.Single},System.Func{Sandbox.ModAPI.IMyTerminalBlock,System.Single})">
+            <summary>
+            Allows you to set the upper and lower limits of the slider with delegates, interpolating on a logarithmic scale
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.SetDualLogLimits(System.Func{Sandbox.ModAPI.IMyTerminalBlock,System.Single},System.Func{Sandbox.ModAPI.IMyTerminalBlock,System.Single},System.Single)">
+            <summary>
+            Allows you to set the upper and lower limits of the slider with delegates, interpolating on a logarithmic scale at both ends
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlSlider.Writer">
+            <summary>
+            This is triggered when a slider value is modified.  Appending to the stringbuilder allows you to modify the text that is displayed along
+            side the slider when it updates.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Interfaces.Terminal.IMyTerminalControlTextbox">
+            <summary>
+            This is a textbox where a user can enter values into.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.MyAPIGateway">
+            <summary>
+            This is entry point for entire scripting possibilities in game
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.GuiControlCreated">
+            <summary>
+            Event triggered on gui control created.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Players">
+            <summary>
+            IMyPlayerCollection contains all players that are in world 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.CubeBuilder">
+            <summary>
+            IMyCubeBuilder represents building hand 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.TerminalActionsHelper">
+            <summary>
+            IMyTerminalActionsHelper is helper for terminal actions and allows to access terminal 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.TerminalControls">
+            <summary>
+            IMyTerminalControls allows access to adding and removing controls from a block's terminal screen
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Multiplayer">
+            <summary>
+            IMyMultiplayer  contains multiplayer related things
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Parallel">
+            <summary>
+            IMyParallelTask allows to run tasks on baground threads 
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.MyAPIGateway.Input">
+            <summary>
+            IMyInput allows accessing direct input device states
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.MyAPIGateway.Session">
+            <summary>
+            IMySession represents session object e.g. current world and its settings
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.MyAPIGateway.Entities">
+            <summary>
+            IMyEntities represents all objects that currently in world 
+            </summary>
+        </member>
+    </members>
+</doc>

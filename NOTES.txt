@@ -1,0 +1,60 @@
+TO DO
+================//
++ change mod timing to one constant instead of 2
++ test entire dictionary
++ test all extensions
++ update script ships
++ make the video
++ test sim in dedicated server; mod and script
++ find out if you can move entity with mouse input
++ release!
++ change all variables to camel case exept const'
++ empty function calls should have their space removed except method calls
++ turn all public fields into properties
++ remove the private keyword from the entire project
++ ingame script needs a conventional revision
++ adjacentevaluation() should have a pattern where secondary is always assigned after primary
++ some state paths can be combined in adjacent evaulation. this one is easy to screw up but dont worry just fix it when someeone reports it
++ move adjacent word comments beside their logic component
+
+REMINDERS
+====================//
++ test every new word before signing off
++ slowly move dictionary words into adjacentevaluation()
+
+BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
+=================//
+
+script
+====================//
+WHATS THAT NOISE
+SOUNDS LIKE A CHINESE EARTHQUAKE
+(where were going we dont need eyes to see)
+OH NO
+NO NO PLEASE NO
+HELLO SPACE ENGINEERS
+TODAY I AM GOING TO SHOW YOU HOW TO USE THE TEXT TO SPEECH MOD
+DOWNLOAD THIS LINK ON THE WORKSHOP
+PUT A SQUARE BRACKET AND A SPACE AT THE START OF YOUR SENTENCE
+YOU ARE LIMITED TO ONE HUNDRED LETTERS
+IF THERE IS TOO MUCH SPAM
+YOU CAN TYPE STOP TO END IT ALL
+YOU CAN ALSO USE IN GAME HARDWARE
+YOU WILL NEED TWO WORKSHOP LINKS
+THE MOD AND THE SHIP DESIGN
+THERE IS A LARGE AND A SMALL SHIP VARIATION
+SAME AS BEFORE
+TYPE SQUARE BRACKET TO PLAY ONCE
+TYPE THIS TO LOOP INFINITELY
+THIS ADDS INTERESTING POSSIBILITIES FOR THE GAME
+UNFORTUNATELY ITS GOING TO BE NEAR IMPOSSIBLE TO GET EVERY WORD TO WORK
+IF YOU FIND A BROKEN WORD
+LET ME KNOW AND I WILL ADD IT IN AN UPDATE
+OR SUBMIT A PULL REQUEST WITH YOUR OWN
+THE MOD WILL GET THESE AUTOMATICALLY
+BUT THE HARDWARE WILL NEED TO BE MANUALLY UPDATED
+TYPE version TO COMPARE
+IF THE VERSIONS DONT MATCH THEN AN UPDATE IS AVAILABLE
+
+
+
