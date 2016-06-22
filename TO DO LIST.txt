@@ -1,5 +1,6 @@
 TO DO
 ================//
++ figure out if the mod pronunciation can be psubstituted for script pronunciation
 + change mod timing to one constant instead of 2
 + test entire dictionary
 + test all extensions
