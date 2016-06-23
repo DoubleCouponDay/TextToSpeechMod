@@ -152,7 +152,7 @@
     <Compile Include="SentenceProcession.cs" />
     <Compile Include="SoundPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OoptionalDebugger.cs" />
+    <Compile Include="OptionalDebugger.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

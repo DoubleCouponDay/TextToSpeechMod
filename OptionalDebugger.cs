@@ -2,7 +2,7 @@
 
 namespace SETextToSpeechMod
 {
-    class OoptionalDebugger
+    class OptionalDebugger
     {
         static void Main()
         {
