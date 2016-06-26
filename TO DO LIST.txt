@@ -1,10 +1,8 @@
 TO DO
 ================//
-+ figure out if the mod pronunciation can be psubstituted for script pronunciation
-+ change mod timing to one constant instead of 2
-+ test entire dictionary
-+ test all extensions
+
 + update script ships
++ upload the script
 + make the video
 + test sim in dedicated server; mod and script
 + find out if you can move entity with mouse input
@@ -21,12 +19,14 @@ TO DO
 REMINDERS
 ====================//
 + test every new word before signing off
-+ slowly move dictionary words into adjacentevaluation()
++ slowly move dictionary words into adjacentevaluation(). reason: broader reach
 
 BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
 =================//
 
-script
+
+
+SCRIPT
 ====================//
 WHATS THAT NOISE
 SOUNDS LIKE A CHINESE EARTHQUAKE

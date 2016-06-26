@@ -1,5 +1,4 @@
 ﻿using System;
-using Sandbox.ModAPI; //needed for catch lines during testing
 
 namespace SETextToSpeechMod
 {
@@ -169,7 +168,7 @@ namespace SETextToSpeechMod
                     {
 
                         bool ALLY = (currentWord[currentWord.Length - 4] == 'A' &&
-                                     currentWord[currentWord.Length - 3] == 'L') ? true : false;  
+                                        currentWord[currentWord.Length - 3] == 'L') ? true : false;  
 
                         if (ALLY == true)
                         {
@@ -413,66 +412,80 @@ namespace SETextToSpeechMod
                     }    
     
                     else if (before == "E" &&
-                        after == "D" &&
-                        two_after == "E")
+                             after == "D" &&
+                             two_after == "E")
                     {
                         primary = PrettyScaryDictionary.EEE;  //such as leader.                
                     }
         
                     else if (before == "U" ||  
                              after == "W" ||
-                             before == "B" ||
                              after == "U" ||
                             (before == "W" && 
                              after == "T")) 
                     {
                         primary = PrettyScaryDictionary.AWW; //such as "raw", water
                     }
- 
-                    else if (before == " " &&
-                             after == " ")
-                    {
-                        primary = PrettyScaryDictionary.UHH; //¯\_(ツ)_/¯
-                    }    
- 
-                    else if ((before == "E" &&
-                             after == "K") || 
+
+                    else if ((before == "E" && //break, steak
+                              after == "K") || 
                              (after == "I" && 
-                             after != "R") ||
-                             after == "Y")       
+                              after != "R") ||
+                              after == "Y" ||
+                            ((after == "C" || //space, ate, rake
+                              after == "T" ||
+                              after == "K" ||
+                              after == "L") && 
+                              two_after == "E") ||
+                            ((before == "T" ||
+                              before == "L") && //table
+                              two_before == " " &&
+                              after == "B") ||
+                             (after == "P" && //maple
+                              two_after == "L") ||
+                              after == "Y")     
                     {
-                        primary = PrettyScaryDictionary.AEE; //such as "ate", "break".
+                        primary = PrettyScaryDictionary.AEE; // "break",
                     }
 
                     else if ((before == "H" && //what
                               after == "T") ||
                              (after == "R" &&
-                              two_after != "E")) //far
+                              two_after != "E") || //far
+                             (before == " " &&
+                              after == " ") || //a
+                             (after == "S" && //last
+                              two_after == "T") )
                     {
                         primary = PrettyScaryDictionary.UHH;
                     }    
             
-                    else if (((before == "W" || //compare, ware, hare, stare, care
-                               before == "H" ||
-                               before == "T" ||
-                               before == "P" ||
-                               before == "C") &&
-                               after == "R") )
+                    else if (after == "R" && //compare, ware, hare, stare, care
+                             two_after == "E") 
                     {
                         primary = PrettyScaryDictionary.EHH;
                     }
 
                     else    
                     {
-                        primary = PrettyScaryDictionary.AHH; //such as "last".
+                        primary = PrettyScaryDictionary.AHH; //plottable,
                     }
                     break;
             
                 case "B":
-                    if (before != "M" &&
-                        before != "B")
+                    if (before != "M" && //silent B
+                        before != "B") //cobber
                     {
-                        primary = PrettyScaryDictionary.BIH; //such as bomb, silent B, cobber
+                        if (after == "L")
+                        {
+                            primary = " ";
+                            secondary = PrettyScaryDictionary.BIH;
+                        }
+
+                        else
+                        {
+                            primary = PrettyScaryDictionary.BIH;
+                        }
                     }
                     break;
             
@@ -523,8 +536,8 @@ namespace SETextToSpeechMod
                               before != "H" &&
                               before != "M" &&
                               before != "W") ||
-                             (before == "I" && //ies
-                              two_after == " ")) 
+                             (after == "L" &&
+                              two_after == "Y") )                              
                     {
                         ; //such as late, cake, break, steak, queue, requirement, speech,
                     }    
@@ -551,7 +564,11 @@ namespace SETextToSpeechMod
                              before == "B") &&
                              after == " ") ||
                             (after == "S" &&
-                             two_after == "E") )
+                             two_after == "E") ||
+                            (before == "I" && //ies
+                             two_after == " ") ||
+                            (before == "K" && //key
+                             after == "Y"))
                     {                           
                         primary = PrettyScaryDictionary.EEE;    //such as "engineer", speech, me
                     }  
@@ -563,10 +580,21 @@ namespace SETextToSpeechMod
                              (after == "R" &&
                              (two_after == "E" ||
                               before == "V")) ||
-                              after == "D") 
+                              after == "D" ||
+                             (after == "S" && //es
+                              two_after == " ") || 
+                             (after == "T" &&
+                              two_after == " ") )
                     {                                         
                         primary = PrettyScaryDictionary.EHH;  //such as silent E, there, fate
                     }   
+
+                    else if (two_before == "R" && //prey
+                              before == "E" ||
+                              after == "Y")
+                    {
+                        primary = PrettyScaryDictionary.AEE;
+                    }
                     break;
             
                 case "F": 
@@ -583,11 +611,12 @@ namespace SETextToSpeechMod
                         primary = " "; //such as "gin", high, judgement, RNG
                     }
             
-                    else if (after != "H" &&
-                             before != "G" /*&&
-                             before != "N")*/)
+                    else if (after != "H" && //high
+                             before != "G" && //lagg
+                            (before != "N" &&
+                             after != " ")) //ing
                     {
-                        primary = PrettyScaryDictionary.GIH; //such as game, high, fighting
+                        primary = PrettyScaryDictionary.GIH;
                     }    
                     break;
             
@@ -602,7 +631,13 @@ namespace SETextToSpeechMod
                     break;
 
                 case "I":
-                    if (after == "O" &&
+                    if ((after == "E" && //ies
+                         two_after == "S") )
+                    {
+                        ;
+                    }
+
+                    else if (after == "O" &&
                         two_after == "N")
                     {
                         primary = PrettyScaryDictionary.SIH;
@@ -622,14 +657,13 @@ namespace SETextToSpeechMod
                             (two_after == "E" &&
                              before != "G") ||
                             (before == " " &&
-                             after == " ")  ) 
+                             after == " ") ||
+                             after == "E") 
                     {   
                         primary = PrettyScaryDictionary.EYE; //such as "filed", light, kite
                     }
             
-                    else if (two_after == "G" ||
-                            (after == "E" &&
-                             two_after == "S")  )
+                    else if (two_after == "G")
                     {
                         primary = PrettyScaryDictionary.EEE; //such as running
                     }
@@ -751,7 +785,10 @@ namespace SETextToSpeechMod
                     break;
             
                 case "P":   
-                    primary = PrettyScaryDictionary.PIH; //such as "potatoes".
+                    if (before != "P") //potatoes, stoppable
+                    {
+                        primary = PrettyScaryDictionary.PIH;
+                    }                    
                     break;
             
                 case "Q":                    
@@ -787,9 +824,18 @@ namespace SETextToSpeechMod
                         secondary = PrettyScaryDictionary.THI; //such as "THInk".    
                     } 
 
-                    else if (before != "T")
+                    else if (before != "T") //attic
                     {
-                        primary = PrettyScaryDictionary.TIH;  //such as attic.  
+                        if (before == "S") //est
+                        {
+                            primary = " ";
+                            secondary = PrettyScaryDictionary.TIH;
+                        }
+                        
+                        else
+                        {
+                            primary = PrettyScaryDictionary.TIH;
+                        }                        
                     }    
                     break;
             
@@ -812,12 +858,12 @@ namespace SETextToSpeechMod
                     }
 
                     else if (before == "E" || 
-                        after == "E" ||
-                        before == "A" ||
-                        before == "R" || 
-                        after == "I" ||
-                       (before == "P" &&
-                        after == "L"))
+                             after == "E" ||
+                             before == "A" ||
+                             before == "R" || 
+                             after == "I" ||
+                            (before == "P" &&
+                             after == "L"))
                     {
                         primary = PrettyScaryDictionary.OOO;  //such as "cruelty", "eulogy".
                     }
@@ -841,8 +887,11 @@ namespace SETextToSpeechMod
                     primary = PrettyScaryDictionary.VIH; //such as "vector".
                     break;
             
-                case "W":   
-                    primary = PrettyScaryDictionary.WIH;  //such as "wario".
+                case "W":
+                    if (after != " ") //narrow, raw
+                    {
+                        primary = PrettyScaryDictionary.WIH;
+                    }                   
                     break;
             
                 case "X":   
@@ -859,35 +908,34 @@ namespace SETextToSpeechMod
             
                 case "Y":
                     if (after == "E" || //eye
-                        before == "A") //maybe
+                        before == "A" || //maybe
+                        before == "E") //key                                      
                     {
-                        ; // eye
+                        ; 
                     }
 
-                    else if (after == "C" || 
-                        before == "T" ||
-                        before == "M" ||
-                        before == "H" ||
-                       (two_before == "F" &&
-                        before == "L") ||
-                        CONSONANTS.Contains (two_before))  
+                    else if ((before == "C" && //bicycle
+                              after == "C") || 
+                             (before == "T" && //style
+                              after != " ") || //possibility
+                              before == "M" ||
+                              before == "H" ||
+                              before == "L" || //fly
+                              before == "K")  //sky
                     {
-                        primary = PrettyScaryDictionary.EYE; //such as "fly", "bicycle", "style".
+                        primary = PrettyScaryDictionary.EYE;
                     }
 
-                    else if (after == " " ||
-                             after == "B" ||
-                             before == "L" ||
-                             VOWELS.Contains (two_before))  
+                    else if ((((two_before == "L" && 
+                                 before == "L") || 
+                                before == "L" ||
+                                before == "R") &&
+                                after == " ") ||
+                                after == "B" ||
+                                VOWELS.Contains (two_before) ||
+                                before == "T")  
                     {
                         primary = PrettyScaryDictionary.EEE; //such as "flaky", negatively
-                    }
-
-                    else if ((two_before == "R" &&
-                             before == "E") ||
-                             before == "A")
-                    {
-                        primary = PrettyScaryDictionary.AEE; //prey, stay
                     }
             
                     else  

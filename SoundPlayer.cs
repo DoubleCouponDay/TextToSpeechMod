@@ -43,8 +43,8 @@ namespace SETextToSpeechMod
         public static void PlayClip(string clip, bool shouldIBonk)
         {
             MyEntity3DSoundEmitter chosenEmitter = shouldIBonk ? bonkEmitter : tts_emitter;
-            MySoundPair sound = new MySoundPair(clip);
-            chosenEmitter.PlaySound(sound);
+            MySoundPair sound = new MySoundPair (clip);
+            chosenEmitter.PlaySound (sound);
         }
     }
 }

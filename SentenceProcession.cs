@@ -7,8 +7,7 @@ namespace SETextToSpeechMod
     class SentenceProcession //the roman numeral class name may help you to understand the code flow.
     {
         //reference settings         
-        const int SPACE_SIZE = 8;
-        const int SPACE_ADDON = 3;
+        const int SPACE_SIZE = 5;
         const int CLIP_LENGTH = 4; 
         const int SYLLABLE_SIZE = 3;
         const string SOUND_ID = "-M";
@@ -107,7 +106,7 @@ namespace SETextToSpeechMod
 
                         if (syllable_measure == SYLLABLE_SIZE) //cues a space using the current setting SYLLABLE_SIZE.
                         {
-                            IncrementSyllables (i);
+                            IncrementSyllables();
                         }   
                         
                         else
@@ -118,23 +117,15 @@ namespace SETextToSpeechMod
 
                     else
                     {
-                        IncrementSyllables (i);
+                        IncrementSyllables();
                     }
                 }
             }
         }
 
-        void IncrementSyllables (int i)
+        void IncrementSyllables()
         {
-            if (i == 1) //spaces between words need to be almost double as large as a syllable space.
-            {
-                timeline_size += SPACE_ADDON;
-            }
-
-            else
-            {
-                timeline_size += SPACE_SIZE;
-            }            
+            timeline_size += SPACE_SIZE;        
             syllable_measure = 1;
         }
 
