@@ -7,7 +7,7 @@ namespace SETextToSpeechMod
     class SentenceProcession //the roman numeral class name may help you to understand the code flow.
     {
         //reference settings         
-        const int SPACE_SIZE = 5;
+        const int SPACE_SIZE = 4;
         const int CLIP_LENGTH = 4; 
         const int SYLLABLE_SIZE = 3;
         const string SOUND_ID = "-M";
@@ -19,7 +19,6 @@ namespace SETextToSpeechMod
 
         //indexs
         int letterIndex;
-        int clip_index;
 
         //play data
         string timeline;
@@ -32,7 +31,6 @@ namespace SETextToSpeechMod
         string sentence;
 
         //objects
-        List <CreateClip> clips = new List <CreateClip>(); //total clips for the sentence.
         StringBuilder string_lite = new StringBuilder(); //the quickest way of pasting strings together. must be cleared to prepare for the next use.        
         Random generator = new Random();
         Pronunciation pronunciation;
@@ -50,26 +48,20 @@ namespace SETextToSpeechMod
             if (loading == true)
             {   
                 if (letterIndex < sentence.Length)
-                {    
-                    AddPhoneme(); 
-                    letterIndex++;
+                {                
+                    while (letterIndex < sentence.Length)
+                    {    
+                        AddPhoneme(); 
+                        letterIndex++;
+                    }
                 }   
-        
-                else if (clip_index < clips.Count) //im getting a string of all the start points to help performance.                    
-                {           
-                    string_lite.Append ("/"); //leaving out clear this one time is ok since it clears on the next else block.
-                    string_lite.Append (clips[clip_index].start_point); 
-                    string_lite.Append ("#"); 
-                    string_lite.Append (clips[clip_index].clips_sound);         
-                    clip_index++;
-                } 
 
                 else
                 {
                     loading = false;    
                     string_lite.Append ("/"); //the cap on the timeline mix.
-                    timeline = string_lite.ToString ();
-                    string_lite.Clear ();
+                    timeline = string_lite.ToString();
+                    string_lite.Clear();
                     timeline_copy = timeline;
                 }        
             }
@@ -80,7 +72,7 @@ namespace SETextToSpeechMod
 
                 if (rng_bonk == 42)
                 {
-                    SoundPlayer.PlayClip ("BONK", true); //it hurts to live
+                    //SoundPlayer.PlayClip ("BONK", true); //it hurts to live
                 }
                 Play();    
             }    
@@ -99,9 +91,9 @@ namespace SETextToSpeechMod
                 {
                     if (add_results[i] != " ") //empty string lets my program know that no clip should be created.
                     {                                                                
-                        int start_point = timeline_size;         
-                        string sound_choice = add_results[i] + SOUND_ID;
-                        clips.Add (new CreateClip (start_point, sound_choice)); //add the key transitions into a new object.
+                        int startPoint = timeline_size;         
+                        string soundChoice = add_results[i] + SOUND_ID;
+                        AppendToTimeline (startPoint, soundChoice); //add the key transitions into the timeline.
                         timeline_size += CLIP_LENGTH; //timeline is expanded for duration after the clip is created.
 
                         if (syllable_measure == SYLLABLE_SIZE) //cues a space using the current setting SYLLABLE_SIZE.
@@ -129,16 +121,13 @@ namespace SETextToSpeechMod
             syllable_measure = 1;
         }
 
-        class CreateClip //template for sound clips; the building blocks of a speech timeline.
-        {
-            public int start_point {get; set;}
-            public string clips_sound {get; set;} 
-  
-            public CreateClip (int one, string two) //constructor
-            {
-                this.start_point = one;
-                this.clips_sound = two;   
-            }
+        //creates a string of all the phonemes and their start points (in ticks); better performance than searching a list of objects.
+        void AppendToTimeline (int startPoint, string clipsSound) 
+        {      
+            string_lite.Append ("/");    
+            string_lite.Append (startPoint); //leaving out clear this one time is ok since it clears when loading is finished.
+            string_lite.Append ("#"); 
+            string_lite.Append (clipsSound);                    
         }
 
         //this function is in charge of finding clips on the timeline and knowing when to end.

@@ -10,16 +10,18 @@ namespace SETextToSpeechMod
 
         public WordCounter (string inputSentence)
         {
+            current_word = 0;
+            current_letter = 0;        
             words = inputSentence.Split (' ');
         }
 
         public string GetCurrentWord (int NEW_WORD, ref int placeholder)
         { 
-            if (current_word < words.Length) //exception checker because thats a possible state.
+            if (current_word < words.Length)
             {
                 if (current_letter < words[current_word].Length)
                 {
-                    current_letter++; //this is for the next time the method is used.
+                    current_letter++;
                     return words[current_word];
                 }
 
@@ -31,11 +33,21 @@ namespace SETextToSpeechMod
                     return " "; //empty space is a valid return.
                 }
             }
-
+        
             else
             {
-                return ""; 
+                return "";
             }
+        }
+
+        public int CheckForEnd (int placeholder, int NEW_WORD)
+        {
+            if (current_word == words.Length - 1 &&
+                current_letter == words[current_word].Length) //resets the placeholder since script doesnt construct a new class for every sentence.
+            { 
+                placeholder = NEW_WORD;
+            }
+            return placeholder;
         }
     }
 }
