@@ -7,6 +7,7 @@ TO DO
 + turn all public fields into properties
 + evaluate where private is considered good placement
 + ingame script needs a conventional revision
++ make sure double spaces never happen in adjacent
 + adjacentevaluation() should have a pattern where secondary is always assigned after primary; semantics
 + design a pattern mandate for adjacent() that minimises the possibility of fixing words at the cost of breaking them. one logic block per line would be cool but ill need comments inside each block if need be
 + design a class that reports known adjacent words and prints a list of changes in success
@@ -26,5 +27,5 @@ BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
 out
 by
 again
-
+avail
 
