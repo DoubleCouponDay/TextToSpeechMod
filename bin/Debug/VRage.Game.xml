@@ -37,6 +37,16 @@
             Gets called before the removal of this component from a container
             </summary>
         </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.OnAddedToScene">
+            <summary>
+            CH: TOOD: Be careful! This does not get called if the component is added to a container that is in the scene already!
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.MyComponentBase.OnRemovedFromScene">
+            <summary>
+            CH: TOOD: Be careful! This does not get called if the component is removed from a container that is still in the scene!
+            </summary>
+        </member>
         <member name="M:VRage.Game.Components.MyComponentBase.IsSerialized">
             <summary>
             Tells the component container serializer whether this component should be saved
@@ -58,7 +68,6 @@
             Indicates whether a session component should be used in current configuration.
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
-            TODO: Make obsolete
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
             <summary>
@@ -150,8 +159,21 @@
         <member name="M:VRage.Game.MyDefinitionSet.GetDefinitionsOfType``1">
             Get all definitions of a given type.
         </member>
+        <member name="M:VRage.Game.MyDefinitionSet.GetDefinitionsOfTypeAndSubtypes``1">
+            Get all definitions of a given type.
+        </member>
         <member name="M:VRage.Game.MyDefinitionSet.OverrideBy(VRage.Game.MyDefinitionSet)">
             Override the contents of this definition set with another.
+        </member>
+        <member name="F:VRage.Game.Definitions.SessionComponents.MyClipboardDefinition.PastingSettings">
+            <summary>
+            Defines settings for pasting.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Definitions.SessionComponents.MyCubeBuilderDefinition.BuildingSettings">
+            <summary>
+            Defines settings for building mode.
+            </summary>
         </member>
         <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
             <summary>
@@ -262,6 +284,11 @@
             Called if this inventory changed its owner
             </summary>
         </member>
+        <member name="T:VRage.Game.ModAPI.Ingame.IMyEntity">
+            <summary>
+            Ingame (Programmable Block) interface for all entities.
+            </summary>
+        </member>
         <member name="M:VRage.ModAPI.IMyEntity.SetEmissiveParts(System.String,VRageMath.Color,System.Single)">
             <summary>
             Sets the emissive value of a specific emissive material on entity.
@@ -312,6 +339,12 @@
             Called when [activated] which for entity means that was added to scene.
             </summary>
             <param name="source">The source of activation.</param>
+        </member>
+        <member name="M:VRage.Game.Entity.MyEntity.HackyComponentInitByMiroPleaseDontUseEver(VRage.Game.MyDefinitionId)">
+            <summary>
+            DONT USE THIS METHOD, EVER!
+            </summary>
+            <param name="id"></param>
         </member>
         <member name="M:VRage.Game.Entity.MyEntity.Delete">
             <summary>
@@ -425,6 +458,11 @@
             Render ID of objects 
             </summary>
         </member>
+        <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.InstanceID">
+            <summary>
+            Instance ID of objects (this should mostly be unused
+            </summary>
+        </member>
         <member name="P:VRage.Game.Entity.UseObject.IMyUseObject.ShowOverlay">
             <summary>
             Show overlay (semitransparent bounding box)
@@ -468,6 +506,40 @@
             </summary>
             <param name="worldPos">World position.</param>
             <returns>Screen coordinate in 0-1 distance.</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.ControlCamera(VRage.Game.Utils.MyCamera)">
+            <summary>
+            Change camera properties now.
+            Communication: from controller to camera.
+            </summary>
+            <param name="currentCamera"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.Rotate(VRageMath.Vector2,System.Single)">
+            <summary>
+            Rotate camera controller.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.RotateStopped">
+            <summary>
+            Rotation of camera controller stopped.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.HandleUse">
+            <summary>
+            Used to send "use" commands to camera controller
+            </summary>
+            <returns>
+            Return value indicates if the camera controller handled the use button.
+            If not, it should fall to ControlledObject
+            </returns>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.UseDamageSystem">
+            <summary>
+            When set to true, it should use MyDamageSystem damage routing.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.AddDecals(VRage.Game.ModAPI.MyHitInfo,VRage.Utils.MyStringHash,System.Object,VRage.Game.ModAPI.Interfaces.IMyDecalHandler)">
+            <param name="hitInfo">Hithinfo on world coordinates</param>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyCharacter.GetSuitGasFillLevel(VRage.Game.MyDefinitionId)">
             <summary>
@@ -729,7 +801,7 @@
             Either upgrades were built or destroyed, or they become damaged or unpowered
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeBuilder.Activate">
+        <member name="M:VRage.Game.ModAPI.IMyCubeBuilder.Activate(System.Nullable{VRage.Game.MyDefinitionId})">
             <summary>
             Activates the building mode
             </summary>
@@ -750,16 +822,6 @@
             Deactivates building mode
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeBuilder.DeactivateCopyPaste">
-            <summary>
-            Deactivates copy pasting mode
-            </summary>
-        </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeBuilder.DeactivateShipCreationClipboard">
-            <summary>
-            Deactivates creating grids
-            </summary>
-        </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeBuilder.StartNewGridPlacement(VRage.Game.MyCubeSize,System.Boolean)">
             <summary>
             Creates new grid 
@@ -775,22 +837,12 @@
         </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeBuilder.BlockCreationIsActivated">
             <summary>
-            Returns state of building mode
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBuilder.CopyPasteIsActivated">
-            <summary>
-            Returns state of copy pasting mode
+             Returns state of building mode
             </summary>
         </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeBuilder.FreezeGizmo">
             <summary>
             Freezes the built object preview in current position
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBuilder.ShipCreationIsActivated">
-            <summary>
-            Current stat of grid creation mode
             </summary>
         </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeBuilder.ShowRemoveGizmo">
@@ -1286,6 +1338,70 @@
             Get or set the time for the notification to be shown, in miliseconds.
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyPhysics.CastLongRay(VRageMath.Vector3D,VRageMath.Vector3D,VRage.Game.ModAPI.IHitInfo@,System.Boolean)">
+            <summary>
+            Finds closest or any object on the path of the ray from->to. Uses Storage for voxels for faster 
+            search but only good for long rays (more or less more than 50m). Use it only in such cases.
+            </summary>
+            <param name="from">Start of the ray.</param>
+            <param name="to">End of the ray.</param>
+            <param name="hitInfo">Hit info</param>
+            <param name="any">Indicates if method should return any object found (May not be closest)</param>
+            <returns>true if hit, false if no hit</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPhysics.CastRay(VRageMath.Vector3D,VRageMath.Vector3D,System.Collections.Generic.List{VRage.Game.ModAPI.IHitInfo},System.Int32)">
+            <summary>
+            Cast a ray and returns all matching entities.
+            </summary>
+            <param name="from">Start of ray.</param>
+            <param name="to">End of ray.</param>
+            <param name="toList">List of hits</param>
+            <param name="raycastFilterLayer">Collision filter.</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPhysics.CastRay(VRageMath.Vector3D,VRageMath.Vector3D,VRage.Game.ModAPI.IHitInfo@,System.Int32)">
+            <summary>
+            Cast a ray and return first entity.
+            </summary>
+            <param name="from">Start of ray.</param>
+            <param name="to">End of ray.</param>
+            <param name="hitInfo">Hit info</param>
+            <param name="raycastFilterLayer">Collision filter.</param>
+            <returns>true if hit; false if no hit</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPhysics.CastRay(VRageMath.Vector3D,VRageMath.Vector3D,VRage.Game.ModAPI.IHitInfo@,System.UInt32,System.Boolean)">
+            <summary>
+            Cast a ray and return first entity.
+            </summary>
+            <param name="from">Start of ray.</param>
+            <param name="to">End of ray.</param>
+            <param name="hitInfo">Hit info</param>
+            <param name="raycastCollisionFilter">Collision filter.</param>
+            <returns>true if hit; false if no hit</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPhysics.EnsurePhysicsSpace(VRageMath.BoundingBoxD)">
+            <summary>
+            Ensure aabb is inside only one subspace. If no, reorder.
+            </summary>
+            <param name="aabb"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPhysics.GetCollisionLayer(System.String)">
+            <summary>
+            Given a string, gets the numeric value for the collision layer. Default: 0.
+            </summary>
+            <param name="strLayer">Name of collision layer. See MyPhysics.CollisionLayers for valid names.</param>
+            <returns>Numeric value from MyPhysics.CollisionLayers</returns>
+            <remarks>Default string used if not valid: DefaultCollisionLayer</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPhysics.StepsLastSecond">
+            <summary>
+            Number of physics steps done in last second
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPhysics.SimulationRatio">
+            <summary>
+            Simulation ratio, when physics cannot keep up, this is smaller than 1
+            </summary>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMySession.IsUserAdmin(System.UInt64)">
             <summary>
             Checks if a given player is an admin.
@@ -1299,6 +1415,15 @@
             </summary>
             <param name="steamId"></param>
             <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySession.SetComponentUpdateOrder(VRage.Game.Components.MySessionComponentBase,VRage.Game.Components.MyUpdateOrder)">
+            <summary>
+            Change the update order of a session component.
+            
+            There is a proxy for this method in the session component itself.
+            </summary>
+            <param name="component">The component to set the update order for</param>
+            <param name="order">The update order</param>
         </member>
         <member name="P:VRage.Game.ModAPI.IMySession.Config">
             <summary>
@@ -1411,6 +1536,39 @@
             <param name="disappearTimeMs"></param>
             <param name="font"></param>
             <returns>The notification object.</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.ReadFileInWorldStorage(System.String,System.Type)">
+            <summary>
+            Read text file from the current world's Storage directory.
+            </summary>
+            <param name="file"></param>
+            <param name="callingType"></param>
+            <returns></returns>
+            <remarks>This directory is under Saves\&lt;SteamId&gt;\&lt;WorldName&gt;\Storage</remarks>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.WriteFileInWorldStorage(System.String,System.Type)">
+            <summary>
+            Write text file to the current world's Storage directory.
+            </summary>
+            <param name="file"></param>
+            <param name="callingType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.ReadBinaryFileInWorldStorage(System.String,System.Type)">
+            <summary>
+            Read file from the current world's Storage directory.
+            </summary>
+            <param name="file"></param>
+            <param name="callingType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.WriteBinaryFileInWorldStorage(System.String,System.Type)">
+            <summary>
+            Write file to the current world's Storage directory.
+            </summary>
+            <param name="file"></param>
+            <param name="callingType"></param>
+            <returns></returns>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.CreateVoxelMapFromStorageName(System.String,System.String,VRageMath.Vector3D)">
             <summary>
@@ -1534,43 +1692,9 @@
             Is closing of objects allowed?
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.ControlCamera(VRage.Game.Utils.MyCamera)">
-            <summary>
-            Change camera properties now.
-            Communication: from controller to camera.
-            </summary>
-            <param name="currentCamera"></param>
-        </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.Rotate(VRageMath.Vector2,System.Single)">
-            <summary>
-            Rotate camera controller.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.RotateStopped">
-            <summary>
-            Rotation of camera controller stopped.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyCameraController.HandleUse">
-            <summary>
-            Used to send "use" commands to camera controller
-            </summary>
-            <returns>
-            Return value indicates if the camera controller handled the use button.
-            If not, it should fall to ControlledObject
-            </returns>
-        </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.AddDecals(VRage.Game.ModAPI.MyHitInfo,VRage.Utils.MyStringHash,System.Object,VRage.Game.ModAPI.Interfaces.IMyDecalHandler)">
-            <param name="hitInfo">Hithinfo on world coordinates</param>
-        </member>
         <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalHandler.AddDecal(VRageRender.MyDecalRenderInfo@)">
             <param name="renderData">Position and normal on local coordinates for regular actors.
             World position on voxel maps</param>
-        </member>
-        <member name="P:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.UseDamageSystem">
-            <summary>
-            When set to true, it should use MyDamageSystem damage routing.
-            </summary>
         </member>
         <member name="T:VRage.Game.ModAPI.MyDamageInformation">
             <summary>
@@ -1726,6 +1850,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
+        </member>
         <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
@@ -1742,6 +1871,83 @@
             Remaps this entity's entityId to a new value.
             If there are cross-referenced between different entities in this object builder, the remapHelper should be used to rememeber these
             references and retrieve them.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_ClipboardDefinition.PastingSettings">
+            <summary>
+            Defines pasting settings.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CoordinateSystemDefinition.AngleTolerance">
+            <summary>
+            Angle tolerance (in radians) used for deciding if block is aligned to coord system.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CoordinateSystemDefinition.PositionTolerance">
+            <summary>
+            Position tolerance (in meters) used for deciding if block is aligned to coord system.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CoordinateSystemDefinition.CoordSystemSize">
+            <summary>
+            Local coordinate system size (in meters).
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyPlacementSettings.StaticGridAlignToCenter">
+            <summary>
+            Align static grids to corners (false) or centers (true).
+            You should always set to corners in new games. Center alignment is only for backwards compatibility so that
+            static grids are correctly aligned with already existing saves.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyGridPlacementSettings.CanAnchorToStaticGrid">
+            <summary>
+            When min. allowed penetration is not met, block may still be placed if it is touching static grid and this property is true.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.ObjectBuilders.Definitions.SessionComponents.VoxelPlacementSettings">
+            <summary>
+            Voxel penetration definition
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.VoxelPlacementSettings.MaxAllowed">
+            <summary>
+            Maximum amount in % of block being inside voxel (where 1 - 100% to 0 - 0%)
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.VoxelPlacementSettings.MinAllowed">
+            <summary>
+            Minimum amount in % of block being inside voxel (where 1 - 100% to 0 - 0%)
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.DefaultBlockBuildingDistance">
+            <summary>
+            Default block building distance for creative mode.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.MaxBlockBuildingDistance">
+            <summary>
+            Max building distance for creative mode.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.MinBlockBuildingDistance">
+            <summary>
+            Min building distnace for creative mode.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistSurvivalCharacter">
+            <summary>
+            Building distance in survival mode when controlling character.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingDistSurvivalShip">
+            <summary>
+            Building distance in survival mode when controlling ship.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.SessionComponents.MyObjectBuilder_CubeBuilderDefinition.BuildingSettings">
+            <summary>
+            Defines placement settings for building mode.
             </summary>
         </member>
         <member name="M:VRage.Game.MyMeshHelper.GenerateSphere(VRageMath.MatrixD@,System.Single,System.Int32,System.Collections.Generic.List{VRageMath.Vector3D})">
@@ -1817,9 +2023,20 @@
             <param name="lineBuffer"></param>
             <param name="divideRatio"></param>
         </member>
-        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+        <member name="F:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.Static">
             <summary>
-            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            Default type metadata manager.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.RegisterAssembly(System.Reflection.Assembly)">
+            <summary>
+            Register an assembly and it's types metadata.
+            </summary>
+            <param name="assembly">Assembly to register.</param>
+        </member>
+        <member name="M:VRage.Game.ObjectBuilder.MyGlobalTypeMetadata.Init">
+            <summary>
+            Initalize the registry with all the defautl game assemblies.
             </summary>
         </member>
         <member name="F:VRage.Game.Utils.MyCamera.CameraShake">
@@ -2446,6 +2663,9 @@
             Allocated new entity ID (won't add to list)
             Entity with this ID should be added immediatelly
             </summary>
+        </member>
+        <member name="M:VRage.MyEntityIdentifier.ConstructIdFromString(VRage.MyEntityIdentifier.ID_OBJECT_TYPE,System.String)">
+            Construct an ID using the hash from a string.
         </member>
         <member name="M:VRage.MyEntityIdentifier.SwapRegisteredEntityId(VRage.ModAPI.IMyEntity,System.Int64,System.Int64)">
             <summary>
@@ -6029,6 +6249,16 @@
             Push-to-talk voice chat
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ControlName_CubeSizeMode">
+            <summary>
+            Cube size toggle button
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ControlName_CubeSizeMode_Tooltip">
+            <summary>
+            Press to switch between small and large sizes of a block
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.EnableVoiceChat">
             <summary>
             Enable voice chat
@@ -6037,6 +6267,11 @@
         <member name="F:MyCommonTexts.ScreenGraphicsOptions_Tonemapping">
             <summary>
             Tonemapping
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_VegetationDistance">
+            <summary>
+            Vegetation View Distance
             </summary>
         </member>
         <member name="F:MyCommonTexts.WorldSettings_GrassDensity">
@@ -6365,6 +6600,11 @@
             Use contextual music
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ControlName_ChangeBlockVariants">
+            <summary>
+            Change block variants
+            </summary>
+        </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
             <summary>
             Amount of item required or produced. For discrete objects this refers to
@@ -6481,36 +6721,10 @@
         <member name="T:VRage.Game.MyPlanetMaterialGroup">
             Rule group defines a material mappable set of surface rules.
         </member>
-        <member name="M:VRage.Game.MyRangeValue.ConvertToCosine">
-            When the range is an angle this method changes it to the cosines of the angle.
-            
-            The angle is expected to be in degrees.
-            
-            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
-            
-        </member>
-        <member name="M:VRage.Game.MyRangeValue.ConvertToSine">
-            When the range is an angle this method changes it to the sines of the angle.
-            
-            The angle is expected to be in degrees.
-        </member>
-        <member name="T:VRage.Game.MyReflectiveRangeValue">
-            Reflective because it can be reflected to the oposite range.
-            
-            Structs not inheriting from structs is stupid.
-        </member>
-        <member name="M:VRage.Game.MyReflectiveRangeValue.ConvertToCosine">
-            When the range is an angle this method changes it to the cosines of the angle.
-            
-            The angle is expected to be in degrees.
-            
-            Also beware that cosine is a decreasing function in [0,90], for that reason the minimum and maximum are swaped.
-            
-        </member>
-        <member name="M:VRage.Game.MyReflectiveRangeValue.ConvertToSine">
-            When the range is an angle this method changes it to the sines of the angle.
-            
-            The angle is expected to be in degrees.
+        <member name="F:VRage.Game.MyObjectBuilder_GuiControlRadioButton.CustomVisualStyle">
+            <summary>
+            Custom visual style. This is check if visual style is set to Custom.
+            </summary>
         </member>
         <member name="F:VRage.Game.ObjectBuilders.MyComponentBlockEntry.Main">
             <summary>
@@ -6567,12 +6781,6 @@
             [Concrete] Data to be stored/is stored as XML.
             </summary>
         </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.RegisterAssembliesAndLoadSerializers">
-            <summary>
-            Register all object builders in game assemblies and loads serializers. This function must be called after links to assemblies in MyPlugins are set!
-            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
-            </summary>
-        </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.GenerateAssemblyId(System.Type)">
             <summary>Generates an identifier for the assembly of a specified type</summary>
             <remarks>Code copied from the .NET serialization classes - to emulate the same bahavior</remarks>
@@ -6588,12 +6796,6 @@
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
             <summary>
             Can handle old values as well.
-            </summary>
-        </member>
-        <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.RegisterAssemblies">
-            <summary>
-            Register all object builders types from game assemblies. This function must be called after links to assemblies in MyPlugins are set!
-            Returns false if assembly links are not set. Only MyPlugins.UserAssembly can be null.
             </summary>
         </member>
         <member name="T:VRage.ObjectBuilders.MyObjectBuilder_ReplicableEntity">

@@ -1,20 +1,3 @@
-TO DO
-================//
-+ find out if you can move entity with mouse input
-+ change all variables to camel case exept const'
-+ convert const to caps and underscores
-+ empty function calls should have their space removed except method calls
-+ turn all public fields into properties
-+ evaluate where private is considered good placement
-+ ingame script needs a conventional revision
-+ make sure double spaces never happen in adjacent
-+ adjacentevaluation() should have a pattern where secondary is always assigned after primary; semantics
-+ design a pattern mandate for adjacent() that minimises the possibility of fixing words at the cost of breaking them. one logic block per line would be cool but ill need comments inside each block if need be
-+ design a class that reports known adjacent words and prints a list of changes in success
-+ some state paths can be combined in adjacent evaulation. this one is easy to screw up but dont worry just fix it when someeone reports it
-+ move adjacent word comments beside their logic component. every logic block should have at least one word
-
-
 REMINDERS
 ====================//
 + test every new word before signing off
@@ -22,10 +5,45 @@ REMINDERS
 + remember to update ships and github
 + steam workshop updates should get a fixed word list in each changelog
 
+TO DO
+================//
+
++ change all variables to camel case exept const'
++ convert const to caps and underscores
++ empty function calls should have their space removed except method calls
++ turn all public fields into properties
++ evaluate where private is considered good placement
++ ingame script needs a conventional revision
++ make sure double spaces never happen in adjacent
++ constructors taking variables should just use "this"
+
++ script OOO is too quiet
++ all phonemes need to be the same length; even small ones. drag them out
++ marek PIH is too quiet
+
++ adjacentevaluation() should have a pattern where secondary is always assigned after primary; semantics
++ design a pattern mandate for adjacent() that minimises the possibility of fixing words at the cost of breaking them. one logic block per line would be cool but ill need comments inside each block if need be
++ design a class that reports known adjacent words and prints a list of changes in success
++ some state paths can be combined in adjacent evaulation. this one is easy to screw up but dont worry just fix it when someeone reports it
++ move adjacent word comments beside their logic component. every logic block should have at least one word
++ sometimes there are double spaces. this should not happen in adjacent
+
++ test script dictionary to see if the spacing matches well with both voices.
+
++ an interface should be designed for SentenceProcession so that all different voices can have the same structure, but different spacing when needed
+
++ find out if you can move entity with mouse input
+
++ make a new programmable block with a sound emitter entity? maybe
+
+
+
 BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
 =================//
 out
 by
 again
 avail
-
+same
+this
+square
