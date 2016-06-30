@@ -1,6 +1,5 @@
 TO DO
 ================//
-+ release at 2 pm
 + find out if you can move entity with mouse input
 + change all variables to camel case exept const'
 + convert const to caps and underscores
