@@ -11,7 +11,7 @@ namespace SETextToSpeechMod
     [MySessionComponentDescriptor (MyUpdateOrder.BeforeSimulation)] //adds an attribute tag telling the game to run my script.
     class MessageEventHandler : MySessionComponentBase //MySessionComponentBase is inherited and allows me to override its methods.
     {
-        const int VERSION = 1;
+        const int VERSION = 2;
         const int MAX_LETTERS = 100;
         bool initialised = false;
         bool run_updates = false;
