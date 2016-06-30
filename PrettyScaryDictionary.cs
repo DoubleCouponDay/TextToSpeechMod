@@ -64,7 +64,7 @@ namespace SETextToSpeechMod
             {"_B_", row}, { "BEFORE", new string[]{ BIH, EEE, FIH, AWW, RIH, "", } },
             {"_C_", row}, { "COULD", new string[]{ KIH, OOO, " ", DIH, "", } }, { "CHINESE", new string[]{ KIH, HIH, EYE, NIH, EEE, " ", ZIH, } },
             {"_D_", row}, { "DO", new string[]{ DIH, OOO, } },
-            {"_E_", row}, { "ENGINE", new string[]{ EHH, NIH, " ", JIH, IHH, NIH, } }, { "EARTHQUAKE", new string[]{ RIH, THI, " ", KIH, WIH, AEE, KIH, "", "", "", } }, { "END", new string[]{ EHH, NIH, DIH, } }, { "EVERY", new string[]{ EHH, VIH, RIH, "", EEE, } },
+            {"_E_", row}, { "ENGINE", new string[]{ EHH, NIH, " ", JIH, IHH, NIH, } }, { "EARTHQUAKE", new string[]{ RIH, THI, " ", KIH, WIH, AEE, KIH, "", "", "", } }, { "END", new string[]{ EHH, NIH, DIH, } }, { "EVERY", new string[]{ EHH, VIH, RIH, "", EEE, } }, { "EXAMPLE", new string[]{ EHH, KSS, " ", UHH, MIH, PIH, LIH, } },
             {"_F_", row}, { "FIND", new string[]{ FIH, EYE, NIH, DIH, } },
             {"_G_", row}, { "GO", new string[]{ GIH, OWE, } }, { "GOOD", new string[]{ GIH, " ", OOO, DIH, } }, { "GIANT", new string[]{ JIH, EYE, UHH, NIH, TIH, } }, { "GET", new string[]{ GIH, EHH, TIH, } },
             {"_H_", row}, { "HELL", new string[]{ HIH, EHH, LIH, "", } }, { "HEY", new string[]{ HIH, AEE, "", } }, { "HARDWARE", new string[]{ HIH, UHH, RIH, DIH, " ", WIH, EHH, RIH } },

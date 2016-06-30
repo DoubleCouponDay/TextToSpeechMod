@@ -72,7 +72,7 @@ namespace SETextToSpeechMod
 
                 if (rng_bonk == 42)
                 {
-                    //SoundPlayer.PlayClip ("BONK", true); //it hurts to live
+                    SoundPlayer.PlayClip ("BONK", true); //it hurts to live
                 }
                 Play();    
             }    

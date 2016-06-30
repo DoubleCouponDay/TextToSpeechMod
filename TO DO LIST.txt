@@ -1,100 +1,31 @@
 TO DO
 ================//
-+ make the video
-+ revert to weekly branch
-+ uncomment bonk
-+ delete script from to do list
-+ test sim in dedicated server mod
-+ if removal of load time was acceptable, realign script with mod then test
-+ finalise the workshop descriptions
++ release at 2 pm
 + find out if you can move entity with mouse input
-+ release on thursday night!
 + change all variables to camel case exept const'
-+ const to caps and underscores
++ convert const to caps and underscores
 + empty function calls should have their space removed except method calls
 + turn all public fields into properties
 + evaluate where private is considered good placement
 + ingame script needs a conventional revision
 + adjacentevaluation() should have a pattern where secondary is always assigned after primary; semantics
-+ design a pattern mandate for adjacent() that minimises the possibility of fixing words at the cost of breaking them
++ design a pattern mandate for adjacent() that minimises the possibility of fixing words at the cost of breaking them. one logic block per line would be cool but ill need comments inside each block if need be
 + design a class that reports known adjacent words and prints a list of changes in success
 + some state paths can be combined in adjacent evaulation. this one is easy to screw up but dont worry just fix it when someeone reports it
-+ move adjacent word comments beside their logic component
++ move adjacent word comments beside their logic component. every logic block should have at least one word
 
 
 REMINDERS
 ====================//
 + test every new word before signing off
 + slowly move dictionary words into adjacentevaluation(). reason: broader reach
-+ remember to update ships too
-+ and update github
++ remember to update ships and github
++ steam workshop updates should get a fixed word list in each changelog
 
 BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
 =================//
-john ~
-
-
-SCRIPT
-====================//
-WHATS THAT NOISE
-
-SOUNDS LIKE A CHINESE EARTHQUAKE
-
-(where were going we dont need eyes to see)
-
-OH NO
-
-NO NO PLEASE NO
-
-HELLO SPACE ENGINEERS
-
-I WILL SHOW YOU HOW TO USE
-THE TEXT TO SPEECH MOD
-
-SUBSCRIBE ON THE WORKSHOP
-
-PUT A SQUARE BRACKET AND A SPACE AT THE
-START OF YOUR SENTENCE
-
-IF THERE IS TOO MUCH SPAM
-
-[ WOW GREAT ARGUMENT YOU SURE CONVINCED ME WITH THOSE HOT OPINIONS
-
-YOU CAN TYPE STOP TO END IT ALL
-
-YOU CAN ALSO USE IN GAME HARDWARE
-
-YOU WILL NEED TWO WORKSHOP LINKS
-
-THE MOD AND THE SHIP DESIGN
-
-SAME AS BEFORE
-
-SQUARE BRACKET TO PLAY ONCE
-
-THIS PHRASE TO LOOP INFINITELY
-
-THIS ADDS INTERESTING POSSIBILITIES FOR 
-THE GAME
-
-UNFORTUNATELY ITS GOING TO BE NEAR IMPOSSIBLE 
-TO GET EVERY WORD TO WORK
-
-IF YOU FIND A BROKEN WORD
-
-LET ME KNOW AND I WILL ADD IT IN AN UPDATE
-
-OR SUBMIT A PULL REQUEST WITH YOUR OWN
-
-THE MOD WILL GET THESE AUTOMATICALLY
-
-BUT THE HARDWARE WILL NEED TO BE MANUALLY 
-UPDATED
-
-TYPE version TO COMPARE
-
-IF THE VERSIONS DONT MATCH THEN AN UPDATE 
-IS AVAILABLE
-
+out
+by
+again
 
 

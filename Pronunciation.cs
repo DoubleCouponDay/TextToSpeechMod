@@ -440,13 +440,7 @@ namespace SETextToSpeechMod
                               after == "K")) || 
                              (after == "I" && 
                               after != "R") ||
-                              after == "Y" ||
-                            ((after == "C" || //space, ate, rake
-                              after == "T" ||
-                              after == "K" ||
-                              after == "L" ||
-                              after == "M" ||
-                              after == "N") && 
+                             (CONSONANTS.Contains (after) && //THE REPLACEMENT. space, ate, rake, grade
                               two_after == "E") ||
                             ((before == "T" ||
                               before == "L") && //table
@@ -455,10 +449,12 @@ namespace SETextToSpeechMod
                              (after == "P" && //maple
                               two_after == "L") ||
                               after == "Y" ||
-                             ((before == "H" ||
-                               before == "R") && //phrase
+                            ((before == "H" ||
+                              before == "R") && //phrase
                               after == "S" &&
-                              two_after == "E") )     
+                              two_after == "E") ||
+                             (after == "B" && //able
+                              two_after == "L"))     
                     {
                         primary = PrettyScaryDictionary.AEE;
                     }
@@ -467,8 +463,9 @@ namespace SETextToSpeechMod
                               after == "T") ||
                              (after == "R" &&
                               two_after != "E") || //far
-                             (before == " " &&
-                              after == " ") || //a
+                             (before == " " && 
+                             (after == " " || //a
+                              after == "V")) || //available
                              (after == "S" && //last
                               two_after == "T") )
                     {
@@ -488,8 +485,9 @@ namespace SETextToSpeechMod
                     break;
             
                 case "B":
-                    if (before != "M" && //silent B
-                        before != "B") //cobber
+                    if ((after != " " && //bomb
+                         before != "B") || //cobber
+                         VOWELS.Contains (before) ) //bob, silent B, cobber
                     {
                         if (after == "L")
                         {
@@ -537,22 +535,20 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.UHH; //such as the
                     } 
   
-                    else if ((after == "A" && 
-                             (before == "R" ||
-                              two_after == "K")) ||
+                    else if ((after == "A" && //late
+                             (before == "R" || 
+                              two_after == "K")) || //steak, break
                               after == "U" ||
-                             (after == "M" &&
-                              before == "R") ||
-                              before == "E" ||
-                             (after == "R" &&
+                              before == "E" || //bee, speech
+                             (after == "R" && //ber
                               before != "V" &&
                               before != "E") ||
-                             (after == " " &&
+                             (after == " " && //silent e at end
                               two_before != " ") ||
                              (after == "L" &&
                               two_after == "Y") )                              
                     {
-                        ; //such as late, cake, break, steak, queue, requirement, speech,
+                        ; //such as queue, requirement, speech,
                     }    
         
                     else if (after == "W")
@@ -577,12 +573,17 @@ namespace SETextToSpeechMod
                              before == "B") &&
                              after == " " &&
                              two_before == " ") ||
+                            (two_before == "Y" && //maybe
+                             before == "B" &&
+                             after == " ") ||
                             (after == "S" &&
                              two_after == "E") ||
                             (before == "I" && //ies
                              two_after == " ") ||
                             (before == "K" && //key
-                             after == "Y"))
+                             after == "Y") ||
+                            (two_before == " " && //re
+                             before == "R") )
                     {                           
                         primary = PrettyScaryDictionary.EEE;    //such as "engineer", speech, me
                     }  
@@ -616,32 +617,46 @@ namespace SETextToSpeechMod
                     break;
             
                 case "G":
-                    if  (after == "E" || 
+                    if (before == "G" || //trigger
+                        before == "H" || //high
+                       (before == "N" && //ing
+                        after == " ") ||
+                       (before == "I" &&
+                        after == "N") ) //design
+                    {
+                        ;
+                    }
+
+                    else if  (after == "E" &&
                          before == "D" ||
-                         after == "I" || 
+                        (after == "I" && 
+                         two_after != "T") || 
                          after == "Y")
                     {   
                         secondary = PrettyScaryDictionary.JIH;
-                        primary = " "; //such as "gin", high, judgement, RNG
+                        primary = " "; //such as "gin", judgement, RNG
                     }
             
-                    else if (after != "H" && //high
-                             before != "G" && //lagg
-                            (before != "N" &&
-                             after != " ")) //ing
+                    else
                     {
-                        primary = PrettyScaryDictionary.GIH;
+                        primary = PrettyScaryDictionary.GIH; //git,
                     }    
                     break;
             
                 case "H":
-                    if (after != "N" &&
-                        before != "T" &&
-                        before != "G" &&
-                        before != "O" &&
-                        before != "P")
+                    if (after == "N" ||
+                       (before == "T" && //thigh
+                        after != "U") || //github
+                        before == "G" || //high
+                        before == "O" ||
+                        before == "P")
                     {
-                        primary = PrettyScaryDictionary.HIH; //such as sign, THIgh, highest
+                        ;
+                    }
+
+                    else
+                    {
+                        primary = PrettyScaryDictionary.HIH;
                     }    
                     break;
 
@@ -661,31 +676,38 @@ namespace SETextToSpeechMod
                         secondary = PrettyScaryDictionary.HIH;
                     }
 
-                    else if (after == "K" ||
-                            (before != "R" &&
-                             two_after != "L" && 
-                             after == "S" &&   
-                             two_after == "D" &&
-                            (CONSONANTS.Contains (after) && 
-                             VOWELS.Contains (two_after)) ||
+                    else if (after == "K" || //pike
+                            (CONSONANTS.Contains (after) && //we'll have to wait and see if this is a universal rule. if its not it has to be broken up.
+                             VOWELS.Contains (two_after) &&
+                             before != "R" &&
+                             two_after != "L" &&
+                             before != "A") || //sail
                             (two_before == "K" &&
                              before == "N") ||
-                             after == "G") ||
+                            (after == "G" && //light
+                             two_after == "H") ||
                             (two_after == "E" &&
                              before != "G") ||
                             (before == " " &&
                              after == " ") ||
-                             after == "E") 
+                             after == "E" || //pie
+                           ((after == "L" || //filed
+                             after == "T") && //kite
+                             two_after == "E") ||
+                            (after == "G" && 
+                             two_after == "N") ) //sign 
                     {   
-                        primary = PrettyScaryDictionary.EYE; //such as "filed", light, kite
+                        primary = PrettyScaryDictionary.EYE;
                     }
             
-                    else if (two_after == "G")
+                    else if ((after == "N" && //running
+                              two_after == "G") ||
+                              before == "O") //point
                     {
                         primary = PrettyScaryDictionary.EEE; //such as running
                     }
     
-                    else if (after != "E")  
+                    else 
                     {
                         primary = PrettyScaryDictionary.IHH;  //such as 'felicity'.
                     }
@@ -739,24 +761,21 @@ namespace SETextToSpeechMod
                         ;
                     }                    
                         
-                    else if ((after == "R" && //for, lore, or, bore, core, store, tore,
-                             (before == "F" || 
-                              before == "L" ||
-                              before == " " ||
-                              before == "B" ||
-                              before == "C" ||
-                              before == "T")) || 
-                             (after == "U" && //four
-                              two_after == "R" &&
-                              before != "S"))
+                    else if (after == "R" || //for, lore, or, bore, core, store, tore, support
+                            (after == "U" && //four
+                             two_after == "R" &&
+                             before != "S") ||
+                             after == "I") //point, annoint, soil
                     {
                         primary = PrettyScaryDictionary.AWW;
                     }
 
-                    else if (after == "U" &&
-                             before == "F")
+                    else if ((after == "U" && //foul
+                             (before == "F" ||
+                              before == "P" || //pouch
+                              before == "L")) ) //slouch
                     {
-                        primary = PrettyScaryDictionary.AHH; //foul
+                        primary = PrettyScaryDictionary.AHH; 
                     }
  
                     else if (after == "M" ||
@@ -766,35 +785,33 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.UHH; //such as computer, coming.
                     }   
             
-                    else if (after == " " ||
+                    else if (after == " " || //pro
                             (before == "S" &&
                              after == "U") ||
-                            (after == "H" &&
-                             before != "J") ||
-                            (after == "W"))
+                             after == "W" ||
+                            (CONSONANTS.Contains (after) && //sole, solo
+                             VOWELS.Contains (two_after)) ||
+                             (before == "B" && //both
+                              after == "T" && 
+                              two_after == "H"))
                     {
                         primary = PrettyScaryDictionary.OWE; //such as hello, soul
                     }   
             
-                    else if ((CONSONANTS.Contains (before) && //told
-                              before != "Y" &&
-                             (after != "V" ||
-                              before == "H")) ||
-                              before == " " ||
-                             (after == "H" &&
-                              two_after == "N") )
+                    else if ((CONSONANTS.Contains (before) && //told, sold, hold, gold, bold 
+                              after == "L") ||
+                             (before == " " &&
+                              after != "O") ||
+                             (after == "H" && //john
+                              two_after == "N") ||
+                             ((after == "T" && //sloth, cloth
+                              two_after == "H") &&
+                              before != "B") ||
+                             (before == "B" && //bot
+                              after == "T" &&
+                              two_after == " ") )
                     {
-                        if (before == " " &&
-                            after == "P")
-                        {
-                            primary = PrettyScaryDictionary.HOH;
-                            secondary = " ";
-                        }
-
-                        else
-                        {
-                            primary = PrettyScaryDictionary.HOH;
-                        }                        
+                        primary = PrettyScaryDictionary.HOH;                      
                     }    
             
                     else if (after == "O" ||
@@ -859,7 +876,8 @@ namespace SETextToSpeechMod
                     break;
             
                 case "T": 
-                    if (after == "H") 
+                    if (after == "H" &&
+                        two_after != "U") //github 
                     {
                         primary = " ";
                         secondary = PrettyScaryDictionary.THI; //such as "THInk".    
@@ -918,10 +936,19 @@ namespace SETextToSpeechMod
                              after == "B") ||
                             (CONSONANTS.Contains (before) && //but, cut
                             (after == "T" ||
-                             after == "C")) ) 
+                             after == "C")) ||
+                            (before == "H" && //hub
+                             after == "B") ) 
                     {
                         primary = PrettyScaryDictionary.UHH; //such as touch, cut
                     }   
+
+                    else if ((before == "B" || //buy
+                             before == "G") &&  //guy
+                             after == "Y")
+                    {
+                        primary = PrettyScaryDictionary.EYE;
+                    }
 
                     else
                     {
@@ -954,9 +981,12 @@ namespace SETextToSpeechMod
                     break;
             
                 case "Y":
-                    if (after == "E" || //eye
-                        before == "A" || //maybe
-                        before == "E") //key                                      
+                    if (((before == "U" || //buy
+                          before == "E") && //key
+                          after == " ") ||
+                          before == "A" || //maybe                                     
+                         (after == "E" && //eye
+                          before == "E") )
                     {
                         ; 
                     }
