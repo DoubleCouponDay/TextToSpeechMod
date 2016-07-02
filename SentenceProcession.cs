@@ -11,7 +11,7 @@ namespace SETextToSpeechMod
         const int CLIP_LENGTH = 4; 
         const int SYLLABLE_SIZE = 3;
         const string SOUND_ID = "-M";
-        const int chanceOfClang = 10000;
+        const int CHANCE_OF_CLANG = 10000;
 
         //state
         bool loading = true;
@@ -22,16 +22,16 @@ namespace SETextToSpeechMod
 
         //play data
         string timeline;
-        string timeline_copy;
-        int timeline_size;
-        int current_tick;
+        string timelineCopy;
+        int timelineSize;
+        int currentTick;
 
         //miscellaneous
-        int syllable_measure = 1; //a measure of how far along each syllable is.
+        int syllableMeasure = 1; //a measure of how far along each syllable is.
         string sentence;
 
         //objects
-        StringBuilder string_lite = new StringBuilder(); //the quickest way of pasting strings together. must be cleared to prepare for the next use.        
+        StringBuilder stringLite = new StringBuilder(); //the quickest way of pasting strings together. must be cleared to prepare for the next use.        
         Random generator = new Random();
         Pronunciation pronunciation;
 
@@ -59,18 +59,18 @@ namespace SETextToSpeechMod
                 else
                 {
                     loading = false;    
-                    string_lite.Append ("/"); //the cap on the timeline mix.
-                    timeline = string_lite.ToString();
-                    string_lite.Clear();
-                    timeline_copy = timeline;
+                    stringLite.Append ("/"); //the cap on the timeline mix.
+                    timeline = stringLite.ToString();
+                    stringLite.Clear();
+                    timelineCopy = timeline;
                 }        
             }
 
             else
             {
-                int rng_bonk = generator.Next (chanceOfClang);
+                int rng_bonk = generator.Next (CHANCE_OF_CLANG);
 
-                if (rng_bonk == 42)
+                if (rng_bonk == 0)
                 {
                     SoundPlayer.PlayClip ("BONK", true); //it hurts to live
                 }
@@ -91,19 +91,19 @@ namespace SETextToSpeechMod
                 {
                     if (add_results[i] != " ") //empty string lets my program know that no clip should be created.
                     {                                                                
-                        int startPoint = timeline_size;         
+                        int startPoint = timelineSize;         
                         string soundChoice = add_results[i] + SOUND_ID;
                         AppendToTimeline (startPoint, soundChoice); //add the key transitions into the timeline.
-                        timeline_size += CLIP_LENGTH; //timeline is expanded for duration after the clip is created.
+                        timelineSize += CLIP_LENGTH; //timeline is expanded for duration after the clip is created.
 
-                        if (syllable_measure == SYLLABLE_SIZE) //cues a space using the current setting SYLLABLE_SIZE.
+                        if (syllableMeasure == SYLLABLE_SIZE) //cues a space using the current setting SYLLABLE_SIZE.
                         {
                             IncrementSyllables();
                         }   
                         
                         else
                         {
-                            syllable_measure++;
+                            syllableMeasure++;
                         }
                     }
 
@@ -117,37 +117,37 @@ namespace SETextToSpeechMod
 
         void IncrementSyllables()
         {
-            timeline_size += SPACE_SIZE;        
-            syllable_measure = 1;
+            timelineSize += SPACE_SIZE;        
+            syllableMeasure = 1;
         }
 
         //creates a string of all the phonemes and their start points (in ticks); better performance than searching a list of objects.
         void AppendToTimeline (int startPoint, string clipsSound) 
         {      
-            string_lite.Append ("/");    
-            string_lite.Append (startPoint); //leaving out clear this one time is ok since it clears when loading is finished.
-            string_lite.Append ("#"); 
-            string_lite.Append (clipsSound);                    
+            stringLite.Append ("/");    
+            stringLite.Append (startPoint); //leaving out clear this one time is ok since it clears when loading is finished.
+            stringLite.Append ("#"); 
+            stringLite.Append (clipsSound);                    
         }
 
         //this function is in charge of finding clips on the timeline and knowing when to end.
         void Play()
         {   
-            string_lite.Append ("/");
-            string_lite.Append (current_tick);
-            string_lite.Append ("#");
-            string tick_string = string_lite.ToString ();
-            string_lite.Clear ();
+            stringLite.Append ("/");
+            stringLite.Append (currentTick);
+            stringLite.Append ("#");
+            string tick_string = stringLite.ToString();
+            stringLite.Clear();
                
-            while (timeline_copy.Contains (tick_string)) //Contains confirms int point_index will not be out of bounds.
+            while (timelineCopy.Contains (tick_string)) //Contains confirms int pointIndex will not be out of bounds.
             {                                    
-                int point_index = timeline_copy.IndexOf (tick_string); //returns index of first character of input string found.
-                ExtractClip (point_index);
+                int pointIndex = timelineCopy.IndexOf (tick_string); //returns index of first character of input string found.
+                ExtractClip (pointIndex);
             }    
 
-            if (current_tick < timeline_size)    
+            if (currentTick < timelineSize)    
             { 
-                current_tick++;
+                currentTick++;
             } 
     
             else
@@ -156,41 +156,41 @@ namespace SETextToSpeechMod
             }    
         }
 
-        void ExtractClip (int point_index) //performance light function that detects clips ready to play. 
+        void ExtractClip (int pointIndex) //performance light function that detects clips ready to play. 
         { 
-            bool extracted_num = false;  
-            string choice_extracted = "";                                                                   
+            bool extractedNum = false;  
+            string choiceExtracted = "";                                                                   
     
-            while (timeline_copy[point_index] != '#') //finds the sound_choice's marker.
+            while (timelineCopy[pointIndex] != '#') //finds the sound_choice's marker.
             {
-                point_index++;    
+                pointIndex++;    
             }
     
-            while (extracted_num == false) //add the sound_choice it finds until it reaches the marker.
+            while (extractedNum == false) //add the sound_choice it finds until it reaches the marker.
             {
-                point_index++; //ensures hash is not added to the temp clip number.
+                pointIndex++; //ensures hash is not added to the temp clip number.
         
-                if (timeline_copy[point_index] != '/') //an indexed string is a single char; therefore use ''.
+                if (timelineCopy[pointIndex] != '/') //an indexed string is a single char; therefore use ''.
                 {
-                    string_lite.Append (timeline_copy[point_index]);
+                    stringLite.Append (timelineCopy[pointIndex]);
                 }
         
                 else
                 {
-                    extracted_num = true; //while loops finish the list before exiting so i dont have to worry about this line's position.
-                    choice_extracted = string_lite.ToString ();
-                    string_lite.Clear ();
-                    point_index--; //readies the logic to remove the data slot.    
+                    extractedNum = true; //while loops finish the list before exiting so i dont have to worry about this line's position.
+                    choiceExtracted = stringLite.ToString();
+                    stringLite.Clear();
+                    pointIndex--; //readies the logic to remove the data slot.    
                 }    
             }    
     
             //removes the data slot (start_point and sound_choice) but leaves the forward slashes.
-            while (timeline_copy[point_index] != '/')
+            while (timelineCopy[pointIndex] != '/')
             {
-                timeline_copy = timeline_copy.Remove (point_index, 1); //inputs index then count.
-                point_index--;
+                timelineCopy = timelineCopy.Remove (pointIndex, 1); //inputs index then count.
+                pointIndex--;
             } 
-            SoundPlayer.PlayClip (choice_extracted, false);
+            SoundPlayer.PlayClip (choiceExtracted, false);
         }
     }
 }

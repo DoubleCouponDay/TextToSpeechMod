@@ -130,3 +130,5 @@ C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Microso
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Microsoft.CodeAnalysis.CSharp.xml
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\System.Collections.Immutable.xml
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\System.Reflection.Metadata.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render.dll
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render11.dll

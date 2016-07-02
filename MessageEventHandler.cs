@@ -11,15 +11,16 @@ namespace SETextToSpeechMod
     [MySessionComponentDescriptor (MyUpdateOrder.BeforeSimulation)] //adds an attribute tag telling the game to run my script.
     class MessageEventHandler : MySessionComponentBase //MySessionComponentBase is inherited and allows me to override its methods.
     {
-        const int VERSION = 2;
+        const int VERSION = 3;
         const int MAX_LETTERS = 100;
+        const int UPDATES_INTERVAL = 60;
+        const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of steam mod as packet ID.
         bool initialised = false;
-        bool run_updates = false;
-        int timer = 0;
-        ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of steam mod as packet ID.
+        bool runUpdates = false;
+        int timer = 0;        
         Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.
         List <IMyPlayer> players = new List <IMyPlayer>();
-        public List <SentenceProcession> speeches = new List <SentenceProcession> ();
+        public List <SentenceProcession> speeches = new List <SentenceProcession>();
 
         public override void UpdateBeforeSimulation()
         {
@@ -28,11 +29,11 @@ namespace SETextToSpeechMod
                 Initialise();
             }
             
-            else if (run_updates == true)
+            else if (runUpdates == true)
             {
                 if (timer == 0) //im hoping that a little distance will prevent the oscillating position whch annoys ear drums.
                 {
-                    timer = 60;
+                    timer = UPDATES_INTERVAL;
                     players.Clear(); //GetPlayers() just adds without overwriting so list must be cleared every time.
                     MyAPIGateway.Multiplayer.Players.GetPlayers (players);
                     SoundPlayer.UpdatePosition (players);   
@@ -56,7 +57,7 @@ namespace SETextToSpeechMod
 
                 if (speeches.Count == 0)
                 {
-                    run_updates = false;
+                    runUpdates = false;
                     timer = 0;
                 }
             }
@@ -77,8 +78,8 @@ namespace SETextToSpeechMod
                 if (messageText[0] == '[' && messageText[1] == ' ')
                 {     
                     string noEscapes = string.Format (@"{0}", messageText); // @ prevents user's regex inputs.
-                    string fixed_case = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
-                    byte[] bytes = encode.GetBytes (fixed_case);
+                    string fixedCase = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
+                    byte[] bytes = encode.GetBytes (fixedCase);
                     players.Clear(); 
                     MyAPIGateway.Multiplayer.Players.GetPlayers (players);
 
@@ -86,9 +87,9 @@ namespace SETextToSpeechMod
                     {
                         for (int i = 0; i < players.Count; i++) //performance danger
                         {                                       
-                            bool packet_size_succeeded = MyAPIGateway.Multiplayer.SendMessageTo (packet_ID, bytes, players[i].SteamUserId, true); //everyone will get this trigger including you.
+                            bool pacletSizeSucceeded = MyAPIGateway.Multiplayer.SendMessageTo (packet_ID, bytes, players[i].SteamUserId, true); //everyone will get this trigger including you.
 
-                            if (packet_size_succeeded == false)
+                            if (pacletSizeSucceeded == false)
                             {
                                 MyAPIGateway.Utilities.ShowMessage ("", "TRANSMISSION FAILED DUE TO PACKET SIZE LIMIT");
                                 break;
@@ -132,14 +133,14 @@ namespace SETextToSpeechMod
             else
             {
                 speeches.Add (new SentenceProcession (decoded));
-                run_updates = true; //in case this is the first sentence.
+                runUpdates = true; //in case this is the first sentence.
             }   
         }
 
         protected override void UnloadData() //will run when the session closes to prevent my assets from doubling up.
         {
             initialised = false;
-            run_updates = false;
+            runUpdates = false;
             timer = 0;
             speeches.Clear();
             MyAPIGateway.Utilities.MessageEntered -= OnMessageEntered;
