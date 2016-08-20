@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SETextToSpeechMod
@@ -27,19 +26,20 @@ namespace SETextToSpeechMod
         int currentTick;
 
         //miscellaneous
-        int syllableMeasure = 1; //a measure of how far along each syllable is.
+        int syllableMeasurer = 1; //a measure of how far along each syllable is.
         string sentence;
+        bool previousWasSpace;
 
-        //objects
-        StringBuilder stringLite = new StringBuilder(); //the quickest way of pasting strings together. must be cleared to prepare for the next use.        
+        //objects    
         Random generator = new Random();
         Pronunciation pronunciation;
+        StringBuilder stringLite = new StringBuilder();
 
         //------------------------------------------------------------------------------------------------------------------------------//
         public SentenceProcession (string input)
         {
-            sentence = input.Remove (0, 2); //getting rid of the trigger since its unnecessary. while testing, words smaller than the count of 2 will throw therefore...     
-            pronunciation = new Pronunciation (sentence);
+            this.sentence = input.Remove (0, 2); //getting rid of the trigger since its unnecessary. while testing, words smaller than the count of 2 will throw therefore...     
+            this.pronunciation = new Pronunciation (sentence);
         }
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
@@ -79,7 +79,7 @@ namespace SETextToSpeechMod
         } 
 
         //creates a new clip for the current letter.
-        private void AddPhoneme()
+        void AddPhoneme()
         {   
             string secondaryPhoneme;
             string primaryPhoneme = pronunciation.GetLettersPronunciation (sentence, letterIndex, out secondaryPhoneme);
@@ -96,20 +96,29 @@ namespace SETextToSpeechMod
                         AppendToTimeline (startPoint, soundChoice); //add the key transitions into the timeline.
                         timelineSize += CLIP_LENGTH; //timeline is expanded for duration after the clip is created.
 
-                        if (syllableMeasure == SYLLABLE_SIZE) //cues a space using the current setting SYLLABLE_SIZE.
+                        if (syllableMeasurer == SYLLABLE_SIZE) //cues a space using the current setting SYLLABLE_SIZE.
                         {
-                            IncrementSyllables();
+                            previousWasSpace = true; //pronunciation class inserts spaces for low energy letters. i dont want double spaces.
+                            IncrementSyllables();                       
                         }   
                         
                         else
                         {
-                            syllableMeasure++;
+                            syllableMeasurer++;
                         }
                     }
 
                     else
                     {
-                        IncrementSyllables();
+                        if (previousWasSpace == false)
+                        {
+                            IncrementSyllables();
+                        }       
+                        
+                        else
+                        {
+                            previousWasSpace = false;
+                        }                 
                     }
                 }
             }
@@ -118,7 +127,7 @@ namespace SETextToSpeechMod
         void IncrementSyllables()
         {
             timelineSize += SPACE_SIZE;        
-            syllableMeasure = 1;
+            syllableMeasurer = 1;
         }
 
         //creates a string of all the phonemes and their start points (in ticks); better performance than searching a list of objects.

@@ -57,7 +57,9 @@ namespace SETextToSpeechMod
         public static readonly string[] row = new string[0]; //for readability only.                                                   
 
         //use dictionary if you just cant get the syllable spacing you want.
-        //its very easy to enter a word wrong. try to get entry values to the same length as its key.                                                         
+        //its very easy to enter a word wrong. 
+        //values must be no longer than their key.                                                       
+        //keep in mind a space is automatically inserted every three letters.
         public static Dictionary <string, string[]> ordered = new Dictionary <string, string[]>() //ACRONYMS ARE NOT SUPPORTED
         {
             {"_A_", row}, { "ALL", new string[]{ AWW, " ", LIH } }, { "ALSO", new string[]{ AWW, LIH, SIH, OWE } }, { "AUTOMATIC", new string[]{ AWW, TIH, " ", OWE, MIH, AHH, TIH, IHH, KIH, } }, { "ALERT", new string[]{ UHH, " ", LIH, RIH, TIH} }, { "ABOARD", new string[]{ UHH, " ", BIH, AWW, " ", DIH} },

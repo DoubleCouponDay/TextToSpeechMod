@@ -132,3 +132,5 @@ C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\System.
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\System.Reflection.Metadata.xml
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render.dll
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render11.dll
+F:\samuels backup\scripting\SpaceEngineersTextToSpeechMod\obj\Debug\TextToSpeechMod.exe
+F:\samuels backup\scripting\SpaceEngineersTextToSpeechMod\obj\Debug\TextToSpeechMod.pdb

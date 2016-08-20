@@ -10,9 +10,9 @@ namespace SETextToSpeechMod
 
         public WordCounter (string inputSentence)
         {
-            currentWord = 0;
-            currentLetter = 0;        
-            words = inputSentence.Split (' ');
+            this.currentWord = 0;
+            this.currentLetter = 0;        
+            this.words = inputSentence.Split (' ');
         }
 
         public string GetCurrentWord (int NEW_WORD, ref int placeholder)

@@ -102,6 +102,11 @@
             Node of animation tree: single track. Contains reference to animation clip.
             </summary>
         </member>
+        <member name="M:VRage.Animations.MyAnimationTreeNodeTrack.ProcessLayerTimeSync(VRage.Animations.MyAnimationUpdateData@)">
+            <summary>
+            Synchronize time with defined layer. Returns false if the time is not synchronized.
+            </summary>
+        </member>
         <member name="T:VRage.Animations.ModelAnimations">
             <summary>
             Class that contains additional information attached to the model and
@@ -155,6 +160,11 @@
             Conditions of transition are ignored.
             </summary>
         </member>
+        <member name="M:VRage.Animations.MyAnimationController.UpdateInverseKinematics(VRage.Animations.MyCharacterBone[]@)">
+            <summary>
+            Perform inverse kinematics.
+            </summary>
+        </member>
         <member name="T:VRage.Animations.MyAnimationController.MyResultBonesPool">
             <summary>
             Simple pool allocator for bone results.
@@ -176,6 +186,125 @@
             Allocate array of bones from pool. Bones are in the rest (bind) position by default.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:VRage.Animations.IMyTerrainHeightProvider">
+            <summary>
+            Interface providing terrain height in model space.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.IMyTerrainHeightProvider.GetTerrainHeight(VRageMath.Vector3,System.Single@,VRageMath.Vector3@)">
+            <summary>
+            Get terrain height in model space.
+            </summary>
+            <param name="bonePosition">bone position in model space</param>
+            <param name="terrainHeight">terrain height in model space</param>
+            <param name="terrainNormal">terrain normal in (character) model space</param>
+            <returns>true if the intersection was found</returns>
+        </member>
+        <member name="M:VRage.Animations.IMyTerrainHeightProvider.GetReferenceTerrainHeight">
+            <summary>
+            Get reference terrain height - (flat terrain height) in model space.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationIkChain">
+            <summary>
+            Tiny structure describing IK chain.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationIkChainExt">
+            <summary>
+            Tiny structure describing IK chain + remembering last state.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationIkChainExt.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationIkChainExt.#ctor(VRage.Animations.MyAnimationIkChain)">
+            <summary>
+            Copy constructor.
+            </summary>
+        </member>
+        <member name="T:VRage.Animations.MyAnimationInverseKinematics">
+            <summary>
+            Class providing various IK solutions.
+            Feet IK is 
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_characterDirDownOffsetMin">
+            <summary>
+            Maximum character offsets.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_feet">
+            <summary>
+            List of all feet bones.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_ignoredBonesTable">
+            <summary>
+            List of all ignored bones (that should not move during IK!).
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_ignoredBoneNames">
+            <summary>
+            All ignored bones (that should not move during IK!). Names of ignored bones.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_characterDirDownOffset">
+            <summary>
+            Character offset - used when the character is slightly above the terrain due to the capsule
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_characterDirDownOffsetSmoothness">
+            <summary>
+            Character offset smoothing.
+            </summary>
+        </member>
+        <member name="F:VRage.Animations.MyAnimationInverseKinematics.m_currentFeetIkInfluence">
+            <summary>
+            Current influence of the feet IK.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationInverseKinematics.SolveFeet(System.Boolean,VRage.Animations.MyCharacterBone[],System.Boolean)">
+            <summary>
+            Solve feet positions. 
+            </summary>
+            <param name="enabled">Feet resolving is enabled - this is a parameter because of blending over time.</param>
+            <param name="characterBones">Character bones storage.</param>
+            <param name="allowMovingWithBody">If feet cannot reach, move the body</param>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationInverseKinematics.SolveIkTwoBones(VRage.Animations.MyCharacterBone[],VRage.Animations.MyAnimationIkChainExt,VRageMath.Vector3@,VRageMath.Vector3@,System.Boolean)">
+            <summary>
+            Solve IK for chain of two bones + change rotation of end bone.
+            </summary>
+            <param name="characterBones">bone storage</param>
+            <param name="ikChain">description of bone chain</param>
+            <param name="finalPosition">desired position of end bone</param>
+            <param name="finalNormal">desired normal of end bone - would be projected on plane first bone-second bone-third bone</param>
+            <param name="fromBindPose">solve this starting from the bind pose</param>
+            <returns>true on success</returns>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationInverseKinematics.RegisterFootBone(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Register foot IK bone chain.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyAnimationInverseKinematics.RegisterIgnoredBone(System.String)">
+            <summary>
+            Register bone ignored by IK. IK will not move it.
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyAnimationInverseKinematics.Feet">
+            <summary>
+            List of all feet bones.
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyAnimationInverseKinematics.TerrainHeightProvider">
+            <summary>
+            Interface providing results from raycasts.
+            </summary>
         </member>
         <member name="T:VRage.Animations.MyAnimationStateMachine">
             <summary>
@@ -292,11 +421,6 @@
             Any rotation applied to the bone
             </summary>
         </member>
-        <member name="F:VRage.Animations.MyCharacterBone.m_transform">
-            <summary>
-            computed bone transform
-            </summary>
-        </member>
         <member name="F:VRage.Animations.MyCharacterBone.m_changed">
             <summary>
             indicates whether bone needs recalculation
@@ -307,27 +431,30 @@
             The bone name
             </summary>
         </member>
-        <member name="F:VRage.Animations.MyCharacterBone.AbsoluteTransform">
-            <summary>
-            The bone absolute transform
-            </summary>
-        </member>
-        <member name="M:VRage.Animations.MyCharacterBone.#ctor(System.Int32,System.String,VRageMath.Matrix,VRage.Animations.MyCharacterBone)">
+        <member name="M:VRage.Animations.MyCharacterBone.#ctor(System.String,VRage.Animations.MyCharacterBone,VRageMath.Matrix,System.Int32,VRageMath.Matrix[],VRageMath.Matrix[])">
             <summary>
             Constructor for a bone object
             </summary>
             <param name="name">The name of the bone</param>
             <param name="bindTransform">The initial bind transform for the bone</param>
             <param name="parent">A parent for this bone</param>
+            <param name="index">Index of this bone in storage arrays.</param>
+            <param name="relativeStorage">reference to matrix array storing all relative transforms of the skeleton</param>
+            <param name="absoluteStorage">reference to matrix array storing all absolute transforms of the skeleton</param>
         </member>
         <member name="M:VRage.Animations.MyCharacterBone.ComputeAbsoluteTransforms(VRage.Animations.MyCharacterBone[])">
             <summary>
             Compute absolute bone transforms for whole hierarchy.
             Expects the array to be sorted by depth in hiearachy.
             </summary>
-            <param name="bones"></param>
         </member>
-        <member name="M:VRage.Animations.MyCharacterBone.ComputeAbsoluteTransform">
+        <member name="M:VRage.Animations.MyCharacterBone.TranslateAllBones(VRage.Animations.MyCharacterBone[],VRageMath.Vector3)">
+            <summary>
+            Translate all bones. Translation vector is given in model space. 
+            We expect that absolute transforms are already computed.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.ComputeAbsoluteTransform(System.Boolean)">
             <summary>
             Compute the absolute transformation for this bone.
             </summary>
@@ -339,11 +466,35 @@
             equals this matrix. This is used to set animation values.
             </summary>
         </member>
+        <member name="M:VRage.Animations.MyCharacterBone.SetCompleteBindTransform">
+            <summary>
+            This sets the rotation and translation of the rest pose.
+            </summary>
+        </member>
         <member name="M:VRage.Animations.MyCharacterBone.SetCompleteTransform(VRageMath.Vector3@,VRageMath.Quaternion@)">
             <summary>
             This sets the rotation and translation such that the
             rotation times the translation times the bind after set
             equals this matrix. This is used to set animation values.
+            </summary>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.SetCompleteTransformFromAbsoluteMatrix(VRageMath.Matrix@,System.Boolean)">
+            <summary>
+            Set the rotation and translation of the bone from absolute transform. Does not recompute hierarchy - call ComputeAbsoluteTransform.
+            </summary>
+            <param name="absoluteMatrix">absolute transform</param>
+            <param name="onlyRotation">apply only rotation</param>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.SetCompleteTransformFromAbsoluteMatrix(VRageMath.Matrix,System.Boolean)">
+            <summary>
+            Set the rotation and translation of the bone from absolute transform. Does not recompute hierarchy - call ComputeAbsoluteTransform.
+            </summary>
+            <param name="absoluteMatrix">absolute transform</param>
+            <param name="onlyRotation">apply only rotation</param>
+        </member>
+        <member name="M:VRage.Animations.MyCharacterBone.SetCompleteRotation(VRageMath.Quaternion@)">
+            <summary>
+            This adds the rotation and translation to the one that is already set inside.
             </summary>
         </member>
         <member name="M:VRage.Animations.MyCharacterBone.GetCompleteTransform(VRageMath.Vector3@,VRageMath.Quaternion@,VRageMath.Vector3@,VRageMath.Quaternion@)">
@@ -380,6 +531,11 @@
         <member name="P:VRage.Animations.MyCharacterBone.Parent">
             <summary>
             The parent bone or null for the root bone
+            </summary>
+        </member>
+        <member name="P:VRage.Animations.MyCharacterBone.AbsoluteTransform">
+            <summary>
+            The bone absolute transform
             </summary>
         </member>
         <member name="P:VRage.Animations.MyCharacterBone.RelativeTransform">
@@ -1671,7 +1827,8 @@
             <summary>
             Client method. Decorated method is be called by server on all clients.
             Clients always trust server and does not perform any validation.
-            When used together with Server attribute, server validates data, invokes the method on server and then sends it to all clients.
+            When used together with Server attribute, server (optionally) validates data, invokes the method on server and then sends it to all clients.
+            If the data is found invalid, it can be marked so by calling MyEventContext.ValidationFailed() on the server. The broadcasts will then not be performed.
             </summary>
         </member>
         <member name="T:VRage.Network.ClientAttribute">
@@ -2314,6 +2471,33 @@
             Beware that Cestmir thinks this can be less precise if you have a billiard numbers.
             
             He is probably right. So only use this version if you don't care.
+        </member>
+        <member name="T:VRage.Utils.MyAverageFiltering">
+            <summary>
+            Mean (average) filtering.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyAverageFiltering.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="sampleCount">Number of samples used in this mean filter.</param>
+        </member>
+        <member name="M:VRage.Utils.MyAverageFiltering.Add(System.Double)">
+            <summary>
+            Add raw value to be filtered.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyAverageFiltering.Get">
+            <summary>
+            Get filtered value.
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyMergeHelper">
+            <summary>
+            Helper class for merge funcionality. Performs comparison between
+            source and other values and set on self if value is different
+            </summary>
         </member>
         <member name="T:VRage.Utils.MyStringHash">
             <summary>

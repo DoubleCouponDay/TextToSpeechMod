@@ -7,35 +7,37 @@ REMINDERS
 
 TO DO
 ================//
-distribute version 3
-+ turn all public fields into properties
-+ evaluate where private is considered good placement
++ finish off the adjacent renovations
++ have a think about removing the silent letter option or not. which is better?
++ design a class that reports known adjacent words and prints a list of changes in success. move reminders into the docoumentation.
++ some state paths can be combined in adjacent evaulation. this one is easy to screw up
 
-+ constructors taking variables should just use "this"
++ marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out
++ see if its feasible to use marek consonants
++ test words before overwriting
 
-+ script OOO is too quiet
-+ all phonemes need to be the same length; even small ones. drag them out
-+ marek PIH is too quiet
-
-+ make sure double spaces never happen in adjacent
-+ adjacentevaluation() should have a pattern where secondary is always assigned after primary; semantics
-+ design a pattern mandate for adjacent() that minimises the possibility of fixing words at the cost of breaking them. one logic block per line would be cool but ill need comments inside each block if need be
-+ design a class that reports known adjacent words and prints a list of changes in success
-+ some state paths can be combined in adjacent evaulation. this one is easy to screw up but dont worry just fix it when someeone reports it
-+ move adjacent word comments beside their logic component. every logic block should have at least one word
-
-+ test script dictionary to see if the spacing matches well with both voices.
++ add new words.
++ create new private mod and script just for testing
++ edit the batch file to point to this new directory
 
 + an interface should be designed for SentenceProcession so that all different voices can have the same structure, but different spacing when needed
++ it may be possible to rip ACAT apart for pronunciation and pitch. C# baby!
++ use autotune free trial to create pitch.
 
 + find out if you can move entity with mouse input
 
-+ make a new programmable block with a sound emitter entity? maybe
++ make a new block with a sound emitter entity? maybe
+
++ document everything
 
 
 
 BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
 =================//
+read
+steak
+real
+leader
 out
 by
 again
@@ -43,3 +45,5 @@ avail
 same
 this
 square
+fair
+plottable

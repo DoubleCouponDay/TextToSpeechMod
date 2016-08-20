@@ -11,7 +11,7 @@ namespace SETextToSpeechMod
     [MySessionComponentDescriptor (MyUpdateOrder.BeforeSimulation)] //adds an attribute tag telling the game to run my script.
     class MessageEventHandler : MySessionComponentBase //MySessionComponentBase is inherited and allows me to override its methods.
     {
-        const int VERSION = 3;
+        const string VERSION = "4";
         const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
         const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of steam mod as packet ID.
@@ -20,7 +20,9 @@ namespace SETextToSpeechMod
         int timer = 0;        
         Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.
         List <IMyPlayer> players = new List <IMyPlayer>();
-        public List <SentenceProcession> speeches = new List <SentenceProcession>();
+
+        //GLOBAL VARIABLE
+        public List <SentenceProcession> speeches = new List <SentenceProcession>(); //this must be a global variable for OptionalDebugger() to work. This isnt a decision i take lightly.
 
         public override void UpdateBeforeSimulation()
         {
@@ -63,9 +65,9 @@ namespace SETextToSpeechMod
             }
         }
 
-        private void Initialise()
+        void Initialise() //this wouldnt work as a constructor because im guessing some assets arent available during load time.
         {
-            initialised = true;
+            initialised = true;            
             MyAPIGateway.Utilities.MessageEntered += OnMessageEntered; //subscribes my method to the MessageEntered event.
             MyAPIGateway.Multiplayer.RegisterMessageHandler (packet_ID, OnReceivedPacket); //registers a multiplayer packet receiver.
             SoundPlayer.InitialiseEmitter();
@@ -122,7 +124,7 @@ namespace SETextToSpeechMod
 
             else if (decoded == "[ VERSION")
             {
-                MyAPIGateway.Utilities.ShowMessage ("TTS MOD VERSION: ", Convert.ToString (VERSION));
+                MyAPIGateway.Utilities.ShowMessage ("TTS MOD VERSION: ", VERSION);
             }
             
             else if (decoded.Length > MAX_LETTERS) //letter limit for mental health concerns.

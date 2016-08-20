@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions; //needed to match wildcard string matches simplify the rule based phoneme approach AdjacentEvaluation().
 
 namespace SETextToSpeechMod
 {
@@ -10,11 +11,13 @@ namespace SETextToSpeechMod
         const int MAX_EXTENSION_SIZE = 5; 
         int placeholder = NEW_WORD;
         string[] dictionaryMatch;
+        string surroundingPhrase;
+
         WordCounter wordCounter;   
 
         public Pronunciation (string inputSentence)
         {
-            wordCounter = new WordCounter (inputSentence);
+            this.wordCounter = new WordCounter (inputSentence);
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
@@ -402,78 +405,66 @@ namespace SETextToSpeechMod
             int intTwoAfter = (letterIndex + 2 < sentence.Length) ? (letterIndex + 2) : letterIndex;
             int intTwoBefore = (letterIndex - 2 >= 0) ? (letterIndex - 2) : letterIndex;
 
-            string before = (intBefore != letterIndex) ? Convert.ToString (sentence[intBefore]) : " "; //these 4 strings ensure i can correctly detect the start and end of a sentence.
+            string before = (intBefore != letterIndex) ? Convert.ToString (sentence[intBefore]) : " "; //these 4 strings ensure i can correctly identify seperate words.
             string after = (intAfter != letterIndex) ? Convert.ToString (sentence[intAfter]) : " "; //using strings instead of chars saves lines since i need strings for Contains()
-            string twoBefore = (intTwoBefore != letterIndex) ? Convert.ToString (sentence[intTwoBefore]) : " "; //the false path must return a space string.
-            string twoAfter = (intTwoAfter != letterIndex) ? Convert.ToString (sentence[intTwoAfter]) : " ";        
+            string twoBefore = (intTwoBefore != letterIndex && before != " ") ? Convert.ToString (sentence[intTwoBefore]) : " "; //the false path must return a space string because spaces signify the start/end of a word.
+            string twoAfter = (intTwoAfter != letterIndex && after != " ") ? Convert.ToString (sentence[intTwoAfter]) : " ";        
             string currentLetter = Convert.ToString (sentence[letterIndex]);
 
+            surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatch is used in this method.
+           
             switch (currentLetter)
             {
                 case "A": 
-                    if ((before == "E" &&
-                         twoBefore != "R") &&
-                         CONSONANTS.Contains (after) &&
-                         after != "K")
+                    if (Regex.IsMatch (surroundingPhrase, ".EA..") && //leaf
+                       !UnwantedMatch ("..AK.") && //!steak
+                       !UnwantedMatch ("REA..") && //!great
+                        CONSONANTS.Contains (after) )
                     {
-                        ; //such as leaf, meat, real
+                        ;
                     }    
-    
-                    else if (before == "E" &&
-                             after == "D" &&
-                             twoAfter == "E")
-                    {
-                        primary = PrettyScaryDictionary.EEE;  //such as leader.                
-                    }
         
-                    else if (before == "U" ||  
-                             after == "W" ||
-                             after == "U" ||
-                            (before == "W" && 
-                             after == "T")) 
+                    else if (Regex.IsMatch (surroundingPhrase, "..AW.|" + //raw
+                                                               "..AU.|" + //saul
+                                                               ".WAT." //water
+                                                               ) )
                     {
-                        primary = PrettyScaryDictionary.AWW; //such as "raw", water
+                        primary = PrettyScaryDictionary.AWW;
                     }
 
-                    else if ((before == "E" && //break, steak
-                             (twoBefore == "R" || //great
-                              after == "K")) || 
-                             (after == "I" && 
-                              after != "R") ||
-                             (CONSONANTS.Contains (after) && //THE REPLACEMENT. space, ate, rake, grade
-                              twoAfter == "E") ||
-                            ((before == "T" ||
-                              before == "L") && //table
-                              twoBefore == " " &&
-                              after == "B") ||
-                             (after == "P" && //maple
-                              twoAfter == "L") ||
-                              after == "Y" ||
-                            ((before == "H" ||
-                              before == "R") && //phrase
-                              after == "S" &&
-                              twoAfter == "E") ||
-                             (after == "B" && //able
-                              twoAfter == "L"))     
+                    else if (Regex.IsMatch (surroundingPhrase, "REA..|" + //break
+                                                               ".EAK.|" + //steak
+                                                               " TAB.|" + //table
+                                                               " LAB.|" + //lable
+                                                               "..APL|" + //maple
+                                                               "..AY.|" + //may
+                                                               ".HASE|" + //hase
+                                                               ".RASE|" + //phrase
+                                                               "..ABL" + //able
+                                                               "..ACE" //space
+                                                               ) ||
+
+                            (Regex.IsMatch (surroundingPhrase, "..AI.") && //faith
+                            !UnwantedMatch ("..A.R"))) // !fair,
                     {
                         primary = PrettyScaryDictionary.AEE;
                     }
 
-                    else if ((before == "H" && //what
-                              after == "T") ||
-                             (after == "R" &&
-                              twoAfter != "E") || //far
-                             (before == " " && 
-                             (after == " " || //a
-                              after == "V")) || //available
-                             (after == "S" && //last
-                              twoAfter == "T") )
+                    else if (Regex.IsMatch (surroundingPhrase, ".HAT.|" + //what
+                                                               ". A .|" + //a
+                                                               ". AV." + //available
+                                                               "..AST" //last
+                                                               ) ||
+
+                            (Regex.IsMatch (surroundingPhrase, "..AR.") && //far
+                            !UnwantedMatch ("..A.E")) ) //!fare
                     {
                         primary = PrettyScaryDictionary.UHH;
                     }    
             
-                    else if (after == "R" && //compare, ware, hare, stare, care
-                             twoAfter == "E") 
+                    else if (Regex.IsMatch (surroundingPhrase, "..ARE|" + //compare                             
+                                                               "..AIR" //fair
+                                                               ))
                     {
                         primary = PrettyScaryDictionary.EHH;
                     }
@@ -633,8 +624,8 @@ namespace SETextToSpeechMod
                          twoAfter != "T") || 
                          after == "Y")
                     {   
-                        secondary = PrettyScaryDictionary.JIH;
-                        primary = " "; //such as "gin", judgement, RNG
+                        primary = PrettyScaryDictionary.JIH;
+                        secondary = " "; //such as "gin", judgement, RNG
                     }
             
                     else
@@ -1005,7 +996,7 @@ namespace SETextToSpeechMod
                     }
 
                     else if ((((twoBefore == "L" && 
-                                 before == "L") || 
+                                before == "L") || 
                                 before == "L" ||
                                 before == "R") &&
                                 after == " ") ||
@@ -1031,6 +1022,12 @@ namespace SETextToSpeechMod
                     break;
             }
             return primary;
+        }
+
+        //saves a little more space since ill be using Regex.IsMatch a lot!
+        bool UnwantedMatch (string pattern) //surroundingPhrase is up to date before this method is needed.
+        {
+            return Regex.IsMatch (surroundingPhrase, pattern);
         }
     }
 }

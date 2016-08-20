@@ -11,14 +11,14 @@ namespace SETextToSpeechMod
 {
     static class SoundPlayer //i only need one emitter per player.
     {
-        public static MyEntity3DSoundEmitter TTSEmitter { get; set; }
-        public static MyEntity3DSoundEmitter bonkEmitter { get; set; }
-        public const float DEFAULT_VOLUME = 0.6f;
+        static MyEntity3DSoundEmitter TTSEmitter;
+        static MyEntity3DSoundEmitter bonkEmitter;
+        const float DEFAULT_VOLUME = 0.6f;
 
         public static void InitialiseEmitter()
         {
-            IMyEntity emitter_entity = new MyEntity() as IMyEntity; //couldnt instantiate MyEntity so had to use its cast.
-            TTSEmitter = new MyEntity3DSoundEmitter (emitter_entity as MyEntity);
+            IMyEntity emitterEntity = new MyEntity() as IMyEntity; //couldnt instantiate MyEntity so had to use its cast.
+            TTSEmitter = new MyEntity3DSoundEmitter (emitterEntity as MyEntity);
             TTSEmitter.CustomMaxDistance = 500.0f; //since emitter position updates every interval, the distance should be large.
             TTSEmitter.SourceChannels = 1;
             TTSEmitter.Force2D = true;

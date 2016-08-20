@@ -145,6 +145,22 @@
             Parallel thread - listener.
             </summary>
         </member>
+        <member name="T:VRage.Game.Core.VRageCore">
+            <summary>
+            Class initializing the (minimal) engine, setting the render properties based on the data.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Core.VRageCore.Init(System.String)">
+            <summary>
+            Initialize minimal engine.
+            </summary>
+            <param name="contentPath">Path to the game content.</param>
+        </member>
+        <member name="M:VRage.Game.Core.VRageCore.Dispose">
+            <summary>
+            Dispose the resources, unload engine.
+            </summary>
+        </member>
         <member name="M:VRage.Game.MyDefinitionSet.AddDefinition(VRage.Game.MyDefinitionBase)">
             Add a new definition to the set.
             
@@ -215,7 +231,12 @@
         </member>
         <member name="P:VRage.Game.Components.MyAnimationControllerComponent.CharacterBones">
             <summary>
-            Get or set reference to array of character bones and its contents.
+            Get reference to array of character bones and its contents.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyAnimationControllerComponent.InverseKinematics">
+            <summary>
+            Get the instance of inverse kinematics.
             </summary>
         </member>
         <member name="F:VRage.Game.Entity.MyInventoryBase.RemoveEntityOnEmpty">
@@ -1739,6 +1760,11 @@
             Unregister entity component.
             </summary>
         </member>
+        <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.ReloadMwmTracks">
+            <summary>
+            Reload all mwm tracks while in-game. Mwms from cache are not used. 
+            </summary>
+        </member>
         <member name="T:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNode">
             <summary>
             Base class of all object builders of animation tree nodes.
@@ -1782,6 +1808,11 @@
         <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.Interpolate">
             <summary>
             Interpolate between keyframes. If false, track will be played frame by frame.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.MyObjectBuilder_AnimationTreeNodeTrack.SynchronizeWithLayer">
+            <summary>
+            Synchronize time in this track with the specified layer.
             </summary>
         </member>
         <member name="T:VRage.Game.ObjectBuilders.MyParameterAnimTreeNodeMapping">
@@ -1986,7 +2017,7 @@
             Public members to easy access
             </summary>
         </member>
-        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
             <summary>
             DrawTransparentBox
             </summary>
@@ -5249,6 +5280,11 @@
             Mods
             </summary>
         </member>
+        <member name="F:MyCommonTexts.WorldSettings_Advanced">
+            <summary>
+            Advanced
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ToolTipWorkshopOpenModInWorkshop">
             <summary>
             Open selected mod in Workshop Steam Overlay
@@ -6605,6 +6641,16 @@
             Change block variants
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Skin">
+            <summary>
+            Skin
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_SkinWarning">
+            <summary>
+            Note: Not all screens support skin at the moment
+            </summary>
+        </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
             <summary>
             Amount of item required or produced. For discrete objects this refers to
@@ -6667,6 +6713,11 @@
             Name of used animation controller.
             </summary>
         </member>
+        <member name="F:VRage.Game.MyObjectBuilder_CharacterDefinition.RotationToSupport">
+            <summary>
+            Align with the support? 
+            </summary>
+        </member>
         <member name="F:VRage.Game.MyAutorotateMode.OneDirection">
             <summary>
             When block has mount points only on one side, it will autorotate so that side is touching the surface.
@@ -6691,6 +6742,22 @@
             Defines the event type.
             Each event type has its assigned handler method and data class type.
             Multiple event definitions can have the same event type.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.MyItemPositioningEnum">
+            <summary>
+            Enumeration defining where to get the weapon transform from.
+            This does not include behavior of arms (anim/ik), which is driven separately by variables SimulateLeftHand and SimulateRightHand.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MyItemPositioningEnum.TransformFromData">
+            <summary>
+            Weapon is placed according to sbc data file.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MyItemPositioningEnum.TransformFromAnim">
+            <summary>
+            Weapon is placed according to animation.
             </summary>
         </member>
         <member name="P:VRage.Game.MyPlanetMaterialDefinition.HasLayers">

@@ -8,14 +8,14 @@ namespace SETextToSpeechMod
         {
             MessageEventHandler handlers = new MessageEventHandler();
             Encoding test_encode = Encoding.Unicode;
-            string test_string = "[ sail";
+            string test_string = "[ plottable unstoppable";
             string upper = test_string.ToUpper();
             byte[] test_array = test_encode.GetBytes (upper);
             handlers.OnReceivedPacket (test_array);
 
             while (true)
             {
-                for (int i = 0; i < handlers.speeches.Count; i++) //performance danger.
+                for (int i = 0; i < handlers.speeches.Count; i++)
                 {
                     handlers.speeches[i].Load();
 
