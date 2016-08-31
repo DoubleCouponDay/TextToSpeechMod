@@ -1,14 +1,13 @@
 REMINDERS
 ====================//
 + test every new word before signing off
-+ slowly move dictionary words into adjacentevaluation(). reason: broader reach
-+ remember to update ships and github
++ remember to update the version number for new patches
 + steam workshop updates should get a fixed word list in each changelog
 
 TO DO
 ================//
 + finish off the adjacent renovations
-+ have a think about removing the silent letter option or not. which is better?
++ double check that every rule has an OR symbol in the right place and that each rule is 5 characters long
 + design a class that reports known adjacent words and prints a list of changes in success. move reminders into the docoumentation.
 + some state paths can be combined in adjacent evaulation. this one is easy to screw up
 
@@ -41,9 +40,14 @@ leader
 out
 by
 again
-avail
+available
 same
 this
 square
 fair
 plottable
+your ~
+flies
+pies
+applies
+our

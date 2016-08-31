@@ -8,7 +8,7 @@ namespace SETextToSpeechMod
         {
             MessageEventHandler handlers = new MessageEventHandler();
             Encoding test_encode = Encoding.Unicode;
-            string test_string = "[ plottable unstoppable";
+            string test_string = "[ flies";
             string upper = test_string.ToUpper();
             byte[] test_array = test_encode.GetBytes (upper);
             handlers.OnReceivedPacket (test_array);

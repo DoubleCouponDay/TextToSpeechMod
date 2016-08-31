@@ -411,60 +411,60 @@ namespace SETextToSpeechMod
             string twoAfter = (intTwoAfter != letterIndex && after != " ") ? Convert.ToString (sentence[intTwoAfter]) : " ";        
             string currentLetter = Convert.ToString (sentence[letterIndex]);
 
-            surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatch is used in this method.
+            surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatchBypassed is used in this method.
            
             switch (currentLetter)
             {
                 case "A": 
-                    if (Regex.IsMatch (surroundingPhrase, ".EA..") && //leaf
-                       !UnwantedMatch ("..AK.") && //!steak
-                       !UnwantedMatch ("REA..") && //!great
-                        CONSONANTS.Contains (after) )
+                    if (UnwantedMatchBypassed ("..AK.") && //!steak
+                        UnwantedMatchBypassed ("REA..") && //!great
+                        CONSONANTS.Contains (after) &&
+                        IsMatch (".EA..")) //leaf
                     {
                         ;
                     }    
         
-                    else if (Regex.IsMatch (surroundingPhrase, "..AW.|" + //raw
-                                                               "..AU.|" + //saul
-                                                               ".WAT." //water
-                                                               ) )
+                    else if (IsMatch ("..AW." + //raw
+                                     "|..AU." + //saul
+                                     "|.WAT." //water
+                                     ))
                     {
                         primary = PrettyScaryDictionary.AWW;
                     }
 
-                    else if (Regex.IsMatch (surroundingPhrase, "REA..|" + //break
-                                                               ".EAK.|" + //steak
-                                                               " TAB.|" + //table
-                                                               " LAB.|" + //lable
-                                                               "..APL|" + //maple
-                                                               "..AY.|" + //may
-                                                               ".HASE|" + //hase
-                                                               ".RASE|" + //phrase
-                                                               "..ABL" + //able
-                                                               "..ACE" //space
-                                                               ) ||
+                    else if (IsMatch ("REA.." + //break
+                                     "|.EAK." + //steak
+                                     "| TAB." + //table
+                                     "| LAB." + //lable
+                                     "|..APL" + //maple
+                                     "|..AY." + //may
+                                     "|.HASE" + //hase
+                                     "|.RASE" + //phrase
+                                     "|..ABL" + //able
+                                     "|..ACE" //space
+                                     ) ||
 
-                            (Regex.IsMatch (surroundingPhrase, "..AI.") && //faith
-                            !UnwantedMatch ("..A.R"))) // !fair,
+                            (IsMatch ("..AI.") && //faith
+                             UnwantedMatchBypassed ("..A.R"))) // !fair,
                     {
                         primary = PrettyScaryDictionary.AEE;
                     }
 
-                    else if (Regex.IsMatch (surroundingPhrase, ".HAT.|" + //what
-                                                               ". A .|" + //a
-                                                               ". AV." + //available
-                                                               "..AST" //last
-                                                               ) ||
+                    else if (IsMatch (".HAT." + //what
+                                     "|. A ." + //a
+                                     "|. AV." + //available
+                                     "|..AST" //last
+                                     ) ||
 
-                            (Regex.IsMatch (surroundingPhrase, "..AR.") && //far
-                            !UnwantedMatch ("..A.E")) ) //!fare
+                            (IsMatch ("..AR.") && //far
+                             UnwantedMatchBypassed ("..A.E")) ) //!fare
                     {
                         primary = PrettyScaryDictionary.UHH;
                     }    
             
-                    else if (Regex.IsMatch (surroundingPhrase, "..ARE|" + //compare                             
-                                                               "..AIR" //fair
-                                                               ))
+                    else if (IsMatch ("..ARE" + //compare                             
+                                     "|..AIR" //fair
+                                     ))
                     {
                         primary = PrettyScaryDictionary.EHH;
                     }
@@ -476,11 +476,12 @@ namespace SETextToSpeechMod
                     break;
             
                 case "B":
-                    if ((after != " " && //bomb
-                         before != "B") || //cobber
-                         VOWELS.Contains (before) ) //bob, silent B, cobber
+                    if ((UnwantedMatchBypassed ("..B .") && //!bomb
+                         UnwantedMatchBypassed (".BB..")) || //!cobber  
+                                               
+                         VOWELS.Contains (before)) //rob
                     {
-                        if (after == "L")
+                        if (IsMatch ("..BL.")) //able
                         {
                             primary = " ";
                             secondary = PrettyScaryDictionary.BIH;
@@ -494,153 +495,146 @@ namespace SETextToSpeechMod
                     break;
             
                 case "C": 
-                    if (after == "E" || 
-                        after == "I" || 
-                        after == "Y")
+                    if (IsMatch ("..CE." + //nice
+                                "|..CI." + //complicit
+                                "|..CY." //stacy
+                                ))
                     {
-                        primary = PrettyScaryDictionary.SIH; //such as "sicily".
+                        primary = PrettyScaryDictionary.SIH; //sicily
                     }
             
                     else 
                     {
-                        primary = PrettyScaryDictionary.KIH; //such as "cat".
+                        primary = PrettyScaryDictionary.KIH; //cat
                     } 
                     break;
             
                 case "D":
-                    if (after == "G")
+                    if (IsMatch ("..DG.")) //judge
                     {
-                        ; //such as judge
+                        ; 
                     }
             
-                    else if (before != "D")
+                    else if (UnwantedMatchBypassed (".DD..")) //ladder
                     {
-                        primary = PrettyScaryDictionary.DIH; //such as ladder.
+                        primary = PrettyScaryDictionary.DIH;
                     }
                     break;
             
                 case "E":
-                    if (twoBefore == "T" &&
-                        after == " ")
+                    if (IsMatch ("THE .")) //the
                     {
-                        primary = PrettyScaryDictionary.UHH; //such as the
+                        primary = PrettyScaryDictionary.UHH;
                     } 
   
-                    else if ((after == "A" && //late
-                             (before == "R" || 
-                              twoAfter == "K")) || //steak, break
-                              after == "U" ||
-                              before == "E" || //bee, speech
-                             (after == "R" && //ber
-                              before != "V" &&
-                              before != "E") ||
-                             (after == " " && //silent e at end
-                              twoBefore != " ") ||
-                             (after == "L" &&
-                              twoAfter == "Y") )                              
+                    else if (IsMatch (".REA." + //great
+                                     "|..EAK" + //break
+                                     "|..EU." + //queue
+                                     "|.EE.." + //speech
+                                     "|..ELY" //lovely
+                                     ) ||
+
+                            (UnwantedMatchBypassed (".VE..") && //!lover 
+                             UnwantedMatchBypassed (".EE..") && //!veer
+                             IsMatch ("..ER.")) || //rubber                            
+                            
+                            (UnwantedMatchBypassed (" .E..") && //!be                         
+                             IsMatch ("..E ."))) //tribe
                     {
-                        ; //such as queue, requirement, speech,
+                        ;
                     }    
         
-                    else if (after == "W")
+                    else if (IsMatch ("..EW.")) //brew
                     {
-                        primary = PrettyScaryDictionary.OOO; //such as brew
+                        primary = PrettyScaryDictionary.OOO; 
                     }
 
-                    else if ((after == "Y" &&
-                              twoAfter == "E") ||
-                              after == "I")
+                    else if (IsMatch ("..EI." + //stein
+                                     "|..EYE" //eye       
+                                     ))                
                     {
-                        primary = PrettyScaryDictionary.EYE; //such as EYE 
+                        primary = PrettyScaryDictionary.EYE;
                     }         
        
-                    else if (after == "E" ||
-                             after == "A" ||
-                             before == "D" ||
-                             twoAfter == "D" ||
-                           ((before == "M" ||
-                             before == "H" ||
-                             before == "W" ||
-                             before == "B") &&
-                             after == " " &&
-                             twoBefore == " ") ||
-                            (twoBefore == "Y" && //maybe
-                             before == "B" &&
-                             after == " ") ||
-                            (after == "S" &&
-                             twoAfter == "E") ||
-                            (before == "I" && //ies
-                             twoAfter == " ") ||
-                            (before == "K" && //key
-                             after == "Y") ||
-                            (twoBefore == " " && //re
-                             before == "R") )
+                    else if (IsMatch ("..EE." + //engineer
+                                     "|..EA." + //lead
+                                     "|.DE.." + //deal
+                                     "|..E.D" + //lead
+                                     "| ME ." + //me
+                                     "| HE ." + //he
+                                     "| WE ." + //we
+                                     "| BE ." + //be
+                                     "|YBE ." + //maybe
+                                     "|..ESE" + //these
+                                     "|.KEY." + //key
+                                     "| RE.." + //remember
+                                     "|.IE. " //trekkies
+                                     ))
                     {                           
-                        primary = PrettyScaryDictionary.EEE;    //such as "engineer", speech, me
+                        primary = PrettyScaryDictionary.EEE;
                     }  
             
-                    else if ((after != "E" && 
-                              after != "R" &&
-                              after != "W" &&
-                              twoAfter != " ") ||   
-                             (after == "R" &&
-                             (twoAfter == "E" ||
-                              before == "V")) ||
-                              after == "D" ||
-                             (after == "S" && //es
-                              twoAfter == " ") || 
-                             (after == "T" &&
-                              twoAfter == " ") )
+                    else if ((UnwantedMatchBypassed ("..EE.") && //!feet
+                              UnwantedMatchBypassed ("..ER.") && //!later
+                              UnwantedMatchBypassed ("..EW.") && //!brew
+                              UnwantedMatchBypassed ("..E. ")) || //!stakes
+
+                              IsMatch ("..ERE" + //there
+                                     "|.VER." + //veto
+                                     "|..ED." + //plated
+                                     "|..ES " + //dresses
+                                     "|..ET " //planet
+                                     ))
                     {                                         
                         primary = PrettyScaryDictionary.EHH;  //such as silent E, there, fate
                     }   
 
-                    else if (twoBefore == "R" && //prey
-                              before == "E" ||
-                              after == "Y")
+                    else if (IsMatch (".REY.")) //osprey
                     {
                         primary = PrettyScaryDictionary.AEE;
                     }
                     break;
             
                 case "F": 
-                    primary = PrettyScaryDictionary.FIH; //such as "follow".
+                    primary = PrettyScaryDictionary.FIH; //follow
                     break;
             
                 case "G":
-                    if (before == "G" || //trigger
-                        before == "H" || //high
-                       (before == "N" && //ing
-                        after == " ") ||
-                       (before == "I" &&
-                        after == "N") ) //design
+                    if (IsMatch (".GG.." + //trigger
+                                "|.HG.." + //high
+                                "|.NG ." + //talking
+                                "|.IGN." //design
+                                ))
                     {
                         ;
                     }
 
-                    else if  (after == "E" &&
-                         before == "D" ||
-                        (after == "I" && 
-                         twoAfter != "T") || 
-                         after == "Y")
+                    else if  ((UnwantedMatchBypassed ("..G.T") && //!git
+                               IsMatch (". GI.")) || //gibberish
+                                
+                               IsMatch (". GY." + //gym
+                                       "|.DGE." //judgement 
+                                       ))
                     {   
                         primary = PrettyScaryDictionary.JIH;
-                        secondary = " "; //such as "gin", judgement, RNG
+                        secondary = " "; //such as "gin", judgement, 
                     }
             
                     else
                     {
-                        primary = PrettyScaryDictionary.GIH; //git,
+                        primary = PrettyScaryDictionary.GIH; //given
                     }    
                     break;
             
                 case "H":
-                    if (after == "N" ||
-                       (before == "T" && //thigh
-                        after != "U") || //github
-                        before == "G" || //high
-                        before == "O" ||
-                        before == "P")
+                    if (IsMatch ("..HN." + //john
+                                "|.GH.." + //dough
+                                "|.OH.." + //pharoah
+                                "|.PH.." //autograph
+                                ) ||
+
+                       (UnwantedMatchBypassed ("..HU.") && //!github
+                        IsMatch (".TH.."))) //thigh
                     {
                         ;
                     }
@@ -652,81 +646,78 @@ namespace SETextToSpeechMod
                     break;
 
                 case "I":
-                    if ((after == "E" && //ies
-                         twoAfter == "S") )
+                    if (UnwantedMatchBypassed ("FLIES") && //!flies
+                        UnwantedMatchBypassed ("PLIES") && //!applies
+                        IsMatch ("..IES")) //activities
                     {
                         ;
                     }
 
-                    else if (after == "O" && //tion
-                        twoAfter == "N" &&
-                        (before == "T" ||
-                        before == "S") )
+                    else if (IsMatch (".TION" + //traction
+                                     "|.SION" //aggression
+                                     ))
                     {
                         primary = PrettyScaryDictionary.SIH;
                         secondary = PrettyScaryDictionary.HIH;
                     }
 
-                    else if (after == "K" || //pike
-                            (CONSONANTS.Contains (after) && //we'll have to wait and see if this is a universal rule. if its not it has to be broken up.
-                             VOWELS.Contains (twoAfter) &&
-                             before != "R" &&
-                             twoAfter != "L" &&
-                             before != "A") || //sail
-                            (twoBefore == "K" &&
-                             before == "N") ||
-                            (after == "G" && //light
-                             twoAfter == "H") ||
-                            (twoAfter == "E" &&
-                             before != "G") ||
-                            (before == " " &&
-                             after == " ") ||
-                             after == "E" || //pie
-                           ((after == "L" || //filed
-                             after == "T") && //kite
-                             twoAfter == "E") ||
-                            (after == "G" && 
-                             twoAfter == "N") ) //sign 
+                    else if (IsMatch ("..IKE" + //pike
+                                     "|KNI.." + //knight
+                                     "|..IGH" + //light
+                                     "|. I ." + //I
+                                     "|..IE." + //skies
+                                     "|..ILE" + //filed
+                                     "|..ITE" + //kite
+                                     "|..IGN" //sign
+                                     ) ||
+
+                            (UnwantedMatchBypassed (".RI..") && //!ring
+                             UnwantedMatchBypassed (".AI.") && //!rail
+                             CONSONANTS.Contains (after) && //bike
+                             VOWELS.Contains (twoAfter)) || //spite
+
+                            (UnwantedMatchBypassed (".GI..") && //!origin
+                             IsMatch ("..I.E"))) //aborigine
                     {   
                         primary = PrettyScaryDictionary.EYE;
                     }
             
-                    else if ((after == "N" && //running
-                              twoAfter == "G") ||
-                              before == "O") //point
+                    else if (IsMatch (".OIN." + //point
+                                     "|..ING" //running
+                                     ))
                     {
                         primary = PrettyScaryDictionary.EEE; //such as running
                     }
     
                     else 
                     {
-                        primary = PrettyScaryDictionary.IHH;  //such as 'felicity'.
+                        primary = PrettyScaryDictionary.IHH;  //felicity
                     }
                     break;
             
                 case "J":   
-                    primary = PrettyScaryDictionary.JIH; //such as "jelly".
+                    primary = PrettyScaryDictionary.JIH; //jelly
                     break;
             
                 case "K":   
-                    if (after != "N" &&
-                        before != "C")
+                    if (UnwantedMatchBypassed (".CK..") && //!two kih's
+                        UnwantedMatchBypassed ("..KN.")) //!silent K
                     {
-                        primary = PrettyScaryDictionary.KIH; //such as silent K
+                        primary = PrettyScaryDictionary.KIH;
                     }    
                     break;
             
                 case "L": 
-                    if (after != "K" && 
-                        after != "F" &&
-                        before != "L") 
+                    if (UnwantedMatchBypassed ("..LK.") && //!silent L
+                        UnwantedMatchBypassed ("..LF.") && //!silent L
+                        UnwantedMatchBypassed (".LL..")) //!double L's
                     {
                         primary = PrettyScaryDictionary.LIH; //silent L, caller,
                     }
                     break;
             
                 case "M":   
-                    if (before != "M")
+                    if (UnwantedMatchBypassed (".MM..")) //!double M's
                     {                        
                         primary = " ";
                         secondary = PrettyScaryDictionary.MIH; //such as "molten", drummer,
@@ -734,92 +725,92 @@ namespace SETextToSpeechMod
                     break;
             
                 case "N":  
-                    if (before != "N")
+                    if (UnwantedMatchBypassed (".NN..")) //double N's
                     {    
                         primary = " ";
                         secondary = PrettyScaryDictionary.NIH;  //such as "nickel", planner, 
-
                     }    
                     break;
             
                 case "O":    
-                    if ((after == "U" && //touch
-                         before == "T") ||
-                         before == "O" ||
-                        (before == "W" && //word
-                         after == "R"))
+                    if (IsMatch (".TOU." + //touch
+                                "|.OO.." + //double O's
+                                "|.WOR." //word
+                                ))
                     {
                         ;
                     }                    
                         
-                    else if (after == "R" || //for, lore, or, bore, core, store, tore, support
-                            (after == "U" && //four
-                             twoAfter == "R" &&
-                             before != "S") ||
-                             after == "I") //point, annoint, soil
+                    else if (IsMatch ("..OR." + //lore
+                                      "|..OI." //annoint
+                                      ) ||
+
+                             (UnwantedMatchBypassed (".SO..") && //sour
+                              IsMatch ("..OUR"))) //four
                     {
                         primary = PrettyScaryDictionary.AWW;
                     }
 
-                    else if ((after == "U" && //foul
-                             (before == "F" ||
-                              before == "P" || //pouch
-                              before == "L")) ) //slouch
+                    else if (IsMatch (".FOU." + //foul
+                                     "|.POU." + //pouch
+                                     "|.LOU." //slouch
+                                     ))
                     {
                         primary = PrettyScaryDictionary.AHH; 
                     }
  
-                    else if (after == "M" ||
-                            (before == "I" &&
-                             after == "N"))
+                    else if (IsMatch ("..OM." + //computer
+                                     "|.ION." //champion
+                                     ))
                     {
-                        primary = PrettyScaryDictionary.UHH; //such as computer, coming.
+                        primary = PrettyScaryDictionary.UHH;
                     }   
             
-                    else if (after == " " || //pro
-                            (before == "S" &&
-                             after == "U") ||
-                             after == "W" ||
-                            (CONSONANTS.Contains (after) && //sole, solo
-                             VOWELS.Contains (twoAfter)) ||
-                             (before == "B" && //both
-                              after == "T" && 
-                              twoAfter == "H"))
+                    else if (IsMatch ("..O ." + //pro
+                                     "|.SOU." + //soul
+                                     "|..OW." + //bestow
+                                     "|.BOTH" //both
+                                     ) ||
+
+                            (CONSONANTS.Contains (after) && //sole
+                             VOWELS.Contains (twoAfter))) //solo
                     {
-                        primary = PrettyScaryDictionary.OWE; //such as hello, soul
+                        primary = PrettyScaryDictionary.OWE;
                     }   
             
-                    else if ((CONSONANTS.Contains (before) && //told, sold, hold, gold, bold 
-                              after == "L") ||
-                             (before == " " &&
-                              after != "O") ||
-                             (after == "H" && //john
-                              twoAfter == "N") ||
-                             ((after == "T" && //sloth, cloth
-                              twoAfter == "H") &&
-                              before != "B") ||
-                             (before == "B" && //bot
-                              after == "T" &&
-                              twoAfter == " ") )
+                    else if (IsMatch ("..OHN" +  //john
+                                     "|.BOT " //bot
+                                     ) ||
+
+                            (CONSONANTS.Contains (before) && 
+                             IsMatch ("..OL.")) || //told
+
+                            (UnwantedMatchBypassed ("..OO.") && //!oolacile
+                             IsMatch (". O..")) || //objective
+
+                            (UnwantedMatchBypassed (".BO..") && //!both
+                             IsMatch ("..OTH"))) //sloth
                     {
                         primary = PrettyScaryDictionary.HOH;                      
                     }    
             
-                    else if (after == "O" ||
-                             after == "V" ||
-                             after == "U" ||
-                            (before == "T" &&
-                             after == "D") )
+                    else if (IsMatch ("..OO." + //fool
+                                     "|..OV." + //improve
+                                     "|..OU." + //route
+                                     "|.TOD." //today
+                                     ))
                     {
-                        primary = PrettyScaryDictionary.OOO; //such as 'fool', today
+                        primary = PrettyScaryDictionary.OOO;
                     }
 
-                    else if (after == "X" ||
-                             after == "L" &&
-                             before != "O" ||
-                             after == "F")
+                    else if (IsMatch ("..OX." + //oxygen
+                                     "|..OF." //of
+                                     ) ||
+                        
+                            (UnwantedMatchBypassed (".OO..") && //!cool
+                             IsMatch ("..OL."))) //collected
                     {
-                        primary = PrettyScaryDictionary.HOH;  //such as "oxygen".    
+                        primary = PrettyScaryDictionary.HOH;  
                     }   
 
                     else
@@ -829,54 +820,53 @@ namespace SETextToSpeechMod
                     break;
             
                 case "P":
-                    if (after == "H") //phrase
+                    if (IsMatch ("..PH.")) //phrase
                     {
                         primary = PrettyScaryDictionary.FIH;
                     }   
 
-                    else if (before != "P") //potatoes, stoppable
+                    else if (UnwantedMatchBypassed (".PP..")) //double P's
                     {
                         primary = PrettyScaryDictionary.PIH;
                     }                    
                     break;
             
                 case "Q":                    
-                    primary = PrettyScaryDictionary.KIH; //such as "query".     
+                    primary = PrettyScaryDictionary.KIH; //query    
                     secondary = PrettyScaryDictionary.WIH;
                     break;               
             
                 case "R":   
-                    if (before != "R" /*&& //sparring
-                        before != "O" && //for
-                        twoBefore != "O"*/) //four
+                    if (UnwantedMatchBypassed (".RR..") && //!double R's
+                        UnwantedMatchBypassed ("OUR..")) //!your
                     {                        
                         primary = PrettyScaryDictionary.RIH;
                     }
                     break;
             
                 case "S":   
-                    if (after == "M")
+                    if (IsMatch ("..SM.")) //prism
                     {
-                        primary = PrettyScaryDictionary.ZIH; //such as prism
+                        primary = PrettyScaryDictionary.ZIH;
                     }
 
-                    else if (before != "S")
+                    else if (UnwantedMatchBypassed (".SS..")) //!double S's
                     {
-                        primary = PrettyScaryDictionary.SIH; //such as "slippery".
+                        primary = PrettyScaryDictionary.SIH;
                     }                  
                     break;
             
                 case "T": 
-                    if (after == "H" &&
-                        twoAfter != "U") //github 
+                    if (UnwantedMatchBypassed ("..T.U") && //!github
+                        IsMatch ("..TH.")) //think
                     {
                         primary = " ";
-                        secondary = PrettyScaryDictionary.THI; //such as "THInk".    
+                        secondary = PrettyScaryDictionary.THI;    
                     } 
 
-                    else if (before != "T") //attic
+                    else if (UnwantedMatchBypassed (".TT..")) //!double T's
                     {
-                        if (before == "S") //est
+                        if (IsMatch (".ST..")) //emphasised T
                         {
                             primary = " ";
                             secondary = PrettyScaryDictionary.TIH;
@@ -890,35 +880,35 @@ namespace SETextToSpeechMod
                     break;
             
                 case "U":
-                    if (before == "Q" || //queue
-                        before == "A" ||
-                       (after == "R" &&
-                        before != "O") ||
-                       (before == "O" && //you
-                       (twoBefore == "Y" ||
-                        after == "L")) )  //soul
+                    if (IsMatch (".QU.." + //queue
+                                "|.AU.." + //caught
+                                "|.OUL." + //soul
+                                "|YOU.." //you
+                                ) ||
+
+                       (UnwantedMatchBypassed (".OU..") && //!your
+                        IsMatch ("..UR"))) //purr
                     {
                         ;
                     }    
 
-                    else if (before == "O" && //your
-                             after == "R")
+                    else if (IsMatch (".EU.." + //eulogy
+                                     "|..UE." + //cruelty
+                                     "|.AU ." + //aboiteau
+                                     "|.AUX " + //aboiteaux
+                                     "|.RU.." + //rude
+                                     "|..UI." //ruin
+                                     ))
                     {
-                        primary = " ";
+                        primary = PrettyScaryDictionary.OOO;
                     }
 
-                    else if (before == "E" || 
-                             after == "E" ||
-                             before == "A" ||
-                             before == "R" || 
-                             after == "I" ||
-                            (before == "P" &&
-                             after == "L") )
-                    {
-                        primary = PrettyScaryDictionary.OOO;  //such as "cruelty", "eulogy".
-                    }
-
-                    else if (before == "O" ||
+                    else if (IsMatch (" OUR." + //end
+                                     "|.PULL" + //pull
+                                     "|.OUC." + //touch
+                                     "|..UD." //
+                                     ) ||
+                        
                              after == "D" ||
                             (after == "N" && //un
                              before == " ") ||
@@ -941,9 +931,14 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.EYE;
                     }
 
-                    else
+                    else if (IsMatch (".AUT.")) //astronaut
                     {
-                        primary = PrettyScaryDictionary.YIH; //fortune
+                        primary = PrettyScaryDictionary.AWW;
+                    }
+
+                    else if (IsMatch (".PULE"))
+                    {
+                        primary = PrettyScaryDictionary.YIH;
                         secondary = PrettyScaryDictionary.OOO;
                     }
                     break;
@@ -1024,10 +1019,16 @@ namespace SETextToSpeechMod
             return primary;
         }
 
-        //saves a little more space since ill be using Regex.IsMatch a lot!
-        bool UnwantedMatch (string pattern) //surroundingPhrase is up to date before this method is needed.
+        //helps cut down on text needed and is easier to understand
+        bool IsMatch (string pattern) //SURROUNDINGPHRASE MUST EXIST BEFORE USE.
         {
             return Regex.IsMatch (surroundingPhrase, pattern);
+        }
+
+        //returns true when the unwanted phrase
+        bool UnwantedMatchBypassed (string pattern) 
+        {
+            return !Regex.IsMatch (surroundingPhrase, pattern);
         }
     }
 }
