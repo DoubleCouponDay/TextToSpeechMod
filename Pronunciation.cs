@@ -883,7 +883,9 @@ namespace SETextToSpeechMod
                     if (IsMatch (".QU.." + //queue
                                 "|.AU.." + //caught
                                 "|.OUL." + //soul
-                                "|YOU.." //you
+                                "|YOU.." + //you
+                                "|.AUT." + //astronaut
+                                "|.AUL" //assault
                                 ) ||
 
                        (UnwantedMatchBypassed (".OU..") && //!your
@@ -906,37 +908,33 @@ namespace SETextToSpeechMod
                     else if (IsMatch (" OUR." + //end
                                      "|.PULL" + //pull
                                      "|.OUC." + //touch
-                                     "|..UD." //
+                                     "|. UN." + //undeveloped
+                                     "|. UP." + //update
+                                     "|.SUB." + //submit
+                                     "|.HUB." //hub
                                      ) ||
-                        
-                             after == "D" ||
-                            (after == "N" && //un
-                             before == " ") ||
-                             after == "P" || //update
-                            (before == "S" && //submit
-                             after == "B") ||
-                            (CONSONANTS.Contains (before) && //but, cut
-                            (after == "T" ||
-                             after == "C")) ||
-                            (before == "H" && //hub
-                             after == "B") ) 
+
+                            (UnwantedMatchBypassed ("..UDE") && //!prude
+                             UnwantedMatchBypassed ("..UDI") && //!ludicrous
+                             IsMatch ("..UD.")) || //crud                                                    
+
+                            (CONSONANTS.Contains (before) && //cut
+                             UnwantedMatchBypassed ("..U.E") && //brute
+                             IsMatch ("..UT." + //but
+                                     "|..UC." //obstruct
+                                     )))
                     {
-                        primary = PrettyScaryDictionary.UHH; //such as touch, cut
+                        primary = PrettyScaryDictionary.UHH;
                     }   
 
-                    else if ((before == "B" || //buy
-                             before == "G") &&  //guy
-                             after == "Y")
+                    else if (IsMatch (".BUY." + //buy
+                                     "|.GUY." //guy
+                                     ))
                     {
                         primary = PrettyScaryDictionary.EYE;
                     }
 
-                    else if (IsMatch (".AUT.")) //astronaut
-                    {
-                        primary = PrettyScaryDictionary.AWW;
-                    }
-
-                    else if (IsMatch (".PULE"))
+                    else if (IsMatch (".PULE")) //opulence
                     {
                         primary = PrettyScaryDictionary.YIH;
                         secondary = PrettyScaryDictionary.OOO;
@@ -944,60 +942,57 @@ namespace SETextToSpeechMod
                     break;
             
                 case "V":    
-                    primary = PrettyScaryDictionary.VIH; //such as "vector".
+                    primary = PrettyScaryDictionary.VIH;
                     break;
             
                 case "W":
-                    if (after != " ") //narrow, raw
+                    if (UnwantedMatchBypassed ("..W .")) //narrow
                     {
                         primary = PrettyScaryDictionary.WIH;
                     }                   
                     break;
             
                 case "X":   
-                    if (before == " ") 
+                    if (IsMatch (". X..")) //xylophone
                     {
-                        primary = PrettyScaryDictionary.ZIH;   //such as "xylophone".  
+                        primary = PrettyScaryDictionary.ZIH; 
                     }    
         
                     else  
                     {
-                        primary = PrettyScaryDictionary.KSS; //such as "exit".                   
+                        primary = PrettyScaryDictionary.KSS;                 
                     }
                     break;
             
                 case "Y":
-                    if (((before == "U" || //buy
-                          before == "E") && //key
-                          after == " ") ||
-                          before == "A" || //maybe                                     
-                         (after == "E" && //eye
-                          before == "E") )
+                    if (IsMatch (".UY ." + //soliloquy
+                                "|.EY ." + //key
+                                "|.AY.." + //maybe
+                                "|.EYE." //eye
+                                ))                                              
                     {
                         ; 
                     }
 
-                    else if ((before == "C" && //bicycle
-                              after == "C") || 
-                             (before == "T" && //style
-                              after != " ") || //possibility
-                              before == "M" ||
-                              before == "H" ||
-                             (before == "L" && //fly
-                              twoBefore == "F") ||
-                              before == "K")  //sky
+                    else if (IsMatch (".CYC." + //bicycle
+                                     "|.MY.." + //my
+                                     "|.HY.." + //hyena
+                                     "|FLY.." + //fly
+                                     "|.KY.." //sky
+                                     ) ||
+
+                            (UnwantedMatchBypassed ("..Y .") && //!possibility     
+                             IsMatch (".TY.."))) //style                             
                     {
                         primary = PrettyScaryDictionary.EYE;
                     }
 
-                    else if ((((twoBefore == "L" && 
-                                before == "L") || 
-                                before == "L" ||
-                                before == "R") &&
-                                after == " ") ||
-                                after == "B" ||
-                                VOWELS.Contains (twoBefore) ||
-                                before == "T")  
+                    else if ((IsMatch ("LLY ." + //totally
+                                      "|.LY ." + //likely
+                                      "|.RY ." + //chivalry
+                                      "|.BY ." + //baby
+                                      "|.TY ." //ability
+                                      )))                                   
                     {
                         primary = PrettyScaryDictionary.EEE; //such as "flaky", negatively
                     }
@@ -1009,11 +1004,11 @@ namespace SETextToSpeechMod
                     break;
             
                 case "Z":  
-                    primary = PrettyScaryDictionary.ZIH; //such as "zorro".
+                    primary = PrettyScaryDictionary.ZIH;
                     break;
             
                 case " ": 
-                    primary = " "; //such as "...dot dot dot im a pretentious wanker dot dot dot..."
+                    primary = " ";
                     break;
             }
             return primary;

@@ -6,7 +6,6 @@ REMINDERS
 
 TO DO
 ================//
-+ finish off the adjacent renovations
 + double check that every rule has an OR symbol in the right place and that each rule is 5 characters long
 + design a class that reports known adjacent words and prints a list of changes in success. move reminders into the docoumentation.
 + some state paths can be combined in adjacent evaulation. this one is easy to screw up
@@ -51,3 +50,6 @@ flies
 pies
 applies
 our
+prude ~
+ludicrous~
+assault
