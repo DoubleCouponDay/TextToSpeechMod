@@ -46,7 +46,7 @@ namespace SETextToSpeechMod
         {
             MyEntity3DSoundEmitter chosenEmitter = shouldIBonk ? bonkEmitter : TTSEmitter;
             MySoundPair sound = new MySoundPair (clip);
-            chosenEmitter.PlaySound (sound);
+            //chosenEmitter.PlaySound (sound);
         }
     }
 }

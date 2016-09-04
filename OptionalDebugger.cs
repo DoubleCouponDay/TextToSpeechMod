@@ -8,24 +8,23 @@ namespace SETextToSpeechMod
         {
             MessageEventHandler handlers = new MessageEventHandler();
             Encoding test_encode = Encoding.Unicode;
-            string test_string = "[ flies";
-            string upper = test_string.ToUpper();
-            byte[] test_array = test_encode.GetBytes (upper);
-            handlers.OnReceivedPacket (test_array);
+            string testString = "[ flies";
+            string upper = testString.ToUpper();
+            byte[] testBytes = test_encode.GetBytes (upper);
+            handlers.OnReceivedPacket (testBytes);
 
-            while (true)
+            while (handlers.speeches[0].finished == false)
             {
-                for (int i = 0; i < handlers.speeches.Count; i++)
-                {
-                    handlers.speeches[i].Load();
-
-                    if (handlers.speeches[i].finished == true)
-                    {
-                        handlers.speeches.RemoveAt (i);
-                        i--; //the for loop is about to increment so i dont want to skip a speech.
-                    }
-                }
+                handlers.speeches[0].Load();
             }
+            handlers.speeches.RemoveAt (0);
+
+            ListBrokenWords();
+        }
+
+        static void ListBrokenWords()
+        {
+            System.Console.WriteLine ("sup");
         }
     }
 }
