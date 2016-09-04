@@ -12,7 +12,7 @@ TO DO
 	2. right capital quotation marks -> space} }
 	3. left lowercase quotation marks -> { "
 	4. right lowercase quotation marks -> ", new string[]{space
-	5. colons -> delete
+D	5. colons -> delete
 	6. AA ->
 	7. AE ->
 	8. AH ->
