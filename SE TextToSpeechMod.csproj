@@ -171,6 +171,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HugeTextDump.cs" />
     <Compile Include="PrettyScaryDictionary.cs" />
     <Compile Include="MessageEventHandler.cs" />
     <Compile Include="Pronunciation.cs" />

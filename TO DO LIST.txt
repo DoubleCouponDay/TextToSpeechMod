@@ -3,13 +3,65 @@ REMINDERS
 + test every new word before signing off
 + remember to update the version number for new patches
 + steam workshop updates should get a fixed word list in each changelog
++ dont worry about updating the script. ill replace it with a block eventually.
 
 TO DO
 ================//
++ holy shit format that json dictionary and test it!!!!
+	1. left capital quotation marks -> space
+	2. right capital quotation marks -> space} }
+	3. left lowercase quotation marks -> { "
+	4. right lowercase quotation marks -> ", new string[]{space
+	5. colons -> delete
+	6. AA ->
+	7. AE ->
+	8. AH ->
+	9. AO ->
+	11. AW ->
+	12. AY ->
+	13. B ->
+	14. CH ->
+	15. D ->
+	16. DH ->
+	17. EH ->
+	18. ER ->
+	19. EY ->
+	20. F ->
+	21. G ->
+	22. HH ->
+	23. IH ->
+	24. IY ->
+	25. JH ->
+	26. K ->
+	27. L  ->
+	28. M ->
+	29. N ->
+	30. NG ->
+	31. OW ->
+	32. OY ->
+	33. P ->
+	34. R ->
+	35. S ->
+	36. SH ->
+	38. T ->
+	39. TH ->
+	40. UH ->
+	41. UW ->
+	42. V ->
+	43. W ->
+	44. Y ->
+	45. Z ->
+	46. ZH ->
+	200. all letters -> capitalized
+
++ add JSON dump to the bottom of ordered.
++ dictionary fetching method must be able to handle any number of phonemes per word.
+
 + design a class that reports known adjacent words and prints a list of changes in success. move reminders into the docoumentation.
 + some state paths can be combined in adjacent evaulation. this one is easy to screw up
 + bring back silent blocks?
 
++ study old work in saved audacity project ._.
 + marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out
 + see if its feasible to use marek consonants
 + test words before overwriting
@@ -19,12 +71,11 @@ TO DO
 + edit the batch file to point to this new directory
 
 + an interface should be designed for SentenceProcession so that all different voices can have the same structure, but different spacing when needed
-+ it may be possible to rip ACAT apart for pronunciation and pitch. C# baby!
 + use autotune free trial to create pitch.
 
-+ find out if you can move entity with mouse input
-
 + make a new block with a sound emitter entity? maybe
+
++ find out if you can move entity with mouse input
 
 + document everything
 
