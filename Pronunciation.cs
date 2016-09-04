@@ -580,11 +580,11 @@ namespace SETextToSpeechMod
                               UnwantedMatchBypassed ("..E. ")) || //!stakes
 
                               IsMatch ("..ERE" + //there
-                                     "|.VER." + //veto
-                                     "|..ED." + //plated
-                                     "|..ES " + //dresses
-                                     "|..ET " //planet
-                                     ))
+                                      "|.VER." + //veto
+                                      "|..ED." + //plated
+                                      "|..ES " + //dresses
+                                      "|..ET " //planet
+                                      ))
                     {                                         
                         primary = PrettyScaryDictionary.EHH;  //such as silent E, there, fate
                     }   
@@ -672,7 +672,7 @@ namespace SETextToSpeechMod
                                      ) ||
 
                             (UnwantedMatchBypassed (".RI..") && //!ring
-                             UnwantedMatchBypassed (".AI.") && //!rail
+                             UnwantedMatchBypassed (".AI..") && //!rail
                              CONSONANTS.Contains (after) && //bike
                              VOWELS.Contains (twoAfter)) || //spite
 
@@ -742,8 +742,8 @@ namespace SETextToSpeechMod
                     }                    
                         
                     else if (IsMatch ("..OR." + //lore
-                                      "|..OI." //annoint
-                                      ) ||
+                                     "|..OI." //annoint
+                                     ) ||
 
                              (UnwantedMatchBypassed (".SO..") && //sour
                               IsMatch ("..OUR"))) //four
@@ -885,11 +885,11 @@ namespace SETextToSpeechMod
                                 "|.OUL." + //soul
                                 "|YOU.." + //you
                                 "|.AUT." + //astronaut
-                                "|.AUL" //assault
+                                "|.AUL." //assault
                                 ) ||
 
                        (UnwantedMatchBypassed (".OU..") && //!your
-                        IsMatch ("..UR"))) //purr
+                        IsMatch ("..UR."))) //purr
                     {
                         ;
                     }    
