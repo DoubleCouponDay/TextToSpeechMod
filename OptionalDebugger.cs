@@ -8,7 +8,7 @@ namespace SETextToSpeechMod
         {
             MessageEventHandler handlers = new MessageEventHandler();
             Encoding test_encode = Encoding.Unicode;
-            string testString = "[ flies";
+            string testString = "[ ok ok";
             string upper = testString.ToUpper();
             byte[] testBytes = test_encode.GetBytes (upper);
             handlers.OnReceivedPacket (testBytes);
@@ -19,7 +19,7 @@ namespace SETextToSpeechMod
             }
             handlers.speeches.RemoveAt (0);
 
-            ListBrokenWords();
+            //ListBrokenWords();
         }
 
         static void ListBrokenWords()

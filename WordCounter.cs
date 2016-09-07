@@ -3,7 +3,9 @@
 namespace SETextToSpeechMod
 {
     public class WordCounter //simply a collection of data without guarded sets. easy to pass.
-    {                   
+    {                  
+        const int NEW_WORD = -1; 
+        const int LAST_LETTER = -3;
         int currentWord;
         int currentLetter;
         string[] words;
@@ -15,11 +17,16 @@ namespace SETextToSpeechMod
             this.words = inputSentence.Split (' ');
         }
 
-        public string GetCurrentWord (int NEW_WORD, ref int placeholder)
+        public string GetCurrentWord (ref int placeholder)
         { 
             if (currentWord < words.Length)
             {
-                if (currentLetter < words[currentWord].Length)
+                if (currentLetter == words[currentWord].Length - 1)
+                {
+                    return words[currentWord];
+                }
+
+                else if (currentLetter < words[currentWord].Length)
                 {
                     currentLetter++;
                     return words[currentWord];

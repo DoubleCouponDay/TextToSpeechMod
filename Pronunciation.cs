@@ -8,6 +8,7 @@ namespace SETextToSpeechMod
         //pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
         const int NEW_WORD = -1;
         const int NO_MATCH = -2; 
+        const int LAST_LETTER = -3;
         const int MAX_EXTENSION_SIZE = 5; 
         int placeholder = NEW_WORD;
         string[] dictionaryMatch;
@@ -25,7 +26,7 @@ namespace SETextToSpeechMod
         {
             secondary = "";
             string primaryPhoneme;        
-            string currentWord = wordCounter.GetCurrentWord (NEW_WORD, ref placeholder); //this update is needed every time i increment a letter.          
+            string currentWord = wordCounter.GetCurrentWord (ref placeholder); //this update is needed every time i increment a letter.          
 
             if (currentWord != " ")
             {                
