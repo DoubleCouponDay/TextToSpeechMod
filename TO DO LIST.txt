@@ -4,6 +4,7 @@ REMINDERS
 + remember to update the version number for new patches
 + steam workshop updates should get a fixed word list in each changelog
 + dont worry about updating the script. ill replace it with a block eventually.
++CMU dictionary needs to be commented out in order to debug.
 
 TO DO
 ================//
