@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions; //needed to match wildcard string matches simplify the rule based phoneme approach AdjacentEvaluation().
+using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {
@@ -10,9 +11,10 @@ namespace SETextToSpeechMod
         const int NO_MATCH = -2; 
         const int LAST_LETTER = -3;
         const int MAX_EXTENSION_SIZE = 5; 
+
         int placeholder = NEW_WORD;
         string[] dictionaryMatch;
-        string surroundingPhrase;   
+        string surroundingPhrase;
 
         WordCounter wordCounter;   
 
@@ -22,11 +24,13 @@ namespace SETextToSpeechMod
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
-        public string GetLettersPronunciation (string sentence, int letterIndex, out string secondary) 
+        public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
-            secondary = "";
-            string primaryPhoneme;        
-            string currentWord = wordCounter.GetCurrentWord (ref placeholder); //this update is needed every time i increment a letter.          
+            List <string> results = new List <string>();
+            string primaryPhoneme = ""; //needed definition to prevent some strange error
+            string secondary = "";
+            bool DumpRemainingLetters = false;
+            string currentWord = wordCounter.GetCurrentWord (ref placeholder, ref DumpRemainingLetters); //this update is needed every time i increment a letter.          
 
             if (currentWord != " ")
             {                
@@ -36,34 +40,40 @@ namespace SETextToSpeechMod
                 
                     if (refinedQuery != "")
                     {
-                        primaryPhoneme = TakeFromDictionary (true, sentence, letterIndex, out secondary);
+                        results = TakeFromDictionary (true, sentence, letterIndex, out secondary);
                     }
             
                     else //if no match is found, use secondary pronunciation.
                     {
                         placeholder = NO_MATCH;
-                        primaryPhoneme = AdjacentEvaluation (sentence, letterIndex, out secondary);
+                        AdjacentEvaluation (sentence, letterIndex, out secondary);
                     }
                 }
 
                 else if (placeholder != NO_MATCH) //takes over reading once a match is found in the dictionary.
                 {
-                    primaryPhoneme = TakeFromDictionary (false, sentence, letterIndex, out secondary);
+                    results = TakeFromDictionary (false, sentence, letterIndex, out secondary);
                 }
 
                 else
                 {
-                    primaryPhoneme = AdjacentEvaluation (sentence, letterIndex, out secondary);
+                    AdjacentEvaluation (sentence, letterIndex, out secondary);
                 }
             }
 
             else
             {
-                primaryPhoneme = currentWord; //avoids setting placeholder in this scenario since an empty space cant reset it when needed.
+                primaryPhoneme = " "; //avoids setting placeholder in this scenario since an empty space cant reset it when needed.
                 secondary = " ";
             }
-            placeholder = wordCounter.CheckForEnd (placeholder, NEW_WORD); //script needed to reset to default state but the mod did not.
-            return primaryPhoneme;
+            
+            results.Insert(0, primaryPhoneme);
+            results.Insert(1, secondary);
+            primaryPhoneme = "";
+            secondary = "";
+            placeholder = wordCounter.CheckForEnd(placeholder, NEW_WORD); //script needed to reset to default state but the mod did not.
+
+            return results;
         }
 
         string ContinuallyRefineSearch (string currentWord) //removes word's extensions one after another until it has none.
@@ -371,9 +381,8 @@ namespace SETextToSpeechMod
             return searchResult;
         }
 
-        string TakeFromDictionary (bool isNewWord, string sentence, int letterIndex, out string secondary)
+        string[] TakeFromDictionary (bool isNewWord, string sentence, int letterIndex)
         {
-            secondary = "";
             placeholder++; //for next time
 
             if (isNewWord == true)
@@ -388,18 +397,15 @@ namespace SETextToSpeechMod
 
             else
             {
-                return AdjacentEvaluation (sentence, letterIndex, out secondary); //reaching the end of a word in the dictionary either means i need to add an extension or i didnt put enough spaces 
+                return AdjacentEvaluation (sentence, letterIndex); //reaching the end of a word in the dictionary either means i need to add an extension or i didnt put enough spaces 
             }
         }
 
         //AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary; including extensions.
-        string AdjacentEvaluation (string sentence, int letterIndex, out string secondary)
+        List <string> AdjacentEvaluation (string sentence, int letterIndex)
         {
             const string VOWELS = "AEIOU";
             const string CONSONANTS = "BCDFGHJKLMNPQRSTVWXYZ";
-
-            string primary = "";
-            secondary = "";            
 
             int intBefore = (letterIndex - 1 >= 0) ? (letterIndex - 1) : letterIndex; //these wil prevent out-of-bounds exception.
             int intAfter = (letterIndex + 1 < sentence.Length) ? (letterIndex + 1) : letterIndex; 
@@ -430,7 +436,7 @@ namespace SETextToSpeechMod
                                      "|.WAT." //water
                                      ))
                     {
-                        primary = PrettyScaryDictionary.AWW;
+                        primaryPhoneme = PrettyScaryDictionary.AWW;
                     }
 
                     else if (IsMatch ("REA.." + //break
@@ -448,7 +454,7 @@ namespace SETextToSpeechMod
                             (IsMatch ("..AI.") && //faith
                              UnwantedMatchBypassed ("..A.R"))) // !fair,
                     {
-                        primary = PrettyScaryDictionary.AEE;
+                        primaryPhoneme = PrettyScaryDictionary.AEE;
                     }
 
                     else if (IsMatch (".HAT." + //what
@@ -460,19 +466,19 @@ namespace SETextToSpeechMod
                             (IsMatch ("..AR.") && //far
                              UnwantedMatchBypassed ("..A.E")) ) //!fare
                     {
-                        primary = PrettyScaryDictionary.UHH;
+                        primaryPhoneme = PrettyScaryDictionary.UHH;
                     }    
             
                     else if (IsMatch ("..ARE" + //compare                             
                                      "|..AIR" //fair
                                      ))
                     {
-                        primary = PrettyScaryDictionary.EHH;
+                        primaryPhoneme = PrettyScaryDictionary.EHH;
                     }
 
                     else    
                     {
-                        primary = PrettyScaryDictionary.AHH; //plottable,
+                        primaryPhoneme = PrettyScaryDictionary.AHH; //plottable,
                     }
                     break;
             
@@ -484,13 +490,13 @@ namespace SETextToSpeechMod
                     {
                         if (IsMatch ("..BL.")) //able
                         {
-                            primary = " ";
+                            primaryPhoneme = " ";
                             secondary = PrettyScaryDictionary.BIH;
                         }
 
                         else
                         {
-                            primary = PrettyScaryDictionary.BIH;
+                            primaryPhoneme = PrettyScaryDictionary.BIH;
                         }
                     }
                     break;
@@ -501,12 +507,12 @@ namespace SETextToSpeechMod
                                 "|..CY." //stacy
                                 ))
                     {
-                        primary = PrettyScaryDictionary.SIH; //sicily
+                        primaryPhoneme = PrettyScaryDictionary.SIH; //sicily
                     }
             
                     else 
                     {
-                        primary = PrettyScaryDictionary.KIH; //cat
+                        primaryPhoneme = PrettyScaryDictionary.KIH; //cat
                     } 
                     break;
             
@@ -518,14 +524,14 @@ namespace SETextToSpeechMod
             
                     else if (UnwantedMatchBypassed (".DD..")) //ladder
                     {
-                        primary = PrettyScaryDictionary.DIH;
+                        primaryPhoneme = PrettyScaryDictionary.DIH;
                     }
                     break;
             
                 case "E":
                     if (IsMatch ("THE .")) //the
                     {
-                        primary = PrettyScaryDictionary.UHH;
+                        primaryPhoneme = PrettyScaryDictionary.UHH;
                     } 
   
                     else if (IsMatch (".REA." + //great
@@ -547,14 +553,14 @@ namespace SETextToSpeechMod
         
                     else if (IsMatch ("..EW.")) //brew
                     {
-                        primary = PrettyScaryDictionary.OOO; 
+                        primaryPhoneme = PrettyScaryDictionary.OOO; 
                     }
 
                     else if (IsMatch ("..EI." + //stein
                                      "|..EYE" //eye       
                                      ))                
                     {
-                        primary = PrettyScaryDictionary.EYE;
+                        primaryPhoneme = PrettyScaryDictionary.EYE;
                     }         
        
                     else if (IsMatch ("..EE." + //engineer
@@ -572,7 +578,7 @@ namespace SETextToSpeechMod
                                      "|.IE. " //trekkies
                                      ))
                     {                           
-                        primary = PrettyScaryDictionary.EEE;
+                        primaryPhoneme = PrettyScaryDictionary.EEE;
                     }  
             
                     else if ((UnwantedMatchBypassed ("..EE.") && //!feet
@@ -587,17 +593,17 @@ namespace SETextToSpeechMod
                                       "|..ET " //planet
                                       ))
                     {                                         
-                        primary = PrettyScaryDictionary.EHH;  //such as silent E, there, fate
+                        primaryPhoneme = PrettyScaryDictionary.EHH;  //such as silent E, there, fate
                     }   
 
                     else if (IsMatch (".REY.")) //osprey
                     {
-                        primary = PrettyScaryDictionary.AEE;
+                        primaryPhoneme = PrettyScaryDictionary.AEE;
                     }
                     break;
             
                 case "F": 
-                    primary = PrettyScaryDictionary.FIH; //follow
+                    primaryPhoneme = PrettyScaryDictionary.FIH; //follow
                     break;
             
                 case "G":
@@ -617,13 +623,13 @@ namespace SETextToSpeechMod
                                        "|.DGE." //judgement 
                                        ))
                     {   
-                        primary = PrettyScaryDictionary.JIH;
+                        primaryPhoneme = PrettyScaryDictionary.JIH;
                         secondary = " "; //such as "gin", judgement, 
                     }
             
                     else
                     {
-                        primary = PrettyScaryDictionary.GIH; //given
+                        primaryPhoneme = PrettyScaryDictionary.GIH; //given
                     }    
                     break;
             
@@ -642,7 +648,7 @@ namespace SETextToSpeechMod
 
                     else
                     {
-                        primary = PrettyScaryDictionary.HIH;
+                        primaryPhoneme = PrettyScaryDictionary.HIH;
                     }    
                     break;
 
@@ -658,7 +664,7 @@ namespace SETextToSpeechMod
                                      "|.SION" //aggression
                                      ))
                     {
-                        primary = PrettyScaryDictionary.SIH;
+                        primaryPhoneme = PrettyScaryDictionary.SIH;
                         secondary = PrettyScaryDictionary.HIH;
                     }
 
@@ -680,31 +686,31 @@ namespace SETextToSpeechMod
                             (UnwantedMatchBypassed (".GI..") && //!origin
                              IsMatch ("..I.E"))) //aborigine
                     {   
-                        primary = PrettyScaryDictionary.EYE;
+                        primaryPhoneme = PrettyScaryDictionary.EYE;
                     }
             
                     else if (IsMatch (".OIN." + //point
                                      "|..ING" //running
                                      ))
                     {
-                        primary = PrettyScaryDictionary.EEE; //such as running
+                        primaryPhoneme = PrettyScaryDictionary.EEE; //such as running
                     }
     
                     else 
                     {
-                        primary = PrettyScaryDictionary.IHH;  //felicity
+                        primaryPhoneme = PrettyScaryDictionary.IHH;  //felicity
                     }
                     break;
             
                 case "J":   
-                    primary = PrettyScaryDictionary.JIH; //jelly
+                    primaryPhoneme = PrettyScaryDictionary.JIH; //jelly
                     break;
             
                 case "K":   
                     if (UnwantedMatchBypassed (".CK..") && //!two kih's
                         UnwantedMatchBypassed ("..KN.")) //!silent K
                     {
-                        primary = PrettyScaryDictionary.KIH;
+                        primaryPhoneme = PrettyScaryDictionary.KIH;
                     }    
                     break;
             
@@ -713,14 +719,14 @@ namespace SETextToSpeechMod
                         UnwantedMatchBypassed ("..LF.") && //!silent L
                         UnwantedMatchBypassed (".LL..")) //!double L's
                     {
-                        primary = PrettyScaryDictionary.LIH; //silent L, caller,
+                        primaryPhoneme = PrettyScaryDictionary.LIH; //silent L, caller,
                     }
                     break;
             
                 case "M":   
                     if (UnwantedMatchBypassed (".MM..")) //!double M's
                     {                        
-                        primary = " ";
+                        primaryPhoneme = " ";
                         secondary = PrettyScaryDictionary.MIH; //such as "molten", drummer,
                     }    
                     break;
@@ -728,7 +734,7 @@ namespace SETextToSpeechMod
                 case "N":  
                     if (UnwantedMatchBypassed (".NN..")) //double N's
                     {    
-                        primary = " ";
+                        primaryPhoneme = " ";
                         secondary = PrettyScaryDictionary.NIH;  //such as "nickel", planner, 
                     }    
                     break;
@@ -749,7 +755,7 @@ namespace SETextToSpeechMod
                              (UnwantedMatchBypassed (".SO..") && //sour
                               IsMatch ("..OUR"))) //four
                     {
-                        primary = PrettyScaryDictionary.AWW;
+                        primaryPhoneme = PrettyScaryDictionary.AWW;
                     }
 
                     else if (IsMatch (".FOU." + //foul
@@ -757,14 +763,14 @@ namespace SETextToSpeechMod
                                      "|.LOU." //slouch
                                      ))
                     {
-                        primary = PrettyScaryDictionary.AHH; 
+                        primaryPhoneme = PrettyScaryDictionary.AHH; 
                     }
  
                     else if (IsMatch ("..OM." + //computer
                                      "|.ION." //champion
                                      ))
                     {
-                        primary = PrettyScaryDictionary.UHH;
+                        primaryPhoneme = PrettyScaryDictionary.UHH;
                     }   
             
                     else if (IsMatch ("..O ." + //pro
@@ -776,7 +782,7 @@ namespace SETextToSpeechMod
                             (CONSONANTS.Contains (after) && //sole
                              VOWELS.Contains (twoAfter))) //solo
                     {
-                        primary = PrettyScaryDictionary.OWE;
+                        primaryPhoneme = PrettyScaryDictionary.OWE;
                     }   
             
                     else if (IsMatch ("..OHN" +  //john
@@ -792,7 +798,7 @@ namespace SETextToSpeechMod
                             (UnwantedMatchBypassed (".BO..") && //!both
                              IsMatch ("..OTH"))) //sloth
                     {
-                        primary = PrettyScaryDictionary.HOH;                      
+                        primaryPhoneme = PrettyScaryDictionary.HOH;                      
                     }    
             
                     else if (IsMatch ("..OO." + //fool
@@ -801,7 +807,7 @@ namespace SETextToSpeechMod
                                      "|.TOD." //today
                                      ))
                     {
-                        primary = PrettyScaryDictionary.OOO;
+                        primaryPhoneme = PrettyScaryDictionary.OOO;
                     }
 
                     else if (IsMatch ("..OX." + //oxygen
@@ -811,29 +817,29 @@ namespace SETextToSpeechMod
                             (UnwantedMatchBypassed (".OO..") && //!cool
                              IsMatch ("..OL."))) //collected
                     {
-                        primary = PrettyScaryDictionary.HOH;  
+                        primaryPhoneme = PrettyScaryDictionary.HOH;  
                     }   
 
                     else
                     {
-                        primary = PrettyScaryDictionary.OWE;
+                        primaryPhoneme = PrettyScaryDictionary.OWE;
                     }
                     break;
             
                 case "P":
                     if (IsMatch ("..PH.")) //phrase
                     {
-                        primary = PrettyScaryDictionary.FIH;
+                        primaryPhoneme = PrettyScaryDictionary.FIH;
                     }   
 
                     else if (UnwantedMatchBypassed (".PP..")) //double P's
                     {
-                        primary = PrettyScaryDictionary.PIH;
+                        primaryPhoneme = PrettyScaryDictionary.PIH;
                     }                    
                     break;
             
                 case "Q":                    
-                    primary = PrettyScaryDictionary.KIH; //query    
+                    primaryPhoneme = PrettyScaryDictionary.KIH; //query    
                     secondary = PrettyScaryDictionary.WIH;
                     break;               
             
@@ -841,19 +847,19 @@ namespace SETextToSpeechMod
                     if (UnwantedMatchBypassed (".RR..") && //!double R's
                         UnwantedMatchBypassed ("OUR..")) //!your
                     {                        
-                        primary = PrettyScaryDictionary.RIH;
+                        primaryPhoneme = PrettyScaryDictionary.RIH;
                     }
                     break;
             
                 case "S":   
                     if (IsMatch ("..SM.")) //prism
                     {
-                        primary = PrettyScaryDictionary.ZIH;
+                        primaryPhoneme = PrettyScaryDictionary.ZIH;
                     }
 
                     else if (UnwantedMatchBypassed (".SS..")) //!double S's
                     {
-                        primary = PrettyScaryDictionary.SIH;
+                        primaryPhoneme = PrettyScaryDictionary.SIH;
                     }                  
                     break;
             
@@ -861,7 +867,7 @@ namespace SETextToSpeechMod
                     if (UnwantedMatchBypassed ("..T.U") && //!github
                         IsMatch ("..TH.")) //think
                     {
-                        primary = " ";
+                        primaryPhoneme = " ";
                         secondary = PrettyScaryDictionary.THI;    
                     } 
 
@@ -869,13 +875,13 @@ namespace SETextToSpeechMod
                     {
                         if (IsMatch (".ST..")) //emphasised T
                         {
-                            primary = " ";
+                            primaryPhoneme = " ";
                             secondary = PrettyScaryDictionary.TIH;
                         }
                         
                         else
                         {
-                            primary = PrettyScaryDictionary.TIH;
+                            primaryPhoneme = PrettyScaryDictionary.TIH;
                         }                        
                     }    
                     break;
@@ -903,7 +909,7 @@ namespace SETextToSpeechMod
                                      "|..UI." //ruin
                                      ))
                     {
-                        primary = PrettyScaryDictionary.OOO;
+                        primaryPhoneme = PrettyScaryDictionary.OOO;
                     }
 
                     else if (IsMatch (" OUR." + //end
@@ -925,43 +931,43 @@ namespace SETextToSpeechMod
                                      "|..UC." //obstruct
                                      )))
                     {
-                        primary = PrettyScaryDictionary.UHH;
+                        primaryPhoneme = PrettyScaryDictionary.UHH;
                     }   
 
                     else if (IsMatch (".BUY." + //buy
                                      "|.GUY." //guy
                                      ))
                     {
-                        primary = PrettyScaryDictionary.EYE;
+                        primaryPhoneme = PrettyScaryDictionary.EYE;
                     }
 
                     else if (IsMatch (".PULE")) //opulence
                     {
-                        primary = PrettyScaryDictionary.YIH;
+                        primaryPhoneme = PrettyScaryDictionary.YIH;
                         secondary = PrettyScaryDictionary.OOO;
                     }
                     break;
             
                 case "V":    
-                    primary = PrettyScaryDictionary.VIH;
+                    primaryPhoneme = PrettyScaryDictionary.VIH;
                     break;
             
                 case "W":
                     if (UnwantedMatchBypassed ("..W .")) //narrow
                     {
-                        primary = PrettyScaryDictionary.WIH;
+                        primaryPhoneme = PrettyScaryDictionary.WIH;
                     }                   
                     break;
             
                 case "X":   
                     if (IsMatch (". X..")) //xylophone
                     {
-                        primary = PrettyScaryDictionary.ZIH; 
+                        primaryPhoneme = PrettyScaryDictionary.ZIH; 
                     }    
         
                     else  
                     {
-                        primary = PrettyScaryDictionary.KSS;                 
+                        primaryPhoneme = PrettyScaryDictionary.KSS;                 
                     }
                     break;
             
@@ -985,7 +991,7 @@ namespace SETextToSpeechMod
                             (UnwantedMatchBypassed ("..Y .") && //!possibility     
                              IsMatch (".TY.."))) //style                             
                     {
-                        primary = PrettyScaryDictionary.EYE;
+                        primaryPhoneme = PrettyScaryDictionary.EYE;
                     }
 
                     else if ((IsMatch ("LLY ." + //totally
@@ -995,24 +1001,23 @@ namespace SETextToSpeechMod
                                       "|.TY ." //ability
                                       )))                                   
                     {
-                        primary = PrettyScaryDictionary.EEE; //such as "flaky", negatively
+                        primaryPhoneme = PrettyScaryDictionary.EEE; //such as "flaky", negatively
                     }
             
                     else  
                     {
-                        primary = PrettyScaryDictionary.YIH;  //such as "yam".
+                        primaryPhoneme = PrettyScaryDictionary.YIH;  //such as "yam".
                     }
                     break;
             
                 case "Z":  
-                    primary = PrettyScaryDictionary.ZIH;
+                    primaryPhoneme = PrettyScaryDictionary.ZIH;
                     break;
             
                 case " ": 
-                    primary = " ";
+                    primaryPhoneme = " ";
                     break;
             }
-            return primary;
         }
 
         //helps cut down on text needed and is easier to understand
