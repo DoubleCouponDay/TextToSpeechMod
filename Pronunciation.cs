@@ -32,6 +32,7 @@ namespace SETextToSpeechMod
             bool DumpRemainingLetters = false;
             string currentWord = wordCounter.GetCurrentWord (ref placeholder, ref DumpRemainingLetters); //this update is needed every time i increment a letter.          
 
+
             if (currentWord != " ")
             {                
                 if (placeholder == NEW_WORD)
