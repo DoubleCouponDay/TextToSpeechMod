@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Text.RegularExpressions; //needed to match wildcard string matches simplify the rule based phoneme approach AdjacentEvaluation().
+using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {
     class Pronunciation 
-    {
-        //pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
+    {       
         const int NEW_WORD = -1;
         const int NO_MATCH = -2; 
         const int LAST_LETTER = -3;
         const int MAX_EXTENSION_SIZE = 5; 
+
         int placeholder = NEW_WORD;
         string[] dictionaryMatch;
         string surroundingPhrase;
+        string primaryPhoneme = ""; 
+        string secondary = "";        
+        bool FinishRemainingLetters = false;
 
         WordCounter wordCounter;   
 
@@ -22,11 +26,14 @@ namespace SETextToSpeechMod
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
-        public string GetLettersPronunciation (string sentence, int letterIndex, out string secondary) 
+        public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
+            List <string> results = new List <string>();    
+            primaryPhoneme = "";
             secondary = "";
-            string primaryPhoneme;        
-            string currentWord = wordCounter.GetCurrentWord (ref placeholder); //this update is needed every time i increment a letter.          
+            FinishRemainingLetters = false;                           
+
+            string currentWord = wordCounter.GetCurrentWord (ref placeholder, ref FinishRemainingLetters); //this update is needed every time i increment a letter.                      
 
             if (currentWord != " ")
             {                
@@ -36,7 +43,7 @@ namespace SETextToSpeechMod
                 
                     if (refinedQuery != "")
                     {
-                        primaryPhoneme = TakeFromDictionary (true, sentence, letterIndex, out secondary);
+                        results = TakeFromDictionary (true, sentence, letterIndex, out secondary, FinishRemainingLetters);
                     }
             
                     else //if no match is found, use secondary pronunciation.
@@ -48,7 +55,7 @@ namespace SETextToSpeechMod
 
                 else if (placeholder != NO_MATCH) //takes over reading once a match is found in the dictionary.
                 {
-                    primaryPhoneme = TakeFromDictionary (false, sentence, letterIndex, out secondary);
+                    results = TakeFromDictionary (false, sentence, letterIndex, out secondary, FinishRemainingLetters);
                 }
 
                 else
@@ -371,7 +378,7 @@ namespace SETextToSpeechMod
             return searchResult;
         }
 
-        string TakeFromDictionary (bool isNewWord, string sentence, int letterIndex, out string secondary)
+        string TakeFromDictionary (bool isNewWord, string sentence, int letterIndex, out string secondary, bool FinishRemainingLetters)
         {
             secondary = "";
             placeholder++; //for next time
@@ -393,6 +400,7 @@ namespace SETextToSpeechMod
         }
 
         //AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary; including extensions.
+        //pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
         string AdjacentEvaluation (string sentence, int letterIndex, out string secondary)
         {
             const string VOWELS = "AEIOU";

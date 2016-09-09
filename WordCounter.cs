@@ -17,12 +17,13 @@ namespace SETextToSpeechMod
             this.words = inputSentence.Split (' ');
         }
 
-        public string GetCurrentWord (ref int placeholder)
+        public string GetCurrentWord (ref int placeholder, ref bool FinishRemainingLetters)
         { 
             if (currentWord < words.Length)
             {
                 if (currentLetter == words[currentWord].Length - 1)
                 {
+                    FinishRemainingLetters = true;
                     return words[currentWord];
                 }
 

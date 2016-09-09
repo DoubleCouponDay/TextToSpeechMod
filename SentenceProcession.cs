@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {   
@@ -81,18 +82,16 @@ namespace SETextToSpeechMod
         //creates a new clip for the current letter.
         void AddPhoneme()
         {   
-            string secondaryPhoneme;
-            string primaryPhoneme = pronunciation.GetLettersPronunciation (sentence, letterIndex, out secondaryPhoneme);
-            string[] add_results = {primaryPhoneme, secondaryPhoneme};
+            List <string> results = pronunciation.GetLettersPronunciation (sentence, letterIndex);
 
-            for (int i = 0; i < add_results.Length; i++)
+            for (int i = 0; i < results.Count; i++)
             {
-                if (add_results[i] != "")
+                if (results[i] != "")
                 {
-                    if (add_results[i] != " ") //empty string lets my program know that no clip should be created.
+                    if (results[i] != " ") //empty string lets my program know that no clip should be created.
                     {                                                                
                         int startPoint = timelineSize;         
-                        string soundChoice = add_results[i] + SOUND_ID;
+                        string soundChoice = results[i] + SOUND_ID;
                         AppendToTimeline (startPoint, soundChoice); //add the key transitions into the timeline.
                         timelineSize += CLIP_LENGTH; //timeline is expanded for duration after the clip is created.
 
