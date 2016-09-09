@@ -134,3 +134,4 @@ C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.R
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render11.dll
 F:\samuels backup\scripting\SpaceEngineersTextToSpeechMod\obj\Debug\TextToSpeechMod.exe
 F:\samuels backup\scripting\SpaceEngineersTextToSpeechMod\obj\Debug\TextToSpeechMod.pdb
+C:\Users\d\Documents\sourcetree\CSHARP-text-to-speech-mod-for-space-engineers\obj\Debug\SE TextToSpeechMod.csprojResolveAssemblyReference.cache

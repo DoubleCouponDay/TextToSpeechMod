@@ -12,7 +12,7 @@ namespace SETextToSpeechMod
         const int MAX_EXTENSION_SIZE = 5; 
         int placeholder = NEW_WORD;
         string[] dictionaryMatch;
-        string surroundingPhrase;
+        string surroundingPhrase;   
 
         WordCounter wordCounter;   
 
