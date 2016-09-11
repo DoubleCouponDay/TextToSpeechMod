@@ -27,18 +27,17 @@ namespace SETextToSpeechMod
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
             List <string> results = new List <string>();
-            bool dumpRemainingLetters = false;
-            string currentWord = wordCounter.AnalyseCurrentPosition (ref placeholder, ref dumpRemainingLetters); //this update is needed every time i increment a letter.          
+            string currentWord = wordCounter.AnalyseCurrentPosition (ref placeholder); //this update is needed every time i increment a letter.          
 
             if (currentWord != " ")
             {                
                 if (placeholder == NEW_WORD)
-                {
-                    string refinedQuery = ContinuallyRefineSearch (currentWord); //word ending simplifier to increase chances of a match.               
-                
-                    if (refinedQuery != "")
+                {                    
+                    bool matchFound = PrettyScaryDictionary.ordered.TryGetValue (currentWord, out dictionaryMatch);
+
+                    if (matchFound == true)
                     {
-                        results = TakeFromDictionary (true, sentence, letterIndex, dumpRemainingLetters);
+                        results = TakeFromDictionary (true, sentence, letterIndex);
                     }
             
                     else //if no match is found, use secondary pronunciation.
@@ -50,7 +49,7 @@ namespace SETextToSpeechMod
 
                 else if (placeholder != NO_MATCH) //takes over reading once a match is found in the dictionary.
                 {
-                    results = TakeFromDictionary (false, sentence, letterIndex, dumpRemainingLetters);
+                    results = TakeFromDictionary (false, sentence, letterIndex);
                 }
 
                 else
@@ -68,312 +67,7 @@ namespace SETextToSpeechMod
             return results;
         }
 
-        string ContinuallyRefineSearch (string currentWord) //removes word's extensions one after another until it has none.
-        {
-            string refinedQuery = currentWord;
-
-            while (PrettyScaryDictionary.ordered.TryGetValue (currentWord, out dictionaryMatch) == false)
-            {          
-                string wordsExtension = EvaluateWordsEnding (currentWord); //returns / if the word is not long enough
-                            
-                if (wordsExtension != "/") //i must only remove an extension if one exists or the word is length 4 or greater.
-                {
-                    currentWord = currentWord.Remove ((currentWord.Length) - wordsExtension.Length, wordsExtension.Length);
-                    refinedQuery = currentWord;
-                }
-
-                else
-                {
-                    return "";
-                }
-            }  
-            return refinedQuery;
-        }
-
-        //returns the words extension if that phrase has been designed for, or / if word length is too small.
-        string EvaluateWordsEnding (string currentWord) //unfortunately there is a ton of logic checks needed here because try catch does not work with in game scripts.
-        {
-            string searchResult = "/"; //prevents calling this method again until the next word.
-
-            if (currentWord.Length >= MAX_EXTENSION_SIZE) //i dont really need to remove extensions unless the word is big enough.
-            {
-                bool E = (currentWord[currentWord.Length - 1] == 'E') ? true : false;
-                bool S = (currentWord[currentWord.Length - 1] == 'S') ? true : false;
-                bool D = (currentWord[currentWord.Length - 1] == 'D') ? true : false;
-                bool Y = (currentWord[currentWord.Length - 1] == 'Y') ? true : false;
-                bool R = (currentWord[currentWord.Length - 1] == 'R') ? true : false;                            
-                bool L = (currentWord[currentWord.Length - 1] == 'L') ? true : false;                            
-
-                bool ING = (currentWord[currentWord.Length - 3] == 'I' && 
-                            currentWord[currentWord.Length - 2] == 'N' && 
-                            currentWord[currentWord.Length - 1] == 'G') ? true : false;
-
-                bool EST = (currentWord[currentWord.Length - 3] == 'E' && 
-                            currentWord[currentWord.Length - 2] == 'S' && 
-                            currentWord[currentWord.Length - 1] == 'T') ? true : false;
-
-                bool ABLE = (currentWord[currentWord.Length - 4] == 'A' &&
-                             currentWord[currentWord.Length - 3] == 'B' && 
-                             currentWord[currentWord.Length - 2] == 'L' && 
-                             currentWord[currentWord.Length - 1] == 'E') ? true : false;  
-            
-                if (E == true)
-                {
-                    searchResult = "E";
-                }
-
-                else if (S == true)
-                {
-                    bool ES = (currentWord[currentWord.Length - 2] == 'E') ? true : false;
-
-                    if (ES == true)
-                    {                                                     
-                        bool IES = (currentWord[currentWord.Length - 3] == 'I') ? true : false;
-                        
-                        if (IES == true)
-                        {
-                            searchResult = "IES";
-                        }
-
-                        else
-                        {
-                            searchResult = "ES";
-                        }
-                    }
-                
-                    else
-                    {
-                        searchResult = "S";
-                    }
-                }
-
-                else if (D == true)
-                {
-                    bool ED = (currentWord[currentWord.Length - 2] == 'E') ? true : false;
-
-                    if (ED == true)
-                    {
-                        bool IED = (currentWord[currentWord.Length - 3] == 'I') ? true : false;
-
-                        if (IED == true)
-                        {
-                            searchResult = "IED";
-                        }
-                    
-                        else
-                        {
-                            searchResult = "ED";
-                        }
-                    }
-
-                    else
-                    {
-                        searchResult = "D";    
-                    }
-                }
-
-                else if (Y == true)
-                {
-                    bool RY = (currentWord[currentWord.Length - 2] == 'R') ? true : false;
-                    bool LY = (currentWord[currentWord.Length - 2] == 'L') ? true : false;
-
-                    if (LY == true)
-                    {
-
-                        bool ALLY = (currentWord[currentWord.Length - 4] == 'A' &&
-                                        currentWord[currentWord.Length - 3] == 'L') ? true : false;  
-
-                        if (ALLY == true)
-                        {
-                            searchResult = "ALLY";
-                        }
-
-                        else
-                        {
-                            searchResult = "LY";
-                        }                        
-                    }
-
-                    else if (RY == true)
-                    {
-                        searchResult = "RY";
-                    }
-
-                    else
-                    {
-                        searchResult = "Y";
-                    }                 
-                }            
-
-                else if (R == true)
-                {
-                    bool ER = (currentWord[currentWord.Length - 2] == 'E') ? true : false;  
-
-                    if (ER == true)
-                    {
-                        bool BER = (currentWord[currentWord.Length - 3] == 'B') ? true : false;
-                        bool LER = (currentWord[currentWord.Length - 3] == 'L') ? true : false;
-                        bool MER = (currentWord[currentWord.Length - 3] == 'M') ? true : false;
-                        bool NER = (currentWord[currentWord.Length - 3] == 'N') ? true : false;
-                        bool PER = (currentWord[currentWord.Length - 3] == 'P') ? true : false;
-                        bool TER = (currentWord[currentWord.Length - 3] == 'T') ? true : false;
-
-                        if (TER == true)
-                        {
-                            searchResult = "TER";
-                        }   
-                  
-                        else if (PER == true)
-                        {
-                            searchResult = "PER";
-                        }
-
-                        else if (NER == true)
-                        {
-                            searchResult = "NER";
-                        }
-
-                        else if (MER == true)
-                        {
-                            searchResult = "MER";
-                        }
-
-                        else if (LER == true)
-                        {
-                            searchResult = "LER";
-                        }
-                                     
-                        else if (BER == true)
-                        {
-                            searchResult = "BER";
-                        } 
-                               
-                        else 
-                        {
-                            searchResult = "ER";
-                        } 
-                    }
-
-                    else
-                    {
-                        return "R";
-                    }
-                }                      
-
-                if (L == true)
-                {
-                    bool AL = (currentWord[currentWord.Length - 2] == 'A') ? true : false;
-
-                    if (AL == true)
-                    {
-                        searchResult = "AL";
-                    }
-
-                    else
-                    {
-                        searchResult = "L";
-                    }
-                }
-
-                else if (ING == true)
-                {
-                    bool BING = (currentWord[currentWord.Length - 4] == 'B') ? true : false;
-                    bool LING = (currentWord[currentWord.Length - 4] == 'L') ? true : false;
-                    bool MING = (currentWord[currentWord.Length - 4] == 'M') ? true : false;
-                    bool NING = (currentWord[currentWord.Length - 4] == 'N') ? true : false;                
-                    bool PING = (currentWord[currentWord.Length - 4] == 'P') ? true : false;
-                    bool TING = (currentWord[currentWord.Length - 4] == 'T') ? true : false;
-                     
-                    if (TING == true)
-                    {
-                        searchResult = "TING";
-                    }   
-                  
-                    else if (PING == true)
-                    {
-                        searchResult = "PING";
-                    }
-
-                    else if (NING == true)
-                    {
-                        searchResult = "NING";
-                    }
-
-                    else if (MING == true)
-                    {
-                        searchResult = "MING";
-                    }
-
-                    else if (LING == true)
-                    {
-                        searchResult = "LING";
-                    }
-                                     
-                    else if (BING == true)
-                    {
-                        searchResult = "BING";
-                    } 
-                               
-                    else 
-                    {
-                        searchResult = "ING";
-                    }          
-                }
-            
-                else if (EST == true)
-                {
-                    searchResult = "EST";
-                }
-
-                else if (ABLE == true)
-                {
-                    bool BABLE = (currentWord[currentWord.Length - 5] == 'B') ? true : false;
-                    bool LABLE = (currentWord[currentWord.Length - 5] == 'L') ? true : false;
-                    bool MABLE = (currentWord[currentWord.Length - 5] == 'M') ? true : false;
-                    bool NABLE = (currentWord[currentWord.Length - 5] == 'N') ? true : false;
-                    bool PABLE = (currentWord[currentWord.Length - 5] == 'P') ? true : false;
-                    bool TABLE = (currentWord[currentWord.Length - 5] == 'T') ? true : false;
-
-                    if (TABLE == true)
-                    {
-                        searchResult = "TABLE";
-                    }   
-                
-                    else if (PABLE == true)
-                    {
-                        searchResult = "PABLE";
-                    }
-
-                    else if (NABLE == true)
-                    {
-                        searchResult = "NABLE";
-                    }
-
-                    else if (MABLE == true)
-                    {
-                        searchResult = "MABLE";
-                    }
-
-                    else if (LABLE == true)
-                    {
-                        searchResult = "LABLE";
-                    }
-
-                    else if (BABLE == true)
-                    {
-                        searchResult = "BABLE";
-                    }
-
-                    else
-                    {
-                        searchResult = "ABLE";
-                    }
-                }
-            }                         
-            return searchResult;
-        }
-
-        List <string> TakeFromDictionary (bool isNewWord, string sentence, int letterIndex, bool dumpRemainingLetters)
+        List <string> TakeFromDictionary (bool isNewWord, string sentence, int letterIndex)
         {
             List <string> output = new List <string>();
 
@@ -384,7 +78,7 @@ namespace SETextToSpeechMod
 
             if (placeholder < dictionaryMatch.Length)
             {
-                if (dumpRemainingLetters == true)
+                if (wordCounter.DumpRemainingLetters == true)
                 {
                     int counter = 0;
 
@@ -403,15 +97,10 @@ namespace SETextToSpeechMod
                     placeholder++;
                 }                
             }
-
-            else
-            {
-                output = AdjacentEvaluation (sentence, letterIndex); //reaching the end of a word in the dictionary either means it will add an extension or i didnt put enough spaces 
-            }
             return output;
         }
 
-        //AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary; including extensions.
+        //AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary
         List <string> AdjacentEvaluation (string sentence, int letterIndex)
         {
             const string VOWELS = "AEIOU";

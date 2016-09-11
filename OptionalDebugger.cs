@@ -8,7 +8,7 @@ namespace SETextToSpeechMod
         {
             MessageEventHandler handlers = new MessageEventHandler();
             Encoding test_encode = Encoding.Unicode;
-            string testString = "[ ok ok";
+            string testString = "[ AACHENER AACHENER";
             string upper = testString.ToUpper();
             byte[] testBytes = test_encode.GetBytes (upper);
             handlers.OnReceivedPacket (testBytes);
@@ -19,12 +19,15 @@ namespace SETextToSpeechMod
             }
             handlers.speeches.RemoveAt (0);
 
-            //ListBrokenWords();
+            PrintAdjacentEvalutionWords();
         }
 
-        static void ListBrokenWords()
+        static void PrintAdjacentEvalutionWords()
         {
-            System.Console.WriteLine ("sup");
+            const string resultsFile = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\";
+
+
+            System.IO.File.WriteAllLines
         }
     }
 }

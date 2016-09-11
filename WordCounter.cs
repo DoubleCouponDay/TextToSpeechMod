@@ -9,6 +9,7 @@ namespace SETextToSpeechMod
         int currentWord;
         int currentLetter;
         string[] words;
+        bool dumpRemainingLetters;
 
         public WordCounter (string inputSentence)
         {
@@ -17,13 +18,17 @@ namespace SETextToSpeechMod
             this.words = inputSentence.Split (' ');
         }
 
-        public string AnalyseCurrentPosition (ref int placeholder, ref bool DumpRemainingLetters)
+        public bool DumpRemainingLetters {get; private set;}
+
+        //chops the sentence into words and returns the current one. also returns related triggers.
+        public string AnalyseCurrentPosition (ref int placeholder)
         { 
             if (currentWord < words.Length)
             {
                 if (currentLetter == words[currentWord].Length - 1)
                 {
-                    DumpRemainingLetters = true;
+                    currentLetter++;
+                    dumpRemainingLetters = true;
                     return words[currentWord];
                 }
 
@@ -35,6 +40,7 @@ namespace SETextToSpeechMod
 
                 else
                 {
+                    dumpRemainingLetters = false;
                     currentWord++;
                     currentLetter = 0;
                     placeholder = NEW_WORD; //a space will never have a placeholder.                    
@@ -48,6 +54,7 @@ namespace SETextToSpeechMod
             }
         }
 
+        //resets a certain variable when the sentence ends.
         public int CheckForEnd (int placeholder, int NEW_WORD)
         {
             if (currentWord == words.Length - 1 &&
