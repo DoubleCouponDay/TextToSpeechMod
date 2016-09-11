@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.IO; //filewriter
 
 namespace SETextToSpeechMod
 {
@@ -24,10 +25,8 @@ namespace SETextToSpeechMod
 
         static void PrintAdjacentEvalutionWords()
         {
-            const string resultsFile = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\";
-
-
-            System.IO.File.WriteAllLines
+            const string resultsAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentWordsListDebugger.txt";
+            File.WriteAllText ();
         }
     }
 }
