@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SoundCategories>
+  
+    <SoundCategory>
+      <Id>
+        <TypeId>SoundCategoryDefinition</TypeId>
+        <SubtypeId>YIH 3</SubtypeId>
+      </Id>
+      
+      <Sounds>
+        <SoundDesc Id="YIH 3" SoundName="YIH 3" />
+      </Sounds>
+      
+    </SoundCategory>
+  </SoundCategories>
+  
+    <Sounds>
+        <Sound>
+            <Id>
+                <TypeId>AudioDefinition</TypeId>
+                <SubtypeId>YIH 3</SubtypeId>
+            </Id>
+            
+            <Category>Sb</Category>
+            <MaxDistance>100</MaxDistance>
+            <Volume>1.00</Volume>
+            <Loopable>true</Loopable>
+            
+            <Waves>
+                <Wave Type="D3">
+                    <Start>Audio\pitch 3\YIH 3.xwm</Start>
+                </Wave>
+            </Waves>
+        </Sound>
+    </Sounds>
+</Definitions> 
