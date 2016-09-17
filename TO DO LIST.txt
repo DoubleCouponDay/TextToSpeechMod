@@ -1,9 +1,17 @@
 TO DO
 ================//
-+ word listing debugger is still go
++ put all comment words in the debugger
++ make a new parameter when creating a SentenceProcession which will only play a sound if not debugging.
++ word listing debugger is still go. remember to discard spaces from results
++ make it point out double ups as well
 
 + some state paths can be combined in adjacent evaulation. this one is easy to screw up
 + bring back silent blocks?
+
++ add shi and chi (this is a phrase by phrase check. dont rush this.)
+SHI = {SIH, HIH,}, 
+CHI = {KIH, HIH,}, {TIH, SIH, HIH,},
+ERR = {RIH}
 
 + study old work in saved audacity project ._.
 + marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out

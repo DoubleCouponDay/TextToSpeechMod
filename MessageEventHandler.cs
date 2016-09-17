@@ -89,9 +89,9 @@ namespace SETextToSpeechMod
                     {
                         for (int i = 0; i < players.Count; i++) //performance danger
                         {                                       
-                            bool pacletSizeSucceeded = MyAPIGateway.Multiplayer.SendMessageTo (packet_ID, bytes, players[i].SteamUserId, true); //everyone will get this trigger including you.
+                            bool packetSizeSucceeded = MyAPIGateway.Multiplayer.SendMessageTo (packet_ID, bytes, players[i].SteamUserId, true); //everyone will get this trigger including you.
 
-                            if (pacletSizeSucceeded == false)
+                            if (packetSizeSucceeded == false)
                             {
                                 MyAPIGateway.Utilities.ShowMessage ("", "TRANSMISSION FAILED DUE TO PACKET SIZE LIMIT");
                                 break;
@@ -117,7 +117,7 @@ namespace SETextToSpeechMod
         { 
             string decoded = encode.GetString (bytes);
 
-            if (decoded == "[ STOP") //the killswitch; for whatever reason (looping the fuck out of your sim speed).
+            if (decoded == "[ STOP") //the killswitch for whatever reason (looping the fuck out of your sim speed).
             {
                 speeches.Clear();
             }

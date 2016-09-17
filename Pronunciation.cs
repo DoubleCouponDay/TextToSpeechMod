@@ -148,7 +148,7 @@ namespace SETextToSpeechMod
                                      "| LAB." + //lable
                                      "|..APL" + //maple
                                      "|..AY." + //may
-                                     "|.HASE" + //hase
+                                     "|.HAZE" + //haze
                                      "|.RASE" + //phrase
                                      "|..ABL" + //able
                                      "|..ACE" //space
@@ -396,7 +396,7 @@ namespace SETextToSpeechMod
                                      "|..ING" //running
                                      ))
                     {
-                        primary = PrettyScaryDictionary.EEE; //such as running
+                        primary = PrettyScaryDictionary.EEE;
                     }
     
                     else 
@@ -704,12 +704,12 @@ namespace SETextToSpeechMod
                                       "|.TY ." //ability
                                       )))                                   
                     {
-                        primary = PrettyScaryDictionary.EEE; //such as "flaky", negatively
+                        primary = PrettyScaryDictionary.EEE;
                     }
             
-                    else  
+                    else
                     {
-                        primary = PrettyScaryDictionary.YIH;  //such as "yam".
+                        primary = PrettyScaryDictionary.YIH;  //yam
                     }
                     break;
             

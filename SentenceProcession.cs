@@ -17,6 +17,12 @@ namespace SETextToSpeechMod
         bool loading = true;
         public bool finished { get; private set; }
 
+        public bool debugging
+        {
+            private get;
+            set;
+        }
+
         //indexs
         int letterIndex;
 
@@ -71,7 +77,7 @@ namespace SETextToSpeechMod
             {
                 int rng_bonk = generator.Next (CHANCE_OF_CLANG);
 
-                if (rng_bonk == 0)
+                if (rng_bonk == 0 && debugging == false)
                 {
                     SoundPlayer.PlayClip ("BONK", true); //it hurts to live
                 }
@@ -198,7 +204,11 @@ namespace SETextToSpeechMod
                 timelineCopy = timelineCopy.Remove (pointIndex, 1); //inputs index then count.
                 pointIndex--;
             } 
-            SoundPlayer.PlayClip (choiceExtracted, false);
+
+            if (debugging == false)
+            {
+                SoundPlayer.PlayClip (choiceExtracted, false);
+            }    
         }
     }
 }
