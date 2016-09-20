@@ -2017,7 +2017,7 @@
             Public members to easy access
             </summary>
         </member>
-        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32,System.Int32)">
             <summary>
             DrawTransparentBox
             </summary>
@@ -2246,17 +2246,6 @@
             Updates the world matrix (change caused by parent)
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldVolume">
-            <summary>
-            Updates the volume of this entity.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateAABBHr(VRageMath.BoundingBoxD@)">
-            <summary>
-            Update volume hr and of all children.
-            </summary>
-            <param name="volume"></param>
-        </member>
         <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
             <summary>
             Called when [world position changed].
@@ -2286,25 +2275,7 @@
             Gets the world volume.
             </summary>
         </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldAABBHr">
-            <summary>
-            Gets the hiearchical box in world.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.WorldVolumeHr">
-            <summary>
-            Gets the hiearchical volume in world.
-            </summary>
-        </member>
         <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABB">
-            <summary>
-            Sets the local aabb.
-            </summary>
-            <value>
-            The local aabb.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalAABBHr">
             <summary>
             Sets the local aabb.
             </summary>
@@ -2318,14 +2289,6 @@
             </summary>
             <value>
             The local volume.
-            </value>
-        </member>
-        <member name="P:VRage.Game.Components.MyPositionComponentBase.MaximalSize">
-            <summary>
-            Gets the maximal size.
-            </summary>
-            <value>
-            The Maximal size.
             </value>
         </member>
         <member name="P:VRage.Game.Components.MyPositionComponentBase.LocalVolumeOffset">
@@ -4762,7 +4725,7 @@
         </member>
         <member name="F:MyCommonTexts.MultiplayerError_IncorrectVersion">
             <summary>
-            Server has different version of the game. Your version: {0}; Server version: {1}
+            Server has different version of the game. Your version: {0}; Server version: {1}; You can change the branch, before launching the game, in game properties.
             </summary>
         </member>
         <member name="F:MyCommonTexts.ShowCrosshair">
@@ -5280,6 +5243,11 @@
             Mods
             </summary>
         </member>
+        <member name="F:MyCommonTexts.WorldSettings_Advanced">
+            <summary>
+            Advanced
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ToolTipWorkshopOpenModInWorkshop">
             <summary>
             Open selected mod in Workshop Steam Overlay
@@ -5497,7 +5465,7 @@
         </member>
         <member name="F:MyCommonTexts.DialogTextIncompatibleWorldVersion">
             <summary>
-            This world can not be loaded. It has been created in newer version of the game.
+            This world cannot be loaded. It has been created in a newer version of the game or in a different branch of the game. You can change the branch, before launching the game, in game properties.
             </summary>
         </member>
         <member name="F:MyCommonTexts.MessageBoxTextPublishFailed_AccessDenied">
@@ -6634,6 +6602,21 @@
         <member name="F:MyCommonTexts.ControlName_ChangeBlockVariants">
             <summary>
             Change block variants
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_Skin">
+            <summary>
+            Skin
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_SkinWarning">
+            <summary>
+            Note: Not all screens support skin at the moment
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.AnimatedRotation">
+            <summary>
+            Animated block preview
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">

@@ -1,64 +1,64 @@
-﻿using System.Collections.Generic;
-
-namespace SETextToSpeechMod
+﻿namespace SETextToSpeechMod
 {
     public class WordCounter //simply a collection of data without guarded sets. easy to pass.
     {                  
         const int NEW_WORD = -1; 
         const int LAST_LETTER = -3;
-        int currentWord;
+        int currentWordInt;
         int currentLetter;
         string[] words;
-        bool dumpRemainingLetters;
+        public bool dumpRemainingLetters {get; private set;}
+        public int placeholder {get; private set;}
+        public string currentWord {get; private set;}
 
         public WordCounter (string inputSentence)
         {
-            this.currentWord = 0;
-            this.currentLetter = 0;        
-            this.words = inputSentence.Split (' ');
+            currentWordInt = 0;
+            currentLetter = 0;        
+            words = inputSentence.Split (' ');
         }
 
-        public bool DumpRemainingLetters {get; private set;}
 
-        //chops the sentence into words and returns the current one. also returns related triggers.
-        public string AnalyseCurrentPosition (ref int placeholder)
+        //chops the sentence into words and stores its results.
+        public void IncrementCurrentPosition (int placeholderInput)
         { 
-            if (currentWord < words.Length)
+            if (currentWordInt < words.Length)
             {
-                if (currentLetter == words[currentWord].Length - 1)
+                if (currentLetter == words[currentWordInt].Length - 1)
                 {
                     currentLetter++;
                     dumpRemainingLetters = true;
-                    return words[currentWord];
+                    currentWord = words[currentWordInt];
                 }
-
-                else if (currentLetter < words[currentWord].Length)
+                
+                else if (currentLetter < words[currentWordInt].Length)
                 {
                     currentLetter++;
-                    return words[currentWord];
+                    currentWord = words[currentWordInt];
                 }
 
                 else
                 {
                     dumpRemainingLetters = false;
-                    currentWord++;
+                    currentWordInt++;
                     currentLetter = 0;
-                    placeholder = NEW_WORD; //a space will never have a placeholder.                    
-                    return " "; //empty space is a valid return.
+                    placeholderInput = NEW_WORD; //a space will never have a placeholder.  
+                    currentWord = " ";                  
                 }
-            }
-        
+            }    
+            
             else
             {
-                return "";
-            }
+                currentWord = "";
+            }   
+            placeholder = placeholderInput;
         }
 
         //resets a certain variable when the sentence ends.
         public int CheckForEnd (int placeholder, int NEW_WORD)
         {
-            if (currentWord == words.Length - 1 &&
-                currentLetter == words[currentWord].Length) //resets the placeholder since script doesnt construct a new class for every sentence.
+            if (currentWordInt == words.Length - 1 &&
+                currentLetter == words[currentWordInt].Length) //resets the placeholder since script doesnt construct a new class for every sentence.
             { 
                 placeholder = NEW_WORD;
             }

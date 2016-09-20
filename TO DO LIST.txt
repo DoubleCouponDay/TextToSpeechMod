@@ -1,9 +1,7 @@
 TO DO
 ================//
-+ put all comment words in the debugger
-+ make a new parameter when creating a SentenceProcession which will only play a sound if not debugging.
-+ word listing debugger is still go. remember to discard spaces from results
-+ make it point out double ups as well
++ fix non matching words.
++ add new words (ITS DIFFERENT NOW. ADD TO DEBUGGER AND TO ADJACENT)
 
 + some state paths can be combined in adjacent evaulation. this one is easy to screw up
 + bring back silent blocks?
@@ -18,10 +16,6 @@ ERR = {RIH}
 + see if its feasible to use marek consonants
 + test words before overwriting
 
-+ add new words.
-+ create new private mod and script just for testing
-+ edit the batch file to point to this new directory
-
 + an interface should be designed for SentenceProcession so that all different voices can have the same structure, but different spacing when needed
 + use autotune free trial to create pitch.
 
@@ -29,7 +23,7 @@ ERR = {RIH}
 
 + find out if you can move entity with mouse input
 
-+ document everything
++ create documentation and flow charts.
 
 BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
 =================//
@@ -55,3 +49,4 @@ prude ~
 ludicrous~
 assault
 ok
+done

@@ -1827,7 +1827,8 @@
             <summary>
             Client method. Decorated method is be called by server on all clients.
             Clients always trust server and does not perform any validation.
-            When used together with Server attribute, server validates data, invokes the method on server and then sends it to all clients.
+            When used together with Server attribute, server (optionally) validates data, invokes the method on server and then sends it to all clients.
+            If the data is found invalid, it can be marked so by calling MyEventContext.ValidationFailed() on the server. The broadcasts will then not be performed.
             </summary>
         </member>
         <member name="T:VRage.Network.ClientAttribute">
@@ -1938,7 +1939,7 @@
             Gets dependency which must be replicated first.
             </summary>
         </member>
-        <member name="M:VRage.Network.IMyReplicable.GetPriority(VRage.Network.MyClientInfo,System.Boolean)">
+        <member name="M:VRage.Network.IMyReplicable.GetPriority(VRage.Network.MyClientInfo)">
             <summary>
             Gets priority related to client.
             When priority is lower than zero, it means the object is not relevant for client.
@@ -1981,12 +1982,12 @@
             Dependency can change during replicable runtime, IsChild can not.
             </summary>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.CreateClientData(VRage.Network.ClientData)">
+        <member name="M:VRage.Network.IMyStateGroup.CreateClientData(VRage.Network.MyClientStateBase)">
             <summary>
             Called on server new clients starts replicating this group.
             </summary>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.DestroyClientData(VRage.Network.ClientData)">
+        <member name="M:VRage.Network.IMyStateGroup.DestroyClientData(VRage.Network.MyClientStateBase)">
             <summary>
             Called on server when client stops replicating this group.
             </summary>

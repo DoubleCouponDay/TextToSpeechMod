@@ -15,8 +15,10 @@ namespace SETextToSpeechMod
         const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
         const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of steam mod as packet ID.
-        bool initialised = false;
-        bool runUpdates = false;
+
+        bool initialised;
+        bool runUpdates;
+        public bool debugging {private get; set;}
         int timer = 0;        
         Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.
         List <IMyPlayer> players = new List <IMyPlayer>();
@@ -67,7 +69,7 @@ namespace SETextToSpeechMod
 
         void Initialise() //this wouldnt work as a constructor because im guessing some assets arent available during load time.
         {
-            initialised = true;            
+            initialised = true;           
             MyAPIGateway.Utilities.MessageEntered += OnMessageEntered; //subscribes my method to the MessageEntered event.
             MyAPIGateway.Multiplayer.RegisterMessageHandler (packet_ID, OnReceivedPacket); //registers a multiplayer packet receiver.
             SoundPlayer.InitialiseEmitter();
@@ -127,7 +129,7 @@ namespace SETextToSpeechMod
                 MyAPIGateway.Utilities.ShowMessage ("TTS MOD VERSION: ", VERSION);
             }
             
-            else if (decoded.Length > MAX_LETTERS) //letter limit for mental health concerns.
+            else if (decoded.Length > MAX_LETTERS && debugging == false) //letter limit for mental health concerns.
             {
                 MyAPIGateway.Utilities.ShowMessage (Convert.ToString (MAX_LETTERS), " LETTER LIMIT REACHED");
             }

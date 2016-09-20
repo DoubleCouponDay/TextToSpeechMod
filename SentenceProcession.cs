@@ -14,17 +14,16 @@ namespace SETextToSpeechMod
         const int CHANCE_OF_CLANG = 10000;
 
         //state
-        bool loading = true;
-        public bool finished { get; private set; }
+        public bool loading {get; private set;}
+        public bool finished {get; private set;}
 
-        public bool debugging
-        {
-            private get;
-            set;
-        }
+        //debugging
+        public bool debugging {private get; set;}
+        public string sentence {get; private set;}
 
-        //indexs
+        //index
         int letterIndex;
+        int syllableMeasurer = 1;    
 
         //play data
         string timeline;
@@ -32,21 +31,21 @@ namespace SETextToSpeechMod
         int timelineSize;
         int currentTick;
 
-        //miscellaneous
-        int syllableMeasurer = 1; //a measure of how far along each syllable is.
-        string sentence;
+        //loading data            
         bool previousWasSpace;
+        public List <string> results {get; private set;}
 
         //objects    
         Random generator = new Random();
-        Pronunciation pronunciation;
+        public Pronunciation pronunciation {get; private set;}
         StringBuilder stringLite = new StringBuilder();
 
         //------------------------------------------------------------------------------------------------------------------------------//
         public SentenceProcession (string input)
         {
-            this.sentence = input.Remove (0, 2); //getting rid of the trigger since its unnecessary. while testing, words smaller than the count of 2 will throw therefore...     
-            this.pronunciation = new Pronunciation (sentence);
+            sentence = input.Remove (0, 2); //getting rid of the trigger since its unnecessary. while testing, words smaller than the count of 2 will throw therefore...     
+            pronunciation = new Pronunciation (sentence);
+            loading = true;
         }
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
@@ -56,11 +55,8 @@ namespace SETextToSpeechMod
             {   
                 if (letterIndex < sentence.Length)
                 {                
-                    while (letterIndex < sentence.Length)
-                    {    
-                        AddPhoneme(); 
-                        letterIndex++;
-                    }
+                    AddPhoneme(); 
+                    letterIndex++;
                 }   
 
                 else
@@ -77,9 +73,9 @@ namespace SETextToSpeechMod
             {
                 int rng_bonk = generator.Next (CHANCE_OF_CLANG);
 
-                if (rng_bonk == 0 && debugging == false)
+                if (rng_bonk == 0)
                 {
-                    SoundPlayer.PlayClip ("BONK", true); //it hurts to live
+                    SoundPlayer.PlayClip (debugging, "BONK", true); //it hurts to live
                 }
                 Play();    
             }    
@@ -88,7 +84,7 @@ namespace SETextToSpeechMod
         //creates a new clip for the current letter.
         void AddPhoneme()
         {   
-            List <string> results = pronunciation.GetLettersPronunciation (sentence, letterIndex);
+            results = pronunciation.GetLettersPronunciation (sentence, letterIndex);
 
             for (int i = 0; i < results.Count; i++)
             {
@@ -204,11 +200,7 @@ namespace SETextToSpeechMod
                 timelineCopy = timelineCopy.Remove (pointIndex, 1); //inputs index then count.
                 pointIndex--;
             } 
-
-            if (debugging == false)
-            {
-                SoundPlayer.PlayClip (choiceExtracted, false);
-            }    
+            SoundPlayer.PlayClip (debugging, choiceExtracted, false);  
         }
     }
 }

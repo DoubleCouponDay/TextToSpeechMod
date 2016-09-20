@@ -1,5 +1,8 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.IO; //filewriter
+using System.Collections;
+using System.Collections.Specialized;
 using System.Collections.Generic;
 
 namespace SETextToSpeechMod
@@ -8,26 +11,31 @@ namespace SETextToSpeechMod
     {
         static void Main()
         {
-            MessageEventHandler handlers = new MessageEventHandler();
+            MessageEventHandler handler = new MessageEventHandler();
             Encoding test_encode = Encoding.Unicode;
-            string testString = "[ ";
+            AdjacentTester methodDebugger = new AdjacentTester();
+
+            string testString = methodDebugger.RollOutAdjacentWords();
             string upper = testString.ToUpper();
             byte[] testBytes = test_encode.GetBytes (upper);
-            handlers.OnReceivedPacket (testBytes);
-            handlers.speeches[0].debugging = true;
+            handler.debugging = true;
+            handler.OnReceivedPacket (testBytes);
+            handler.speeches[0].debugging = true;
 
-            while (handlers.speeches[0].finished == false)
+            while (handler.speeches[0].finished == false)
             {
-                handlers.speeches[0].Load();
+                handler.speeches[0].Load();
+
+                if (handler.speeches[0].loading == true)
+                {
+                    methodDebugger.StoreResults (handler.speeches[0].pronunciation.wordCounter.currentWord, handler.speeches[0].results);
+                }
             }
-            handlers.speeches.RemoveAt (0);
+            methodDebugger.PrintResults();
         }
 
-        static class AdjacentTester
-        {
-            const string resultsAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentWordsListDebugger.txt";
-
-            static readonly string[] row = PrettyScaryDictionary.row;
+        class AdjacentTester
+        {            
             const string AEE = PrettyScaryDictionary.AEE;
             const string AHH = PrettyScaryDictionary.AHH; 
             const string AWW = PrettyScaryDictionary.AWW; 
@@ -59,8 +67,9 @@ namespace SETextToSpeechMod
             const string WIH = PrettyScaryDictionary.WIH; 
             const string YIH = PrettyScaryDictionary.YIH; 
             const string ZIH = PrettyScaryDictionary.ZIH;
+            static readonly string[] row = PrettyScaryDictionary.row;
 
-            static Dictionary <string, string[]> adjacentWords = new Dictionary <string, string[]>
+            readonly OrderedDictionary adjacentWords = new OrderedDictionary
             {
                 {"", new string[]{  }},
                 {"_A_", row}, {"ABLE", new string[]{ AEE, BIH, LIH, }}, {"A", new string[]{ UHH, }}, {"AVAILABLE", new string[]{ UHH, VIH, AEE, LIH, UHH, BIH, LIH, }}, {"AUTOGRAPH", new string[]{ AWW, TIH, OWE, GIH, RIH, AHH, FIH, }}, {"ACTIVITIES", new string[]{ AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, }}, {"AGGRESSION", new string[]{ UHH, GIH, RIH, EHH, SIH, HIH, UHH, NIH, }}, {"ABORIGINE", new string[]{ AHH, BIH, AWW, RIH, IHH, JIH, NIH, EEE, }}, {"ANNOINT", new string[]{ UHH, NIH, AWW, EEE, NIH, TIH, }}, {"ASTRONAUT", new string[]{ AHH, SIH, TIH, RIH, OWE, NIH, AWW, TIH, }}, {"ASSAULT", new string[]{ UHH, SIH, HOH, LIH, TIH, }}, {"ABOITEAU", new string[]{ UHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABOITEAUX", new string[]{ UHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABILITY", new string[]{ UHH, BIH, IHH, LIH, IHH, TIH, EEE, }},
@@ -72,7 +81,7 @@ namespace SETextToSpeechMod
                 {"_G_", row}, {"GREAT", new string[]{ GIH, RIH, AEE, TIH, }}, {"GIBBERISH", new string[]{ JIH, IHH, BIH, RIH, IHH, SIH, HIH, }}, {"GYM", new string[]{ JIH, IHH, MIH, }}, {"GIN", new string[]{ JIH, IHH, NIH, }}, {"GIVEN", new string[]{ GIH, IHH, VIH, EHH, NIH, }}, {"GUY", new string[]{ GIH, EYE, }},
                 {"_H_", row}, {"HAZE", new string[]{ HIH, AEE, ZIH, }}, {"HE", new string[]{ HIH, EEE, }}, {"HIGH", new string[]{ HIH, EYE, }}, {"HUB", new string[]{ HIH, UHH, BIH, }}, {"HYENA", new string[]{ HIH, EYE, EEE, NIH, UHH, }},
                 {"_I_", row}, {"I", new string[]{ EYE, }}, {"IMPROVE", new string[]{ IHH, MIH, PIH, RIH, OOO, VIH, }},
-                {"_J_", row}, {"JUDGE", new string[]{ JIH, UHH, DIH, JIH, }}, {"JUDGEMENT", new string[]{ JIH, UHH, DIH, JIH, MIH, EHH, NIH, TIH, }}, {"JOHN", new string[]{ JIH, HOH, NIH, }}, {"JELLY", new string[]{ JIH, EHH, LIH, EEE, }}, {"JOHN", new string[]{ JIH, HOH, NIH, }},
+                {"_J_", row}, {"JUDGE", new string[]{ JIH, UHH, DIH, JIH, }}, {"JUDGEMENT", new string[]{ JIH, UHH, DIH, JIH, MIH, EHH, NIH, TIH, }}, {"JOHN", new string[]{ JIH, HOH, NIH, }}, {"JELLY", new string[]{ JIH, EHH, LIH, EEE, }},
                 {"_K_", row}, {"KEY", new string[]{ KIH, EEE, }}, {"KNIGHT", new string[]{ NIH, EYE, TIH, }}, {"KITE", new string[]{ KIH, EYE, TIH, }},
                 {"_L_", row}, {"LEAF", new string[]{ LIH, EEE, FIH, }}, {"LABEL", new string[]{ LIH, AEE, BIH, LIH, }}, {"LAST", new string[]{ LIH, AHH, SIH, TIH, }}, {"LADDER", new string[]{ LIH, AHH, DIH, RIH, }}, {"LOVELY", new string[]{ LIH, UHH, VIH, LIH, EEE, }}, {"LEAD", new string[]{ LIH, EEE, DIH, }}, {"LIGHT", new string[]{ LIH, EYE, TIH, }}, {"LORE", new string[]{ LIH, AWW, RIH, }}, {"LIKELY", new string[]{ LIH, EYE, KIH, LIH, EEE, }},
                 {"_M_", row}, {"MAPLE", new string[]{ MIH, AEE, PIH, LIH, }}, {"MAY", new string[]{ MIH, AEE, }}, {"ME", new string[]{ MIH, EEE, }}, {"MAYBE", new string[]{ MIH, AEE, BIH, EEE, }}, {"MOLTEN", new string[]{ MIH, HOH, LIH, TIH, EHH, NIH, }},
@@ -81,16 +90,150 @@ namespace SETextToSpeechMod
                 {"_P_", row}, {"PHRASE", new string[]{ FIH, RIH, AEE, SIH, }}, {"PLOTTABLE", new string[]{ PIH, LIH, HOH, TIH, UHH, BIH, LIH, }}, {"PLATED", new string[]{ PIH, LIH, AEE, TIH, EHH, DIH, }}, {"PLANET", new string[]{ PIH, LIH, AHH, NIH, EHH, TIH, }}, {"PHAROAH", new string[]{ FIH, EHH, RIH, OWE, }}, {"PIKE", new string[]{ PIH, EYE, KIH, }}, {"POINT", new string[]{ PIH, AWW, EEE, NIH, TIH, }}, {"PLANNER", new string[]{ PIH, LIH, AHH, NIH, RIH, }}, {"POUCH", new string[]{ PIH, AHH, OOO, KIH, HIH, }}, {"PRO", new string[]{ PIH, RIH, OWE, }}, {"PRISM", new string[]{ PIH, RIH, IHH, SIH, MIH, }}, {"PURR", new string[]{ PIH, RIH, }}, {"PULL", new string[]{ PIH, OOO, LIH, }},
                 {"_Q_", row}, {"QUEUE", new string[]{ KIH, YIH, OOO, }}, {"QUERY", new string[]{ KIH, WIH, EHH, RIH, EEE, }},
                 {"_R_", row}, {"RAW", new string[]{ RIH, AWW, }}, {"ROW", new string[]{ RIH, OWE, }}, {"ROB", new string[]{ RIH, HOH, BIH, }}, {"RUBBER", new string[]{ RIH, UHH, BIH, RIH, }}, {"REMEMBER", new string[]{ RIH, EEE, MIH, EHH, MIH, BIH, RIH, }}, {"RUNNING", new string[]{ RIH, UHH, NIH, EEE, NIH, }}, {"ROUTE", new string[]{ RIH, OOO, TIH, }}, {"RUDE", new string[]{ RIH, OOO, DIH, }}, {"RUIN", new string[]{ RIH, OOO, IHH, NIH, }},
-                {"_S_", row}, {"SAUL", new string[]{ SIH, AWW, LIH, }}, {"STEAK", new string[]{ SIH, TIH, AEE, KIH, }}, {"SPACE", new string[]{ SIH, PIH, AEE, SIH, }}, {"STACY", new string[]{ SIH, TIH, AEE, SIH, EEE, }}, {"SICILY", new string[]{ SIH, IHH, SIH, IHH, LIH, EEE, }}, {"SPEECH", new string[]{ SIH, PIH, EEE, EEE, KIH, HIH, }}, {"STEIN", new string[]{ SIH, TIH, EEE, NIH, }}, {"SKIES", new string[]{ SIH, KIH, EYE, SIH, }}, {"SIGN", new string[]{ SIH, EYE, NIH, }}, {"SPITE", new string[]{ SIH, PIH, EYE, TIH, }}, {"SOUR", new string[]{ SIH, AHH, HOH, WIH, UHH, }}, {"SLOUCH", new string[]{ SIH, LIH, AHH, OOO, KIH, HIH, }}, {"SOUL", new string[]{ SIH, OWE, WIH, IHH, LIH, }}, {"SOLE", new string[]{ SIH, OWE, WIH, IHH, LIH, }}, {"SOLO", new string[]{ SIH, OWE, LIH, OWE, }}, {"SLOTH", new string[]{ SIH, LIH, HOH, THI, }}, {"SUBMIT", new string[]{ SIH, UHH, BIH, MIH, IHH, TIH, }}, {"SKY", new string[]{ SIH, KIH, EYE, }}, {"STYLE", new string[]{ SIH, TIH, EYE, LIH, }},
+                {"_S_", row}, {"SAUL", new string[]{ SIH, AWW, LIH, }}, {"STEAK", new string[]{ SIH, TIH, AEE, KIH, }}, {"SPACE", new string[]{ SIH, PIH, AEE, SIH, }}, {"STACY", new string[]{ SIH, TIH, AEE, SIH, EEE, }}, {"SICILY", new string[]{ SIH, IHH, SIH, IHH, LIH, EEE, }}, {"SPEECH", new string[]{ SIH, PIH, EEE, EEE, KIH, HIH, }}, {"STEIN", new string[]{ SIH, TIH, EEE, NIH, }}, {"SKIES", new string[]{ SIH, KIH, EYE, SIH, }}, {"SIGN", new string[]{ SIH, EYE, NIH, }}, {"SPITE", new string[]{ SIH, PIH, EYE, TIH, }}, {"SOUR", new string[]{ SIH, AHH, HOH, WIH, UHH, }}, {"SLOUCH", new string[]{ SIH, LIH, AHH, OOO, KIH, HIH, }}, {"SOUL", new string[]{ SIH, OWE, WIH, IHH, LIH, }}, {"SOLE", new string[]{ SIH, OWE, WIH, IHH, LIH, }}, {"SOLO", new string[]{ SIH, OWE, LIH, OWE, }}, {"SLOTH", new string[]{ SIH, LIH, HOH, THI, }}, {"SUBMIT", new string[]{ SIH, UHH, BIH, MIH, IHH, TIH, }}, {"SKY", new string[]{ SIH, KIH, EYE, }}, {"STYLE", new string[]{ SIH, TIH, EYE, LIH, }}, {"SOLILOQUY", new string[]{ SIH, HOH, LIH, IHH, LIH, HOH, KIH, WIH, EEE, }},
                 {"_T_", row}, {"TABLE", new string[]{ TIH, AEE, BIH, LIH, }}, {"THE", new string[]{ THI, UHH, }}, {"TRIBE", new string[]{ TIH, RIH, EYE, BIH, }}, {"THESE", new string[]{ THI, EEE, SIH, }}, {"TREKKIES", new string[]{ TIH, RIH, EHH, KIH, EEE, SIH, }}, {"THERE", new string[]{ THI, EHH, RIH, }}, {"TRIGGER", new string[]{ TIH, RIH, IHH, GIH, RIH, }}, {"TALKING", new string[]{ TIH, AWW, KIH, EEE, NIH, }}, {"THIGH", new string[]{ THI, EYE, }}, {"TRACTION", new string[]{ TIH, RIH, AHH, KIH, SIH, HIH, UHH, NIH, }}, {"TOUCH", new string[]{ TIH, UHH, TIH, SIH, HIH, }}, {"TOLD", new string[]{ TIH, HOH, LIH, DIH, }}, {"TODAY", new string[]{ TIH, OOO, DIH, AEE, }}, {"THINK", new string[]{ THI, IHH, NIH, KIH, }}, {"TOTALLY", new string[]{ TIH, OWE, TIH, UHH, LIH, EEE, }},
                 {"_U_", row}, {"UNDEVELOPED", new string[]{ UHH, NIH, DIH, EHH, VIH, EHH, LIH, HOH, PIH, DIH, }}, {"UPDATE", new string[]{ UHH, PIH, DIH, AEE, TIH, }},
                 {"_V_", row}, {"VETO", new string[]{ VIH, EEE, TIH, OWE, }},
                 {"_W_", row}, {"WATER", new string[]{ WIH, AWW, TIH, RIH, }}, {"WHAT", new string[]{ WIH, HOH, TIH, }}, {"WE", new string[]{ WIH, EEE, }}, {"WORD", new string[]{ WIH, RIH, DIH, }},
                 {"_X_", row}, {"XYLOPHONE", new string[]{ ZIH, EYE, LIH, UHH, FIH, OWE, NIH, }},
-                {"_Y_", row}, {"YOU", new string[]{ YIH, OOO, }}, {"SOLILOQUY", new string[]{ SIH, HOH, LIH, IHH, LIH, HOH, KIH, WIH, EEE, }}, {"YAM", new string[]{ YIH, AHH, MIH, }},
+                {"_Y_", row}, {"YOU", new string[]{ YIH, OOO, }}, {"YAM", new string[]{ YIH, AHH, MIH, }},
                 {"_Z_", row},
             };
-            //File.WriteAllText ();
+            const string fileAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";                        
+
+            OrderedDictionary emptiesRemoved = new OrderedDictionary();            
+            OrderedDictionary tabledResults = new OrderedDictionary();
+            ICollection adjacentKeys;
+            ICollection resultKeys;
+
+            public AdjacentTester()
+            {
+                emptiesRemoved = adjacentWords;
+                adjacentKeys = emptiesRemoved.Keys;
+                resultKeys = tabledResults.Keys;
+            }
+
+            public string RollOutAdjacentWords()
+            {
+                string rolledOut = "[ ";                
+
+                //removing row markers
+                for (int i = 0; i < emptiesRemoved.Count; i++) 
+                {                    
+                    string[] currentAdjacentValue = emptiesRemoved[i] as string[];
+
+                    if (currentAdjacentValue.IsNullOrEmpty())
+                    {
+                        emptiesRemoved.RemoveAt (i);
+                        i--;
+                    }
+                }
+
+                //adding
+                //these two loops need to be seperate due to the nature ordered dictionary enumerators.
+                IEnumerator addingIndex = adjacentKeys.GetEnumerator(); 
+
+                for (int i = 0; i < emptiesRemoved.Count; i++) 
+                {                    
+                    addingIndex.MoveNext();                       
+                    rolledOut += addingIndex.Current.ToString() + " ";
+                }
+                return rolledOut;
+            }
+
+            public void StoreResults (string currentWord, List <string> phonemes)
+            {
+                if (currentWord != " ")
+                {                    
+                    for (int i = 0; i < phonemes.Count; i++)
+                    {
+                        if (phonemes[i] == " " ||
+                            phonemes[i] == "")
+                        {
+                            phonemes.RemoveAt (i);
+                            i--;
+                        }
+                    }
+                    string[] formattedPhonemes = phonemes.ToArray();
+
+                    if (tabledResults.Contains (currentWord))
+                    {
+                        string[] previousEntry = tabledResults[currentWord] as string[];
+                        string[] largerAccommodation = new string[previousEntry.Length + formattedPhonemes.Length];
+                        
+                        for (int i = 0; i < largerAccommodation.Length; i++)
+                        {
+                            if (i < previousEntry.Length)
+                            {
+                                largerAccommodation[i] = previousEntry[i];
+                            }
+
+                            else
+                            {
+                                largerAccommodation[i] = formattedPhonemes[i - previousEntry.Length];
+                            }
+                        }                    
+                        tabledResults[currentWord] = largerAccommodation;
+                    }
+
+                    else
+                    {
+                        tabledResults.Add (currentWord, formattedPhonemes);
+                    }
+                }
+            }
+
+            public void PrintResults()
+            {                
+                string[] lines = new string[emptiesRemoved.Count];
+                IEnumerator adjacentIndex = adjacentKeys.GetEnumerator();
+                IEnumerator resultsIndex = resultKeys.GetEnumerator();
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    adjacentIndex.MoveNext();
+                    resultsIndex.MoveNext();
+                    string currentAdjacentKey = adjacentIndex.Current.ToString();
+                    string currentResultsKey = resultsIndex.Current.ToString();
+                    string[] currentAdjacentValue = emptiesRemoved[currentAdjacentKey] as string[];
+                    string[] currentResultsValue = tabledResults[currentResultsKey] as string[];
+                    bool isMatch = false;
+
+                    lines[i] = adjacentIndex.Current.ToString() + "      { ";
+
+                    for (int f = 0; f < currentAdjacentValue.Length; f++)
+                    {
+                        lines[i] += currentAdjacentValue[f] + ", ";
+
+                        if (currentAdjacentValue.Length == currentResultsValue.Length)
+                        {
+                            if (currentAdjacentValue[f] == currentResultsValue[f])
+                            {
+                                isMatch = true;
+                            }
+                        }                      
+                    }
+                    lines[i] += "} { ";
+
+                    for (int k = 0; k < currentResultsValue.Length; k++)
+                    {
+                        lines[i] += currentResultsValue[k] + ", ";
+                    }
+                    lines[i] += "} ";
+
+                    switch (isMatch)
+                    {
+                        case true:
+                        lines[i] = "correct ------ " + lines[i];
+                            break;
+
+                        case false:
+                            lines[i] = "incorrect ------ " + lines[i];
+                            break;
+                    }
+                }
+                File.WriteAllLines (fileAddress, lines);
+            }
         }
     }
 }

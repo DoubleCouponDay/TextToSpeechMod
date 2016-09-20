@@ -1,0 +1,170 @@
+correct ------ ABLE      { AEE, BIH, LIH, } { AEE, BIH, LIH, } 
+correct ------ A      { UHH, } { UHH, } 
+incorrect ------ AVAILABLE      { UHH, VIH, AEE, LIH, UHH, BIH, LIH, } { UHH, VIH, AEE, IHH, LIH, AEE, BIH, LIH, } 
+correct ------ AUTOGRAPH      { AWW, TIH, OWE, GIH, RIH, AHH, FIH, } { AWW, TIH, OWE, GIH, RIH, AHH, FIH, } 
+correct ------ ACTIVITIES      { AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, } { AHH, KIH, TIH, EYE, VIH, EYE, TIH, EEE, SIH, } 
+incorrect ------ AGGRESSION      { UHH, GIH, RIH, EHH, SIH, HIH, UHH, NIH, } { AHH, GIH, RIH, EHH, SIH, SIH, HIH, UHH, NIH, } 
+correct ------ ABORIGINE      { AHH, BIH, AWW, RIH, IHH, JIH, NIH, EEE, } { AHH, BIH, AWW, RIH, IHH, GIH, EYE, NIH, } 
+correct ------ ANNOINT      { UHH, NIH, AWW, EEE, NIH, TIH, } { AHH, NIH, AWW, EEE, NIH, TIH, } 
+correct ------ ASTRONAUT      { AHH, SIH, TIH, RIH, OWE, NIH, AWW, TIH, } { UHH, SIH, TIH, RIH, OWE, NIH, AWW, TIH, } 
+correct ------ ASSAULT      { UHH, SIH, HOH, LIH, TIH, } { AHH, SIH, AWW, LIH, TIH, } 
+incorrect ------ ABOITEAU      { UHH, BIH, AWW, EEE, TIH, OWE, } { AHH, BIH, AWW, EYE, TIH, EEE, AWW, } 
+incorrect ------ ABOITEAUX      { UHH, BIH, AWW, EEE, TIH, OWE, } { AHH, BIH, AWW, EYE, TIH, EEE, AWW, KSS, } 
+correct ------ ABILITY      { UHH, BIH, IHH, LIH, IHH, TIH, EEE, } { AHH, BIH, EYE, LIH, IHH, TIH, EEE, } 
+correct ------ BREAK      { BIH, RIH, AEE, KIH, } { BIH, RIH, AEE, KIH, } 
+correct ------ BREW      { BIH, RIH, OOO, } { BIH, RIH, OOO, } 
+correct ------ BE      { BIH, EEE, } { BIH, EEE, } 
+correct ------ BIKE      { BIH, EYE, KIH, } { BIH, EYE, KIH, } 
+correct ------ BESTOW      { BIH, EHH, SIH, TIH, OWE, } { BIH, EHH, SIH, TIH, OWE, } 
+correct ------ BOTH      { BIH, OWE, THI, } { BIH, OWE, THI, } 
+correct ------ BOT      { BIH, HOH, TIH, } { BIH, HOH, TIH, } 
+correct ------ BRUTE      { BIH, RIH, OOO, TIH, } { BIH, RIH, OOO, TIH, } 
+correct ------ BUT      { BIH, UHH, TIH, } { BIH, UHH, TIH, } 
+correct ------ BUY      { BIH, EYE, } { BIH, EYE, } 
+correct ------ BICYCLE      { BIH, EYE, SIH, EYE, KIH, LIH, } { BIH, IHH, SIH, EYE, KIH, LIH, } 
+correct ------ BABY      { BIH, AEE, BIH, EEE, } { BIH, AHH, BIH, EEE, } 
+correct ------ COMPARE      { KIH, HOH, MIH, PIH, EHH, RIH, } { KIH, UHH, MIH, PIH, EHH, RIH, } 
+correct ------ COMPLICIT      { KIH, HOH, MIH, PIH, IHH, LIH, SIH, IHH, TIH, } { KIH, UHH, MIH, PIH, LIH, EYE, SIH, IHH, TIH, } 
+correct ------ CAT      { KIH, AHH, TIH, } { KIH, AHH, TIH, } 
+correct ------ CALLER      { KIH, AWW, LIH, RIH, } { KIH, AHH, LIH, RIH, } 
+incorrect ------ COMPUTER      { KIH, HOH, MIH, PIH, YIH, OOO, TIH, RIH, } { KIH, UHH, MIH, PIH, TIH, RIH, } 
+correct ------ CHAMPION      { KIH, HIH, AHH, MIH, PIH, EEE, UHH, NIH, } { KIH, HIH, AHH, MIH, PIH, IHH, UHH, NIH, } 
+correct ------ COLLECTED      { KIH, HOH, LIH, EHH, KIH, TIH, EHH, DIH, } { KIH, HOH, LIH, EHH, KIH, TIH, EHH, DIH, } 
+incorrect ------ CAUGHT      { KIH, AWW, TIH, } { KIH, AWW, GIH, TIH, } 
+incorrect ------ CRUELTY      { KIH, RIH, OOO, LIH, TIH, EEE, } { KIH, RIH, OOO, EHH, LIH, TIH, EEE, } 
+correct ------ CRUD      { KIH, RIH, UHH, DIH, } { KIH, RIH, OOO, DIH, } 
+correct ------ CUT      { KIH, UHH, TIH, } { KIH, UHH, TIH, } 
+correct ------ CHIVALRY      { KIH, HIH, IHH, VIH, AHH, LIH, RIH, EEE, } { KIH, HIH, EYE, VIH, AHH, LIH, RIH, EEE, } 
+correct ------ DEAL      { DIH, EEE, LIH, } { DIH, EEE, LIH, } 
+correct ------ DRESSES      { DIH, RIH, EHH, SIH, EHH, SIH, } { DIH, RIH, EHH, SIH, EHH, SIH, } 
+correct ------ DESIGN      { DIH, EEE, SIH, EYE, NIH, } { DIH, EEE, SIH, EYE, NIH, } 
+incorrect ------ DOUGH      { DIH, OWE, } { DIH, OOO, GIH, } 
+correct ------ DRUMMER      { DIH, RIH, UHH, MIH, RIH, } { DIH, RIH, OOO, MIH, RIH, } 
+correct ------ EYE      { EYE, } { EYE, } 
+correct ------ ENGINEER      { EHH, NIH, JIH, IHH, NIH, EEE, RIH, } { EHH, NIH, GIH, EYE, NIH, EEE, RIH, } 
+incorrect ------ EULOGY      { YIH, OOO, LIH, HOH, JIH, EEE, } { OOO, LIH, OWE, GIH, YIH, } 
+correct ------ END      { EHH, NIH, DIH, } { EHH, NIH, DIH, } 
+incorrect ------ FAITH      { FIH, AEE, THI, } { FIH, AEE, IHH, THI, } 
+correct ------ FAR      { FIH, UHH, RIH, } { FIH, UHH, RIH, } 
+incorrect ------ FAIR      { FIH, EHH, RIH, } { FIH, EHH, IHH, RIH, } 
+correct ------ FOLLOW      { FIH, HOH, LIH, OWE, } { FIH, HOH, LIH, OWE, } 
+incorrect ------ FILED      { FIH, EYE, LIH, DIH, } { FIH, EYE, LIH, EHH, DIH, } 
+correct ------ FELICITY      { FIH, EHH, LIH, IHH, SIH, IHH, TIH, EEE, } { FIH, EHH, LIH, EYE, SIH, IHH, TIH, EEE, } 
+correct ------ FOUR      { FIH, AWW, } { FIH, AWW, } 
+incorrect ------ FOUL      { FIH, UHH, WIH, IHH, LIH, } { FIH, AHH, LIH, } 
+correct ------ FOOL      { FIH, OOO, LIH, } { FIH, OOO, LIH, } 
+correct ------ FLY      { FIH, LIH, EYE, } { FIH, LIH, EYE, } 
+correct ------ FLAKY      { FIH, LIH, AEE, KIH, EEE, } { FIH, LIH, AHH, KIH, EYE, } 
+correct ------ GREAT      { GIH, RIH, AEE, TIH, } { GIH, RIH, AEE, TIH, } 
+correct ------ GIBBERISH      { JIH, IHH, BIH, RIH, IHH, SIH, HIH, } { JIH, IHH, BIH, RIH, IHH, SIH, HIH, } 
+correct ------ GYM      { JIH, IHH, MIH, } { JIH, YIH, MIH, } 
+correct ------ GIN      { JIH, IHH, NIH, } { JIH, IHH, NIH, } 
+incorrect ------ GIVEN      { GIH, IHH, VIH, EHH, NIH, } { JIH, EYE, VIH, NIH, } 
+correct ------ GUY      { GIH, EYE, } { GIH, EYE, } 
+correct ------ HAZE      { HIH, AEE, ZIH, } { HIH, AEE, ZIH, } 
+correct ------ HE      { HIH, EEE, } { HIH, EEE, } 
+incorrect ------ HIGH      { HIH, EYE, } { HIH, EYE, GIH, } 
+correct ------ HUB      { HIH, UHH, BIH, } { HIH, UHH, BIH, } 
+correct ------ HYENA      { HIH, EYE, EEE, NIH, UHH, } { HIH, EYE, EHH, NIH, AHH, } 
+correct ------ I      { EYE, } { EYE, } 
+correct ------ IMPROVE      { IHH, MIH, PIH, RIH, OOO, VIH, } { IHH, MIH, PIH, RIH, OWE, VIH, } 
+incorrect ------ JUDGE      { JIH, UHH, DIH, JIH, } { JIH, UHH, JIH, } 
+correct ------ JUDGEMENT      { JIH, UHH, DIH, JIH, MIH, EHH, NIH, TIH, } { JIH, UHH, JIH, EHH, MIH, EHH, NIH, TIH, } 
+correct ------ JOHN      { JIH, HOH, NIH, } { JIH, HOH, NIH, } 
+correct ------ JELLY      { JIH, EHH, LIH, EEE, } { JIH, EHH, LIH, EEE, } 
+correct ------ KEY      { KIH, EEE, } { KIH, EEE, } 
+incorrect ------ KNIGHT      { NIH, EYE, TIH, } { NIH, EYE, GIH, TIH, } 
+correct ------ KITE      { KIH, EYE, TIH, } { KIH, EYE, TIH, } 
+correct ------ LEAF      { LIH, EEE, FIH, } { LIH, EEE, FIH, } 
+correct ------ LABEL      { LIH, AEE, BIH, LIH, } { LIH, AEE, BIH, LIH, } 
+correct ------ LAST      { LIH, AHH, SIH, TIH, } { LIH, UHH, SIH, TIH, } 
+correct ------ LADDER      { LIH, AHH, DIH, RIH, } { LIH, AHH, DIH, RIH, } 
+correct ------ LOVELY      { LIH, UHH, VIH, LIH, EEE, } { LIH, OWE, VIH, LIH, EEE, } 
+correct ------ LEAD      { LIH, EEE, DIH, } { LIH, EEE, DIH, } 
+incorrect ------ LIGHT      { LIH, EYE, TIH, } { LIH, EYE, GIH, TIH, } 
+correct ------ LORE      { LIH, AWW, RIH, } { LIH, AWW, RIH, } 
+correct ------ LIKELY      { LIH, EYE, KIH, LIH, EEE, } { LIH, EYE, KIH, LIH, EEE, } 
+correct ------ MAPLE      { MIH, AEE, PIH, LIH, } { MIH, AEE, PIH, LIH, } 
+correct ------ MAY      { MIH, AEE, } { MIH, AEE, } 
+correct ------ ME      { MIH, EEE, } { MIH, EEE, } 
+incorrect ------ MAYBE      { MIH, AEE, BIH, EEE, } { MIH, AEE, BIH, } 
+incorrect ------ MOLTEN      { MIH, HOH, LIH, TIH, EHH, NIH, } { MIH, HOH, LIH, TIH, NIH, } 
+correct ------ NICE      { NIH, EYE, SIH, } { NIH, EYE, SIH, } 
+correct ------ NICKLE      { NIH, IHH, KIH, LIH, } { NIH, IHH, KIH, LIH, } 
+correct ------ NARROW      { NIH, AHH, RIH, OWE, } { NIH, UHH, RIH, OWE, } 
+correct ------ NEGATIVELY      { NIH, EHH, GIH, UHH, TIH, IHH, VIH, LIH, EEE, } { NIH, EHH, GIH, AHH, TIH, EYE, VIH, LIH, EEE, } 
+correct ------ OSPREY      { HOH, SIH, PIH, RIH, AEE, } { HOH, SIH, PIH, RIH, AEE, } 
+correct ------ OBJECTIVE      { HOH, BIH, JIH, EHH, KIH, TIH, IHH, VIH, } { HOH, BIH, JIH, EHH, KIH, TIH, EYE, VIH, } 
+incorrect ------ OXYGEN      { HOH, KIH, SIH, IHH, JIH, EHH, NIH, } { HOH, KSS, YIH, GIH, NIH, } 
+correct ------ OF      { HOH, FIH, } { HOH, FIH, } 
+correct ------ OBSTRUCT      { HOH, BIH, SIH, TIH, RIH, UHH, KIH, TIH, } { HOH, BIH, SIH, TIH, RIH, OOO, KIH, TIH, } 
+correct ------ OPULENCE      { HOH, PIH, YIH, OOO, LIH, EHH, NIH, SIH, } { OWE, PIH, YIH, OOO, LIH, EHH, NIH, SIH, } 
+correct ------ PHRASE      { FIH, RIH, AEE, SIH, } { FIH, RIH, AEE, SIH, } 
+correct ------ PLOTTABLE      { PIH, LIH, HOH, TIH, UHH, BIH, LIH, } { PIH, LIH, OWE, TIH, AEE, BIH, LIH, } 
+correct ------ PLATED      { PIH, LIH, AEE, TIH, EHH, DIH, } { PIH, LIH, AHH, TIH, EHH, DIH, } 
+correct ------ PLANET      { PIH, LIH, AHH, NIH, EHH, TIH, } { PIH, LIH, AHH, NIH, EHH, TIH, } 
+incorrect ------ PHAROAH      { FIH, EHH, RIH, OWE, } { FIH, UHH, RIH, OWE, AHH, HIH, } 
+correct ------ PIKE      { PIH, EYE, KIH, } { PIH, EYE, KIH, } 
+correct ------ POINT      { PIH, AWW, EEE, NIH, TIH, } { PIH, AWW, EEE, NIH, TIH, } 
+correct ------ PLANNER      { PIH, LIH, AHH, NIH, RIH, } { PIH, LIH, AHH, NIH, RIH, } 
+correct ------ POUCH      { PIH, AHH, OOO, KIH, HIH, } { PIH, AHH, UHH, KIH, HIH, } 
+correct ------ PRO      { PIH, RIH, OWE, } { PIH, RIH, OWE, } 
+correct ------ PRISM      { PIH, RIH, IHH, SIH, MIH, } { PIH, RIH, IHH, ZIH, MIH, } 
+correct ------ PURR      { PIH, RIH, } { PIH, RIH, } 
+correct ------ PULL      { PIH, OOO, LIH, } { PIH, UHH, LIH, } 
+correct ------ QUEUE      { KIH, YIH, OOO, } { KIH, WIH, OOO, } 
+incorrect ------ QUERY      { KIH, WIH, EHH, RIH, EEE, } { KIH, WIH, RIH, EEE, } 
+correct ------ RAW      { RIH, AWW, } { RIH, AWW, } 
+correct ------ ROW      { RIH, OWE, } { RIH, OWE, } 
+correct ------ ROB      { RIH, HOH, BIH, } { RIH, OWE, BIH, } 
+correct ------ RUBBER      { RIH, UHH, BIH, RIH, } { RIH, OOO, BIH, RIH, } 
+correct ------ REMEMBER      { RIH, EEE, MIH, EHH, MIH, BIH, RIH, } { RIH, EEE, MIH, EHH, MIH, BIH, RIH, } 
+correct ------ RUNNING      { RIH, UHH, NIH, EEE, NIH, } { RIH, OOO, NIH, EEE, NIH, } 
+correct ------ ROUTE      { RIH, OOO, TIH, } { RIH, OOO, TIH, } 
+correct ------ RUDE      { RIH, OOO, DIH, } { RIH, OOO, DIH, } 
+correct ------ RUIN      { RIH, OOO, IHH, NIH, } { RIH, OOO, IHH, NIH, } 
+correct ------ SAUL      { SIH, AWW, LIH, } { SIH, AWW, LIH, } 
+correct ------ STEAK      { SIH, TIH, AEE, KIH, } { SIH, TIH, AEE, KIH, } 
+correct ------ SPACE      { SIH, PIH, AEE, SIH, } { SIH, PIH, AEE, SIH, } 
+correct ------ STACY      { SIH, TIH, AEE, SIH, EEE, } { SIH, TIH, AHH, SIH, YIH, } 
+correct ------ SICILY      { SIH, IHH, SIH, IHH, LIH, EEE, } { SIH, EYE, SIH, IHH, LIH, EEE, } 
+incorrect ------ SPEECH      { SIH, PIH, EEE, EEE, KIH, HIH, } { SIH, PIH, EEE, KIH, HIH, } 
+incorrect ------ STEIN      { SIH, TIH, EEE, NIH, } { SIH, TIH, EYE, IHH, NIH, } 
+correct ------ SKIES      { SIH, KIH, EYE, SIH, } { SIH, KIH, EEE, SIH, } 
+correct ------ SIGN      { SIH, EYE, NIH, } { SIH, EYE, NIH, } 
+correct ------ SPITE      { SIH, PIH, EYE, TIH, } { SIH, PIH, EYE, TIH, } 
+incorrect ------ SOUR      { SIH, AHH, HOH, WIH, UHH, } { SIH, OWE, } 
+correct ------ SLOUCH      { SIH, LIH, AHH, OOO, KIH, HIH, } { SIH, LIH, AHH, UHH, KIH, HIH, } 
+incorrect ------ SOUL      { SIH, OWE, WIH, IHH, LIH, } { SIH, OWE, LIH, } 
+incorrect ------ SOLE      { SIH, OWE, WIH, IHH, LIH, } { SIH, OWE, LIH, } 
+correct ------ SOLO      { SIH, OWE, LIH, OWE, } { SIH, OWE, LIH, OWE, } 
+correct ------ SLOTH      { SIH, LIH, HOH, THI, } { SIH, LIH, HOH, THI, } 
+correct ------ SUBMIT      { SIH, UHH, BIH, MIH, IHH, TIH, } { SIH, UHH, BIH, MIH, IHH, TIH, } 
+correct ------ SKY      { SIH, KIH, EYE, } { SIH, KIH, EYE, } 
+correct ------ STYLE      { SIH, TIH, EYE, LIH, } { SIH, TIH, EYE, LIH, } 
+incorrect ------ SOLILOQUY      { SIH, HOH, LIH, IHH, LIH, HOH, KIH, WIH, EEE, } { SIH, OWE, LIH, EYE, LIH, OWE, KIH, WIH, } 
+correct ------ TABLE      { TIH, AEE, BIH, LIH, } { TIH, AEE, BIH, LIH, } 
+correct ------ THE      { THI, UHH, } { THI, UHH, } 
+correct ------ TRIBE      { TIH, RIH, EYE, BIH, } { TIH, RIH, EYE, BIH, } 
+correct ------ THESE      { THI, EEE, SIH, } { THI, EEE, SIH, } 
+incorrect ------ TREKKIES      { TIH, RIH, EHH, KIH, EEE, SIH, } { TIH, RIH, EHH, KIH, KIH, EEE, SIH, } 
+correct ------ THERE      { THI, EHH, RIH, } { THI, EHH, RIH, } 
+correct ------ TRIGGER      { TIH, RIH, IHH, GIH, RIH, } { TIH, RIH, IHH, GIH, RIH, } 
+correct ------ TALKING      { TIH, AWW, KIH, EEE, NIH, } { TIH, AHH, KIH, EEE, NIH, } 
+incorrect ------ THIGH      { THI, EYE, } { THI, EYE, GIH, } 
+incorrect ------ TRACTION      { TIH, RIH, AHH, KIH, SIH, HIH, UHH, NIH, } { TIH, RIH, AHH, KIH, TIH, SIH, HIH, UHH, NIH, } 
+incorrect ------ TOUCH      { TIH, UHH, TIH, SIH, HIH, } { TIH, UHH, KIH, HIH, } 
+correct ------ TOLD      { TIH, HOH, LIH, DIH, } { TIH, HOH, LIH, DIH, } 
+correct ------ TODAY      { TIH, OOO, DIH, AEE, } { TIH, OOO, DIH, AEE, } 
+correct ------ THINK      { THI, IHH, NIH, KIH, } { THI, IHH, NIH, KIH, } 
+correct ------ TOTALLY      { TIH, OWE, TIH, UHH, LIH, EEE, } { TIH, OWE, TIH, AHH, LIH, EEE, } 
+incorrect ------ UNDEVELOPED      { UHH, NIH, DIH, EHH, VIH, EHH, LIH, HOH, PIH, DIH, } { UHH, NIH, DIH, EEE, VIH, EHH, LIH, OWE, PIH, EHH, DIH, } 
+correct ------ UPDATE      { UHH, PIH, DIH, AEE, TIH, } { UHH, PIH, DIH, AHH, TIH, } 
+correct ------ VETO      { VIH, EEE, TIH, OWE, } { VIH, EHH, TIH, OWE, } 
+correct ------ WATER      { WIH, AWW, TIH, RIH, } { WIH, AWW, TIH, RIH, } 
+incorrect ------ WHAT      { WIH, HOH, TIH, } { WIH, HIH, UHH, TIH, } 
+correct ------ WE      { WIH, EEE, } { WIH, EEE, } 
+correct ------ WORD      { WIH, RIH, DIH, } { WIH, RIH, DIH, } 
+correct ------ XYLOPHONE      { ZIH, EYE, LIH, UHH, FIH, OWE, NIH, } { ZIH, YIH, LIH, OWE, FIH, OWE, NIH, } 
+correct ------ YOU      { YIH, OOO, } { YIH, OOO, } 
+correct ------ YAM      { YIH, AHH, MIH, } { YIH, AHH, MIH, } 

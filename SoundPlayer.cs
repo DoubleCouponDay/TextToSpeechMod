@@ -42,11 +42,14 @@ namespace SETextToSpeechMod
             }
         }
 
-        public static void PlayClip (string clip, bool shouldIBonk)
+        public static void PlayClip (bool debugging, string clip, bool shouldIBonk)
         {
-            MyEntity3DSoundEmitter chosenEmitter = shouldIBonk ? bonkEmitter : TTSEmitter;
-            MySoundPair sound = new MySoundPair (clip);
-            chosenEmitter.PlaySound (sound);
+            if (debugging == false)
+            {
+                MyEntity3DSoundEmitter chosenEmitter = shouldIBonk ? bonkEmitter : TTSEmitter;
+                MySoundPair sound = new MySoundPair (clip);
+                chosenEmitter.PlaySound (sound);
+            }
         }
     }
 }

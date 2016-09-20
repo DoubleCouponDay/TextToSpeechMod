@@ -16,7 +16,7 @@ namespace SETextToSpeechMod
         string[] dictionaryMatch;
         string surroundingPhrase;
 
-        WordCounter wordCounter;   
+        public WordCounter wordCounter {get; private set;}
 
         public Pronunciation (string inputSentence)
         {
@@ -27,13 +27,15 @@ namespace SETextToSpeechMod
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
             List <string> results = new List <string>();
-            string currentWord = wordCounter.AnalyseCurrentPosition (ref placeholder); //this update is needed every time i increment a letter.          
+            wordCounter.IncrementCurrentPosition (placeholder); //this update is needed every time i increment a letter.      
+            placeholder = wordCounter.placeholder;         
+            string currentWord = wordCounter.currentWord;
 
             if (currentWord != " ")
             {                
                 if (placeholder == NEW_WORD)
                 {                    
-                    bool matchFound = PrettyScaryDictionary.ordered.TryGetValue (currentWord, out dictionaryMatch);
+                    bool matchFound = PrettyScaryDictionary.TTSdictionary.TryGetValue (currentWord, out dictionaryMatch);
 
                     if (matchFound == true)
                     {
@@ -78,7 +80,7 @@ namespace SETextToSpeechMod
 
             if (placeholder < dictionaryMatch.Length)
             {
-                if (wordCounter.DumpRemainingLetters == true)
+                if (wordCounter.dumpRemainingLetters == true)
                 {
                     int counter = 0;
 
