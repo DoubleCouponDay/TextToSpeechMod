@@ -1,52 +1,38 @@
+BROKEN WORDS
+=================//
+
+
+
 TO DO
 ================//
 + fix non matching words.
-+ add new words (ITS DIFFERENT NOW. ADD TO DEBUGGER AND TO ADJACENT)
 
-+ some state paths can be combined in adjacent evaulation. this one is easy to screw up
-+ bring back silent blocks?
++ make backup copy of Pronunciation
++ analyse the best looking letter pattern to see if its actually better
++ some state paths can be combined in adjacent evaulation.  this involves removing else scenarios. TEST AFTER EVERY LETTER.
 
-+ add shi and chi (this is a phrase by phrase check. dont rush this.)
-SHI = {SIH, HIH,}, 
-CHI = {KIH, HIH,}, {TIH, SIH, HIH,},
++ record new phonemes
+SHI = {SIH, HIH}, 
+CHI = {KIH, HIH}, {TIH, SIH, HIH},
 ERR = {RIH}
++ replace them in the debuger,dictionary,adjacent
++ fix the resulting mess
++ replace instances of "AOW" with UHH OHH (dont rush this)
 
 + study old work in saved audacity project ._.
 + marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out
 + see if its feasible to use marek consonants
 + test words before overwriting
 
-+ an interface should be designed for SentenceProcession so that all different voices can have the same structure, but different spacing when needed
-+ use autotune free trial to create pitch.
++ record madden and glados phonemes
++ use autotune free trial to create pitch for those two?
++ SentenceProcession should become an interface/base class (idk which one yet)
++ create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
 
-+ make a new block with a sound emitter entity? maybe
++ make a new block with a sound emitter entity
 
 + find out if you can move entity with mouse input
 
-+ create documentation and flow charts.
++ commission some artwork of hawking, SE suit, glados on the moon around the TTS block
 
-BROKEN WORDS / WORDS MOVING FROM PRIMARY TO BACKUP
-=================//
-read
-steak
-real
-leader
-out
-by
-again
-available
-same
-this
-square
-fair
-plottable
-your ~
-flies
-pies
-applies
-our
-prude ~
-ludicrous~
-assault
-ok
-done
++ create documentation and flow charts.
