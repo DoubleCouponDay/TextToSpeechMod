@@ -447,9 +447,9 @@ namespace SETextToSpeechMod
                         IsMatch ("..IES") || //activities
 
                         IsMatch ("VAILA" + //available
-                                "|GAIN " + //bargain
+                                "|GAIN." + //bargain
                                 "|.AITH" + //faith
-                                "|.AIR" //fair
+                                "|.AIR." //fair
                                 ))
                     {
                         ;

@@ -39,8 +39,14 @@ namespace SETextToSpeechMod
 
         class AdjacentTester
         {            
-            const string fileAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";                        
-            const string toDoList = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\TO DO LIST.txt";  
+            const string currentComputer = "pavilion";
+            //const string currentComputer = "thinkpad";
+
+            const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
+            const string thinkpadAddress = @"C:\Users\pp\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
+                             
+            const string pavilionList = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\TO DO LIST.txt";  
+            const string thinkpadList = @"C:\Users\pp\Desktop\Workshop\text-to-speech-mod-for-space-engineers\TO DO LIST.txt";
              
             const string AEE = PrettyScaryDictionary.AEE;
             const string AHH = PrettyScaryDictionary.AHH; 
@@ -111,12 +117,27 @@ namespace SETextToSpeechMod
             ICollection adjacentKeys;
             ICollection resultKeys;
             int lowerCaseWords = 0;
+            string resultsFile;
+            string toDoFile;
 
             public AdjacentTester()
             {
                 emptiesRemoved = adjacentWords;
                 adjacentKeys = emptiesRemoved.Keys;
                 resultKeys = tabledResults.Keys;
+
+                switch (currentComputer)
+                {
+                    case "pavilion":
+                        resultsFile = pavilionAddress;
+                        toDoFile = pavilionList;
+                        break;
+
+                    case "thinkpad":
+                        resultsFile = thinkpadAddress;
+                        toDoFile = thinkpadList;
+                        break;
+                }
             }
 
             public string RollOutAdjacentWords()
@@ -194,7 +215,7 @@ namespace SETextToSpeechMod
 
             public void PrintResults (bool matchersInFormat, bool nonMatchersInFormat)
             {                       
-                string[] previousReadings = File.ReadAllLines (fileAddress);   
+                string[] previousReadings = File.ReadAllLines (resultsFile);   
                 previousReadings = previousReadings[1].Split(' '); 
    
                 string[] tallies = {"Total Words: ",
@@ -291,7 +312,7 @@ namespace SETextToSpeechMod
                 lines[4] = tallies[4] + lowerCaseWords;
                 lines[5] = tallies[5] + matchersInFormat;
                 lines[6] = tallies[6] + nonMatchersInFormat;
-                File.WriteAllLines (fileAddress, lines);
+                File.WriteAllLines (resultsFile, lines);
 
                 processes = Process.GetProcessesByName ("notepad");
 
@@ -299,8 +320,8 @@ namespace SETextToSpeechMod
                 {
                     processes[i].Kill();
                 }             
-                Process.Start (toDoList);
-                Process.Start (fileAddress);
+                Process.Start (toDoFile);
+                Process.Start (resultsFile);
             }
         }
     }

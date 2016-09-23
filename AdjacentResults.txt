@@ -3,7 +3,7 @@ Total Incorrect: 39
 Previous Incorrect: 39
 From Dictionary: 0
 Lowercase Keys: 0
-Wanted Regex In Format: False
+Wanted Regex In Format: True
 Unwanted Regex In Format: True
 
 Correct ------ ABLE      { AEE, BIH, LIH, } { AEE, BIH, LIH, } 
