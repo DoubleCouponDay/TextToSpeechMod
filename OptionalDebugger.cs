@@ -40,7 +40,7 @@ namespace SETextToSpeechMod
         class AdjacentTester
         {            
             const string currentComputer = "pavilion";
-            //const string currentComputer = "thinkpad";
+           //const string currentComputer = "thinkpad";
 
             const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
             const string thinkpadAddress = @"C:\Users\pp\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
