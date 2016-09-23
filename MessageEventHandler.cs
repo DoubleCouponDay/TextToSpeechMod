@@ -11,7 +11,7 @@ namespace SETextToSpeechMod
     [MySessionComponentDescriptor (MyUpdateOrder.BeforeSimulation)] //adds an attribute tag telling the game to run my script.
     class MessageEventHandler : MySessionComponentBase //MySessionComponentBase is inherited and allows me to override its methods.
     {
-        const string VERSION = "4";
+        const string VERSION = "0";
         const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
         const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of steam mod as packet ID.
@@ -73,6 +73,8 @@ namespace SETextToSpeechMod
             MyAPIGateway.Utilities.MessageEntered += OnMessageEntered; //subscribes my method to the MessageEntered event.
             MyAPIGateway.Multiplayer.RegisterMessageHandler (packet_ID, OnReceivedPacket); //registers a multiplayer packet receiver.
             SoundPlayer.InitialiseEmitter();
+            MyAPIGateway.Utilities.ShowMessage ("Text To Speech Mod", "2." + VERSION);
+            MyAPIGateway.Utilities.ShowMessage ("", "If you find a broken word, please contact the designer.");
         }
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
@@ -126,7 +128,7 @@ namespace SETextToSpeechMod
 
             else if (decoded == "[ VERSION")
             {
-                MyAPIGateway.Utilities.ShowMessage ("TTS MOD VERSION: ", VERSION);
+                MyAPIGateway.Utilities.ShowMessage ("TTS mod version: ", "2." + VERSION);
             }
             
             else if (decoded.Length > MAX_LETTERS && debugging == false) //letter limit for mental health concerns.
