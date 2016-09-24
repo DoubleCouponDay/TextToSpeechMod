@@ -9,12 +9,13 @@ TO DO
 
 + make backup copy of Pronunciation
 + analyse the best looking letter pattern to see if its actually better
++ i reckon having an else at the end of each letter is good for debugging
 + some state paths can be combined in adjacent evaulation.  this involves removing else scenarios. TEST AFTER EVERY LETTER.
 
 + record new phonemes
 SHI = {SIH, HIH}, 
-CHI = {KIH, HIH}, {TIH, SIH, HIH},
-ERR = {RIH}
+{TIH, SHI} = {KIH, HIH}, {TIH, SIH, HIH}, {SIH, HIH,},
+ERR = {RIH},
 + replace them in the debuger,dictionary,adjacent
 + fix the resulting mess
 + replace instances of "AOW" with UHH OHH (dont rush this)
@@ -24,8 +25,8 @@ ERR = {RIH}
 + see if its feasible to use marek consonants
 + test words before overwriting
 
-+ record madden and glados phonemes
-+ use autotune free trial to create pitch for those two?
++ record madden and glados phonemes using DECtalk and youtube
++ use autotune free trial to create pitch for those two? how many notes?
 + SentenceProcession should become an interface/base class (idk which one yet)
 + create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
 

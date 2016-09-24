@@ -16,16 +16,14 @@ namespace SETextToSpeechMod
         string[] dictionaryMatch;
         string surroundingPhrase;
         public bool usedDictionary {get; private set;}
-        public bool matchingRegexInFormat {get; private set;}
-        public bool nonmatchingRegexInFormat {get; private set;}
+        public int wrongFormatMatchers {get; private set;}
+        public int wrongFormatNonMatchers {get; private set;}
 
         public WordCounter wordCounter {get; private set;}
 
         public Pronunciation (string inputSentence)
         {
             this.wordCounter = new WordCounter (inputSentence);
-            matchingRegexInFormat = true;
-            nonmatchingRegexInFormat = true;
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
@@ -135,9 +133,14 @@ namespace SETextToSpeechMod
 #region case A
                 case "A":
                     if (UnwantedMatchBypassed ("..AK.") && //!steak
-                        UnwantedMatchBypassed ("REA..") && //!great
-                        CONSONANTS.Contains(after) &&
-                        IsMatch (".EA..")) //leaf
+                        UnwantedMatchBypassed ("REAT.") && //!great
+                        IsMatch (".EAF." + //leaf
+                                "|.EAL." + //real
+                                "|.EAD." + //lead
+                                "|.EAT." //meat
+                                ) ||
+
+                       (IsMatch (".OAH."))) //pharoah 
                     {
                         ;
                     }
@@ -148,7 +151,8 @@ namespace SETextToSpeechMod
                                      "|..AUT" + //astronaut
                                      "| CALL" + //caller
                                      "| TALL" + //tallest
-                                     "|..AUG" //caught
+                                     "|..AUG" + //caught
+                                     "|..ALK" //talking
                                      ) ||
 
                             (UnwantedMatchBypassed ("SSAUL") && //!assault
@@ -171,10 +175,13 @@ namespace SETextToSpeechMod
                                      "|..ATE" + //activate
                                      "| BABY" + //baby
                                      "|..ADY" + //lady
-                                     "|..AKY" //flaky
+                                     "|..AKY" + //flaky
+                                     "|..ACY" + //stacy
+                                     "|..AME" //same
                                      ) ||
                             
                             (UnwantedMatchBypassed (".PATI") && //!patio
+                             UnwantedMatchBypassed (".GATI") && //!negatively
                              IsMatch ("..ATI")) || //station
 
                             (IsMatch ("..AI.") && //faith
@@ -191,20 +198,25 @@ namespace SETextToSpeechMod
                                      "|. ASS" + //assault
                                      "|. ABI" + //ability
                                      "|OTAL." + //totally
-                                     "|..A ." //hyena
+                                     "|..A ." + //hyena
+                                     "|..ARG" + //bargain
+                                     "|.GATI" + //negatively
+                                     "|..AMA" + //proclamation
+                                     "|ISA.." //elisabeth
                                      ) ||
 
                             (UnwantedMatchBypassed ("..ACT") && //!activites
                              IsMatch (". AC.")) || //acoustic
                             
-                            (IsMatch ("..AR.") && //far
+                            (IsMatch ("..AR ") && //far
                              UnwantedMatchBypassed ("..A.E"))) //!fare
                     {
                         primary = PrettyScaryDictionary.UHH;
                     }
 
                     else if (IsMatch ("..ARE" + //compare                             
-                                     "|..AIR" //fair
+                                     "|..AIR" + //fair
+                                     "|..ARO" //pharoah
                                      ))
                     { 
                         primary = PrettyScaryDictionary.EHH;
@@ -259,7 +271,8 @@ namespace SETextToSpeechMod
                 case "C": 
                     if (IsMatch ("..CE." + //nice
                                 "|..CI." + //complicit
-                                "|..CY." //stacy
+                                "|..CY." + //stacy
+                                "|..CH " //touch
                                 ))
                     {
                         primary = PrettyScaryDictionary.SIH; //sicily
@@ -293,16 +306,20 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.UHH;
                     } 
   
-                    else if (IsMatch (".REA." + //great
-                                     "|..EAK" + //break
+                    else if (IsMatch ("..EAK" + //break
                                      "|..EU." + //queue
                                      "|.EE.." + //speech
                                      "|..ELY" + //lovely
                                      "|.TEAU" + //aboiteau
                                      "|OPED " + //undeveloped
                                      "|.LED " + //filed
-                                     "|DGE.." //judgement
+                                     "|DGE.." + //judgement
+                                     "|.VES " + //ourselves
+                                     "|.BEL " //label
                                      ) ||
+
+                            (UnwantedMatchBypassed (".REAL") && //!real
+                             IsMatch (".REA.")) || //great
 
                             (UnwantedMatchBypassed ("TIES.") && //!activities
                             IsMatch (".IES.")) || //flies
@@ -311,8 +328,8 @@ namespace SETextToSpeechMod
                              UnwantedMatchBypassed (".EE..") && //!veer
                              IsMatch ("..ER.")) || //rubber                            
                             
-                            (UnwantedMatchBypassed (" .E..") && //!be    
-                             UnwantedMatchBypassed (".BE..") && //!maybe                     
+                            (UnwantedMatchBypassed (" .E..") && //!He man    
+                             UnwantedMatchBypassed ("YBE..") && //!maybe                     
                              IsMatch ("..E ."))) //tribe
                     {
                         ;
@@ -323,9 +340,7 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.OOO; 
                     }
 
-                    else if (IsMatch ("..EI." + //stein
-                                     "|..EYE" //eye       
-                                     ))                
+                    else if (IsMatch ("..EYE")) //eye               
                     {
                         primary = PrettyScaryDictionary.EYE;
                     }         
@@ -340,11 +355,15 @@ namespace SETextToSpeechMod
                                      "|YBE ." + //maybe
                                      "|..ESE" + //these
                                      "|.KEY." + //key
-                                     "| RE.." + //remember
                                      "|.IE. " + //trekkies
                                      "|.VETO" + //veto
-                                     "|..ENA" //hyena
+                                     "|..ENA" + //hyena
+                                     "|.TEI." //stein
                                      ) ||
+
+                            (UnwantedMatchBypassed (".RES.") && //!respite
+                             UnwantedMatchBypassed (".REI.") && //!rein
+                             IsMatch (" RE..")) || //remember
                                      
                             (UnwantedMatchBypassed ("ITE..") && //!aboiteau
                              IsMatch (".LEA."))) //lead
@@ -352,26 +371,29 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.EEE;
                     }  
             
-                    else if (
-                        (UnwantedMatchBypassed ("..EE.") && //!feet
-                              UnwantedMatchBypassed ("..ER.") && //!later
-                              UnwantedMatchBypassed ("..EW.") && //!brew
-                              UnwantedMatchBypassed ("..E. ")) || //!stakes 
+                    else if ((UnwantedMatchBypassed (".VES ") && //!ourselves
+                              IsMatch ("..ES ")) || //dresses
 
                               IsMatch ("..ERE" + //there
                                       "|.VER." + //veto
                                       "|.TED." + //plated
-                                      "|..ES " + //dresses
                                       "|.NET " + //planet
                                       "|..EN." //given
                                       ))
                     {                                         
-                        primary = PrettyScaryDictionary.EHH;  //such as silent E, there, fate
+                        primary = PrettyScaryDictionary.EHH;
                     }   
 
-                    else if (IsMatch (".REY.")) //osprey
+                    else if (IsMatch (".REY." + //osprey
+                                     "|.REI." //rein
+                                     ))
                     {
                         primary = PrettyScaryDictionary.AEE;
+                    }
+
+                    else
+                    {
+                        primary = PrettyScaryDictionary.EHH;
                     }
                     break;
 #endregion case E
@@ -397,14 +419,15 @@ namespace SETextToSpeechMod
                     else if  (
 
                               (UnwantedMatchBypassed ("..G .") && //rig
-                               IsMatch (".IG..")) || //aborigine
+                               IsMatch (".IGI.")) || //aborigine
                                 
                                IsMatch (". GY." + //gym
                                        "|.DGE." + //judgement 
                                        "|ENGI." + //engineer
                                        "|.OGY " + //eulogy
                                        "|. GIN" + //gin
-                                       "|.AGE." //advantage
+                                       "|.AGE." + //advantage
+                                       "|..GEN" //oxygen
                                        ))
                     {   
                         primary = PrettyScaryDictionary.JIH;
@@ -422,10 +445,12 @@ namespace SETextToSpeechMod
                 case "H":
                     if (IsMatch ("..HN." + //john
                                 "|.GH.." + //dough
-                                "|.OH.." + //pharoah
                                 "|.PH.." + //autograph
                                 "|.WH.." //what
                                 ) ||
+
+                       (UnwantedMatchBypassed (".CH..") && //!pouch
+                        IsMatch ("..H .")) || //pharoah
 
                        (UnwantedMatchBypassed ("..HU.") && //!github
                         IsMatch (".TH.."))) //thigh
@@ -442,21 +467,22 @@ namespace SETextToSpeechMod
 
 #region case I
                 case "I":
-                    if (UnwantedMatchBypassed ("FLIES") && //!flies
-                        UnwantedMatchBypassed ("PLIES") && //!applies
+                    if (UnwantedMatchBypassed (".LIES") && //!flies
+                        UnwantedMatchBypassed (" PIES") && //!pies
+                        UnwantedMatchBypassed (".KIES") && //!skies
                         IsMatch ("..IES") || //activities
 
                         IsMatch ("VAILA" + //available
                                 "|GAIN." + //bargain
                                 "|.AITH" + //faith
-                                "|.AIR." //fair
+                                "|.AIR." + //fair
+                                "|.EI.." //stein
                                 ))
                     {
                         ;
                     }
 
-                    else if (
-                             IsMatch (".TION" + //traction
+                    else if (IsMatch (".TION" + //traction
                                      "|.SION" //accession
                                      ))
                     {
@@ -476,18 +502,24 @@ namespace SETextToSpeechMod
                                      "|KNI.." + //knight
                                      "|..IGH" + //light
                                      "|. I ." + //I
-                                     "|..IE." + //skies
                                      "|..ILE" + //filed                                 
                                      "|..IGN" + //sign
                                      "| VITA" + //vitality                                                                   
                                      "|..ICY" + //bicycle
                                      "| TITA" + //titanite
                                      "|OVISA" + //improvisation
-                                     "|OVISE" //improvise
+                                     "|OVISE" + //improvise
+                                     "|.LIE." + //flies
+                                     "| .IE." + //pies
+                                     "| .IK." //bikie
                                      ) ||
 
-                            (UnwantedMatchBypassed ("ENICE") && //!venice
-                             IsMatch ("..ICE")) || //nice
+                            (UnwantedMatchBypassed (".GINE") && //!aborigine
+                             UnwantedMatchBypassed ("ENICE") && //!venice
+                             UnwantedMatchBypassed (".OITE") && //!aboiteau
+                             UnwantedMatchBypassed (".GIVE") && //!give
+                             UnwantedMatchBypassed (".TIVE") && //!negatively
+                             IsMatch ("..I.E")) || //nice
                             
                             (CONSONANTS.Contains (before) && //respite
                              IsMatch ("..ITE"))) //titanite
@@ -498,7 +530,11 @@ namespace SETextToSpeechMod
                     else if (IsMatch (".OIN." + //point
                                      "|..ING" + //running
                                      "|.OITE" + //aboiteaux
-                                     "|..ION" //champion
+                                     "|..ION" + //champion
+                                     "|..IO." + //patio                                     
+                                     "|SKIE." + //huskies
+                                     "|.KIE." + //trekkies
+                                     "| .ISA" //visa
                                      ))
                     {
                         primary = PrettyScaryDictionary.EEE;
@@ -520,7 +556,8 @@ namespace SETextToSpeechMod
 #region case K
                 case "K":   
                     if (UnwantedMatchBypassed (".CK..") && //!two kih's
-                        UnwantedMatchBypassed ("..KN.")) //!silent K
+                        UnwantedMatchBypassed ("..KN.") && //!silent K
+                        UnwantedMatchBypassed (".KK..")) //!double K's
                     {
                         primary = PrettyScaryDictionary.KIH;
                     }    
@@ -587,14 +624,12 @@ namespace SETextToSpeechMod
                         ;
                     }                    
                         
-                    else if (IsMatch ("..OI." //annoint
+                    else if (IsMatch ("..OI." + //annoint
+                                     "|.FOUR" //four
                                      ) ||
 
                             (UnwantedMatchBypassed ("ABORI") && //aborigine
-                             IsMatch ("..OR.")) || //lore
-
-                            (UnwantedMatchBypassed (".SO..") && //sour
-                             IsMatch ("..OUR"))) //four
+                             IsMatch ("..OR."))) //lore
                     {
                         primary = PrettyScaryDictionary.AWW;
                     }
@@ -602,7 +637,9 @@ namespace SETextToSpeechMod
                     else if (IsMatch (".FOUL" + //foul
                                      "|.POUC" + //pouch
                                      "|.LOUC" + //slouch
-                                     "|.HOUS" //house
+                                     "|.HOUS" + //house
+                                     "|..OUT" + //out
+                                     "|..OUR" //our
                                      ))
                     {
                         primary = PrettyScaryDictionary.AHH; 
@@ -624,11 +661,11 @@ namespace SETextToSpeechMod
                                      "|ABORI" //aborigine
                                      ) ||
 
-                            (UnwantedMatchBypassed (".LOV.") && //love
-                             UnwantedMatchBypassed ("PROVE") && //improve
-                             CONSONANTS.Contains (after) && //sole
-                             VOWELS.Contains (twoAfter) //solo
-                             ))
+                            (UnwantedMatchBypassed (".LOV.") && //!love
+                             UnwantedMatchBypassed ("PROVE") && //!improve
+                             UnwantedMatchBypassed ("..OPU") && //!opulence
+                             UnwantedMatchBypassed ("..OLE") && //!opulence
+                             IsMatch (".SOLO"))) //solo
                     {
                         primary = PrettyScaryDictionary.OWE;
                     }   
@@ -636,11 +673,13 @@ namespace SETextToSpeechMod
                     else if (IsMatch ("..OHN" +  //john
                                      "|.BOT " + //bot
                                      "|..OM." + //computer
-                                     "|..OGY" //eulogy
+                                     "|..OGY" + //eulogy
+                                     "|..OPU" + //opulence
+                                     "|..OTT" + //plottable
+                                     "|..OC." + //proclamation
+                                     "|..OB " + //rob
+                                     "|..OL." //told
                                      ) ||
-
-                            (CONSONANTS.Contains (before) && 
-                             IsMatch ("..OL.")) || //told
 
                             (UnwantedMatchBypassed ("..OO.") && //!oolacile
                              IsMatch (". O..")) || //objective
@@ -655,7 +694,8 @@ namespace SETextToSpeechMod
                                      "|PROVE" + //improve
                                      "|.TOD." + //today
                                      "|PROVE" + //improve
-                                     "|.COUS" //acoustic
+                                     "|.COUS" + //acoustic
+                                     "|..OU " //you
                                      ))
                     {
                         primary = PrettyScaryDictionary.OOO;
@@ -693,16 +733,24 @@ namespace SETextToSpeechMod
 #endregion case P
 
 #region case Q
-                case "Q":                    
-                    primary = PrettyScaryDictionary.KIH; //query    
-                    secondary = PrettyScaryDictionary.WIH;
+                case "Q": 
+                    if (IsMatch ("..QUE"))
+                    {
+                        primary = PrettyScaryDictionary.KIH;
+                        secondary = PrettyScaryDictionary.YIH;
+                    }                   
+
+                    else
+                    {
+                        primary = PrettyScaryDictionary.KIH; //query    
+                        secondary = PrettyScaryDictionary.WIH;
+                    }                    
                     break;
 #endregion case Q
 
 #region case R
                 case "R":   
-                    if (UnwantedMatchBypassed (".RR..") && //!double R's
-                        UnwantedMatchBypassed ("OUR..")) //!your
+                    if (UnwantedMatchBypassed (".RR..")) //!double R's
                     {                        
                         primary = PrettyScaryDictionary.RIH;
                     }
@@ -728,7 +776,9 @@ namespace SETextToSpeechMod
 #region case T
                 case "T":
                     if (UnwantedMatchBypassed ("PATIO") && //!patio
-                        IsMatch (".ATIO")) //proclamation                        
+                        IsMatch (".ATIO" + //proclamation                        
+                                "|.CTIO" //instructional 
+                                ))
                     {
                         ;
                     }
@@ -765,13 +815,17 @@ namespace SETextToSpeechMod
                                 "|.AUT." + //astronaut
                                 "|.AUL." + //assault
                                 "|.OUGH" + //dough
-                                "|.OUR " + //four
+                                "|.OUR." + //four
                                 "|COUS." + //accoustic
-                                "|HOUS." //hous
+                                "|HOUS." + //hous
+                                "|.OUT." //out
                                 ) ||
                         
+                       (UnwantedMatchBypassed ("TOUCH") && //!touch
+                        IsMatch (".OUCH")) || //pouch
+
                        (UnwantedMatchBypassed (".OU..") && //!your
-                        IsMatch ("..UR."))) //purr
+                        IsMatch ("..URR"))) //purr
                     {
                         ;
                     }    
@@ -782,7 +836,8 @@ namespace SETextToSpeechMod
                                      "|.AUX " + //aboiteaux
                                      "|.RU.E" + //rude
                                      "|..UI." + //ruin
-                                     "|..UDI" //ludicrous
+                                     "|..UDI" + //ludicrous
+                                     "|.PULL" //pull
                                      ))
                     {
                         if (IsMatch (" EU..")) //eulogy
@@ -798,7 +853,6 @@ namespace SETextToSpeechMod
                     }
 
                     else if (IsMatch (" OUR." + //end
-                                     "|.PULL" + //pull
                                      "|.OUC." + //touch
                                      "|. UN." + //undeveloped
                                      "|. UP." + //update
@@ -813,6 +867,9 @@ namespace SETextToSpeechMod
                             (UnwantedMatchBypassed ("..UDE") && //!prude
                              UnwantedMatchBypassed ("..UDI") && //!ludicrous
                              IsMatch ("..UD.")) || //crud                                                    
+
+                            (CONSONANTS.Contains (after) && //rubber
+                             CONSONANTS.Contains (twoAfter)) || //instructional
 
                             (CONSONANTS.Contains (before) && //cut
                              UnwantedMatchBypassed ("..U.E") && //brute
@@ -869,11 +926,13 @@ namespace SETextToSpeechMod
 
 #region case Y
                 case "Y":
-                    if (IsMatch (".UY ." + //soliloquy
-                                "|.EY ." + //key
+                    if (IsMatch (".EY ." + //key
                                 "|.AY.." + //maybe
                                 "|.EYE." //eye
-                                ))                                              
+                                ) ||
+                                
+                        (UnwantedMatchBypassed ("QUY .") && //!soliloquy 
+                         IsMatch (".UY ."))) //buy                                              
                     {
                         ; 
                     }
@@ -892,22 +951,16 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.EYE;
                     }
 
-                    else if (IsMatch ("LLY ." + //totally
-                                      "|.LY ." + //likely
-                                      "|.RY ." + //chivalry
-                                      "|.BY ." + //baby
-                                      "|.TY ." + //ability
-                                      "|OGY ." + //eulogy
-                                      "|.KY.." //flaky
-                                      ))
-
-                                  
+                    else if (IsMatch ("..Y ." + //ability                                  
+                                     "|QUY ." //soliloquy                            
+                                     ))
                     {
                         primary = PrettyScaryDictionary.EEE;
                     }
 
                     else if (IsMatch (" XYS." + //xyster
-                                     "|.GYM." //gym
+                                     "|.GYM." + //gym
+                                     "|.XYG." //oxygen
                                     ))   
                     {
                         primary = PrettyScaryDictionary.IHH;
@@ -925,13 +978,6 @@ namespace SETextToSpeechMod
                     primary = PrettyScaryDictionary.ZIH;
                     break;
 #endregion case Z
-/*
-#region case SPACE
-                case " ": 
-                    primary = " ";
-                    break;
-#endregion case SPACE
-*/
             }            
             output.Insert (0, primary);
             output.Insert (1, secondary);
@@ -947,7 +993,7 @@ namespace SETextToSpeechMod
             {
                 if (analyseDivisions[i].Length != 5)
                 {
-                    matchingRegexInFormat = false;
+                    wrongFormatMatchers++;
                 }
             }           
             return Regex.IsMatch (surroundingPhrase, pattern);
@@ -958,7 +1004,7 @@ namespace SETextToSpeechMod
         {
             if (pattern.Length != 5)
             {
-                nonmatchingRegexInFormat = false;
+                wrongFormatNonMatchers++;
             }
             return !Regex.IsMatch (surroundingPhrase, pattern);
         }
