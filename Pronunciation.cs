@@ -248,28 +248,34 @@ namespace SETextToSpeechMod
 
 #region case B
                 case "B":
-                    if ((UnwantedMatchBypassed ("..B .") && //!bomb
-                         UnwantedMatchBypassed (".BB..")) || //!cobber  
-                                               
-                         VOWELS.Contains (before)) //rob
+                    if (IsMatch (".MB ." + //bomb
+                                "|.BB.." //cobber
+                                ))                                                                      
                     {
-                        if (IsMatch ("..BL.")) //able
-                        {
-                            primary = " ";
-                            secondary = PrettyScaryDictionary.BIH;
-                        }
+                        ;
+                    }
 
-                        else
-                        {
-                            primary = PrettyScaryDictionary.BIH;
-                        }
+                    else if (IsMatch ("..BL.")) //able
+                    {
+                        primary = " ";
+                        secondary = PrettyScaryDictionary.BIH;
+                    }
+
+                    else
+                    {
+                        primary = PrettyScaryDictionary.BIH;
                     }
                     break;
 #endregion case B
 
 #region case C
-                case "C": 
-                    if (IsMatch ("..CE." + //nice
+                case "C":
+                    if (IsMatch (".CC..")) //!double C's 
+                    {
+                        ;
+                    }
+                     
+                    else if (IsMatch ("..CE." + //nice
                                 "|..CI." + //complicit
                                 "|..CY." + //stacy
                                 "|..CH " //touch
@@ -278,21 +284,23 @@ namespace SETextToSpeechMod
                         primary = PrettyScaryDictionary.SIH; //sicily
                     }
             
-                    else if (UnwantedMatchBypassed (".CC..")) //!double C's 
+                    else
                     {
-                        primary = PrettyScaryDictionary.KIH; //cat
+                        primary = PrettyScaryDictionary.KIH;
                     } 
                     break;
 #endregion case C
 
 #region case D
                 case "D":
-                    if (IsMatch ("..DG.")) //judge
+                    if (IsMatch ("..DG." + //judge
+                                "|.DD.." //ladder
+                                ))
                     {
                         ; 
                     }
             
-                    else if (UnwantedMatchBypassed (".DD..")) //ladder
+                    else
                     {
                         primary = PrettyScaryDictionary.DIH;
                     }
@@ -554,10 +562,15 @@ namespace SETextToSpeechMod
 #endregion case J
 
 #region case K
-                case "K":   
-                    if (UnwantedMatchBypassed (".CK..") && //!two kih's
-                        UnwantedMatchBypassed ("..KN.") && //!silent K
-                        UnwantedMatchBypassed (".KK..")) //!double K's
+                case "K":
+                    if (IsMatch (".CK.." + //two kih's
+                                "|..KN." + //silent K
+                                "|.KK..")) //double K's
+                    {
+                        ;
+                    }
+
+                    else
                     {
                         primary = PrettyScaryDictionary.KIH;
                     }    
@@ -565,23 +578,33 @@ namespace SETextToSpeechMod
 #endregion case K
 
 #region case L
-                case "L": 
-                    if (UnwantedMatchBypassed ("..LK.") && //!silent L
-                        UnwantedMatchBypassed ("..LF.") && //!silent L
-                        UnwantedMatchBypassed (".LL..")) //!double L's
+                case "L":
+                    if (IsMatch ("..LK." + //silent L
+                                "|..LF." + //silent L
+                                "|.LL..")) //double L's
                     {
-                        primary = PrettyScaryDictionary.LIH; //silent L, caller,
+                        ;
+                    }
+
+                    else
+                    {
+                        primary = PrettyScaryDictionary.LIH;
                     }
                     break;
 #endregion case L
 
 #region case M
-                case "M":   
-                    if (UnwantedMatchBypassed (".MM..")) //!double M's
-                    {                        
+                case "M":
+                    if (IsMatch (".MM..")) //double M's
+                    {
+                        ;                        
+                    }
+
+                    else
+                    {
                         primary = " ";
                         secondary = PrettyScaryDictionary.MIH; //such as "molten", drummer,
-                    }    
+                    }  
                     break;
 #endregion case M
 

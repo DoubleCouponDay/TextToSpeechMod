@@ -3,14 +3,12 @@ BROKEN WORDS
 
 
 
+
 TO DO
 ================//
-+ fix non matching words.
-
-+ make backup copy of Pronunciation
-+ analyse the best looking letter pattern to see if its actually better
-+ i reckon having an else at the end of each letter is good for debugging
-+ some state paths can be combined in adjacent evaulation.  this involves removing else scenarios. TEST AFTER EVERY LETTER.
++ im up to M
++ put an else on the end of every letter. test after every letter.
++ some state paths can be combined in adjacent evaulation. TEST AFTER EVERY LETTER.
 
 + record new phonemes
 SHI = {SIH, HIH}, 
