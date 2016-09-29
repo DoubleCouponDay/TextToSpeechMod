@@ -1,6 +1,6 @@
-Total Words: 200
-Total Incorrect: 0
-Previous Incorrect: 0
+Total Words: 201
+Total Incorrect: 1
+Previous Incorrect: 1
 From Dictionary: 0
 Lowercase Keys: 0
 Wrong Format Matchers: 0
@@ -221,6 +221,8 @@ Correct ------ ME      { MIH, EEE, } { MIH, EEE, }
 Correct ------ MAYBE      { MIH, AEE, BIH, EEE, } { MIH, AEE, BIH, EEE, } 
 
 Correct ------ MOLTEN      { MIH, HOH, LIH, TIH, EHH, NIH, } { MIH, HOH, LIH, TIH, EHH, NIH, } 
+
+Not Correct -- MANOEUVER      { MIH, UHH, NIH, OOO, VIH, RIH, } { MIH, AHH, NIH, OWE, OOO, VIH, EHH, RIH, } 
 
 Correct ------ NICE      { NIH, EYE, SIH, } { NIH, EYE, SIH, } 
 

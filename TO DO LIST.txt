@@ -6,8 +6,6 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ im up to M
-+ put an else on the end of every letter. test after every letter.
 + some state paths can be combined in adjacent evaulation. TEST AFTER EVERY LETTER.
 
 + record new phonemes

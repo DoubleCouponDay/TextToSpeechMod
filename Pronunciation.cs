@@ -610,21 +610,23 @@ namespace SETextToSpeechMod
 
 #region case N
                 case "N":      
-                    if (UnwantedMatchBypassed (".NN..")) //double N's
+                    if (IsMatch (".NN..")) //double N's
                     {
-                        if (IsMatch ("GINE ")) //aborigine
-                        {
-                            primary = PrettyScaryDictionary.NIH;
-                            secondary = PrettyScaryDictionary.EEE;
-                        }   
+                        ;
+                    }
+
+                    else if (IsMatch ("GINE ")) //aborigine
+                    {
+                        primary = PrettyScaryDictionary.NIH;
+                        secondary = PrettyScaryDictionary.EEE;
+                    }
+                           
                         
-                        else
-                        {
-                            primary = " ";
-                            secondary = PrettyScaryDictionary.NIH;  //such as nickel,
-                        } 
-                        
-                    }    
+                    else
+                    {
+                        primary = " ";
+                        secondary = PrettyScaryDictionary.NIH;  //such as nickel,
+                    }                         
                     break;
 #endregion case N
 
@@ -743,15 +745,20 @@ namespace SETextToSpeechMod
 
 #region case P
                 case "P":
-                    if (IsMatch ("..PH.")) //phrase
+                    if (IsMatch (".PP..")) //double P's
+                    {
+                        ;
+                    }
+
+                    else if (IsMatch ("..PH.")) //phrase
                     {
                         primary = PrettyScaryDictionary.FIH;
-                    }   
-
-                    else if (UnwantedMatchBypassed (".PP..")) //double P's
+                    }     
+                    
+                    else
                     {
                         primary = PrettyScaryDictionary.PIH;
-                    }                    
+                    }                 
                     break;
 #endregion case P
 
@@ -773,23 +780,33 @@ namespace SETextToSpeechMod
 
 #region case R
                 case "R":   
-                    if (UnwantedMatchBypassed (".RR..")) //!double R's
+                    if (IsMatch (".RR..")) //!double R's
                     {                        
+                        ;
+                    }
+
+                    else
+                    {
                         primary = PrettyScaryDictionary.RIH;
                     }
                     break;
 #endregion case R
 
 #region case S
-                case "S":   
-                    if (IsMatch ("..SM " + //prism
-                                "|VIS.." //improvise
-                                ))
+                case "S":
+                    if (IsMatch (".SS..")) //!double S's
+                    {
+                        ;
+                    }
+                       
+                    else if (IsMatch ("..SM " + //prism
+                                     "|VIS.." //improvise
+                                     ))
                     {
                         primary = PrettyScaryDictionary.ZIH;
                     }
 
-                    else if (UnwantedMatchBypassed (".SS..")) //!double S's
+                    else
                     {
                         primary = PrettyScaryDictionary.SIH;
                     }                  
@@ -800,7 +817,8 @@ namespace SETextToSpeechMod
                 case "T":
                     if (UnwantedMatchBypassed ("PATIO") && //!patio
                         IsMatch (".ATIO" + //proclamation                        
-                                "|.CTIO" //instructional 
+                                "|.CTIO" + //instructional 
+                                "|.TT.." //!double T's
                                 ))
                     {
                         ;
@@ -813,19 +831,16 @@ namespace SETextToSpeechMod
                         secondary = PrettyScaryDictionary.THI;    
                     } 
 
-                    else if (UnwantedMatchBypassed (".TT..")) //!double T's 
+                    else if (IsMatch (".ST..")) //emphasised T
                     {
-                        if (IsMatch (".ST..")) //emphasised T
-                        {
-                            primary = " ";
-                            secondary = PrettyScaryDictionary.TIH;
-                        }
+                        primary = " ";
+                        secondary = PrettyScaryDictionary.TIH;
+                    }
                         
-                        else
-                        {
-                            primary = PrettyScaryDictionary.TIH;
-                        }                        
-                    }    
+                    else
+                    {
+                        primary = PrettyScaryDictionary.TIH;
+                    }                        
                     break;
 #endregion case T
 
@@ -926,7 +941,12 @@ namespace SETextToSpeechMod
 
 #region case W
                 case "W":
-                    if (UnwantedMatchBypassed ("..W .")) //narrow
+                    if (IsMatch ("..W .")) //narrow
+                    {
+                        ;
+                    }
+
+                    else
                     {
                         primary = PrettyScaryDictionary.WIH;
                     }                   
@@ -934,13 +954,18 @@ namespace SETextToSpeechMod
 #endregion case W
 
 #region case X
-                case "X":   
-                    if (IsMatch (". X..")) //xylophone
+                case "X":
+                    if (IsMatch ("AUX .")) //aboitaux
+                    {
+                        ;
+                    }   
+
+                    else if (IsMatch (". X..")) //xylophone
                     {
                         primary = PrettyScaryDictionary.ZIH; 
                     }    
         
-                    else if (UnwantedMatchBypassed ("AUX .")) //aboitaux
+                    else
                     {
                         primary = PrettyScaryDictionary.KSS;                 
                     }
