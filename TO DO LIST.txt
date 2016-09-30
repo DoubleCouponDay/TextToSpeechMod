@@ -6,7 +6,11 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ some state paths can be combined in adjacent evaulation. TEST AFTER EVERY LETTER.
++ marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out
++ i didnt export the changes. wait until im happy with all the letters before doing that.
++ test words before uploading
+
++ was i upgrading computer voice too?
 
 + record new phonemes
 SHI = {SIH, HIH}, 
@@ -16,13 +20,10 @@ ERR = {RIH},
 + fix the resulting mess
 + replace instances of "AOW" with UHH OHH (dont rush this)
 
-+ study old work in saved audacity project ._.
-+ marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out
-+ see if its feasible to use marek consonants
-+ test words before overwriting
-
 + record madden and glados phonemes using DECtalk and youtube
 + use autotune free trial to create pitch for those two? how many notes?
++ convert them to XWM
++ find a way to automate writing thousands of SBC files
 + SentenceProcession should become an interface/base class (idk which one yet)
 + create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
 
@@ -31,5 +32,9 @@ ERR = {RIH},
 + find out if you can move entity with mouse input
 
 + commission some artwork of hawking, SE suit, glados on the moon around the TTS block
+
++ FINISH
+
++ move phonemes folder to mega.
 
 + create documentation and flow charts.
