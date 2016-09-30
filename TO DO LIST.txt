@@ -6,11 +6,9 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ marek PIH is too quiet. marek phonemes need to be the same length; even small ones. drag them out
-+ i didnt export the changes. wait until im happy with all the letters before doing that.
-+ test words before uploading
-
-+ was i upgrading computer voice too?
++ check if computer renovations are different. if they are, save them too.
++ double check every sound file.
++ publish
 
 + record new phonemes
 SHI = {SIH, HIH}, 
@@ -23,9 +21,14 @@ ERR = {RIH},
 + record madden and glados phonemes using DECtalk and youtube
 + use autotune free trial to create pitch for those two? how many notes?
 + convert them to XWM
-+ find a way to automate writing thousands of SBC files
+
++ write a new program that prints these potential thousands of SBC files
++ make a git for it and give it to the community.
+
++ move phonemes backup to mega (outside of the git)
 + SentenceProcession should become an interface/base class (idk which one yet)
 + create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
++ tune the two voices.
 
 + make a new block with a sound emitter entity
 
@@ -35,6 +38,5 @@ ERR = {RIH},
 
 + FINISH
 
-+ move phonemes folder to mega.
 
 + create documentation and flow charts.
