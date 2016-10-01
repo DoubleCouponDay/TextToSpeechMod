@@ -10,8 +10,6 @@ SHI = {SIH, HIH},
 CHI = {KIH, HIH}, {TIH, SIH, HIH}, {SIH, HIH,}
 ERR = {RIH},
 
-+ record new phonemes
-+ convert and publish them
 + SYNC WORK PC FROM PAVILION
 + replace them in the debugger, dictionary, adjacent
 + replace instances of "AOW" with UHH OHH (dont rush this)
@@ -35,8 +33,9 @@ ERR = {RIH},
 + find out if you can move entity with mouse input
 
 + commission some artwork of hawking, SE suit, glados on the moon around the TTS block
++ stick mareks face on earth with some transparency
 
-+ video? script? ugh idk
++ maybe make a simple tutorial video
 
 + FINISH
 
