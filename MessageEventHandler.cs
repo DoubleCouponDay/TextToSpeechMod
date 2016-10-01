@@ -73,8 +73,7 @@ namespace SETextToSpeechMod
             MyAPIGateway.Utilities.MessageEntered += OnMessageEntered; //subscribes my method to the MessageEntered event.
             MyAPIGateway.Multiplayer.RegisterMessageHandler (packet_ID, OnReceivedPacket); //registers a multiplayer packet receiver.
             SoundPlayer.InitialiseEmitter();
-//            MyAPIGateway.Utilities.ShowMessage ("Text To Speech Mod", "2." + VERSION);
-            MyAPIGateway.Utilities.ShowMessage ("TextToSpeechMod", "If you find a broken word, please contact the designer.");
+            MyAPIGateway.Utilities.ShowMessage ("TextToSpeechMod", "If you find a broken word, please tell the designer.");
         }
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
