@@ -6,9 +6,6 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ check if computer renovations are different. if they are, save them too.
-+ double check every sound file.
-+ publish
 
 + record new phonemes
 SHI = {SIH, HIH}, 
@@ -37,6 +34,5 @@ ERR = {RIH},
 + commission some artwork of hawking, SE suit, glados on the moon around the TTS block
 
 + FINISH
-
 
 + create documentation and flow charts.
