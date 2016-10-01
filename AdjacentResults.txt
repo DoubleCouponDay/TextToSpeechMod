@@ -1,6 +1,6 @@
-Total Words: 201
-Total Incorrect: 1
-Previous Incorrect: 1
+Total Words: 202
+Total Incorrect: 0
+Previous Incorrect: 2
 From Dictionary: 0
 Lowercase Keys: 0
 Wrong Format Matchers: 0
@@ -16,7 +16,7 @@ Correct ------ AUTOGRAPH      { AWW, TIH, OWE, GIH, RIH, AHH, FIH, } { AWW, TIH,
 
 Correct ------ ACTIVITIES      { AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, } { AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, } 
 
-Correct ------ AGGRESSION      { UHH, GIH, RIH, EHH, SIH, HIH, UHH, NIH, } { UHH, GIH, RIH, EHH, SIH, HIH, UHH, NIH, } 
+Correct ------ AGGRESSION      { UHH, GIH, RIH, EHH, SHI, UHH, NIH, } { UHH, GIH, RIH, EHH, SHI, UHH, NIH, } 
 
 Correct ------ ABORIGINE      { AHH, BIH, OWE, RIH, IHH, JIH, IHH, NIH, EEE, } { AHH, BIH, OWE, RIH, IHH, JIH, IHH, NIH, EEE, } 
 
@@ -76,11 +76,11 @@ Correct ------ COMPLICIT      { KIH, HOH, MIH, PIH, LIH, IHH, SIH, IHH, TIH, } {
 
 Correct ------ CAT      { KIH, AHH, TIH, } { KIH, AHH, TIH, } 
 
-Correct ------ CALLER      { KIH, AWW, LIH, RIH, } { KIH, AWW, LIH, RIH, } 
+Correct ------ CALLER      { KIH, AWW, LIH, ERR, } { KIH, AWW, LIH, ERR, } 
 
-Correct ------ COMPUTER      { KIH, HOH, MIH, PIH, YIH, OOO, TIH, RIH, } { KIH, HOH, MIH, PIH, YIH, OOO, TIH, RIH, } 
+Correct ------ COMPUTER      { KIH, HOH, MIH, PIH, YIH, OOO, TIH, ERR, } { KIH, HOH, MIH, PIH, YIH, OOO, TIH, ERR, } 
 
-Correct ------ CHAMPION      { KIH, HIH, AHH, MIH, PIH, EEE, UHH, NIH, } { KIH, HIH, AHH, MIH, PIH, EEE, UHH, NIH, } 
+Correct ------ CHAMPION      { CHI, AHH, MIH, PIH, EEE, UHH, NIH, } { CHI, AHH, MIH, PIH, EEE, UHH, NIH, } 
 
 Correct ------ COLLECTED      { KIH, HOH, LIH, EHH, KIH, TIH, EHH, DIH, } { KIH, HOH, LIH, EHH, KIH, TIH, EHH, DIH, } 
 
@@ -92,7 +92,7 @@ Correct ------ CRUD      { KIH, RIH, UHH, DIH, } { KIH, RIH, UHH, DIH, }
 
 Correct ------ CUT      { KIH, UHH, TIH, } { KIH, UHH, TIH, } 
 
-Correct ------ CHIVALRY      { KIH, HIH, IHH, VIH, AHH, LIH, RIH, EEE, } { KIH, HIH, IHH, VIH, AHH, LIH, RIH, EEE, } 
+Correct ------ CHIVALRY      { CHI, IHH, VIH, AHH, LIH, RIH, EEE, } { CHI, IHH, VIH, AHH, LIH, RIH, EEE, } 
 
 Correct ------ DEAL      { DIH, EEE, LIH, } { DIH, EEE, LIH, } 
 
@@ -100,7 +100,7 @@ Correct ------ DRESSES      { DIH, RIH, EHH, SIH, EHH, SIH, } { DIH, RIH, EHH, S
 
 Correct ------ DOUGH      { DIH, OWE, } { DIH, OWE, } 
 
-Correct ------ DRUMMER      { DIH, RIH, UHH, MIH, RIH, } { DIH, RIH, UHH, MIH, RIH, } 
+Correct ------ DRUMMER      { DIH, RIH, UHH, MIH, ERR, } { DIH, RIH, UHH, MIH, ERR, } 
 
 Correct ------ DONE      { DIH, UHH, NIH, } { DIH, UHH, NIH, } 
 
@@ -170,9 +170,9 @@ Correct ------ IMPROVE      { IHH, MIH, PIH, RIH, OOO, VIH, } { IHH, MIH, PIH, R
 
 Correct ------ IMPROVISE      { IHH, MIH, PIH, RIH, OWE, VIH, EYE, ZIH, } { IHH, MIH, PIH, RIH, OWE, VIH, EYE, ZIH, } 
 
-Correct ------ IMPROVISATION      { IHH, MIH, PIH, RIH, OWE, VIH, EYE, ZIH, AEE, SIH, HIH, UHH, NIH, } { IHH, MIH, PIH, RIH, OWE, VIH, EYE, ZIH, AEE, SIH, HIH, UHH, NIH, } 
+Correct ------ IMPROVISATION      { IHH, MIH, PIH, RIH, OWE, VIH, EYE, ZIH, AEE, SHI, UHH, NIH, } { IHH, MIH, PIH, RIH, OWE, VIH, EYE, ZIH, AEE, SHI, UHH, NIH, } 
 
-Correct ------ INSTRUCTIONAL      { IHH, NIH, SIH, TIH, RIH, UHH, KIH, SIH, HIH, UHH, NIH, AHH, LIH, } { IHH, NIH, SIH, TIH, RIH, UHH, KIH, SIH, HIH, UHH, NIH, AHH, LIH, } 
+Correct ------ INSTRUCTIONAL      { IHH, NIH, SIH, TIH, RIH, UHH, KIH, SHI, UHH, NIH, AHH, LIH, } { IHH, NIH, SIH, TIH, RIH, UHH, KIH, SHI, UHH, NIH, AHH, LIH, } 
 
 Correct ------ JUDGE      { JIH, UHH, JIH, } { JIH, UHH, JIH, } 
 
@@ -194,7 +194,7 @@ Correct ------ LABEL      { LIH, AEE, BIH, LIH, } { LIH, AEE, BIH, LIH, }
 
 Correct ------ LAST      { LIH, AHH, SIH, TIH, } { LIH, AHH, SIH, TIH, } 
 
-Correct ------ LADDER      { LIH, AHH, DIH, RIH, } { LIH, AHH, DIH, RIH, } 
+Correct ------ LADDER      { LIH, AHH, DIH, ERR, } { LIH, AHH, DIH, ERR, } 
 
 Correct ------ LOVELY      { LIH, UHH, VIH, LIH, EEE, } { LIH, UHH, VIH, LIH, EEE, } 
 
@@ -206,7 +206,7 @@ Correct ------ LORE      { LIH, AWW, RIH, } { LIH, AWW, RIH, }
 
 Correct ------ LIKELY      { LIH, EYE, KIH, LIH, EEE, } { LIH, EYE, KIH, LIH, EEE, } 
 
-Correct ------ LEADER      { LIH, EEE, DIH, RIH, } { LIH, EEE, DIH, RIH, } 
+Correct ------ LEADER      { LIH, EEE, DIH, ERR, } { LIH, EEE, DIH, ERR, } 
 
 Correct ------ LUDICROUS      { LIH, OOO, DIH, IHH, KIH, RIH, UHH, SIH, } { LIH, OOO, DIH, IHH, KIH, RIH, UHH, SIH, } 
 
@@ -222,7 +222,7 @@ Correct ------ MAYBE      { MIH, AEE, BIH, EEE, } { MIH, AEE, BIH, EEE, }
 
 Correct ------ MOLTEN      { MIH, HOH, LIH, TIH, EHH, NIH, } { MIH, HOH, LIH, TIH, EHH, NIH, } 
 
-Not Correct -- MANOEUVER      { MIH, UHH, NIH, OOO, VIH, RIH, } { MIH, AHH, NIH, OWE, OOO, VIH, EHH, RIH, } 
+Correct ------ MANOEUVRE      { MIH, AHH, NIH, OOO, VIH, ERR, } { MIH, AHH, NIH, OOO, VIH, ERR, } 
 
 Correct ------ NICE      { NIH, EYE, SIH, } { NIH, EYE, SIH, } 
 
@@ -266,9 +266,9 @@ Correct ------ PIKE      { PIH, EYE, KIH, } { PIH, EYE, KIH, }
 
 Correct ------ POINT      { PIH, AWW, EEE, NIH, TIH, } { PIH, AWW, EEE, NIH, TIH, } 
 
-Correct ------ PLANNER      { PIH, LIH, AHH, NIH, RIH, } { PIH, LIH, AHH, NIH, RIH, } 
+Correct ------ PLANNER      { PIH, LIH, AHH, NIH, ERR, } { PIH, LIH, AHH, NIH, ERR, } 
 
-Correct ------ POUCH      { PIH, AHH, HOH, SIH, HIH, } { PIH, AHH, HOH, SIH, HIH, } 
+Correct ------ POUCH      { PIH, AHH, HOH, CHI, } { PIH, AHH, HOH, CHI, } 
 
 Correct ------ PRO      { PIH, RIH, OWE, } { PIH, RIH, OWE, } 
 
@@ -282,9 +282,11 @@ Correct ------ PIES      { PIH, EYE, SIH, } { PIH, EYE, SIH, }
 
 Correct ------ PRUDE      { PIH, RIH, OOO, DIH, } { PIH, RIH, OOO, DIH, } 
 
-Correct ------ PROCLAMATION      { PIH, RIH, HOH, KIH, LIH, UHH, MIH, AEE, SIH, HIH, UHH, NIH, } { PIH, RIH, HOH, KIH, LIH, UHH, MIH, AEE, SIH, HIH, UHH, NIH, } 
+Correct ------ PROCLAMATION      { PIH, RIH, HOH, KIH, LIH, UHH, MIH, AEE, SHI, UHH, NIH, } { PIH, RIH, HOH, KIH, LIH, UHH, MIH, AEE, SHI, UHH, NIH, } 
 
 Correct ------ PATIO      { PIH, AHH, TIH, EEE, OWE, } { PIH, AHH, TIH, EEE, OWE, } 
+
+Correct ------ PENIS      { PIH, EEE, NIH, IHH, SIH, } { PIH, EEE, NIH, IHH, SIH, } 
 
 Correct ------ QUEUE      { KIH, YIH, OOO, } { KIH, YIH, OOO, } 
 
@@ -294,9 +296,9 @@ Correct ------ ROW      { RIH, OWE, } { RIH, OWE, }
 
 Correct ------ ROB      { RIH, HOH, BIH, } { RIH, HOH, BIH, } 
 
-Correct ------ RUBBER      { RIH, UHH, BIH, RIH, } { RIH, UHH, BIH, RIH, } 
+Correct ------ RUBBER      { RIH, UHH, BIH, ERR, } { RIH, UHH, BIH, ERR, } 
 
-Correct ------ REMEMBER      { RIH, EEE, MIH, EHH, MIH, BIH, RIH, } { RIH, EEE, MIH, EHH, MIH, BIH, RIH, } 
+Correct ------ REMEMBER      { RIH, EEE, MIH, EHH, MIH, BIH, ERR, } { RIH, EEE, MIH, EHH, MIH, BIH, ERR, } 
 
 Correct ------ RUNNING      { RIH, UHH, NIH, EEE, NIH, } { RIH, UHH, NIH, EEE, NIH, } 
 
@@ -320,7 +322,7 @@ Correct ------ STACY      { SIH, TIH, AEE, SIH, EEE, } { SIH, TIH, AEE, SIH, EEE
 
 Correct ------ SICILY      { SIH, IHH, SIH, IHH, LIH, EEE, } { SIH, IHH, SIH, IHH, LIH, EEE, } 
 
-Correct ------ SPEECH      { SIH, PIH, EEE, SIH, HIH, } { SIH, PIH, EEE, SIH, HIH, } 
+Correct ------ SPEECH      { SIH, PIH, EEE, CHI, } { SIH, PIH, EEE, CHI, } 
 
 Correct ------ STEIN      { SIH, TIH, EEE, NIH, } { SIH, TIH, EEE, NIH, } 
 
@@ -330,7 +332,7 @@ Correct ------ SPITE      { SIH, PIH, EYE, TIH, } { SIH, PIH, EYE, TIH, }
 
 Correct ------ SOUR      { SIH, AHH, HOH, RIH, } { SIH, AHH, HOH, RIH, } 
 
-Correct ------ SLOUCH      { SIH, LIH, AHH, HOH, SIH, HIH, } { SIH, LIH, AHH, HOH, SIH, HIH, } 
+Correct ------ SLOUCH      { SIH, LIH, AHH, HOH, CHI, } { SIH, LIH, AHH, HOH, CHI, } 
 
 Correct ------ SOUL      { SIH, OWE, LIH, } { SIH, OWE, LIH, } 
 
@@ -352,7 +354,7 @@ Correct ------ SQUARE      { SIH, KIH, WIH, EHH, RIH, } { SIH, KIH, WIH, EHH, RI
 
 Correct ------ SLEUTH      { SIH, LIH, OOO, THI, } { SIH, LIH, OOO, THI, } 
 
-Correct ------ STATION      { SIH, TIH, AEE, SIH, HIH, UHH, NIH, } { SIH, TIH, AEE, SIH, HIH, UHH, NIH, } 
+Correct ------ STATION      { SIH, TIH, AEE, SHI, UHH, NIH, } { SIH, TIH, AEE, SHI, UHH, NIH, } 
 
 Correct ------ TABLE      { TIH, AEE, BIH, LIH, } { TIH, AEE, BIH, LIH, } 
 
@@ -364,15 +366,15 @@ Correct ------ THESE      { THI, EEE, SIH, } { THI, EEE, SIH, }
 
 Correct ------ TREKKIES      { TIH, RIH, EHH, KIH, EEE, SIH, } { TIH, RIH, EHH, KIH, EEE, SIH, } 
 
-Correct ------ TRIGGER      { TIH, RIH, IHH, GIH, RIH, } { TIH, RIH, IHH, GIH, RIH, } 
+Correct ------ TRIGGER      { TIH, RIH, IHH, GIH, ERR, } { TIH, RIH, IHH, GIH, ERR, } 
 
 Correct ------ TALKING      { TIH, AWW, KIH, EEE, NIH, } { TIH, AWW, KIH, EEE, NIH, } 
 
 Correct ------ THIGH      { THI, EYE, } { THI, EYE, } 
 
-Correct ------ TRACTION      { TIH, RIH, AHH, KIH, SIH, HIH, UHH, NIH, } { TIH, RIH, AHH, KIH, SIH, HIH, UHH, NIH, } 
+Correct ------ TRACTION      { TIH, RIH, AHH, KIH, SHI, UHH, NIH, } { TIH, RIH, AHH, KIH, SHI, UHH, NIH, } 
 
-Correct ------ TOUCH      { TIH, UHH, SIH, HIH, } { TIH, UHH, SIH, HIH, } 
+Correct ------ TOUCH      { TIH, UHH, CHI, } { TIH, UHH, CHI, } 
 
 Correct ------ TOLD      { TIH, HOH, LIH, DIH, } { TIH, HOH, LIH, DIH, } 
 
@@ -396,7 +398,7 @@ Correct ------ VETO      { VIH, EEE, TIH, OWE, } { VIH, EEE, TIH, OWE, }
 
 Correct ------ VISA      { VIH, EEE, ZIH, UHH, } { VIH, EEE, ZIH, UHH, } 
 
-Correct ------ WATER      { WIH, AWW, TIH, RIH, } { WIH, AWW, TIH, RIH, } 
+Correct ------ WATER      { WIH, AWW, TIH, ERR, } { WIH, AWW, TIH, ERR, } 
 
 Correct ------ WHAT      { WIH, HOH, TIH, } { WIH, HOH, TIH, } 
 
