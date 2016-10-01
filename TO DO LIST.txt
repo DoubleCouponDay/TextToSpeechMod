@@ -6,32 +6,37 @@ BROKEN WORDS
 
 TO DO
 ================//
+SHI = {SIH, HIH}, 
+CHI = {KIH, HIH}, {TIH, SIH, HIH}, {SIH, HIH,}
+ERR = {RIH},
 
 + record new phonemes
-SHI = {SIH, HIH}, 
-{TIH, SHI} = {KIH, HIH}, {TIH, SIH, HIH}, {SIH, HIH,},
-ERR = {RIH},
-+ replace them in the debuger,dictionary,adjacent
-+ fix the resulting mess
++ convert and publish them
++ SYNC WORK PC FROM PAVILION
++ replace them in the debugger, dictionary, adjacent
 + replace instances of "AOW" with UHH OHH (dont rush this)
++ fix the resulting mess 
 
 + record madden and glados phonemes using DECtalk and youtube
 + use autotune free trial to create pitch for those two? how many notes?
 + convert them to XWM
 
 + write a new program that prints these potential thousands of SBC files
++ dip toe in and try to make an exe for it with interface
 + make a git for it and give it to the community.
 
 + move phonemes backup to mega (outside of the git)
 + SentenceProcession should become an interface/base class (idk which one yet)
 + create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
-+ tune the two voices.
++ tune the four voices.
 
 + make a new block with a sound emitter entity
 
 + find out if you can move entity with mouse input
 
 + commission some artwork of hawking, SE suit, glados on the moon around the TTS block
+
++ video? script? ugh idk
 
 + FINISH
 
