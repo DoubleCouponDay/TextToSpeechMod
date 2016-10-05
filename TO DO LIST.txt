@@ -6,6 +6,8 @@ BROKEN WORDS
 
 TO DO
 ================//
++ MAKE SBC FILES FOR PREVIOUSLY CREATED PHONEME BATCH
+
 + write a new program that prints these potential thousands of SBC files
 + dip toe in and try to make an exe for it with interface
 + mod needs modifications where it fetches file name
@@ -23,7 +25,7 @@ TO DO
 
 + find out if you can move entity with mouse input
 
-+ maybe make a simple tutorial video
++ maybe make a showcase video
 
 + FINISH
 
