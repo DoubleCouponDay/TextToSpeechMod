@@ -6,26 +6,31 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ MAKE SBC FILES FOR PREVIOUSLY CREATED PHONEME BATCH
-
-+ write a new program that prints these potential thousands of SBC files
-+ dip toe in and try to make an exe for it with interface
-+ mod needs modifications where it fetches file name
++ file generator must not have backslashes at the start
++ mega backup
++ sync
 
 + record madden and glados phonemes using DECtalk and youtube
 + use autotune free trial to create pitch for those two? how many notes?
 + convert them to XWM
++ publish
++ backup to mega
++ sync
 
-+ move phonemes backup to mega (outside of the git)
 + SentenceProcession should become an interface/base class (idk which one yet)
 + create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
-+ tune the four voices.
++ mod needs modifications where it fetches file name
++ test voices and tune them up.
+
++ NO SINGING
+
++ test new phonemes on pavilion
 
 + make a new block with a sound emitter entity
 
 + find out if you can move entity with mouse input
 
-+ maybe make a showcase video
++ make a showcase video 
 
 + FINISH
 
