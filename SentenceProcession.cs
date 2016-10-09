@@ -75,7 +75,7 @@ namespace SETextToSpeechMod
 
                 if (rng_bonk == 0)
                 {
-                    SoundPlayer.PlayClip (debugging, "BONK", true); //it hurts to live
+                    SoundPlayer.PlayClip (debugging, "BONK"); //it hurts to live
                 }
                 Play();    
             }    
@@ -200,7 +200,7 @@ namespace SETextToSpeechMod
                 timelineCopy = timelineCopy.Remove (pointIndex, 1); //inputs index then count.
                 pointIndex--;
             } 
-            SoundPlayer.PlayClip (debugging, choiceExtracted, false);  
+            SoundPlayer.PlayClip (debugging, choiceExtracted);  
         }
     }
 }
