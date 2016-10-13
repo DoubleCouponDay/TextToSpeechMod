@@ -6,9 +6,19 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ file generator must not have backslashes at the start
-+ mega backup
-+ sync
++ remove subtypeid
++ remove comment about detection
++ find a cleaner ore name
++ reduce to just visible oremarkers
++ test next to gigantic asteroid
++ test on dedicated server. see if progress caries on without you?
++ push and finish
+
++ add new commands and muting options
++ SentenceProcession should become an interface/base class (idk which one yet)
++ create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
++ mod needs modifications where it fetches file name
++ add singing
 
 + record madden and glados phonemes using DECtalk and youtube
 + use autotune free trial to create pitch for those two? how many notes?
@@ -17,21 +27,13 @@ TO DO
 + backup to mega
 + sync
 
-+ SentenceProcession should become an interface/base class (idk which one yet)
-+ create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
-+ mod needs modifications where it fetches file name
 + test voices and tune them up.
 
-+ NO SINGING
-
-+ test new phonemes on pavilion
-
 + make a new block with a sound emitter entity
-
 + find out if you can move entity with mouse input
+
++ test everything
 
 + make a showcase video 
 
 + FINISH
-
-+ create documentation and flow charts.
