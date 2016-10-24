@@ -16,8 +16,8 @@ namespace SETextToSpeechMod
         string[] dictionaryMatch;
         string surroundingPhrase;
         public bool usedDictionary {get; private set;}
-        public int wrongFormatMatchers {get; private set;}
-        public int wrongFormatNonMatchers {get; private set;}
+        public int wrongFormatMatches {get; private set;}
+        public int wrongFormatNonMatches {get; private set;}
 
         public WordCounter wordCounter {get; private set;}
 
@@ -1021,7 +1021,7 @@ namespace SETextToSpeechMod
             {
                 if (analyseDivisions[i].Length != 5)
                 {
-                    wrongFormatMatchers++;
+                    wrongFormatMatches++;
                 }
             }           
             return Regex.IsMatch (surroundingPhrase, pattern);
@@ -1032,7 +1032,7 @@ namespace SETextToSpeechMod
         {
             if (pattern.Length != 5)
             {
-                wrongFormatNonMatchers++;
+                wrongFormatNonMatches++;
             }
             return !Regex.IsMatch (surroundingPhrase, pattern);
         }

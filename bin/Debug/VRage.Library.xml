@@ -5343,6 +5343,11 @@
             Checks write access for file
             </summary>
         </member>
+        <member name="M:VRage.FileSystem.MyFileSystem.MakeRelativePath(System.String,System.String)">
+            <summary>
+            Creates a relative path from one file or folder to another.
+            </summary>
+        </member>
         <member name="T:VRage.Library.Utils.MyGameTimer">
             <summary>
             Global thread-safe timer.

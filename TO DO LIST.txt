@@ -1,17 +1,25 @@
 BROKEN WORDS
 =================//
 
-
+ 
 
 
 TO DO
 ================//
-+ remove subtypeid
-+ remove comment about detection
-+ find a cleaner ore name
-+ reduce to just visible oremarkers
++ record and edit madden phonemes
++ merge them to mono
++ record and edit glados phonemes
++ merge them to mono
++ use melodyne free trial to create pitch for those two? how many notes?
++ convert them to XWM
++ publish
++ backup to mega
++ sync
+
++ placing the antenna gets rid of the problem. what is it doing?
++ why doesnt ownership prevent a return?
 + test next to gigantic asteroid
-+ test on dedicated server. see if progress caries on without you?
++ test on dedicated server. see if progress carries on without you?
 + push and finish
 
 + add new commands and muting options
@@ -19,13 +27,6 @@ TO DO
 + create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
 + mod needs modifications where it fetches file name
 + add singing
-
-+ record madden and glados phonemes using DECtalk and youtube
-+ use autotune free trial to create pitch for those two? how many notes?
-+ convert them to XWM
-+ publish
-+ backup to mega
-+ sync
 
 + test voices and tune them up.
 

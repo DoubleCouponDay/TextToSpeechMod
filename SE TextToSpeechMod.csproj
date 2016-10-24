@@ -171,11 +171,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GLADOSVoice.cs" />
+    <Compile Include="HawkingVoice.cs" />
+    <Compile Include="MarekVoice.cs" />
     <Compile Include="PrettyScaryDictionary.cs" />
     <Compile Include="MessageEventHandler.cs" />
     <Compile Include="Pronunciation.cs" />
     <Compile Include="WordCounter.cs" />
-    <Compile Include="SentenceProcession.cs" />
+    <Compile Include="SentenceFactory.cs" />
     <Compile Include="SoundPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OptionalDebugger.cs" />

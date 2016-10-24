@@ -20,11 +20,10 @@ namespace SETextToSpeechMod
         bool runUpdates;
         public bool debugging {private get; set;}
         int timer = 0;        
-        Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.
-        List <IMyPlayer> players = new List <IMyPlayer>();
 
-        //GLOBAL VARIABLE
-        public List <SentenceProcession> speeches = new List <SentenceProcession>(); //this must be a global variable for OptionalDebugger() to work. This isnt a decision i take lightly.
+        private Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.
+        private List <IMyPlayer> players = new List <IMyPlayer>();
+        public List <SentenceFactory> speeches = new List <SentenceFactory>(); //this must be a global variable for OptionalDebugger() to work.
 
         public override void UpdateBeforeSimulation()
         {
@@ -137,7 +136,7 @@ namespace SETextToSpeechMod
 
             else
             {
-                speeches.Add (new SentenceProcession (decoded));
+                speeches.Add (new MarekVoice (decoded));
                 runUpdates = true; //in case this is the first sentence.
             }   
         }

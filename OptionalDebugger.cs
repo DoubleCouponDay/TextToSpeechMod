@@ -34,10 +34,10 @@ namespace SETextToSpeechMod
                                                  handler.speeches[0].pronunciation.usedDictionary);
                 }
             }
-            methodDebugger.PrintResults (handler.speeches[0].pronunciation.wrongFormatMatchers, handler.speeches[0].pronunciation.wrongFormatNonMatchers);
+            methodDebugger.PrintResults (handler.speeches[0].pronunciation.wrongFormatMatches, handler.speeches[0].pronunciation.wrongFormatNonMatches);
         }
 
-        class AdjacentTester
+        private class AdjacentTester
         {            
             const string currentComputer = "pavilion";
             //const string currentComputer = "thinkpad";
