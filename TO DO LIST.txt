@@ -16,17 +16,12 @@ TO DO
 + backup to mega
 + sync
 
-+ placing the antenna gets rid of the problem. what is it doing?
-+ why doesnt ownership prevent a return?
-+ test next to gigantic asteroid
-+ test on dedicated server. see if progress carries on without you?
-+ push and finish
-
++ add pitch processing. needs modifications where it fetches file name
 + add new commands and muting options
-+ SentenceProcession should become an interface/base class (idk which one yet)
-+ create HawkingVoice, GladosVoice, MarekVoice, ComputerVoice classes which inherit SentenceProgression
-+ mod needs modifications where it fetches file name
-+ add singing
++ benchmark stringbuilder performance.
++ change stringbuilder timeline to struct timeline.
++ benchmark struct performance
++ make pronunciation and wordcounter static
 
 + test voices and tune them up.
 

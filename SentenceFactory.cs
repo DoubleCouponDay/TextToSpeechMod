@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {   
-    class SentenceFactory //the roman numeral class name may help you to understand the code flow.
+    abstract class SentenceFactory //the roman numeral class name may help you to understand the code flow.
     {
         //reference settings         
         const int CHANCE_OF_CLANG = 10000;
@@ -12,6 +12,7 @@ namespace SETextToSpeechMod
         protected virtual int ClipLength { get { return 0; } }
         protected virtual int SyllableSize { get { return 0; } }
         protected virtual string VoiceID { get { return ""; } }
+        protected virtual int[][] IntonationOptions { get { return new int[][]{}; } }
         protected readonly string SENTENCE;
 
         //state
@@ -83,7 +84,7 @@ namespace SETextToSpeechMod
         } 
 
         //creates a new clip for the current letter.
-        void AddPhoneme()
+        private void AddPhoneme()
         {   
             results = pronunciation.GetLettersPronunciation (SENTENCE, letterIndex);
 
@@ -126,14 +127,19 @@ namespace SETextToSpeechMod
             }
         }
 
-        void IncrementSyllables()
+        private void IncrementSyllables()
         {
             timelineSize += SpaceSize;        
             syllableMeasurer = 1;
         }
 
+        private int GetIntonation()
+        {
+            return 0;
+        }
+
         //creates a string of all the phonemes and their start points (in ticks); better performance than searching a list of objects.
-        void AppendToTimeline (int startPoint, string clipsSound) 
+        private void AppendToTimeline (int startPoint, string clipsSound) 
         {      
             stringLite.Append ("/");    
             stringLite.Append (startPoint); //leaving out clear this one time is ok since it clears when loading is finished.
@@ -142,7 +148,7 @@ namespace SETextToSpeechMod
         }
 
         //this function is in charge of finding clips on the timeline and knowing when to end.
-        void Play()
+        private void Play()
         {   
             stringLite.Append ("/");
             stringLite.Append (currentTick);
@@ -167,7 +173,7 @@ namespace SETextToSpeechMod
             }    
         }
 
-        void ExtractClip (int pointIndex) //performance light function that detects clips ready to play. 
+        private void ExtractClip (int pointIndex) //performance light function that detects clips ready to play. 
         { 
             bool extractedNum = false;  
             string choiceExtracted = "";                                                                   
