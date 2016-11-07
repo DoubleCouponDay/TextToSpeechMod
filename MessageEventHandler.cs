@@ -47,7 +47,7 @@ namespace SETextToSpeechMod
                     timer--;
                 }               
 
-                for (int i = 0; i < speeches.Count; i++) //performance danger.
+                for (int i = 0; i < speeches.Count; i++) 
                 {
                     speeches[i].Load();
 
@@ -112,7 +112,6 @@ namespace SETextToSpeechMod
             {
                 ;
             }
-
         }
 
         public void OnReceivedPacket (byte[] bytes) //action type method which handles the received packets from other players.

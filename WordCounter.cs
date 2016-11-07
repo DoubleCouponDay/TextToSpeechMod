@@ -1,12 +1,13 @@
 ﻿namespace SETextToSpeechMod
 {
-    public class WordCounter //simply a collection of data without guarded sets. easy to pass.
+    public class WordCounter
     {                  
         const int NEW_WORD = -1; 
         const int LAST_LETTER = -3;
         int currentWordInt;
         int currentLetter;
         string[] words;
+
         public bool dumpRemainingLetters {get; private set;}
         public int placeholder {get; private set;}
         public string currentWord {get; private set;}

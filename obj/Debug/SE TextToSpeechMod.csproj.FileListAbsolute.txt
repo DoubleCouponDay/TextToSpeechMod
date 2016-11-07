@@ -208,3 +208,5 @@ C:\Users\pp\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\SE
 C:\Users\pp\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.exe
 C:\Users\pp\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.pdb
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\RecastDetourWrapper.dll
+C:\Users\sjsui\Desktop\Workshop\CSHARP-text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.exe
+C:\Users\sjsui\Desktop\Workshop\CSHARP-text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.pdb

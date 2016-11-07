@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {   
-    abstract class SentenceFactory //the roman numeral class name may help you to understand the code flow.
+    abstract class SentenceFactory
     {
         //reference settings         
         const int CHANCE_OF_CLANG = 10000;
@@ -83,7 +83,7 @@ namespace SETextToSpeechMod
             }    
         } 
 
-        //creates a new clip for the current letter.
+        //creates a new clip for the current letter by serializing the timeline of clips.
         private void AddPhoneme()
         {   
             results = pronunciation.GetLettersPronunciation (SENTENCE, letterIndex);
@@ -147,7 +147,7 @@ namespace SETextToSpeechMod
             stringLite.Append (clipsSound);                    
         }
 
-        //this function is in charge of finding clips on the timeline and knowing when to end.
+        //this method is in charge of finding clips on the timeline and knowing when to end.
         private void Play()
         {   
             stringLite.Append ("/");
