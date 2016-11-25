@@ -1,114 +1,128 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {   
-    abstract class SentenceFactory
-    {
-        //reference settings         
-        const int CHANCE_OF_CLANG = 10000;
-        protected virtual int SpaceSize { get { return 0; } }
-        protected virtual int ClipLength { get { return 0; } }
-        protected virtual int SyllableSize { get { return 0; } }
-        protected virtual string VoiceID { get { return ""; } }
-        protected virtual int[][] IntonationOptions { get { return new int[][]{}; } }
-        protected readonly string SENTENCE;
+    public abstract class SentenceFactory : StateResetTemplate, VoiceTemplate
+    {   
+        const int TIMELINE_CAPACITY = 100;
 
-        //state
-        public bool loading {get; protected set;} //made public so the debugger can take readings
-        public bool finished {get; protected set;}
+        //voice template
+        public virtual string Name { get { return "SentenceFactory";} }
+        public virtual string FileID { get; }
+        public virtual int SpaceSize { get; } //public because these properties are part of interface VoiceTemplate.
+        public virtual int ClipLength { get; }
+        public virtual int SyllableSize { get; }        
 
-        //debugging
-        public bool debugging {private get; set;}
+        //pitch        
+        protected virtual int[][] smallIntonationOptions { get; }
+        protected virtual int[][] mediumIntonationOptions { get; }
+        protected virtual int[][] largeIntonationOptions { get; }
+        protected int[][][] allPitchSizes;
+
+        //public state
+        public bool Loading {get; protected set;} //made public so the debugger can take readings
+        public bool Finished {get; protected set;}
 
         //index
-        int letterIndex;
-        int syllableMeasurer = 1;    
+        protected int letterIndex; 
+        protected int optionsIndex;                      
+        protected int arraysIndex; 
+        
+        //loading data            
+        protected string sentence;
+        bool previousWasSpace;
+        int syllableMeasure;          
+        protected int[][] intonationChoice;
 
         //play data
-        string timeline;
-        string timelineCopy;
-        int timelineSize;
         int currentTick;
+        public List <string> results {get; private set;}
 
-        //loading data            
-        bool previousWasSpace;
-        public List <string> results {get; protected set;}
+        //objects     
+        public Pronunciation pronunciation {get; private set;}   
+        private List <TimelineClip> timeline = new List <TimelineClip>();      
+        protected Random rng = SoundPlayer.NumberGenerator;
 
-        //objects    
-        private Random generator = new Random();
-        private StringBuilder stringLite = new StringBuilder();
-        public Pronunciation pronunciation {get; protected set;}        
+        public SentenceFactory()
+        {            
+            Loading = false;
+            Finished = true;
+            pronunciation = new Pronunciation();
+            results = new List <string>();
+            timeline.Capacity = TIMELINE_CAPACITY; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;
 
-        public SentenceFactory(){}
+            allPitchSizes = new int[][][]     
+            {
+                smallIntonationOptions,
+                mediumIntonationOptions,
+                largeIntonationOptions,
+            };
+        }
 
-        protected SentenceFactory (string input)
+        public void FactoryReset (string inputSentence)
         {
-            SENTENCE = input.Remove (0, 2); //getting rid of the trigger since its unnecessary. while testing, words smaller than the count of 2 will throw therefore...     
-            pronunciation = new Pronunciation (SENTENCE);
-            loading = true;
+            Loading = true;
+            Finished = false;           
+
+            letterIndex = 0; 
+            optionsIndex = 0;
+            arraysIndex = 0;
+
+            sentence = inputSentence;
+            
+            previousWasSpace = false;
+            syllableMeasure = 0;
+            intonationChoice = null;
+
+            currentTick = 0;
+            results.Clear();
         }
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
-        public void Load()
+        public void Run()
         {    
-            if (loading == true)
+            if (Loading == true)
             {   
-                if (letterIndex < SENTENCE.Length)
+                if (letterIndex < sentence.Length)
                 {                
-                    AddPhoneme(); 
                     letterIndex++;
+                    ProcessSentence(); 
                 }   
 
                 else
                 {
-                    loading = false;    
-                    stringLite.Append ("/"); //the cap on the timeline mix.
-                    timeline = stringLite.ToString();
-                    stringLite.Clear();
-                    timelineCopy = timeline;
+                    Loading = false;    
+                    previousWasSpace = false;
                 }        
             }
 
-            else
+            else 
             {
-                int rng_bonk = generator.Next (CHANCE_OF_CLANG);
-
-                if (rng_bonk == 0)
-                {
-                    SoundPlayer.PlayClip (debugging, "BONK"); //it hurts to live
-                }
-                Play();    
+                Finished = SoundPlayer.PlaySentence (timeline, currentTick);
+                currentTick++;
             }    
         } 
-
-        //creates a new clip for the current letter by serializing the timeline of clips.
-        private void AddPhoneme()
+        
+        private void ProcessSentence()
         {   
-            results = pronunciation.GetLettersPronunciation (SENTENCE, letterIndex);
+            results = pronunciation.GetLettersPronunciation (sentence, letterIndex);
 
             for (int i = 0; i < results.Count; i++)
             {
-                if (results[i] != "")
+                if (results[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
                 {
-                    if (results[i] != " ") //empty string lets my program know that no clip should be created.
-                    {                                                                
-                        int startPoint = timelineSize;         
-                        string soundChoice = results[i] + VoiceID;
-                        AppendToTimeline (startPoint, soundChoice); //add the key transitions into the timeline.
-                        timelineSize += ClipLength; //timeline is expanded for duration after the clip is created.
+                    if (results[i] != " ") //empty string is simple a pause in the speech
+                    {                                                   
+                        string soundChoice = results[i] + FileID + GetPhonemesIntonation();    
+                        AddToTimeline (soundChoice);                    
+                        syllableMeasure++;
 
-                        if (syllableMeasurer == SyllableSize) //cues a space using the current setting SyllableSize.
+                        if (syllableMeasure == SyllableSize) //cues a pause using the current setting SyllableSize.
                         {
-                            previousWasSpace = true; //pronunciation class inserts spaces for low energy letters. i dont want double spaces.
+                            previousWasSpace = true; //pronunciation class inserts spaces for low energy letters. i dont want double spaces so thats the purpose of this var.
                             IncrementSyllables();                       
                         }   
-                        
-                        else
-                        {
-                            syllableMeasurer++;
-                        }
                     }
 
                     else
@@ -127,87 +141,58 @@ namespace SETextToSpeechMod
             }
         }
 
+        protected virtual string GetPhonemesIntonation()
+        {
+            string choice = " ";
+            
+            if (intonationChoice == null)
+            {
+                foreach (int[][] size in allPitchSizes)
+                {
+                    if (sentence.Length <= size[0].Length)
+                    { 
+                        intonationChoice = size; //just a pointer
+                        optionsIndex = rng.Next (size.GetLength (1));
+                    }
+                }
+            }
+
+            if (arraysIndex >= intonationChoice[optionsIndex].Length)
+            {
+                arraysIndex = 0; //in the unlikely event there are more phonemes than letters, it will start from the beginning.
+            }            
+            choice += intonationChoice[optionsIndex][arraysIndex];
+            arraysIndex++;
+            return choice;
+        }
+
+        private void AddToTimeline (string inputSound)
+        {
+            int startPoint = 0;                                                                      
+                        
+            if (timeline.Count != 0)
+            {
+                startPoint = timeline[timeline.Count - 1].StartPoint + SpaceSize;         
+            }  
+            timeline.Add (new TimelineClip (startPoint, inputSound));
+        }
+
         private void IncrementSyllables()
         {
-            timelineSize += SpaceSize;        
-            syllableMeasurer = 1;
-        }
-
-        private int GetIntonation()
-        {
-            return 0;
-        }
-
-        //creates a string of all the phonemes and their start points (in ticks); better performance than searching a list of objects.
-        private void AppendToTimeline (int startPoint, string clipsSound) 
-        {      
-            stringLite.Append ("/");    
-            stringLite.Append (startPoint); //leaving out clear this one time is ok since it clears when loading is finished.
-            stringLite.Append ("#"); 
-            stringLite.Append (clipsSound);                    
-        }
-
-        //this method is in charge of finding clips on the timeline and knowing when to end.
-        private void Play()
-        {   
-            stringLite.Append ("/");
-            stringLite.Append (currentTick);
-            stringLite.Append ("#");
-            string tick_string = stringLite.ToString();
-            stringLite.Clear();
-               
-            while (timelineCopy.Contains (tick_string)) //Contains confirms int pointIndex will not be out of bounds.
-            {                                    
-                int pointIndex = timelineCopy.IndexOf (tick_string); //returns index of first character of input string found.
-                ExtractClip (pointIndex);
-            }    
-
-            if (currentTick < timelineSize)    
-            { 
-                currentTick++;
-            } 
-    
-            else
-            {                
-                finished = true;
-            }    
-        }
-
-        private void ExtractClip (int pointIndex) //performance light function that detects clips ready to play. 
-        { 
-            bool extractedNum = false;  
-            string choiceExtracted = "";                                                                   
-    
-            while (timelineCopy[pointIndex] != '#') //finds the sound_choice's marker.
-            {
-                pointIndex++;    
-            }
-    
-            while (extractedNum == false) //add the sound_choice it finds until it reaches the marker.
-            {
-                pointIndex++; //ensures hash is not added to the temp clip number.
-        
-                if (timelineCopy[pointIndex] != '/') //an indexed string is a single char; therefore use ''.
-                {
-                    stringLite.Append (timelineCopy[pointIndex]);
-                }
-        
-                else
-                {
-                    extractedNum = true; //while loops finish the list before exiting so i dont have to worry about this line's position.
-                    choiceExtracted = stringLite.ToString();
-                    stringLite.Clear();
-                    pointIndex--; //readies the logic to remove the data slot.    
-                }    
-            }    
-    
-            //removes the data slot (start_point and sound_choice) but leaves the forward slashes.
-            while (timelineCopy[pointIndex] != '/')
-            {
-                timelineCopy = timelineCopy.Remove (pointIndex, 1); //inputs index then count.
-                pointIndex--;
-            } 
-            SoundPlayer.PlayClip (debugging, choiceExtracted);  
-        }
+            AddToTimeline (SoundPlayer.SPACE);
+            syllableMeasure = 0;
+        }          
     }
+
+    public struct TimelineClip
+    {
+        public int StartPoint { get; }
+        public string ClipsSound { get; }
+
+        internal TimelineClip (int inputPoint, string inputSound)
+        {
+            StartPoint = inputPoint;
+            ClipsSound = inputSound;
+        }
+    } 
 }

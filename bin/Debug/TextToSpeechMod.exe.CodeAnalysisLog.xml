@@ -1,6 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 14.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
 <FxCopReport Version="14.0">
+ <Targets>
+  <Target Name="C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\TextToSpeechMod.exe">
+   <Modules>
+    <Module Name="texttospeechmod.exe">
+     <Namespaces>
+      <Namespace Name="SETextToSpeechMod">
+       <Types>
+        <Type Name="POSSIBLE_OUTPUTS" Kind="Struct" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.cctor()" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="InitializeValueTypeStaticFieldsInline" Category="Microsoft.Usage" CheckId="CA2207" Status="Active" Created="2016-11-25 11:10:54Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers" File="OutputManager.cs" Line="125">Initialize all static fields in 'POSSIBLE_OUTPUTS' when those fields are declared and remove the explicit static constructor.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SentenceFactory" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-11-25 11:10:54Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers" File="SentenceFactory.cs" Line="44">'SentenceFactory.SentenceFactory()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SentenceFactory..ctor()&#xD;&#xA;SentenceFactory.get_largeIntonationOptions():Int32[][]</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers" File="SentenceFactory.cs" Line="44">'SentenceFactory.SentenceFactory()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SentenceFactory..ctor()&#xD;&#xA;SentenceFactory.get_mediumIntonationOptions():Int32[][]</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers" File="SentenceFactory.cs" Line="44">'SentenceFactory.SentenceFactory()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SentenceFactory..ctor()&#xD;&#xA;SentenceFactory.get_smallIntonationOptions():Int32[][]</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
+   <Name>Do not call overridable methods in constructors</Name>
+   <Description>Virtual methods defined on the class should not be called from constructors. If a derived class has overridden the method, the derived class version will be called (before the derived class constructor is called).</Description>
+   <Resolution Name="Default">{0} contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182331.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="InitializeValueTypeStaticFieldsInline" Category="Microsoft.Usage" CheckId="CA2207">
+   <Name>Initialize value type static fields inline</Name>
+   <Description>Do not declare explicit static constructors on value types. Initializing static data in explicit static constructors results in a value type that is not marked in metadata as 'beforefieldinit'. In this case, the static constructor is not always guaranteed to be called before instance members on the value type are called.</Description>
+   <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182346.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="usagerules.dll" Version="14.0.0.0" />
+  </Rule>
+ </Rules>
  <Localized>
   <String Key="Category">Category</String>
   <String Key="Certainty">Certainty</String>

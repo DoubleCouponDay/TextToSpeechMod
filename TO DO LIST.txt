@@ -6,23 +6,18 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ record and edit madden phonemes
-+ merge them to mono
-+ record and edit glados phonemes
-+ merge them to mono
++ OutputManager doesnt keep Speeches type's isolated when creating new. maybe use a different, categorized collection?
++ add new commands and muting options
+
++ last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
++ some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
 + use melodyne free trial to create pitch for those two? how many notes?
++ download wav to XWM converter
 + convert them to XWM
 + publish
-+ backup to mega
 + sync
 
-+ add pitch processing. needs modifications where it fetches file name
-+ add new commands and muting options
-+ benchmark stringbuilder performance.
-+ change stringbuilder timeline to struct timeline.
 + benchmark struct performance
-+ make pronunciation and wordcounter static
-
 + test voices and tune them up.
 
 + make a new block with a sound emitter entity

@@ -1,29 +1,66 @@
 ﻿namespace SETextToSpeechMod
 {
-    sealed class HawkingVoice : SentenceFactory
+    public sealed class HawkingVoice : SentenceFactory
     {
-        const int H_SPACE_SIZE = 4;
-        const int H_CLIP_LENGTH = 4; 
-        const int H_SYLLABLE_SIZE = 3;
-        const string H_VOICE_ID = "-H";
+        public override string Name { get { return "HawkingVoice"; } }
+        public override string FileID { get { return "-H"; } }        
+        public override int SpaceSize { get { return 4; } }
+        public override int ClipLength { get { return 4; } }
+        public override int SyllableSize { get { return 3; } }        
 
-        protected override int SpaceSize { get { return 4; } }
-        protected override int ClipLength { get { return 4; } }
-        protected override int SyllableSize { get { return 3; } }
-        protected override string VoiceID { get { return "-H"; } }
+        protected override int[][] smallIntonationOptions { get { return smallOptions; } }
+        protected override int[][] mediumIntonationOptions { get { return mediumOptions; } }
+        protected override int[][] largeIntonationOptions { get { return largeOptions; } }
 
-        protected override int[][] IntonationOptions
+        readonly int[][] smallOptions = new int[][] 
         {
-            get
-            {
-                return new int[][] 
-                {
-                    new int[] { },
-                    new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, },
-                };
-            }
-        }
+            new int[] { },
+            new int[] { 0, 1, 2, },           
+        };
 
-        public HawkingVoice (string input) : base (input){}
+        readonly int[][] mediumOptions = new int[][] 
+        {
+            new int[] { },
+            new int[] { 0, 1, 2, },          
+        };
+
+        readonly int[][] largeOptions = new int[][] 
+        {
+            new int[] { },
+            new int[] { 0, 1, 2, },          
+        };
+        string sentenceEndPhonemeID = "-E";
+
+        public HawkingVoice() : base(){}
+
+        //the point of this extended method is to play a special kind of phoneme at the end of every sentence.
+        protected override string GetPhonemesIntonation()
+        {            
+            string choice = "";
+            
+            if (intonationChoice == null)
+            {
+                foreach (int[][] size in allPitchSizes)
+                {
+                    if (sentence.Length <= size[0].Length)
+                    { 
+                        intonationChoice = size;
+                        optionsIndex = rng.Next (size.GetLength (1));
+                    }
+                }
+            }
+
+            if (letterIndex >= sentence.Length - SyllableSize)
+            {
+                choice = sentenceEndPhonemeID;
+            }   
+            
+            else
+            {
+                choice = " " + intonationChoice[optionsIndex][arraysIndex];
+            }                                    
+            arraysIndex++;
+            return choice;
+        }
     }
 }

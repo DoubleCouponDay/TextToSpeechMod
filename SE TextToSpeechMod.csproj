@@ -171,8 +171,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttendanceManager.cs" />
     <Compile Include="GLADOSVoice.cs" />
     <Compile Include="HawkingVoice.cs" />
+    <Compile Include="OutputManager.cs" />
+    <Compile Include="StateResetTemplate.cs" />
+    <Compile Include="VoiceTemplate.cs" />
     <Compile Include="MarekVoice.cs" />
     <Compile Include="PrettyScaryDictionary.cs" />
     <Compile Include="MessageEventHandler.cs" />

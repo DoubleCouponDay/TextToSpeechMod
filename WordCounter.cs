@@ -1,6 +1,6 @@
 ﻿namespace SETextToSpeechMod
 {
-    public class WordCounter
+    public class WordCounter : StateResetTemplate
     {                  
         const int NEW_WORD = -1; 
         const int LAST_LETTER = -3;
@@ -12,13 +12,15 @@
         public int placeholder {get; private set;}
         public string currentWord {get; private set;}
 
-        public WordCounter (string inputSentence)
+        public void FactoryReset (string inputSentence)
         {
-            currentWordInt = 0;
-            currentLetter = 0;        
             words = inputSentence.Split (' ');
+            dumpRemainingLetters = false;
+            currentWordInt = 0;
+            currentLetter = 0;                
+            placeholder = 0;
+            currentWord = "";
         }
-
 
         //chops the sentence into words and stores its results.
         public void IncrementCurrentPosition (int placeholderInput)

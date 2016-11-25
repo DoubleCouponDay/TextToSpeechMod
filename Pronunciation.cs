@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {
-    class Pronunciation 
+    public class Pronunciation : StateResetTemplate
     {
         //pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
         const int NEW_WORD = -1;
@@ -21,9 +21,20 @@ namespace SETextToSpeechMod
 
         public WordCounter wordCounter {get; private set;}
 
-        public Pronunciation (string inputSentence)
+        public Pronunciation()
         {
-            this.wordCounter = new WordCounter (inputSentence);
+            this.wordCounter = new WordCounter();
+        }
+
+        public void FactoryReset (string inputSentence)
+        {
+            placeholder = NEW_WORD;
+            surroundingPhrase = "";
+            usedDictionary = false;
+            wrongFormatMatches = 0;
+            wrongFormatNonMatches = 0;
+
+            wordCounter.FactoryReset (inputSentence);
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
@@ -38,7 +49,7 @@ namespace SETextToSpeechMod
             {                
                 if (placeholder == NEW_WORD)
                 {                    
-                    usedDictionary = PrettyScaryDictionary.TTSdictionary.TryGetValue (currentWord, out dictionaryMatch);
+                    usedDictionary = PrettyScaryDictionary.TTSDICTIONARY.TryGetValue (currentWord, out dictionaryMatch);
 
                     if (usedDictionary == true)
                     {
@@ -108,7 +119,7 @@ namespace SETextToSpeechMod
         //AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary
         List <string> AdjacentEvaluation (string sentence, int letterIndex)
         {
-            const string VOWELS = "AEIOU";
+            //const string VOWELS = "AEIOU";
             const string CONSONANTS = "BCDFGHJKLMNPQRSTVWXYZ";
 
             List <string> output = new List <string>();
@@ -120,11 +131,11 @@ namespace SETextToSpeechMod
             int intTwoAfter = (letterIndex + 2 < sentence.Length) ? (letterIndex + 2) : letterIndex;
             int intTwoBefore = (letterIndex - 2 >= 0) ? (letterIndex - 2) : letterIndex;
 
-            string before = (intBefore != letterIndex) ? Convert.ToString (sentence[intBefore]) : " "; //these 4 strings ensure i can correctly identify seperate words.
-            string after = (intAfter != letterIndex) ? Convert.ToString (sentence[intAfter]) : " "; //using strings instead of chars saves lines since i need strings for Contains()
-            string twoBefore = (intTwoBefore != letterIndex && before != " ") ? Convert.ToString (sentence[intTwoBefore]) : " "; //the false path must return a space string because spaces signify the start/end of a word.
-            string twoAfter = (intTwoAfter != letterIndex && after != " ") ? Convert.ToString (sentence[intTwoAfter]) : " ";        
-            string currentLetter = Convert.ToString (sentence[letterIndex]);
+            string before = (intBefore != letterIndex) ? sentence[intBefore].ToString() : " "; //these 4 strings ensure i can correctly identify seperate words.
+            string after = (intAfter != letterIndex) ? sentence[intAfter].ToString() : " "; //using strings instead of chars saves lines since i need strings for Contains()
+            string twoBefore = (intTwoBefore != letterIndex && before != " ") ? sentence[intTwoBefore].ToString() : " "; //the false path must return a space string because spaces signify the start/end of a word.
+            string twoAfter = (intTwoAfter != letterIndex && after != " ") ? sentence[intTwoAfter].ToString() : " ";        
+            string currentLetter = sentence[letterIndex].ToString();
 
             surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatchBypassed is used in this method.
            

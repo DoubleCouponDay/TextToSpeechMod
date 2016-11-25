@@ -25,6 +25,17 @@
             Example: MyDestructionData component returns true only when game uses Havok Destruction
             </summary>
         </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.RunningLevelScriptNames">
+            <summary>
+            Array of running level script names.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.FailedLevelScriptExceptionTexts">
+            <summary>
+            Array of exceptions raised when the scripts were running.
+            The name of the script is at the same index. (RunningLevelScriptNames)
+            </summary>
+        </member>
         <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
             <summary>
             Sets the container of this component.
@@ -7460,6 +7471,46 @@
         <member name="F:MyCommonTexts.AudioSettings_EnableReverb">
             <summary>
             Enable echo
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AmbientOcclusion">
+            <summary>
+            Ambient occlusion
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AmbientOcclusion_HBAO">
+            <summary>
+            HBAO
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenGraphicsOptions_AmbientOcclusion_None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionDoYouWishToPublishCampaign">
+            <summary>
+            PUBLISH CAMPAIGN
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionCampaignPublished">
+            <summary>
+            CAMPAIGN PUBLISHED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxCaptionModCampaignPublishFailed">
+            <summary>
+            CAMPAIGN PUBLISH FAILED
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextDoYouWishToPublishCampaign">
+            <summary>
+            Are you sure you want to upload and publish selected campaign on Steam Workshop? Note that by submitting this item, you agree to the workshop terms of service (see http://steamcommunity.com/sharedfiles/workshoplegalagreement).
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCampaignPublished">
+            <summary>
+            Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
