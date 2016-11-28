@@ -5,8 +5,6 @@ namespace SETextToSpeechMod
 {   
     public abstract class SentenceFactory : StateResetTemplate, VoiceTemplate
     {   
-        const int TIMELINE_CAPACITY = 100;
-
         //voice template
         public virtual string Name { get { return "SentenceFactory";} }
         public virtual string FileID { get; }
@@ -20,9 +18,8 @@ namespace SETextToSpeechMod
         protected virtual int[][] largeIntonationOptions { get; }
         protected int[][][] allPitchSizes;
 
-        //public state
-        public bool Loading {get; protected set;} //made public so the debugger can take readings
-        public bool Finished {get; protected set;}
+        //public state        
+        public bool FinishedPlaying {get; protected set;}
 
         //index
         protected int letterIndex; 
@@ -30,6 +27,7 @@ namespace SETextToSpeechMod
         protected int arraysIndex; 
         
         //loading data            
+        bool Loading;
         protected string sentence;
         bool previousWasSpace;
         int syllableMeasure;          
@@ -37,21 +35,29 @@ namespace SETextToSpeechMod
 
         //play data
         int currentTick;
-        public List <string> results {get; private set;}
+
+        public IList <string> Results
+        {
+            get
+            {
+                return resultsField.AsReadOnly();
+            }
+        }
+        List <string> resultsField;
 
         //objects     
-        public Pronunciation pronunciation {get; private set;}   
+        public Pronunciation Pronunciation { get; private set; }   
         private List <TimelineClip> timeline = new List <TimelineClip>();      
-        protected Random rng = SoundPlayer.NumberGenerator;
+        protected Random rng = SoundPlayer.NumberGenerator; //some voices need to change this object's usage. Therefore, it is protected.
 
         public SentenceFactory()
         {            
             Loading = false;
-            Finished = true;
-            pronunciation = new Pronunciation();
-            results = new List <string>();
-            timeline.Capacity = TIMELINE_CAPACITY; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;
-
+            FinishedPlaying = true;
+            Pronunciation = new Pronunciation();
+            resultsField = new List <string>();
+            timeline.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;
+                                                           //also i dont expect there to ever be more phonemes than letters. It will only resize in rare, designer created, occasions.
             allPitchSizes = new int[][][]     
             {
                 smallIntonationOptions,
@@ -63,7 +69,7 @@ namespace SETextToSpeechMod
         public void FactoryReset (string inputSentence)
         {
             Loading = true;
-            Finished = false;           
+            FinishedPlaying = false;           
 
             letterIndex = 0; 
             optionsIndex = 0;
@@ -76,7 +82,10 @@ namespace SETextToSpeechMod
             intonationChoice = null;
 
             currentTick = 0;
-            results.Clear();
+            resultsField.Clear();
+
+            Pronunciation.FactoryReset (sentence);
+            timeline.Clear();
         }
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
@@ -93,28 +102,27 @@ namespace SETextToSpeechMod
                 else
                 {
                     Loading = false;    
-                    previousWasSpace = false;
                 }        
             }
 
             else 
             {
-                Finished = SoundPlayer.PlaySentence (timeline, currentTick);
+                FinishedPlaying = SoundPlayer.PlaySentence (timeline, currentTick);
                 currentTick++;
             }    
         } 
         
         private void ProcessSentence()
         {   
-            results = pronunciation.GetLettersPronunciation (sentence, letterIndex);
+            resultsField = Pronunciation.GetLettersPronunciation (sentence, letterIndex);
 
-            for (int i = 0; i < results.Count; i++)
+            for (int i = 0; i < resultsField.Count; i++)
             {
-                if (results[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
+                if (resultsField[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
                 {
-                    if (results[i] != " ") //empty string is simple a pause in the speech
+                    if (resultsField[i] != " ") //empty string is simple a pause in the speech
                     {                                                   
-                        string soundChoice = results[i] + FileID + GetPhonemesIntonation();    
+                        string soundChoice = resultsField[i] + FileID + GetPhonemesIntonation();    
                         AddToTimeline (soundChoice);                    
                         syllableMeasure++;
 

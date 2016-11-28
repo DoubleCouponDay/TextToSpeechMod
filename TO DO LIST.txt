@@ -6,8 +6,8 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ OutputManager doesnt keep Speeches type's isolated when creating new. maybe use a different, categorized collection?
-+ add new commands and muting options
++ pronunciation is fucked and dictionarymatch is prefilled sometimes
++ add muting options
 
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?

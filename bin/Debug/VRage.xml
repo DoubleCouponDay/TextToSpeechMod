@@ -483,6 +483,11 @@
             <param name="bytesTransfered">Specify number of bytes transferred or null to automatically calculate number of bytes from inner blocks.</param>
             <param name="customValue">You can put any number here.</param>
             <param name="customValueFormat">This is formatting string how the number will be written on screen, use something like: 'MyNumber: {0} foos/s'</param>
+            <param name="byteFormat"></param>
+            <param name="callFormat"></param>
+            <param name="member"></param>
+            <param name="line"></param>
+            <param name="file"></param>
         </member>
         <member name="T:VRage.Network.BlockingAttribute">
             <summary>
@@ -523,6 +528,14 @@
             Internally it's SteamId or RakNetGUID.
             </summary>
         </member>
+        <member name="M:VRage.Replication.IMySyncServerGameTime.Serialize(VRage.Library.Collections.BitStream,System.TimeSpan,System.Boolean)">
+            <summary>
+            serialize time
+            </summary>
+            <param name="stream"></param>
+            <param name="systemTime"></param>
+            <param name="dummyMode">do not actually serialize valid data</param>
+        </member>
         <member name="M:VRage.Replication.MyBandwidthLimits.GetLimit(VRage.Network.StateGroupEnum)">
             <summary>
             Gets current limit for group (how many bits can be written per frame).
@@ -542,6 +555,12 @@
             E.g. can be used to get priority of grid when calling GetPriority on cube block.
             </summary>
         </member>
+        <member name="F:VRage.Replication.MyReplicables.m_presentOnAnyClient">
+            <summary>
+            List of all replicables that are present on at least one client.
+            This information can be one frame in the past.
+            </summary>
+        </member>
         <member name="M:VRage.Replication.MyReplicables.Add(VRage.Network.IMyReplicable,VRage.Network.IMyReplicable@)">
             <summary>
             Sets or resets replicable (updates child status and parent).
@@ -558,6 +577,7 @@
             Refreshes replicable, updates it's child status and parent.
             Returns true if replicable is root.
             </summary>
+            <returns>Returns true if replicable is root.</returns>
         </member>
         <member name="M:VRage.Replication.MyReplicables.Remove(VRage.Network.IMyReplicable)">
             <summary>
@@ -670,6 +690,11 @@
             Called on server when client stops replicating this group.
             </summary>
         </member>
+        <member name="M:VRage.Network.IMyStateGroup.ServerUpdate">
+            <summary>
+            Update method called on server.
+            </summary>
+        </member>
         <member name="M:VRage.Network.IMyStateGroup.ClientUpdate(System.UInt32)">
             <summary>
             Update method called on client.
@@ -680,7 +705,7 @@
             Called when state group is being destroyed.
             </summary>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.GetGroupPriority(System.Int32,VRage.Network.MyClientInfo)">
+        <member name="M:VRage.Network.IMyStateGroup.GetGroupPriority(System.Int32,VRage.Network.MyClientInfo,System.Boolean@)">
             <summary>
             Gets priority related to client.
             When priority is lower than zero, it means the object is not relevant for client.
@@ -688,8 +713,9 @@
             </summary>
             <param name="frameCountWithoutSync">How long (in update frame count) has client not received sync of this state group.</param>
             <param name="forClient">Client for whom is the priority get.</param>
+            <param name="sleep">Weather the group should sleep</param>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.EndpointId,System.UInt32,System.Byte,System.Int32)">
+        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.EndpointId,System.UInt32,System.Int64,System.Byte,System.Int32)">
             <summary>
             (De)serializes group state or it's diff for client.
             When writing, you can write beyond maxBitPosition, but message won't be sent and ACKs won't be received for it.
@@ -698,6 +724,8 @@
             </summary>
             <param name="stream">Stream to write to or read from.</param>
             <param name="forClient">When writing the client which will receive the data. When reading, it's null.</param>
+            <param name="timestamp">Timestamp related to the client.</param>
+            <param name="serverTimestamp"></param>
             <param name="packetId">Id of packet in which the data will be sent or from which the data is received.</param>
             <param name="maxBitPosition">Maximum position in bit stream where you can write data, it's inclusive.</param>
         </member>
@@ -987,6 +1015,11 @@
             Returns true when current packet is closely preceding last packet (is within threshold)
             </summary>
         </member>
+        <member name="F:VRage.Network.MyReplicationServer.ClientData.AwakeGroups">
+            <summary>
+            State groups that have signaled themselves as active and should be sent to client.
+            </summary>
+        </member>
         <member name="T:VRage.Network.MySynchronizedTypeInfo">
             <summary>
             Type descriptor for synchronized type.
@@ -1174,6 +1207,48 @@
         <member name="M:VRage.Sync.Sync`1.ValidateAndSet(`0)">
             <summary>
             Validates the value and sets it (when valid).
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyMaxFiltering">
+            <summary>
+            Nonlinear maximum filtering.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMaxFiltering.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="sampleCount">Number of samples used in this mean filter.</param>
+        </member>
+        <member name="M:VRage.Utils.MyMaxFiltering.Add(System.Double)">
+            <summary>
+            Add raw value to be filtered.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMaxFiltering.Get">
+            <summary>
+            Get filtered value.
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyMinFiltering">
+            <summary>
+            Nonlinear minimum filtering.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMinFiltering.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="sampleCount">Number of samples used in this mean filter.</param>
+        </member>
+        <member name="M:VRage.Utils.MyMinFiltering.Add(System.Double)">
+            <summary>
+            Add raw value to be filtered.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMinFiltering.Get">
+            <summary>
+            Get filtered value.
             </summary>
         </member>
         <member name="T:VRage.Utils.MyDiscreteSampler`1">

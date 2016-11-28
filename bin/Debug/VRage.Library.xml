@@ -5442,6 +5442,11 @@
             Hi-resolution time span. Beware: the resolution can be different on different systems!
             </summary>
         </member>
+        <member name="M:VRage.Library.Utils.MyTimeSpan.FromTimeSpan(System.TimeSpan)">
+            <summary>
+            This may not be accurate for large values - double accuracy
+            </summary>
+        </member>
         <member name="P:VRage.Library.Utils.MyTimeSpan.TimeSpan">
             <summary>
             This may not be accurate for large values - double accuracy

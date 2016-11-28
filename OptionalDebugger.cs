@@ -129,10 +129,10 @@ namespace SETextToSpeechMod
             string packaged = signatureBuild + upperCase;                
             byte[] packet = encode.GetBytes (packaged);
             entryPoint.OnReceivedPacket (packet);
-            
-            while (OutputManager.Speeches[0].Finished == false)
+
+            while (OutputManager.RunSpeechPlayback)
             {
-                OutputManager.Run();
+                OutputManager.Run();              
                 debugger.StoreResults (OutputManager.Speeches[0].pronunciation.wordCounter.currentWord, 
                                        OutputManager.Speeches[0].results, 
                                        OutputManager.Speeches[0].pronunciation.usedDictionary);         

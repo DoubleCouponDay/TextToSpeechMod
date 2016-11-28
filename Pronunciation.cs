@@ -5,21 +5,21 @@ using System.Collections.Generic;
 namespace SETextToSpeechMod
 {
     public class Pronunciation : StateResetTemplate
-    {
-        //pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
+    {        
         const int NEW_WORD = -1;
         const int NO_MATCH = -2; 
         const int LAST_LETTER = -3;
         const int MAX_EXTENSION_SIZE = 5; 
-
-        int placeholder = NEW_WORD;
+       
         string[] dictionaryMatch;
         string surroundingPhrase;
+        List <string> currentResults = new List <string>(); 
+
         public bool usedDictionary {get; private set;}
         public int wrongFormatMatches {get; private set;}
         public int wrongFormatNonMatches {get; private set;}
 
-        public WordCounter wordCounter {get; private set;}
+        public WordCounter wordCounter {get; private set;}        
 
         public Pronunciation()
         {
@@ -28,11 +28,11 @@ namespace SETextToSpeechMod
 
         public void FactoryReset (string inputSentence)
         {
-            placeholder = NEW_WORD;
             surroundingPhrase = "";
             usedDictionary = false;
             wrongFormatMatches = 0;
-            wrongFormatNonMatches = 0;
+            wrongFormatNonMatches = 0;            
+            currentResults.Clear();
 
             wordCounter.FactoryReset (inputSentence);
         }
@@ -40,83 +40,72 @@ namespace SETextToSpeechMod
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
-            List <string> results = new List <string>();
-            wordCounter.IncrementCurrentPosition (placeholder); //this update is needed every time i increment a letter.      
-            placeholder = wordCounter.placeholder;         
-            string currentWord = wordCounter.currentWord;
+            currentResults.Clear();   
+            wordCounter.CheckNextLetter ();            
 
-            if (currentWord != " ")
+            if (wordCounter.CurrentWord != " ")
             {                
-                if (placeholder == NEW_WORD)
+                if (wordCounter.LetterIndex == NEW_WORD)
                 {                    
-                    usedDictionary = PrettyScaryDictionary.TTSDICTIONARY.TryGetValue (currentWord, out dictionaryMatch);
+                    usedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (wordCounter.CurrentWord, out dictionaryMatch);
 
-                    if (usedDictionary == true)
+                    if (usedDictionary)
                     {
-                        results = TakeFromDictionary (true, sentence, letterIndex);
+                        currentResults = TakeFromDictionary (true);
                     }
             
-                    else //if no match is found, use secondary pronunciation.
+                    else
                     {
-                        placeholder = NO_MATCH;
-                        results = AdjacentEvaluation (sentence, letterIndex);
+                        currentResults = AdjacentEvaluation (sentence, letterIndex);
                     }
                 }
 
-                else if (placeholder != NO_MATCH) //takes over reading once a match is found in the dictionary.
+                else if (usedDictionary == false) //takes over reading once a match is found in the dictionary.
                 {
-                    results = TakeFromDictionary (false, sentence, letterIndex);
+                    currentResults = TakeFromDictionary (false);
                 }
 
                 else
                 {
-                    results = AdjacentEvaluation (sentence, letterIndex);
+                    currentResults = AdjacentEvaluation (sentence, letterIndex);
                 }
             }
 
             else
             {
-                results.Insert (0, " "); //avoids setting placeholder in this scenario since an empty space cant reset it when needed.
-                results.Insert (1, " ");
+                currentResults.Insert (0, " "); //avoids setting wordCounter.LetterIndex in this scenario since an empty space cant reset it when needed.
             }
-            placeholder = wordCounter.CheckForEnd (placeholder, NEW_WORD); //script needed to reset to default state but the mod did not.
-            return results;
+            return currentResults;
         }
 
-        List <string> TakeFromDictionary (bool isNewWord, string sentence, int letterIndex)
+        List <string> TakeFromDictionary (bool isNewWord)
         {
             List <string> output = new List <string>();
 
-            if (isNewWord == true)
+            if (wordCounter.DumpRemainingLetters == false)
             {
-                placeholder = 0;
+                string extract = dictionaryMatch[wordCounter.LetterIndex];
+                output.Insert (0, extract);
             }
-
-            if (placeholder < dictionaryMatch.Length)
-            {
-                if (wordCounter.dumpRemainingLetters == true)
-                {
-                    int counter = 0;
-
-                    for (int i = placeholder; i < dictionaryMatch.Length; i++)
-                    {                        
-                        output.Insert (counter, dictionaryMatch[placeholder]);
-                        counter++;
-                        placeholder++;
-                    }
-                }
                 
-                else
-                {
-                    string extract = dictionaryMatch[placeholder];
-                    output.Insert (0, extract);
-                    placeholder++;
-                }                
-            }
+            else
+            {   
+                int counter = 0;
+
+                for (int i = wordCounter.LetterIndex; i < dictionaryMatch.Length; i++)
+                {                        
+                    output.Insert (output.Count - 1, dictionaryMatch[wordCounter.LetterIndex]);
+                    counter++;
+                    i++;
+                }
+            }                
             return output;
         }
 
-        //AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary
+        /*
+        AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary.
+        pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
+        */
         List <string> AdjacentEvaluation (string sentence, int letterIndex)
         {
             //const string VOWELS = "AEIOU";

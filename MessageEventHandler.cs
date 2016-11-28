@@ -9,7 +9,6 @@ namespace SETextToSpeechMod
     [MySessionComponentDescriptor (MyUpdateOrder.BeforeSimulation)] //adds an attribute tag telling the game to run my script.
     class MessageEventHandler : MySessionComponentBase //this is also the entry point of the mod.
     {
-        const int MAX_LETTERS = 100;
         const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of your steam mod as packet ID
 
         bool initialised;
@@ -22,7 +21,7 @@ namespace SETextToSpeechMod
             {
                 Initialise();
             }
-            OutputManager.Run();            
+            OutputManager.Run();             
         }
 
         void Initialise() //this wouldnt work as a constructor because im guessing some assets arent available during load time.
@@ -31,7 +30,8 @@ namespace SETextToSpeechMod
             MyAPIGateway.Utilities.MessageEntered += OnMessageEntered; //subscribes my method to the MessageEntered event.
             MyAPIGateway.Multiplayer.RegisterMessageHandler (packet_ID, OnReceivedPacket); //registers a multiplayer packet receiver.
             SoundPlayer.InitialiseEmitter();
-            MyAPIGateway.Utilities.ShowMessage ("TextToSpeechMod", "If you find a broken word, please tell the designer.");
+            OutputManager.FactoryReset();
+            MyAPIGateway.Utilities.ShowMessage ("TextToSpeechMod", "If you find a broken word, please tell the designer.");            
         }
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
@@ -74,10 +74,10 @@ namespace SETextToSpeechMod
             string decoded = encode.GetString (bytes);
             string signature = ExtractSignatureFromPacket (ref decoded);
 
-            if (decoded.Length > MAX_LETTERS && //letter limit for mental health concerns.
+            if (decoded.Length > OutputManager.MAX_LETTERS && //letter limit for mental health concerns.
                 OutputManager.Debugging == false) 
             {
-                MyAPIGateway.Utilities.ShowMessage (MAX_LETTERS.ToString(), " LETTER LIMIT REACHED");
+                MyAPIGateway.Utilities.ShowMessage (OutputManager.MAX_LETTERS.ToString(), " LETTER LIMIT REACHED");
             }
 
             else
@@ -107,8 +107,7 @@ namespace SETextToSpeechMod
         {
             initialised = false;
             MyAPIGateway.Utilities.MessageEntered -= OnMessageEntered;
-            MyAPIGateway.Multiplayer.UnregisterMessageHandler (packet_ID, OnReceivedPacket);
-            OutputManager.FactoryReset();
+            MyAPIGateway.Multiplayer.UnregisterMessageHandler (packet_ID, OnReceivedPacket);            
         }
     }
 }

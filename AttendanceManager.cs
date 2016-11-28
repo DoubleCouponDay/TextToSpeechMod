@@ -14,7 +14,11 @@ namespace SETextToSpeechMod
             get
             {
                 playersField.Clear(); //GetPlayers() just adds without overwriting so list must be cleared every time.
-                MyAPIGateway.Multiplayer.Players.GetPlayers (playersField); //everytime the project needs to see all players, this will update. Little heavier on performance but its polymorphic. 
+
+                if (OutputManager.Debugging == false)
+                {
+                    MyAPIGateway.Multiplayer.Players.GetPlayers (playersField); //everytime the project needs to see all players, this will update. Little heavier on performance but its polymorphic. 
+                }                
                 return playersField;
             }
         }    

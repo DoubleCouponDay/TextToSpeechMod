@@ -2,70 +2,54 @@
 {
     public class WordCounter : StateResetTemplate
     {                  
-        const int NEW_WORD = -1; 
-        const int LAST_LETTER = -3;
-        int currentWordInt;
-        int currentLetter;
+        int wordsIndex;
         string[] words;
 
-        public bool dumpRemainingLetters {get; private set;}
-        public int placeholder {get; private set;}
-        public string currentWord {get; private set;}
+        public bool DumpRemainingLetters {get; private set;}
+        public string CurrentWord {get; private set;}
+        public int LetterIndex { get; private set; }
 
         public void FactoryReset (string inputSentence)
         {
             words = inputSentence.Split (' ');
-            dumpRemainingLetters = false;
-            currentWordInt = 0;
-            currentLetter = 0;                
-            placeholder = 0;
-            currentWord = "";
+            DumpRemainingLetters = false;                
+            CurrentWord = "";
+            wordsIndex = 0;         
+            LetterIndex = 0;
         }
-
-        //chops the sentence into words and stores its results.
-        public void IncrementCurrentPosition (int placeholderInput)
+        
+        //wordcounter 
+        public void CheckNextLetter()
         { 
-            if (currentWordInt < words.Length)
+            if (wordsIndex < words.Length)
             {
-                if (currentLetter == words[currentWordInt].Length - 1)
+                if (LetterIndex == words[wordsIndex].Length - 1)
                 {
-                    currentLetter++;
-                    dumpRemainingLetters = true;
-                    currentWord = words[currentWordInt];
+                    LetterIndex++;
+                    DumpRemainingLetters = true;
+                    CurrentWord = words[wordsIndex];
                 }
                 
-                else if (currentLetter < words[currentWordInt].Length)
+                else if (LetterIndex < words[wordsIndex].Length)
                 {
-                    currentLetter++;
-                    currentWord = words[currentWordInt];
+                    LetterIndex++;
+                    CurrentWord = words[wordsIndex];
                 }
 
                 else
                 {
-                    dumpRemainingLetters = false;
-                    currentWordInt++;
-                    currentLetter = 0;
-                    placeholderInput = NEW_WORD; //a space will never have a placeholder.  
-                    currentWord = " ";                  
+                    DumpRemainingLetters = false;
+                    wordsIndex++;
+                    LetterIndex = 0;
+                    wordsIndex = 0;
+                    CurrentWord = " ";                  
                 }
             }    
             
             else
             {
-                currentWord = "";
+                CurrentWord = "";
             }   
-            placeholder = placeholderInput;
-        }
-
-        //resets a certain variable when the sentence ends.
-        public int CheckForEnd (int placeholder, int NEW_WORD)
-        {
-            if (currentWordInt == words.Length - 1 &&
-                currentLetter == words[currentWordInt].Length) //resets the placeholder since script doesnt construct a new class for every sentence.
-            { 
-                placeholder = NEW_WORD;
-            }
-            return placeholder;
         }
     }
 }
