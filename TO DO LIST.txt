@@ -6,8 +6,11 @@ BROKEN WORDS
 
 TO DO
 ================//
++ rng cant instantiate because soundplayer cant initialise?
 + pronunciation is fucked and dictionarymatch is prefilled sometimes
 + add muting options
++ review all the new algorithms
++ debug
 
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
@@ -19,6 +22,7 @@ TO DO
 
 + benchmark struct performance
 + test voices and tune them up.
++ fully implement and study intonation selecting algorithm
 
 + make a new block with a sound emitter entity
 + find out if you can move entity with mouse input

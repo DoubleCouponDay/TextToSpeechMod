@@ -8,17 +8,24 @@ namespace SETextToSpeechMod
         //voice template
         public virtual string Name { get { return "SentenceFactory";} }
         public virtual string FileID { get; }
-        public virtual int SpaceSize { get; } //public because these properties are part of interface VoiceTemplate.
+        public virtual int SpaceSize { get; }
         public virtual int ClipLength { get; }
         public virtual int SyllableSize { get; }        
 
         //pitch        
-        protected virtual int[][] smallIntonationOptions { get; }
-        protected virtual int[][] mediumIntonationOptions { get; }
-        protected virtual int[][] largeIntonationOptions { get; }
-        protected int[][][] allPitchSizes;
+        protected virtual int smallSize { get { return 6; } }
+        protected virtual int mediumSize { get { return 50; } }
+        protected virtual int largeSize { get { return OutputManager.MAX_LETTERS; } }
+        protected int[] allSizes;
 
-        //public state        
+        protected virtual int[][] smallIntonationPatterns { get; } //an intonation pattern should be designed to loop on itself. it can be any size.
+        protected virtual int[][] mediumIntonationPatterns { get; }
+        protected virtual int[][] largeIntonationPatterns { get; }
+        protected int[][][] allPitchOptions;
+
+        protected virtual int voiceRange { get; }
+
+        //external feedback        
         public bool FinishedPlaying {get; protected set;}
 
         //index
@@ -31,7 +38,7 @@ namespace SETextToSpeechMod
         protected string sentence;
         bool previousWasSpace;
         int syllableMeasure;          
-        protected int[][] intonationChoice;
+        protected int[] intonationArrayChosen;
 
         //play data
         int currentTick;
@@ -47,8 +54,8 @@ namespace SETextToSpeechMod
 
         //objects     
         public Pronunciation Pronunciation { get; private set; }   
-        private List <TimelineClip> timeline = new List <TimelineClip>();      
-        protected Random rng = SoundPlayer.NumberGenerator; //some voices need to change this object's usage. Therefore, it is protected.
+        protected List <TimelineClip> timeline = new List <TimelineClip>();      
+        protected Random rng = new Random();
 
         public SentenceFactory()
         {            
@@ -58,11 +65,18 @@ namespace SETextToSpeechMod
             resultsField = new List <string>();
             timeline.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;
                                                            //also i dont expect there to ever be more phonemes than letters. It will only resize in rare, designer created, occasions.
-            allPitchSizes = new int[][][]     
+            allSizes = new int[]
             {
-                smallIntonationOptions,
-                mediumIntonationOptions,
-                largeIntonationOptions,
+                smallSize,
+                mediumSize,
+                largeSize,
+            };
+            
+            allPitchOptions = new int[][][]     
+            {
+                smallIntonationPatterns,
+                mediumIntonationPatterns,
+                largeIntonationPatterns,
             };
         }
 
@@ -79,7 +93,7 @@ namespace SETextToSpeechMod
             
             previousWasSpace = false;
             syllableMeasure = 0;
-            intonationChoice = null;
+            intonationArrayChosen = null;
 
             currentTick = 0;
             resultsField.Clear();
@@ -94,14 +108,18 @@ namespace SETextToSpeechMod
             if (Loading == true)
             {   
                 if (letterIndex < sentence.Length)
-                {                
+                {                                    
+                    AddPhonemes(); 
                     letterIndex++;
-                    ProcessSentence(); 
                 }   
 
                 else
                 {
-                    Loading = false;    
+                    for (int i = 0; i < timeline.Count; i++)
+                    {
+                        AddIntonations (i);
+                    }
+                    Loading = false;
                 }        
             }
 
@@ -112,7 +130,7 @@ namespace SETextToSpeechMod
             }    
         } 
         
-        private void ProcessSentence()
+        private void AddPhonemes()
         {   
             resultsField = Pronunciation.GetLettersPronunciation (sentence, letterIndex);
 
@@ -120,13 +138,13 @@ namespace SETextToSpeechMod
             {
                 if (resultsField[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
                 {
-                    if (resultsField[i] != " ") //empty string is simple a pause in the speech
+                    if (resultsField[i] != " ")
                     {                                                   
-                        string soundChoice = resultsField[i] + FileID + GetPhonemesIntonation();    
+                        string soundChoice = resultsField[i] + FileID;
                         AddToTimeline (soundChoice);                    
                         syllableMeasure++;
 
-                        if (syllableMeasure == SyllableSize) //cues a pause using the current setting SyllableSize.
+                        if (syllableMeasure == SyllableSize)
                         {
                             previousWasSpace = true; //pronunciation class inserts spaces for low energy letters. i dont want double spaces so thats the purpose of this var.
                             IncrementSyllables();                       
@@ -149,38 +167,13 @@ namespace SETextToSpeechMod
             }
         }
 
-        protected virtual string GetPhonemesIntonation()
-        {
-            string choice = " ";
-            
-            if (intonationChoice == null)
-            {
-                foreach (int[][] size in allPitchSizes)
-                {
-                    if (sentence.Length <= size[0].Length)
-                    { 
-                        intonationChoice = size; //just a pointer
-                        optionsIndex = rng.Next (size.GetLength (1));
-                    }
-                }
-            }
-
-            if (arraysIndex >= intonationChoice[optionsIndex].Length)
-            {
-                arraysIndex = 0; //in the unlikely event there are more phonemes than letters, it will start from the beginning.
-            }            
-            choice += intonationChoice[optionsIndex][arraysIndex];
-            arraysIndex++;
-            return choice;
-        }
-
         private void AddToTimeline (string inputSound)
         {
             int startPoint = 0;                                                                      
                         
             if (timeline.Count != 0)
             {
-                startPoint = timeline[timeline.Count - 1].StartPoint + SpaceSize;         
+                startPoint = timeline[timeline.Count - 1].StartPoint + ClipLength;         
             }  
             timeline.Add (new TimelineClip (startPoint, inputSound));
         }
@@ -189,7 +182,44 @@ namespace SETextToSpeechMod
         {
             AddToTimeline (SoundPlayer.SPACE);
             syllableMeasure = 0;
-        }          
+        } 
+
+        //this has been separated from the initial timeline construction because it must know the total number of phonemes first.
+        protected virtual void AddIntonations (int timelineIndex)
+        {        
+            string intonation = " ";
+            
+            if (intonationArrayChosen == null)
+            {
+                for (int u = 0; u < allSizes.Length; u++)
+                {
+                    if (timeline.Count <= allSizes[u])
+                    {
+                        ChoosePitchPattern (u);
+                    }
+
+                    else if (u == allSizes.Length - 1)
+                    {
+                        ChoosePitchPattern (allSizes.Length - 1); //assuming the array is ordered from largest to smallest!
+                    }
+                }
+            }
+
+            if (arraysIndex >= intonationArrayChosen.Length)
+            {
+                arraysIndex = 0;
+            }            
+            intonation += intonationArrayChosen[arraysIndex];
+            timeline[timelineIndex] = new TimelineClip (timeline[timelineIndex].StartPoint, timeline[timelineIndex].ClipsSound + intonation);
+            arraysIndex++;
+        }         
+
+        protected void ChoosePitchPattern (int sizeIndex)
+        {
+            int currentLimit = allPitchOptions[sizeIndex].Length;
+            int randomPattern = rng.Next (currentLimit);
+            intonationArrayChosen = allPitchOptions[sizeIndex][randomPattern];
+        }
     }
 
     public struct TimelineClip

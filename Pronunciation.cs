@@ -6,7 +6,7 @@ namespace SETextToSpeechMod
 {
     public class Pronunciation : StateResetTemplate
     {        
-        const int NEW_WORD = -1;
+        const int NEW_WORD = 0;
         const int NO_MATCH = -2; 
         const int LAST_LETTER = -3;
         const int MAX_EXTENSION_SIZE = 5; 
@@ -15,41 +15,43 @@ namespace SETextToSpeechMod
         string surroundingPhrase;
         List <string> currentResults = new List <string>(); 
 
-        public bool usedDictionary {get; private set;}
-        public int wrongFormatMatches {get; private set;}
-        public int wrongFormatNonMatches {get; private set;}
+        public bool UsedDictionary {get; private set;}
+        public int WrongFormatMatches {get; private set;}
+        public int WrongFormatNonMatches {get; private set;}
 
-        public WordCounter wordCounter {get; private set;}        
+        public WordCounter WordCounter {get; private set;}        
 
         public Pronunciation()
         {
-            this.wordCounter = new WordCounter();
+            this.WordCounter = new WordCounter();
         }
 
         public void FactoryReset (string inputSentence)
         {
             surroundingPhrase = "";
-            usedDictionary = false;
-            wrongFormatMatches = 0;
-            wrongFormatNonMatches = 0;            
+            UsedDictionary = false;
+            WrongFormatMatches = 0;
+            WrongFormatNonMatches = 0;            
             currentResults.Clear();
+            dictionaryMatch = null;
 
-            wordCounter.FactoryReset (inputSentence);
+            WordCounter.FactoryReset (inputSentence);
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
             currentResults.Clear();   
-            wordCounter.CheckNextLetter ();            
+            WordCounter.CheckNextLetter ();            
 
-            if (wordCounter.CurrentWord != " ")
+            if (WordCounter.CurrentWord != " ")
             {                
-                if (wordCounter.LetterIndex == NEW_WORD)
+                if (WordCounter.LetterIndex == NEW_WORD)
                 {                    
-                    usedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (wordCounter.CurrentWord, out dictionaryMatch);
+                    dictionaryMatch = null;
+                    UsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordCounter.CurrentWord, out dictionaryMatch);
 
-                    if (usedDictionary)
+                    if (UsedDictionary)
                     {
                         currentResults = TakeFromDictionary (true);
                     }
@@ -60,7 +62,7 @@ namespace SETextToSpeechMod
                     }
                 }
 
-                else if (usedDictionary == false) //takes over reading once a match is found in the dictionary.
+                else if (UsedDictionary == true)
                 {
                     currentResults = TakeFromDictionary (false);
                 }
@@ -73,7 +75,7 @@ namespace SETextToSpeechMod
 
             else
             {
-                currentResults.Insert (0, " "); //avoids setting wordCounter.LetterIndex in this scenario since an empty space cant reset it when needed.
+                currentResults.Insert (0, " "); //avoids setting WordCounter.LetterIndex in this scenario since an empty space cant reset it when needed.
             }
             return currentResults;
         }
@@ -82,9 +84,9 @@ namespace SETextToSpeechMod
         {
             List <string> output = new List <string>();
 
-            if (wordCounter.DumpRemainingLetters == false)
+            if (WordCounter.DumpRemainingLetters == false)
             {
-                string extract = dictionaryMatch[wordCounter.LetterIndex];
+                string extract = dictionaryMatch[WordCounter.LetterIndex];
                 output.Insert (0, extract);
             }
                 
@@ -92,9 +94,9 @@ namespace SETextToSpeechMod
             {   
                 int counter = 0;
 
-                for (int i = wordCounter.LetterIndex; i < dictionaryMatch.Length; i++)
+                for (int i = WordCounter.LetterIndex; i < dictionaryMatch.Length; i++)
                 {                        
-                    output.Insert (output.Count - 1, dictionaryMatch[wordCounter.LetterIndex]);
+                    output.Insert (output.Count - 1, dictionaryMatch[WordCounter.LetterIndex]);
                     counter++;
                     i++;
                 }
@@ -120,7 +122,7 @@ namespace SETextToSpeechMod
             int intTwoAfter = (letterIndex + 2 < sentence.Length) ? (letterIndex + 2) : letterIndex;
             int intTwoBefore = (letterIndex - 2 >= 0) ? (letterIndex - 2) : letterIndex;
 
-            string before = (intBefore != letterIndex) ? sentence[intBefore].ToString() : " "; //these 4 strings ensure i can correctly identify seperate words.
+            string before = (intBefore != letterIndex) ? sentence[intBefore].ToString() : " "; //these 4 strings ensure i can correctly identify separate words.
             string after = (intAfter != letterIndex) ? sentence[intAfter].ToString() : " "; //using strings instead of chars saves lines since i need strings for Contains()
             string twoBefore = (intTwoBefore != letterIndex && before != " ") ? sentence[intTwoBefore].ToString() : " "; //the false path must return a space string because spaces signify the start/end of a word.
             string twoAfter = (intTwoAfter != letterIndex && after != " ") ? sentence[intTwoAfter].ToString() : " ";        
@@ -1021,7 +1023,7 @@ namespace SETextToSpeechMod
             {
                 if (analyseDivisions[i].Length != 5)
                 {
-                    wrongFormatMatches++;
+                    WrongFormatMatches++;
                 }
             }           
             return Regex.IsMatch (surroundingPhrase, pattern);
@@ -1032,7 +1034,7 @@ namespace SETextToSpeechMod
         {
             if (pattern.Length != 5)
             {
-                wrongFormatNonMatches++;
+                WrongFormatNonMatches++;
             }
             return !Regex.IsMatch (surroundingPhrase, pattern);
         }

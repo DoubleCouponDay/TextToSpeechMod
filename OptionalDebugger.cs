@@ -114,6 +114,7 @@ namespace SETextToSpeechMod
             OptionalDebugger debugger = new OptionalDebugger();
             MessageEventHandler entryPoint = new MessageEventHandler();
             Encoding encode = Encoding.Unicode;
+            SoundPlayer.InitialiseEmitter();
 
             OutputManager.Debugging = true;
 
@@ -133,11 +134,11 @@ namespace SETextToSpeechMod
             while (OutputManager.RunSpeechPlayback)
             {
                 OutputManager.Run();              
-                debugger.StoreResults (OutputManager.Speeches[0].pronunciation.wordCounter.currentWord, 
-                                       OutputManager.Speeches[0].results, 
-                                       OutputManager.Speeches[0].pronunciation.usedDictionary);         
+                debugger.StoreResults (OutputManager.Speeches[0].Pronunciation.WordCounter.CurrentWord, 
+                                       OutputManager.Speeches[0].Results, 
+                                       OutputManager.Speeches[0].Pronunciation.UsedDictionary);         
             }                               
-            debugger.PrintResults (OutputManager.Speeches[0].pronunciation.wrongFormatMatches, OutputManager.Speeches[0].pronunciation.wrongFormatNonMatches);
+            debugger.PrintResults (OutputManager.Speeches[0].Pronunciation.WrongFormatMatches, OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
         }
 
         public string RollOutAdjacentWords()
@@ -157,7 +158,7 @@ namespace SETextToSpeechMod
             }
 
             //adding
-            //these two loops need to be seperate due to the nature ordered dictionary enumerators.
+            //these two loops need to be separate due to the nature ordered dictionary enumerators.
             IEnumerator addingIndex = adjacentKeys.GetEnumerator(); 
 
             for (int i = 0; i < emptiesRemoved.Count; i++) 
@@ -169,11 +170,11 @@ namespace SETextToSpeechMod
             return rolledOut;
         }
 
-        public void StoreResults (string currentWord, List <string> phonemes, bool usedDictionary)
+        public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
         {
             if (currentWord != " ")
             {          
-                currentWord += " " + usedDictionary.ToString();
+                currentWord += " " + UsedDictionary.ToString();
                               
                 for (int i = 0; i < phonemes.Count; i++)
                 {
@@ -183,8 +184,13 @@ namespace SETextToSpeechMod
                         phonemes.RemoveAt (i);
                         i--;
                     }
+                }               
+                string[] formattedPhonemes = new string[phonemes.Count];
+
+                for (int i = 0; i < phonemes.Count; i++)
+                {
+                    formattedPhonemes[i] = phonemes[i];
                 }
-                string[] formattedPhonemes = phonemes.ToArray();
 
                 if (tabledResults.Contains (currentWord))
                 {
@@ -242,7 +248,7 @@ namespace SETextToSpeechMod
                 string currentAdjacentKey = adjacentIndex.Current.ToString();
                 string currentResultsKey = resultsIndex.Current.ToString();
                 string[] splitReading = currentResultsKey.Split(' ');
-                bool usedDictionary = Convert.ToBoolean (splitReading[1]);
+                bool UsedDictionary = Convert.ToBoolean (splitReading[1]);
 
                 string[] currentAdjacentValue = emptiesRemoved[currentAdjacentKey] as string[];
                 string[] currentResultsValue = tabledResults[currentResultsKey] as string[];
@@ -254,7 +260,7 @@ namespace SETextToSpeechMod
                     currentAdjacentKey += "____Lowercase Key____";
                 }
 
-                if (usedDictionary)
+                if (UsedDictionary)
                 {
                         UsageCount++;
                         currentAdjacentKey += "____Used Dictionary____";
