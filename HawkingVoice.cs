@@ -1,6 +1,6 @@
 ﻿namespace SETextToSpeechMod
 {
-    public sealed class HawkingVoice : SentenceFactory
+    public sealed class HawkingVoice : SentenceFactory, VoiceTemplate
     {
         public override string FileID { get { return "-H"; } }        
         public override int SpaceSize { get { return 4; } }
@@ -10,6 +10,8 @@
         protected override int[][] smallIntonationPatterns { get { return smallOptions; } }
         protected override int[][] mediumIntonationPatterns { get { return mediumOptions; } }
         protected override int[][] largeIntonationPatterns { get { return largeOptions; } }
+
+        protected override int voiceRange { get { return 11; } }
 
         readonly int[][] smallOptions = new int[][] 
         {
@@ -24,9 +26,11 @@
         readonly int[][] largeOptions = new int[][] 
         {
             new int[] { 0, 1, 2, },          
+            new int[] { 0, 1, 2, },
+            new int[] { 0, 1, 2, },
+            new int[] { 0, 1, 2, },
         };
         string sentenceEndPhonemeID = "-E";
-        int hawkingPitchRange = 11;
 
         public HawkingVoice() : base(){}
 
@@ -35,38 +39,45 @@
         {       
             string intonation = " ";
             
-            if (intonationArrayChosen == null)
-            {
-                for (int u = 0; u < allSizes.Length; u++)
+            if (timeline[timelineIndex].ClipsSound != SPACE)
+            {  
+                if (intonationArrayChosen == null)
                 {
-                    if (timeline.Count <= allSizes[u])
+                    for (int u = 0; u < allSizes.Length; u++)
                     {
-                        ChoosePitchPattern (u);
-                    }
+                        if (timeline.Count <= allSizes[u])
+                        {
+                            ChoosePitchPattern (u);
+                        }
 
-                    else if (u == allSizes.Length - 1)
-                    {
-                        ChoosePitchPattern (allSizes.Length - 1); //assuming the array is ordered from largest to smallest!
+                        else if (u == allSizes.Length - 1)
+                        {
+                            ChoosePitchPattern (allSizes.Length - 1); //assuming the array is ordered from largest to smallest!
+                        }
                     }
                 }
-            }
 
-            if (arraysIndex >= intonationArrayChosen.Length)
-            {
-                arraysIndex = 0;
-            }        
+                if (arraysIndex >= intonationArrayChosen.Length)
+                {                
+                    arraysIndex = 0;
+                }        
                                     
-            if (letterIndex >= sentence.Length - SyllableSize)
-            {
-                intonation = sentenceEndPhonemeID; //hawking ending phonemes dont have a space between.
-            }   
+                if (timelineIndex >= timeline.Count - SyllableSize)
+                {
+                    intonation = sentenceEndPhonemeID; //hawking ending phonemes dont have a space between.
+                }   
             
-            else
-            {
-                intonation += intonationArrayChosen[arraysIndex];
-            }                
-            timeline[timelineIndex] = new TimelineClip (timeline[timelineIndex].StartPoint, timeline[timelineIndex].ClipsSound + intonation);
-            arraysIndex++;                                   
+                else
+                {
+                    if (intonationArrayChosen[arraysIndex] > voiceRange)
+                    {
+                        intonationArrayChosen[arraysIndex] = voiceRange;
+                    }                
+                    intonation += intonationArrayChosen[arraysIndex];
+                }                
+                timeline[timelineIndex] = new TimelineClip (timeline[timelineIndex].StartPoint, timeline[timelineIndex].ClipsSound + intonation);
+                arraysIndex++;
+            }                          
         }
     }
 }

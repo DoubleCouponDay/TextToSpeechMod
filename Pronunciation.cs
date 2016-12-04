@@ -45,7 +45,7 @@ namespace SETextToSpeechMod
             WordCounter.CheckNextLetter ();            
 
             if (WordCounter.CurrentWord != " ")
-            {                
+            {
                 if (WordCounter.LetterIndex == NEW_WORD)
                 {                    
                     dictionaryMatch = null;

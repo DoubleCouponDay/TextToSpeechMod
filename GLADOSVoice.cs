@@ -1,6 +1,6 @@
 ﻿namespace SETextToSpeechMod
 {
-    public sealed class GLADOSVoice : SentenceFactory
+    public sealed class GLADOSVoice : SentenceFactory, VoiceTemplate
     {        
         public override string FileID { get { return "-G"; } }
         public override int SpaceSize { get { return 4; } }
@@ -10,6 +10,8 @@
         protected override int[][] smallIntonationPatterns { get { return smallOptions; } }
         protected override int[][] mediumIntonationPatterns { get { return mediumOptions; } }
         protected override int[][] largeIntonationPatterns { get { return largeOptions; } }
+
+        protected override int voiceRange { get { return 11; } }
 
         readonly int[][] smallOptions = new int[][] 
         {

@@ -5,6 +5,8 @@ namespace SETextToSpeechMod
 {   
     public abstract class SentenceFactory : StateResetTemplate, VoiceTemplate
     {   
+        protected const string SPACE = "SPACE";    
+
         //voice template
         public virtual string Name { get { return "SentenceFactory";} }
         public virtual string FileID { get; }
@@ -141,14 +143,18 @@ namespace SETextToSpeechMod
                     if (resultsField[i] != " ")
                     {                                                   
                         string soundChoice = resultsField[i] + FileID;
-                        AddToTimeline (soundChoice);                    
-                        syllableMeasure++;
+                        AddToTimeline (soundChoice);                                            
 
-                        if (syllableMeasure == SyllableSize)
-                        {
-                            previousWasSpace = true; //pronunciation class inserts spaces for low energy letters. i dont want double spaces so thats the purpose of this var.
+                        if (syllableMeasure >= SyllableSize - 1)
+                        {                            
                             IncrementSyllables();                       
                         }   
+
+                        else
+                        {
+                            previousWasSpace = false;
+                            syllableMeasure++;
+                        }
                     }
 
                     else
@@ -180,7 +186,8 @@ namespace SETextToSpeechMod
 
         private void IncrementSyllables()
         {
-            AddToTimeline (SoundPlayer.SPACE);
+            previousWasSpace = true; //pronunciation class inserts spaces for low energy letters. i dont want double spaces so thats the purpose of this var.        {
+            AddToTimeline (SPACE);
             syllableMeasure = 0;
         } 
 
@@ -188,30 +195,38 @@ namespace SETextToSpeechMod
         protected virtual void AddIntonations (int timelineIndex)
         {        
             string intonation = " ";
-            
-            if (intonationArrayChosen == null)
-            {
-                for (int u = 0; u < allSizes.Length; u++)
-                {
-                    if (timeline.Count <= allSizes[u])
-                    {
-                        ChoosePitchPattern (u);
-                    }
 
-                    else if (u == allSizes.Length - 1)
+            if (timeline[timelineIndex].ClipsSound != SPACE)
+            {                        
+                if (intonationArrayChosen == null)
+                {
+                    for (int u = 0; u < allSizes.Length; u++)
                     {
-                        ChoosePitchPattern (allSizes.Length - 1); //assuming the array is ordered from largest to smallest!
+                        if (timeline.Count <= allSizes[u])
+                        {
+                            ChoosePitchPattern (u);
+                        }
+
+                        else if (u == allSizes.Length - 1)
+                        {
+                            ChoosePitchPattern (allSizes.Length - 1); //assuming the array is ordered from largest to smallest!
+                        }
                     }
                 }
-            }
 
-            if (arraysIndex >= intonationArrayChosen.Length)
-            {
-                arraysIndex = 0;
-            }            
-            intonation += intonationArrayChosen[arraysIndex];
-            timeline[timelineIndex] = new TimelineClip (timeline[timelineIndex].StartPoint, timeline[timelineIndex].ClipsSound + intonation);
-            arraysIndex++;
+                if (arraysIndex >= intonationArrayChosen.Length)
+                {
+                    arraysIndex = 0;
+                }        
+                
+                if (intonationArrayChosen[arraysIndex] > voiceRange)
+                {
+                    intonationArrayChosen[arraysIndex] = voiceRange;
+                }                
+                intonation += intonationArrayChosen[arraysIndex];
+                timeline[timelineIndex] = new TimelineClip (timeline[timelineIndex].StartPoint, timeline[timelineIndex].ClipsSound + intonation);
+                arraysIndex++;
+            }
         }         
 
         protected void ChoosePitchPattern (int sizeIndex)

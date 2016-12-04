@@ -15,7 +15,7 @@ namespace SETextToSpeechMod
         const float DEFAULT_VOLUME = 0.6f;
         const int CHANCE_OF_CLANG = 10000; //cannot be zero
         const string BONK = "BONK";
-        public const string SPACE = "SPACE";       
+        const string SPACE = "SPACE";       
 
         static MyEntity3DSoundEmitter TTSEmitter;
         static Random numberGenerator = new Random();
@@ -56,7 +56,8 @@ namespace SETextToSpeechMod
 
             if (inputTimeline.Count > 0)
             {
-                while (inputTimeline[0].StartPoint <= currentTick)
+                while (inputTimeline.Count > 0 &&
+                       inputTimeline[0].StartPoint <= currentTick)
                 {
                     if (inputTimeline[0].ClipsSound != SPACE)
                     {

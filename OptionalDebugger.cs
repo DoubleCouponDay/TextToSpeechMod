@@ -10,10 +10,10 @@ namespace SETextToSpeechMod
 {
     class OptionalDebugger
     {         
-        //const string currentComputer = "pavilion";
-        const string currentComputer = "thinkpad";
+        const string currentComputer = "pavilion";
+        //const string currentComputer = "thinkpad";
 
-        const string pavilionAddress = @"C:\Users\power\Desktop\scripting\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";       
+        const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
         const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
 
         const string AEE = PrettyScaryDictionary.AEE;
@@ -114,11 +114,10 @@ namespace SETextToSpeechMod
             OptionalDebugger debugger = new OptionalDebugger();
             MessageEventHandler entryPoint = new MessageEventHandler();
             Encoding encode = Encoding.Unicode;
-            SoundPlayer.InitialiseEmitter();
 
             OutputManager.Debugging = true;
 
-            string testString = debugger.RollOutAdjacentWords();
+            string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.
             string upperCase = testString.ToUpper();                     
             string signatureBuild = OutputManager.LocalPlayersVoice.ToString();
             int leftoverSpace = POSSIBLE_OUTPUTS.AutoSignatureSize - OutputManager.LocalPlayersVoice.ToString().Length;
@@ -134,16 +133,16 @@ namespace SETextToSpeechMod
             while (OutputManager.RunSpeechPlayback)
             {
                 OutputManager.Run();              
-                debugger.StoreResults (OutputManager.Speeches[0].Pronunciation.WordCounter.CurrentWord, 
-                                       OutputManager.Speeches[0].Results, 
-                                       OutputManager.Speeches[0].Pronunciation.UsedDictionary);         
+                debugger.StoreResults (OutputManager.Speeches[5].Pronunciation.WordCounter.CurrentWord, 
+                                       OutputManager.Speeches[5].Results, 
+                                       OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
             }                               
-            debugger.PrintResults (OutputManager.Speeches[0].Pronunciation.WrongFormatMatches, OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
+            debugger.PrintResults (OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
         }
 
         public string RollOutAdjacentWords()
         {
-            string rolledOut = "[ ";                
+            string rolledOut = "";                
 
             //removing row markers
             for (int i = 0; i < emptiesRemoved.Count; i++) 
@@ -157,7 +156,6 @@ namespace SETextToSpeechMod
                 }
             }
 
-            //adding
             //these two loops need to be separate due to the nature ordered dictionary enumerators.
             IEnumerator addingIndex = adjacentKeys.GetEnumerator(); 
 
@@ -172,24 +170,30 @@ namespace SETextToSpeechMod
 
         public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
         {
+            if (currentWord == "GLADOS")
+            {
+                ;
+            }
+
             if (currentWord != " ")
-            {          
+            {
+                List <string> newReference = new List <string> (phonemes);                
                 currentWord += " " + UsedDictionary.ToString();
                               
-                for (int i = 0; i < phonemes.Count; i++)
+                for (int i = 0; i < newReference.Count; i++)
                 {
-                    if (phonemes[i] == " " ||
-                        phonemes[i] == "")
+                    if (newReference[i] == " " ||
+                        newReference[i] == "")
                     {
-                        phonemes.RemoveAt (i);
+                        newReference.RemoveAt (i);
                         i--;
                     }
                 }               
-                string[] formattedPhonemes = new string[phonemes.Count];
+                string[] formattedPhonemes = new string[newReference.Count];
 
-                for (int i = 0; i < phonemes.Count; i++)
+                for (int i = 0; i < newReference.Count; i++)
                 {
-                    formattedPhonemes[i] = phonemes[i];
+                    formattedPhonemes[i] = newReference[i];
                 }
 
                 if (tabledResults.Contains (currentWord))
@@ -220,7 +224,10 @@ namespace SETextToSpeechMod
         }
 
         public void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
-        {                       
+        {                 
+int test1 = adjacentKeys.Count;
+int test2 = resultKeys.Count;  
+                              
             string[] previousReadings = File.ReadAllLines (resultsFile);   
             previousReadings = previousReadings[1].Split(' '); 
    
@@ -236,6 +243,7 @@ namespace SETextToSpeechMod
             string[] lines = new string[2 * emptiesRemoved.Count + tallies.Length];
             int errorCount = 0;
             int UsageCount = 0;
+
             IEnumerator adjacentIndex = adjacentKeys.GetEnumerator();
             IEnumerator resultsIndex = resultKeys.GetEnumerator();
             Process[] processes;

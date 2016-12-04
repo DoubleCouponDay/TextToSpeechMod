@@ -1,6 +1,6 @@
-Total Words: 202
-Total Incorrect: 0
-Previous Incorrect: 0
+Total Words: 203
+Total Incorrect: 1
+Previous Incorrect: 1
 From Dictionary: 0
 Lowercase Keys: 0
 Wrong Format Matchers: 0
@@ -147,6 +147,8 @@ Correct ------ GIN      { JIH, IHH, NIH, } { JIH, IHH, NIH, }
 Correct ------ GIVEN      { GIH, IHH, VIH, EHH, NIH, } { GIH, IHH, VIH, EHH, NIH, } 
 
 Correct ------ GUY      { GIH, EYE, } { GIH, EYE, } 
+
+Not Correct -- GLADOS      { GIH, LIH, AEE, DIH, HOH, SIH, } { GIH, LIH, AHH, DIH, OWE, SIH, } 
 
 Correct ------ HAZE      { HIH, AEE, ZIH, } { HIH, AEE, ZIH, } 
 
