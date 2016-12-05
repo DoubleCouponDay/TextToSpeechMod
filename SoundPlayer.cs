@@ -8,7 +8,6 @@ using VRage.ModAPI;
 using VRage.Game.Entity;
 using VRageMath;
 
-
 namespace SETextToSpeechMod
 {
     static class SoundPlayer //A stateless class equip to handle sound emitting requests and anything associated.
@@ -16,10 +15,10 @@ namespace SETextToSpeechMod
         const float DEFAULT_VOLUME = 0.6f;
         const int CHANCE_OF_CLANG = 10000; //cannot be zero
         const string BONK = "BONK";
-        public const string SPACE = "SPACE";       
+        const string SPACE = "SPACE";       
 
         static MyEntity3DSoundEmitter TTSEmitter;
-        public static Random NumberGenerator { get; private set; }        
+        static Random numberGenerator = new Random();
 
         public static void InitialiseEmitter() //i tested with a constructor instead but it doesnt seem to work with the game?
         {
@@ -28,8 +27,7 @@ namespace SETextToSpeechMod
             TTSEmitter.CustomMaxDistance = 500.0f; //since emitter position updates every interval, the distance should be large.
             TTSEmitter.SourceChannels = 1;
             TTSEmitter.Force3D = true;
-            TTSEmitter.CustomVolume = DEFAULT_VOLUME; //my sounds are already clipping; people dont want it that loud.
-            NumberGenerator = new Random();
+            TTSEmitter.CustomVolume = DEFAULT_VOLUME;
         }
 
         public static void UpdatePosition()
@@ -49,7 +47,7 @@ namespace SETextToSpeechMod
         public static bool PlaySentence (List <TimelineClip> inputTimeline, int currentTick)
         {
             bool hasFinished = false;
-            int rngBonk = NumberGenerator.Next (CHANCE_OF_CLANG);
+            int rngBonk = numberGenerator.Next (CHANCE_OF_CLANG);
 
             if (rngBonk == CHANCE_OF_CLANG - 1) //repent you fucking sinner. CLANG
             {
@@ -58,7 +56,8 @@ namespace SETextToSpeechMod
 
             if (inputTimeline.Count > 0)
             {
-                while (inputTimeline[0].StartPoint <= currentTick)
+                while (inputTimeline.Count > 0 &&
+                       inputTimeline[0].StartPoint <= currentTick)
                 {
                     if (inputTimeline[0].ClipsSound != SPACE)
                     {

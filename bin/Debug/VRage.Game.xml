@@ -9,9 +9,31 @@
             Auto-debug client.
             </summary>
         </member>
-        <member name="T:VRage.Game.Components.Entity.Multiplayer.MultiplayerSnapshot">
+        <member name="T:VRage.Game.Components.IMyComponentOwner`1">
             <summary>
-            Multiplayer snapshot.
+            Always implement explicitly, because of Obfuscation
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Components.IMyComponentOwner`1.GetComponent(`0@)">
+            <summary>
+            Always implement explicitly, because of Obfuscation
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
+            <summary>
+            Indicates whether a session component should be used in current configuration.
+            Example: MyDestructionData component returns true only when game uses Havok Destruction
+            </summary>
+        </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.RunningLevelScriptNames">
+            <summary>
+            Array of running level script names.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.FailedLevelScriptExceptionTexts">
+            <summary>
+            Array of exceptions raised when the scripts were running.
+            The name of the script is at the same index. (RunningLevelScriptNames)
             </summary>
         </member>
         <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
@@ -56,33 +78,6 @@
         <member name="P:VRage.Game.Components.MyEntityComponentBase.ComponentTypeDebugString">
             <summary>
             Name of the base component type for debug purposes (e.g.: "Position")
-            </summary>
-        </member>
-        <member name="T:VRage.Game.Components.IMyComponentOwner`1">
-            <summary>
-            Always implement explicitly, because of Obfuscation
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.IMyComponentOwner`1.GetComponent(`0@)">
-            <summary>
-            Always implement explicitly, because of Obfuscation
-            </summary>
-        </member>
-        <member name="P:VRage.Game.Components.MySessionComponentBase.IsRequiredByGame">
-            <summary>
-            Indicates whether a session component should be used in current configuration.
-            Example: MyDestructionData component returns true only when game uses Havok Destruction
-            </summary>
-        </member>
-        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.RunningLevelScriptNames">
-            <summary>
-            Array of running level script names.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.FailedLevelScriptExceptionTexts">
-            <summary>
-            Array of exceptions raised when the scripts were running.
-            The name of the script is at the same index. (RunningLevelScriptNames)
             </summary>
         </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
@@ -2117,119 +2112,6 @@
             User supplied data for the item
             </summary>
         </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.MIN_MULTIPLAYER_DELTA">
-            <summary>
-            Minimum multiplayer delta length under which error is reset to 0.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.MAX_MULTIPLAYER_DELTA">
-            <summary>
-            Maximum multiplayer delta length over which error is reset to 0.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.MIN_MULTIPLAYER_ANGLE_DELTA">
-            <summary>
-            Minimum multiplayer delta angle under which error is reset to 0.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.m_parent">
-            <summary>
-            Link to the parent node.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.m_localPivot">
-            <summary>
-            Pivot position in local space.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.Entity">
-            <summary>
-            Linked entity.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.Children">
-            <summary>
-            Child nodes.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.LocalErrorPos">
-            <summary>
-            Local error of the pivot (physics to graphics). 
-            If parent is null, it is in world coordinate system.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.HasNewCorrectionOnIndex">
-            <summary>
-            Links this node to array of corrections (if there is any correction queued).
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.RemoveMe">
-            <summary>
-            If true, this node wants to be removed from the hierarchy as soon as possible (no child nodes, no correction).
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.Active">
-            <summary>
-            If true, there is at leas one correction in the chain
-            </summary>
-        </member>
-        <member name="F:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.LocalPivot">
-            <summary>
-            Local pivot. Relative to the Entity origin.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.SetActive(System.Boolean)">
-            <summary>
-            Sets the active state on whole chain
-            </summary>
-            <param name="active"></param>
-            <returns>Root node</returns>
-        </member>
-        <member name="P:VRage.Game.Multiplayer.MyMultiplayerCorrectionNode.Parent">
-            <summary>
-            Link to the parent node.
-            </summary>
-        </member>
-        <member name="T:VRage.Game.Multiplayer.MyMultiplayerCorrections">
-            <summary>
-            Class taking care of chains of delta corrections.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Multiplayer.MyMultiplayerCorrections.AddCorrection(VRage.Game.Entity.MyEntity,VRage.Game.Entity.MyEntity,VRageMath.Vector3@,VRageMath.MyTransformD@,VRageMath.Vector3,VRageMath.Vector3)">
-            <summary>
-            Add local correction.
-            </summary>
-            <param name="entity"></param>
-            <param name="parentEntity"></param>
-            <param name="localPivot"></param>
-            <param name="localCorrection"></param>
-            <param name="angularVelocityDelta"></param>
-            <param name="linearVelocityDelta"></param>
-        </member>
-        <member name="M:VRage.Game.Multiplayer.MyMultiplayerCorrections.Update">
-            <summary>
-            Update method does following steps.
-            
-            1. Apply new physics corrections (snap physics).
-            2. Bring graphics corrections to world space and set them to physics components.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Multiplayer.MyMultiplayerCorrections.ApplyNewCorrectionsAndSnap(VRage.Game.Multiplayer.MyMultiplayerCorrectionNode,VRageMath.MatrixD@,VRageMath.MatrixD@)">
-            <summary>
-            Snap to the new physics transforms.
-            </summary>
-            <param name="node">link to current root node</param>
-            <param name="parentOldInvWorld"></param>
-            <param name="parentNewWorld"></param>
-        </member>
-        <member name="M:VRage.Game.Multiplayer.MyMultiplayerCorrections.UpdateNode(VRage.Game.Multiplayer.MyMultiplayerCorrectionNode,VRageMath.MatrixD@,VRageMath.MatrixD@)">
-            <summary>
-            Snap to the new physics transforms.
-            </summary>
-            <param name="node">link to current root node</param>
-            <param name="parentWorldPhysInv"></param>
-            <param name="parentWorldMatrix"></param>
-        </member>
         <member name="M:VRage.Game.SessionComponents.MySessionComponentAnimationSystem.RegisterEntityComponent(VRage.Game.Components.MyAnimationControllerComponent)">
             <summary>
             Register entity component.
@@ -2360,11 +2242,6 @@
             Create deep copy of this conjuction of conditions.
             </summary>
             <returns></returns>
-        </member>
-        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
-            <summary>
-            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
-            </summary>
         </member>
         <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
@@ -2548,6 +2425,11 @@
             <param name="worldMatrix"></param>
             <param name="lineBuffer"></param>
             <param name="divideRatio"></param>
+        </member>
+        <member name="F:VRage.Game.MyObjectBuilder_PhysicalObject.DurabilityHP">
+            <summary>
+            This is used for GUI to show the amount of health points (durability) of the weapons and tools. This is updated through Durability entity component if entity exists..
+            </summary>
         </member>
         <member name="T:VRage.Game.MyDefinitionXmlSerializer">
             <summary>
@@ -3020,15 +2902,6 @@
             Must be set before creating rigid body
             </summary>
         </member>
-        <member name="F:VRage.Game.Components.MyPhysicsComponentBase.m_multiplayerTransformPos">
-            <summary>
-            Indicates offset of the transfrom between Physics and what is returned to clients.
-            It is set only from multiplayer.
-            
-            orientation of the delta: from physics graphics  to graphical/logical
-            
-            </summary>
-        </member>
         <member name="F:VRage.Game.Components.MyPhysicsComponentBase.IsPhantom">
             <summary>
             Use something from Havok to detect this
@@ -3102,16 +2975,6 @@
             Called when [world position changed].
             </summary>
             <param name="source">The source object that caused this event.</param>
-        </member>
-        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.SetMultiplayerDelta(VRageMath.Vector3D@,VRageMath.QuaternionD@)">
-            <summary>
-            Set new offset of transform from physics to graphics.
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.GetMultiplayerDelta(VRageMath.MyTransformD@)">
-            <summary>
-            Get current offset of transform from physics to graphics.
-            </summary>
         </member>
         <member name="P:VRage.Game.Components.MyPhysicsComponentBase.MaterialType">
             <summary>
@@ -7678,16 +7541,6 @@
         <member name="F:MyCommonTexts.MessageBoxTextCampaignPublished">
             <summary>
             Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.Multiplayer_ServerSlow">
-            <summary>
-            Server is having performance issues
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.Multiplayer_UnstableConnection">
-            <summary>
-            Multiplayer connection is unstable
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">

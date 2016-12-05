@@ -1,8 +1,7 @@
 ﻿namespace SETextToSpeechMod
 {
-    public sealed class MarekVoice : SentenceFactory
+    public sealed class MarekVoice : SentenceFactory, VoiceTemplate
     {
-        public override string Name { get { return "MarekVoice"; } }
         public override string FileID { get { return "-M"; } }
         public override int SpaceSize { get { return 4; } }
         public override int ClipLength { get { return 4; } }
@@ -10,6 +9,6 @@
 
         public MarekVoice() : base(){}
 
-        protected override string GetPhonemesIntonation() { return ""; }
+        protected override void AddIntonations (int timelineIndex) { }
     }
 }

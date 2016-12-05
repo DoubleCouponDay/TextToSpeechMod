@@ -25,12 +25,10 @@
             {
                 if (LetterIndex == words[wordsIndex].Length - 1)
                 {
-                    LetterIndex++;
                     DumpRemainingLetters = true;
-                    CurrentWord = words[wordsIndex];
                 }
                 
-                else if (LetterIndex < words[wordsIndex].Length)
+                if (LetterIndex < words[wordsIndex].Length)
                 {
                     LetterIndex++;
                     CurrentWord = words[wordsIndex];
@@ -41,7 +39,6 @@
                     DumpRemainingLetters = false;
                     wordsIndex++;
                     LetterIndex = 0;
-                    wordsIndex = 0;
                     CurrentWord = " ";                  
                 }
             }    

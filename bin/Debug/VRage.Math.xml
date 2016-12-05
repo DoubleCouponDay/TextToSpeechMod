@@ -4330,11 +4330,6 @@
             </summary>
             <param name="quaternion">Quaternion to create the Matrix from.</param><param name="result">[OutAttribute] The created Matrix.</param>
         </member>
-        <member name="M:VRageMath.MatrixD.CreateFromQuaternionAndPoint(VRageMath.Quaternion@,VRageMath.Vector3D@,VRageMath.MatrixD@)">
-            <summary>
-            Rotate using quaternion around point other than origin.
-            </summary>
-        </member>
         <member name="M:VRageMath.MatrixD.CreateFromYawPitchRoll(System.Double,System.Double,System.Double)">
             <summary>
             Creates a new rotation matrix from a specified yaw, pitch, and roll.
@@ -4623,14 +4618,6 @@
             <summary>
             Gets and sets the translation vector of the Matrix.
             </summary>
-        </member>
-        <member name="M:VRageMath.Spatial.MyClusterTree.ReorderClusters(VRageMath.BoundingBoxD,System.Nullable{System.UInt64})">
-            <summary>
-            Reorder clusters so that there is a cluster which includes the given bounding box.
-            Optionally, supply an objectId of an object to add to the new cluster
-            </summary>
-            <param name="aabb"></param>
-            <param name="objectId"></param>
         </member>
         <member name="M:VRageMath.Spatial.MyClusterTree.IMyActivationHandler.Activate(System.Object,System.UInt64)">
             <summary>
@@ -5202,12 +5189,6 @@
             <param name="normal">The source vector.</param><param name="matrix">The transformation Matrix.</param><param name="result">[OutAttribute] The Vector3 resulting from the transformation.</param>
         </member>
         <member name="M:VRageMath.Vector3D.Transform(VRageMath.Vector3D,VRageMath.Quaternion)">
-            <summary>
-            Transforms a Vector3 by a specified Quaternion rotation.
-            </summary>
-            <param name="value">The Vector3 to rotate.</param><param name="rotation">The Quaternion rotation to apply.</param>
-        </member>
-        <member name="M:VRageMath.Vector3D.Transform(VRageMath.Vector3D,VRageMath.QuaternionD)">
             <summary>
             Transforms a Vector3 by a specified Quaternion rotation.
             </summary>
