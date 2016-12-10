@@ -15,8 +15,7 @@ TO DO
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
 + use melodyne free trial to create pitch for those two? how many notes?
-+ download wav to XWM converter
-+ convert them to XWM
++ record exclamation point endings and question mark endings
 + publish
 + sync
 
