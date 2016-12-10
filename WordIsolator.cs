@@ -16,11 +16,11 @@
 
         public void FactoryReset()
         {
-            CurrentWord = "";
+            CurrentWord = EMPTY;
             CurrentWordIsNew = false; 
             LettersLeftInWord = NEW_WORD;       
             
-            tempSentence = "";
+            tempSentence = EMPTY;
             tempLetterIndex = NEW_WORD;                             
         }
 
@@ -65,6 +65,7 @@
             else
             {
                 LettersLeftInWord = NEW_WORD;
+                WordsIndexLimit = NEW_WORD;
                 CurrentWord = SPACE.ToString();
             }
         }
