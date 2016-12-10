@@ -6303,8 +6303,7 @@
         </member>
         <member name="M:VRageMath.Vector3UByte.Normalize(VRageMath.Vector3,System.Single)">
             <summary>
-            Normalizes Vector3 into Vector4UByte, scales vector from (-range, range) to (0, 255).
-            Unsafe for values "range >= any_vec_value / 257";
+            Normalizes Vector3 into Vector4UByte, scales vector from (-range, range) to (0, 255)
             </summary>
         </member>
         <member name="M:VRageMath.Vector3UByte.Denormalize(VRageMath.Vector3UByte,System.Single)">
@@ -6794,12 +6793,6 @@
             <param name="value1">The coordinate on one axis of vertex 1 of the defining triangle.</param><param name="value2">The coordinate on the same axis of vertex 2 of the defining triangle.</param><param name="value3">The coordinate on the same axis of vertex 3 of the defining triangle.</param><param name="amount1">The normalized barycentric (areal) coordinate b2, equal to the weighting factor for vertex 2, the coordinate of which is specified in value2.</param><param name="amount2">The normalized barycentric (areal) coordinate b3, equal to the weighting factor for vertex 3, the coordinate of which is specified in value3.</param>
         </member>
         <member name="M:VRageMath.MathHelper.SmoothStep(System.Single,System.Single,System.Single)">
-            <summary>
-            Interpolates between two values using a cubic equation.
-            </summary>
-            <param name="value1">Source value.</param><param name="value2">Source value.</param><param name="amount">Weighting value.</param>
-        </member>
-        <member name="M:VRageMath.MathHelper.SmoothStep(System.Double,System.Double,System.Double)">
             <summary>
             Interpolates between two values using a cubic equation.
             </summary>

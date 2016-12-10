@@ -1,27 +1,29 @@
-﻿using System;
-using System.Text.RegularExpressions; //needed to match wildcard string matches simplify the rule based phoneme approach AdjacentEvaluation().
+﻿using System.Text.RegularExpressions; //needed to match wildcard string matches simplify the rule based phoneme approach AdjacentEvaluation().
 using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {
-    public class Pronunciation : StateResetTemplate
-    {               
-        string[] dictionaryMatch;
-        string surroundingPhrase;
-        List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!
+    public class Pronunciation
+    {    
+        public WordIsolator WordIsolator {get; private set;}
 
         public bool UsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
         public int WrongFormatNonMatches {get; private set;}
 
-        public WordCounter WordCounter {get; private set;}        
+        string[] dictionaryMatch;
+        string surroundingPhrase;
+        List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!
+
+        string tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
+        int tempLetterIndex;
 
         public Pronunciation()
         {
-            this.WordCounter = new WordCounter();
+            this.WordIsolator = new WordIsolator();
         }
 
-        public void FactoryReset (string inputSentence)
+        public void FactoryReset()
         {
             surroundingPhrase = "";
             UsedDictionary = false;
@@ -30,26 +32,26 @@ namespace SETextToSpeechMod
             currentResults.Clear();
             dictionaryMatch = null;
 
-            WordCounter.FactoryReset (inputSentence);
+            tempSentence = "";
+            tempLetterIndex = 0;
+
+            WordIsolator.FactoryReset();
         }
 
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
-            currentResults.Clear();            
-            WordCounter.IncrementToNextLetter(); //Incrementing the WordCounter must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis. 
+            WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis. 
+            tempSentence = sentence;
+            tempLetterIndex = letterIndex;
+            currentResults.Clear();                        
 
-if (WordCounter.CurrentWord == "STATION")
-{
-    ;
-}
-
-            if (WordCounter.CurrentWord != WordCounter.SPACE)
+            if (WordIsolator.CurrentWord != WordIsolator.SPACE.ToString())
             {
-                if (WordCounter.LetterIndex == WordCounter.NEW_WORD)
+                if (WordIsolator.CurrentWordIsNew == true)
                 {                    
                     dictionaryMatch = null;
-                    UsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordCounter.CurrentWord, out dictionaryMatch);
+                    UsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordIsolator.CurrentWord, out dictionaryMatch);
 
                     if (UsedDictionary)
                     {
@@ -58,7 +60,7 @@ if (WordCounter.CurrentWord == "STATION")
             
                     else
                     {
-                        AdjacentEvaluation (sentence, letterIndex);
+                        AdjacentEvaluation();
                     }
                 }
 
@@ -69,56 +71,57 @@ if (WordCounter.CurrentWord == "STATION")
 
                 else
                 {
-                    AdjacentEvaluation (sentence, letterIndex);
+                    AdjacentEvaluation();
                 }
             }
 
             else
             {
-                currentResults.Add (WordCounter.SPACE); //avoids setting WordCounter.LetterIndex in this scenario since an empty space cant reset it when needed.
+                currentResults.Add (WordIsolator.SPACE.ToString()); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
             }      
             return currentResults;
         }
 
+        //Method returns one phoneme per run until it reaches the end of the current dictionary key. In which case it will dump all remaining.
         private void TakeFromDictionary()
         {
-            switch (WordCounter.DumpRemainingLetters)
-            {
-                case false:
-                    string extract = dictionaryMatch[WordCounter.LetterIndex];
-                    currentResults.Add (extract);
-                    break;
+            int bookmark = dictionaryMatch.Length - WordIsolator.LettersLeftInWord;
 
-                case true:
-                    for (int i = WordCounter.LetterIndex; i < dictionaryMatch.Length; i++)
-                    {                        
-                        currentResults.Add (dictionaryMatch[WordCounter.LetterIndex]);
-                    }
-                    break;
-            }           
+            if (bookmark == WordIsolator.WordsIndexLimit)
+            {
+                for (int i = bookmark; i < dictionaryMatch.Length; i++)
+                {                        
+                    currentResults.Add (dictionaryMatch[i]);
+                }
+            }
+
+            else
+            {
+                currentResults.Add (dictionaryMatch[bookmark]);
+            }   
         }
 
-        /*
-        AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary.
-        pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
+        /* Rule based processing algorithm which works one letter at a time.
+         * It's more efficient than a dictionary attack but its structure is hard to understand without consulting the documentation.
+         * The primary purpose of OptionalDebugger is to make sure this algorithm does not decrease in word coverage due to obscurity.
         */
-        private void AdjacentEvaluation (string sentence, int letterIndex)
+        private void AdjacentEvaluation()
         {
             //const string VOWELS = "AEIOU";
             const string CONSONANTS = "BCDFGHJKLMNPQRSTVWXYZ";
             string primary = "";
             string secondary = "";
 
-            int intBefore = (letterIndex - 1 >= 0) ? (letterIndex - 1) : letterIndex; //these wil prevent out-of-bounds exception.
-            int intAfter = (letterIndex + 1 < sentence.Length) ? (letterIndex + 1) : letterIndex; 
-            int intTwoAfter = (letterIndex + 2 < sentence.Length) ? (letterIndex + 2) : letterIndex;
-            int intTwoBefore = (letterIndex - 2 >= 0) ? (letterIndex - 2) : letterIndex;
+            int intBefore = (tempLetterIndex - 1 >= 0) ? (tempLetterIndex - 1) : tempLetterIndex; //these wil prevent out-of-bounds exception.
+            int intAfter = (tempLetterIndex + 1 < tempSentence.Length) ? (tempLetterIndex + 1) : tempLetterIndex; 
+            int intTwoAfter = (tempLetterIndex + 2 < tempSentence.Length) ? (tempLetterIndex + 2) : tempLetterIndex;
+            int intTwoBefore = (tempLetterIndex - 2 >= 0) ? (tempLetterIndex - 2) : tempLetterIndex;
 
-            string before = (intBefore != letterIndex) ? sentence[intBefore].ToString() : " "; //these 4 strings ensure i can correctly identify separate words.
-            string after = (intAfter != letterIndex) ? sentence[intAfter].ToString() : " "; //using strings instead of chars saves lines since i need strings for Contains()
-            string twoBefore = (intTwoBefore != letterIndex && before != " ") ? sentence[intTwoBefore].ToString() : " "; //the false path must return a space string because spaces signify the start/end of a word.
-            string twoAfter = (intTwoAfter != letterIndex && after != " ") ? sentence[intTwoAfter].ToString() : " ";        
-            string currentLetter = sentence[letterIndex].ToString();
+            string before = (intBefore != tempLetterIndex) ? tempSentence[intBefore].ToString() : " "; //these 4 strings ensure i can correctly identify separate words.
+            string after = (intAfter != tempLetterIndex) ? tempSentence[intAfter].ToString() : " "; //using strings instead of chars saves lines since i need strings for Contains()
+            string twoBefore = (intTwoBefore != tempLetterIndex && before != " ") ? tempSentence[intTwoBefore].ToString() : " "; //the false path must return a space string because spaces signify the start/end of a word.
+            string twoAfter = (intTwoAfter != tempLetterIndex && after != " ") ? tempSentence[intTwoAfter].ToString() : " ";        
+            string currentLetter = tempSentence[tempLetterIndex].ToString();
 
             surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatchBypassed is used in this method.
            

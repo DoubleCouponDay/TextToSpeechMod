@@ -4,12 +4,6 @@
         <name>Sandbox.Common</name>
     </assembly>
     <members>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyTerminalBlock.CustomData">
-            <summary>
-            Gets or sets the Custom Data string.
-            NOTE: Only use this for user input. For storing large mod configs, create your own MyModStorageComponent
-            </summary>
-        </member>
         <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
             <summary>
             Raises AppendingCustomInfo so every subscriber can append custom info.
@@ -68,67 +62,6 @@
         <member name="M:Sandbox.ModAPI.IMyProductionBlock.ClearQueue">
             <summary>
             Clears the Queue
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.Raycast(System.Double,System.Single,System.Single)">
-            <summary>
-            Does a raycast in the direction the camera is facing. Pitch and Yaw are in degrees. 
-            Will return an empty struct if distance or angle are out of bounds.
-            </summary>
-            <param name="distance"></param>
-            <param name="pitch"></param>
-            <param name="yaw"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.Raycast(VRageMath.Vector3D)">
-            <summary>
-            Does a raycast to the given point. 
-            Will return an empty struct if distance or angle are out of bounds.
-            </summary>
-            <param name="targetPos"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.Raycast(System.Double,VRageMath.Vector3D)">
-            <summary>
-            Does a raycast in the given direction. 
-            Will return an empty struct if distance or angle are out of bounds.
-            </summary>
-            <param name="distance"></param>
-            <param name="targetDirection"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.CanScan(System.Double)">
-            <summary>
-            Checks if the camera can scan the given distance.
-            </summary>
-            <param name="distance"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.TimeUntilScan(System.Double)">
-            <summary>
-            Returns the number of milliseconds until the camera can do a raycast of the given distance.
-            </summary>
-            <param name="distance"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCameraBlock.AvailableScanRange">
-            <summary>
-            The maximum distance that this camera can scan, based on the time since the last scan.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCameraBlock.EnableRaycast">
-            <summary>
-            When this is true, the available raycast distance will count up, and power usage is increased.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCameraBlock.RaycastConeLimit">
-            <summary>
-            Returns the maximum positive angle you can apply for pitch and yaw.
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyCameraBlock.RaycastDistanceLimit">
-            <summary>
-            Returns the maximum distance you can request a raycast. -1 means infinite.
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyShipController.GetNaturalGravity">
@@ -1776,62 +1709,6 @@
         <member name="P:Sandbox.ModAPI.MyAPIGateway.Entities">
             <summary>
             IMyEntities represents all objects that currently in world 
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.EntityId">
-            <summary>
-            The entity's EntityId
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.Name">
-            <summary>
-            The entity's display name if it is friendly, or a generic descriptor if it is not
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.Type">
-            <summary>
-            Enum describing the type of entity
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.HitPosition">
-            <summary>
-            Position where the raycast hit the entity. (can be null if the sensor didn't use a raycast)
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.Orientation">
-            <summary>
-            The entity's absolute orientation at the time it was detected
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.Velocity">
-            <summary>
-            The entity's absolute velocity at the time it was detected
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.Relationship">
-            <summary>
-            Relationship between the entity and the owner of the sensor
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.BoundingBox">
-            <summary>
-            The entity's world-aligned bounding box
-            </summary>
-        </member>
-        <member name="F:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.TimeStamp">
-            <summary>
-            Time when the entity was detected. This field counts milliseconds, compensated for simspeed
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.IsEmpty">
-            <summary>
-            Determines if this structure is empty; meaning it does not contain any meaningful data
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.MyDetectedEntityInfo.Position">
-            <summary>
-            The entity's position (center of the Bounding Box)
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.MyWhitelistTarget">

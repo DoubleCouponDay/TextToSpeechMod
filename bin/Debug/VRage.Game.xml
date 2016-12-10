@@ -80,38 +80,6 @@
             Name of the base component type for debug purposes (e.g.: "Position")
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyModStorageComponentBase.GetValue``1(System.Guid)">
-            <summary>
-            Gets a value from the Storage dictionary with the specified key.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="guid"></param>
-            <returns></returns>
-            <remarks>This can throw exceptions</remarks>
-        </member>
-        <member name="M:VRage.Game.Components.MyModStorageComponentBase.TryGetValue``1(System.Guid,``0@)">
-            <summary>
-            Trys to a value from the Storage dictionary with the specified key.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="guid"></param>
-            <param name="value"></param>
-            <returns><b>true</b> on success; <b>false</b> on failure</returns>
-        </member>
-        <member name="M:VRage.Game.Components.MyModStorageComponentBase.SetValue``1(System.Guid,``0)">
-            <summary>
-            Stores a value with the specified key into the Storage dictionary.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="guid"></param>
-            <param name="value"></param>
-        </member>
-        <member name="M:VRage.Game.Components.MyModStorageComponentBase.RemoveValue(System.Guid)">
-            <summary>
-            Removes a value with the specified key from the Storage dictionary.
-            </summary>
-            <param name="guid"></param>
-        </member>
         <member name="F:VRage.Game.MyDefinitionBase.DisplayNameEnum">
             <summary>
             Enum used for localization of display name. Null for player created definitions.
@@ -391,14 +359,6 @@
             <param name="emissiveName">The name of the emissive material (ie. "Emissive0")</param>
             <param name="emissivity">Level of emissivity (0 is off, 1 is full brightness).</param>
             <param name="emissivePartColor">Color to emit</param>
-        </member>
-        <member name="P:VRage.ModAPI.IMyEntity.Storage">
-            <summary>
-            Custom storage for mods. Shared with all mods.
-            </summary>
-            <remarks>Not synced, but saved with blueprints.
-            Only use set accessor if value is null.
-            </remarks>
         </member>
         <member name="M:VRage.Game.Entity.MyEntity.GetTopMostParent(System.Type)">
             <summary>
@@ -779,7 +739,7 @@
             When set to true, it should use MyDamageSystem damage routing.
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.AddDecals(VRage.Game.ModAPI.MyHitInfo,VRage.Utils.MyStringHash,System.Object,VRage.Game.ModAPI.Interfaces.IMyDecalHandler,VRage.Utils.MyStringHash)">
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalProxy.AddDecals(VRage.Game.ModAPI.MyHitInfo,VRage.Utils.MyStringHash,System.Object,VRage.Game.ModAPI.Interfaces.IMyDecalHandler)">
             <param name="hitInfo">Hithinfo on world coordinates</param>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyCharacter.GetSuitGasFillLevel(VRage.Game.MyDefinitionId)">
@@ -1678,51 +1638,16 @@
             Simulation ratio, when physics cannot keep up, this is smaller than 1
             </summary>
         </member>
-        <member name="T:VRage.Game.ModAPI.MyPromoteLevel">
+        <member name="M:VRage.Game.ModAPI.IMySession.IsUserAdmin(System.UInt64)">
             <summary>
-            Describes what permissions a user has
-            </summary>
-        </member>
-        <member name="F:VRage.Game.ModAPI.MyPromoteLevel.None">
-            <summary>
-            Normal players
-            </summary>
-        </member>
-        <member name="F:VRage.Game.ModAPI.MyPromoteLevel.Scripter">
-            <summary>
-            Can edit scripts when the scripter role is enabled
-            </summary>
-        </member>
-        <member name="F:VRage.Game.ModAPI.MyPromoteLevel.Moderator">
-            <summary>
-            Can kick and ban players, has access to 'Show All Players' option in Admin Tools menu
-            </summary>
-        </member>
-        <member name="F:VRage.Game.ModAPI.MyPromoteLevel.SpaceMaster">
-            <summary>
-            Has access to Space Master tools
-            </summary>
-        </member>
-        <member name="F:VRage.Game.ModAPI.MyPromoteLevel.Admin">
-            <summary>
-            Has access to Admin tools
-            </summary>
-        </member>
-        <member name="F:VRage.Game.ModAPI.MyPromoteLevel.Owner">
-            <summary>
-            Admins listed in server config, cannot be demoted
-            </summary>
-        </member>
-        <member name="M:VRage.Game.ModAPI.IMySession.GetUserPromoteLevel(System.UInt64)">
-            <summary>
-            Gets a remote player's promote level.
+            Checks if a given player is an admin.
             </summary>
             <param name="steamId"></param>
             <returns></returns>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMySession.IsUserAdmin(System.UInt64)">
+        <member name="M:VRage.Game.ModAPI.IMySession.IsUserPromoted(System.UInt64)">
             <summary>
-            Checks if a given player is an admin (or higher).
+            Checks if a given player is promoted to space master.
             </summary>
             <param name="steamId"></param>
             <returns></returns>
@@ -1742,14 +1667,9 @@
             Do it only when necessary.
             </summary>
         </member>
-        <member name="P:VRage.Game.ModAPI.IMySession.PromoteLevel">
+        <member name="P:VRage.Game.ModAPI.IMySession.HasAdminPrivileges">
             <summary>
-            Gets the local player's promote level.
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMySession.HasCreativeRights">
-            <summary>
-            Checks if the local player is an admin or is promoted to space master (or higher).
+            Checks if the local player is an admin or is promoted to space master.
             </summary>
         </member>
         <member name="T:VRage.Game.ModAPI.Ingame.IMySlimBlock">
@@ -1842,7 +1762,7 @@
             The blocks that neighbour this block
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,System.String)">
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,VRage.Game.MyFontEnum)">
             <summary>
             Create a notification object.
             The object needs to have Show() called on it to be shown.
@@ -2679,7 +2599,7 @@
             Internal local matrix relative to parent of entity.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
             <summary>
             Sets the world matrix.
             </summary>
@@ -2715,7 +2635,7 @@
             Updates the world matrix (change caused by parent)
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object,System.Boolean)">
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.OnWorldPositionChanged(System.Object)">
             <summary>
             Called when [world position changed].
             </summary>
@@ -2774,7 +2694,7 @@
             Implementation should only store and return passed object.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponent.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:VRage.Game.Components.MyPositionComponent.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean)">
             <summary>
             Sets the world matrix.
             </summary>
@@ -2786,7 +2706,7 @@
             Updates the childs of this entity.
             </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponent.OnWorldPositionChanged(System.Object,System.Boolean)">
+        <member name="M:VRage.Game.Components.MyPositionComponent.OnWorldPositionChanged(System.Object)">
             <summary>
             Called when [world position changed].
             </summary>
@@ -3177,13 +3097,6 @@
         <member name="M:VRage.Game.Components.MyResourceSourceComponentBase.ProductionEnabledByType(VRage.Game.MyDefinitionId)">
             <summary>
             Resource production is enabled
-            </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyUseObjectsComponentBase.RaycastDetectors(VRageMath.Vector3D,VRageMath.Vector3D,System.Single@)">
-            <summary>
-            Determine whether the given ray intersects any detector. If so, returns
-            the parametric value of the point of first intersection.
-            PARAMATER IS NOT DISTANCE!
             </summary>
         </member>
         <member name="M:VRage.MyEntityIdentifier.MarkIdUsed(System.Int64)">
@@ -4040,7 +3953,7 @@
         </member>
         <member name="F:MyCommonTexts.ScreenCaptionCustomWorld">
             <summary>
-            Custom Game
+            Custom World
             </summary>
         </member>
         <member name="F:MyCommonTexts.ErrorNameTooLong">
@@ -4395,7 +4308,7 @@
         </member>
         <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoAdapter">
             <summary>
-            Select a graphic adapter and/or a monitor. Changing the adapter requires restart of the game.
+            Select a graphic adapter and/or a monitor
             </summary>
         </member>
         <member name="F:MyCommonTexts.ToolTipVideoOptionsVideoMode">
@@ -4421,11 +4334,6 @@
         <member name="F:MyCommonTexts.ToolTipVideoOptionsFieldOfView">
             <summary>
             Horizontal field of view angle
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.MessageBoxTextRestartNeededAfterAdapterSwitch">
-            <summary>
-            Changing adapter requires restarting the game. Restart now?
             </summary>
         </member>
         <member name="F:MyCommonTexts.ToolTipGameOptionsShowControlsHints">
@@ -4625,7 +4533,7 @@
         </member>
         <member name="F:MyCommonTexts.ScreenCaptionWorkshop">
             <summary>
-            Workshop Content
+            Workshop
             </summary>
         </member>
         <member name="F:MyCommonTexts.ScreenMenuButtonRecommend">
@@ -4653,11 +4561,7 @@
             MOD PUBLISH FAILED
             </summary>
         </member>
-        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldCopyAndLoad">
-            <summary>
-            Quickstart
-            </summary>
-        </member>
+        <!-- Badly formed XML comment ignored for member "F:MyCommonTexts.ScreenLoadSubscribedWorldCopyAndLoad" -->
         <member name="F:MyCommonTexts.LoadScreenButtonTooltipPublish">
             <summary>
             Publish selected world on Steam Workshop
@@ -4825,7 +4729,7 @@
         </member>
         <member name="F:MyCommonTexts.ToolTipWorkshopCopyAndLoad">
             <summary>
-            Launch with default parameters.
+            Download selected world to your computer and load
             </summary>
         </member>
         <member name="F:MyCommonTexts.ToolTipWorkshopOpenInWorkshop">
@@ -6930,32 +6834,7 @@
         </member>
         <member name="F:MyCommonTexts.ScreenDebugAdminMenu_TrashRemoval">
             <summary>
-            Include in trash
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_ContinuousTrashInterval">
-            <summary>
-            Continuous trash interval
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_TrashAction">
-            <summary>
-            Trash action
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_PauseTrashButton">
-            <summary>
-            Suspend
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_ResumeTrashButton">
-            <summary>
-            Activate
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_PauseTrashButtonTooltip">
-            <summary>
-            Disable trash performing
+            Include in removal
             </summary>
         </member>
         <member name="F:MyCommonTexts.ScreenDebugAdminMenu_ShowTrashAdminView">
@@ -7125,7 +7004,7 @@
         </member>
         <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldCopyWorld">
             <summary>
-            Customize
+            Copy World
             </summary>
         </member>
         <member name="F:MyCommonTexts.NotificationResearchUnlocked">
@@ -7146,7 +7025,7 @@
         </member>
         <member name="F:MyCommonTexts.ToolTipWorkshopCopyWorld">
             <summary>
-            Customize settings before launch.
+            Download selected world to save games without loading it (Use to Edit Settings before playing world)
             </summary>
         </member>
         <member name="F:MyCommonTexts.SignalMode_Switch_DefaultMode">
@@ -7196,7 +7075,7 @@
         </member>
         <member name="F:MyCommonTexts.ScreenCaptionNewGame">
             <summary>
-            Campaign
+            New Game
             </summary>
         </member>
         <member name="F:MyCommonTexts.ScreenMenuButtonContinueGame">
@@ -7632,36 +7511,6 @@
         <member name="F:MyCommonTexts.MessageBoxTextCampaignPublished">
             <summary>
             Publish has been completed successfully. If you have Steam Overlay enabled, a page will open and you can edit attributes such as title, description or visibility (it is public by default).
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenDebugAdminMenu_EntityName">
-            <summary>
-            Entity Name: 
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.Multiplayer_HighPing">
-            <summary>
-            Multiplayer warning: High latency connection (>250 ms)
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.Multiplayer_LowSimSpeed">
-            <summary>
-            Multiplayer warning: Low sim speed on server
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.NewGameScreen_Description">
-            <summary>
-            Start a new campaign game.
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.WorkshopScreen_Description">
-            <summary>
-            Choose one of your subscribed workshop items or browse for more.
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.WorldSettingsScreen_Description">
-            <summary>
-            Create a new custom world.
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">

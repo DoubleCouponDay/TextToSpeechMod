@@ -6,12 +6,7 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ word counter and letter index out not synchronised.
-+ debugger adjacent keys is different size than resultkeys?
-+ debugger doesnt know that a dictionary word was used?
 + add muting options
-+ review all the new algorithms
-+ debug
 
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?

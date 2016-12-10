@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {   
-    public abstract class SentenceFactory : StateResetTemplate, VoiceTemplate
+    public abstract class SentenceFactory : VoiceTemplate
     {   
         protected const string SPACE = "SPACE";    
 
@@ -100,7 +100,7 @@ namespace SETextToSpeechMod
             currentTick = 0;
             resultsField.Clear();
 
-            Pronunciation.FactoryReset (sentence);
+            Pronunciation.FactoryReset();
             timeline.Clear();
         }
 

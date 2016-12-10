@@ -10,8 +10,8 @@ namespace SETextToSpeechMod
 {
     class OptionalDebugger
     {         
-        const string currentComputer = "pavilion";
-        //const string currentComputer = "thinkpad";
+        //const string currentComputer = "pavilion";
+        const string currentComputer = "thinkpad";
 
         const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
         const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
@@ -133,7 +133,7 @@ namespace SETextToSpeechMod
             while (OutputManager.RunSpeechPlayback)
             {
                 OutputManager.Run();              
-                debugger.StoreResults (OutputManager.Speeches[5].Pronunciation.WordCounter.CurrentWord, 
+                debugger.StoreResults (OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, 
                                        OutputManager.Speeches[5].Results, 
                                        OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
             }                               
@@ -169,11 +169,6 @@ namespace SETextToSpeechMod
 
         public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
         {
-if (currentWord == "STATION")
-{
-    ;
-}
-
             if (currentWord != " ")
             {
                 List <string> newReference = new List <string> (phonemes);                
@@ -223,10 +218,7 @@ if (currentWord == "STATION")
         }
 
         public void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
-        {                 
-int test1 = adjacentKeys.Count;
-int test2 = resultKeys.Count;  
-                              
+        {                                               
             string[] previousReadings = File.ReadAllLines (resultsFile);   
             previousReadings = previousReadings[1].Split(' '); 
    
