@@ -5,15 +5,10 @@ using System.Collections.Generic;
 namespace SETextToSpeechMod
 {
     public class Pronunciation : StateResetTemplate
-    {        
-        const int NEW_WORD = 0;
-        const int NO_MATCH = -2; 
-        const int LAST_LETTER = -3;
-        const int MAX_EXTENSION_SIZE = 5; 
-       
+    {               
         string[] dictionaryMatch;
         string surroundingPhrase;
-        List <string> currentResults = new List <string>(); 
+        List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!
 
         public bool UsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
@@ -41,79 +36,76 @@ namespace SETextToSpeechMod
         //first searches the ditionary, then tries the secondary pronunciation if no match found.
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
-            currentResults.Clear();   
-            WordCounter.CheckNextLetter ();            
+            currentResults.Clear();            
+            WordCounter.IncrementToNextLetter(); //Incrementing the WordCounter must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis. 
 
-            if (WordCounter.CurrentWord != " ")
+if (WordCounter.CurrentWord == "GLADOS")
+{
+    ;
+}
+
+            if (WordCounter.CurrentWord != WordCounter.SPACE)
             {
-                if (WordCounter.LetterIndex == NEW_WORD)
+                if (WordCounter.LetterIndex == WordCounter.NEW_WORD)
                 {                    
                     dictionaryMatch = null;
                     UsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordCounter.CurrentWord, out dictionaryMatch);
 
                     if (UsedDictionary)
                     {
-                        currentResults = TakeFromDictionary (true);
+                        TakeFromDictionary();
                     }
             
                     else
                     {
-                        currentResults = AdjacentEvaluation (sentence, letterIndex);
+                        AdjacentEvaluation (sentence, letterIndex);
                     }
                 }
 
                 else if (UsedDictionary == true)
                 {
-                    currentResults = TakeFromDictionary (false);
+                    TakeFromDictionary();
                 }
 
                 else
                 {
-                    currentResults = AdjacentEvaluation (sentence, letterIndex);
+                    AdjacentEvaluation (sentence, letterIndex);
                 }
             }
 
             else
             {
-                currentResults.Insert (0, " "); //avoids setting WordCounter.LetterIndex in this scenario since an empty space cant reset it when needed.
-            }
+                currentResults.Add (WordCounter.SPACE); //avoids setting WordCounter.LetterIndex in this scenario since an empty space cant reset it when needed.
+            }      
             return currentResults;
         }
 
-        List <string> TakeFromDictionary (bool isNewWord)
+        private void TakeFromDictionary()
         {
-            List <string> output = new List <string>();
-
-            if (WordCounter.DumpRemainingLetters == false)
+            switch (WordCounter.DumpRemainingLetters)
             {
-                string extract = dictionaryMatch[WordCounter.LetterIndex];
-                output.Insert (0, extract);
-            }
-                
-            else
-            {   
-                int counter = 0;
+                case false:
+                    string extract = dictionaryMatch[WordCounter.LetterIndex];
+                    currentResults.Add (extract);
+                    break;
 
-                for (int i = WordCounter.LetterIndex; i < dictionaryMatch.Length; i++)
-                {                        
-                    output.Insert (output.Count - 1, dictionaryMatch[WordCounter.LetterIndex]);
-                    counter++;
-                    i++;
-                }
-            }                
-            return output;
+                case true:
+                    for (int i = WordCounter.LetterIndex; i < dictionaryMatch.Length; i++)
+                    {                        
+                        currentResults.Add (dictionaryMatch[WordCounter.LetterIndex]);
+                    }
+                    break;
+            }           
         }
 
         /*
         AdjacentEvaluation is more efficient but its a complicated mess. catches anything not in the dictionary.
         pronunciation reference: http://www.englishleap.com/other-resources/learn-english-pronunciation
         */
-        List <string> AdjacentEvaluation (string sentence, int letterIndex)
+        private void AdjacentEvaluation (string sentence, int letterIndex)
         {
             //const string VOWELS = "AEIOU";
             const string CONSONANTS = "BCDFGHJKLMNPQRSTVWXYZ";
-
-            List <string> output = new List <string>();
             string primary = "";
             string secondary = "";
 
@@ -1009,9 +1001,8 @@ namespace SETextToSpeechMod
                     break;
 #endregion case Z
             }            
-            output.Insert (0, primary);
-            output.Insert (1, secondary);
-            return output;
+            currentResults.Add (primary);
+            currentResults.Add (secondary);
         }
 
         //helps cut down on text needed and is easier to understand

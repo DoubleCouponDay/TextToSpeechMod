@@ -143,8 +143,7 @@ namespace SETextToSpeechMod
         public string RollOutAdjacentWords()
         {
             string rolledOut = "";                
-
-            //removing row markers
+            
             for (int i = 0; i < emptiesRemoved.Count; i++) 
             {                    
                 string[] currentAdjacentValue = emptiesRemoved[i] as string[];
@@ -170,10 +169,10 @@ namespace SETextToSpeechMod
 
         public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
         {
-            if (currentWord == "GLADOS")
-            {
-                ;
-            }
+if (currentWord == "GLADOS")
+{
+    ;
+}
 
             if (currentWord != " ")
             {

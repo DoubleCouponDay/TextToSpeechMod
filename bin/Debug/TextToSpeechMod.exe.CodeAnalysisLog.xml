@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#.cctor()" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="InitializeValueTypeStaticFieldsInline" Category="Microsoft.Usage" CheckId="CA2207" Status="Active" Created="2016-11-30 02:34:13Z" FixCategory="NonBreaking">
+            <Message TypeName="InitializeValueTypeStaticFieldsInline" Category="Microsoft.Usage" CheckId="CA2207" Status="Active" Created="2016-12-10 04:59:47Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalError" Path="C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod" File="OutputManager.cs" Line="163">Initialize all static fields in 'POSSIBLE_OUTPUTS' when those fields are declared and remove the explicit static constructor.</Issue>
             </Message>
            </Messages>
@@ -23,7 +23,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-11-30 02:34:13Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2016-12-10 04:59:47Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod" File="SentenceFactory.cs" Line="59">'SentenceFactory.SentenceFactory()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SentenceFactory..ctor()&#xD;&#xA;SentenceFactory.get_largeIntonationPatterns():Int32[][]</Issue>
              <Issue Certainty="95" Level="CriticalWarning" Path="C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod" File="SentenceFactory.cs" Line="59">'SentenceFactory.SentenceFactory()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SentenceFactory..ctor()&#xD;&#xA;SentenceFactory.get_largeSize():Int32</Issue>
              <Issue Certainty="95" Level="CriticalWarning" Path="C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod" File="SentenceFactory.cs" Line="59">'SentenceFactory.SentenceFactory()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SentenceFactory..ctor()&#xD;&#xA;SentenceFactory.get_mediumIntonationPatterns():Int32[][]</Issue>

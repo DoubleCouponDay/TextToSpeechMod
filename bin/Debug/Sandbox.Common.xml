@@ -4,6 +4,12 @@
         <name>Sandbox.Common</name>
     </assembly>
     <members>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyTerminalBlock.CustomData">
+            <summary>
+            Gets or sets the Custom Data string.
+            NOTE: Only use this for user input. For storing large mod configs, create your own MyModStorageComponent
+            </summary>
+        </member>
         <member name="M:Sandbox.ModAPI.IMyTerminalBlock.RefreshCustomInfo">
             <summary>
             Raises AppendingCustomInfo so every subscriber can append custom info.

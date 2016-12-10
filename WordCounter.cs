@@ -2,24 +2,38 @@
 {
     public class WordCounter : StateResetTemplate
     {                  
-        int wordsIndex;
-        string[] words;
+        public const string EMPTY = "";
+        public const string SPACE = " ";
+        public const int NEW_WORD = 0;
 
         public bool DumpRemainingLetters {get; private set;}
         public string CurrentWord {get; private set;}
         public int LetterIndex { get; private set; }
 
+        int wordsIndex;
+        string[] words;
+        bool giveNewWordGracePeriod;
+
         public void FactoryReset (string inputSentence)
         {
             words = inputSentence.Split (' ');
             DumpRemainingLetters = false;                
-            CurrentWord = "";
-            wordsIndex = 0;         
-            LetterIndex = 0;
+            giveNewWordGracePeriod = true;
+            wordsIndex = NEW_WORD;         
+            LetterIndex = NEW_WORD;            
+
+            if (words[0] == EMPTY)
+            {
+                CurrentWord = SPACE; //in case the sentence cant be split.
+            }
+
+            else
+            {
+                CurrentWord = words[wordsIndex];
+            }            
         }
-        
-        //wordcounter 
-        public void CheckNextLetter()
+
+        public void IncrementToNextLetter()
         { 
             if (wordsIndex < words.Length)
             {
@@ -30,23 +44,28 @@
                 
                 if (LetterIndex < words[wordsIndex].Length)
                 {
-                    LetterIndex++;
-                    CurrentWord = words[wordsIndex];
+                    switch (giveNewWordGracePeriod)
+                    {
+                        case false:
+                            LetterIndex++;                            
+                            break;
+
+                        case true:
+                            giveNewWordGracePeriod = false;
+                            break;
+                    }         
+                    CurrentWord = words[wordsIndex];      
                 }
 
                 else
                 {
-                    DumpRemainingLetters = false;
-                    wordsIndex++;
-                    LetterIndex = 0;
-                    CurrentWord = " ";                  
+                    LetterIndex = NEW_WORD;                                                   
+                    CurrentWord = SPACE;   
+                    DumpRemainingLetters = false;   
+                    giveNewWordGracePeriod = true;               
+                    wordsIndex++;      
                 }
-            }    
-            
-            else
-            {
-                CurrentWord = "";
-            }   
+            }     
         }
     }
 }

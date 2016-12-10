@@ -6,9 +6,8 @@ BROKEN WORDS
 
 TO DO
 ================//
++ debugger adjacent keys is different size than resultkeys?
 + debugger doesnt know that a dictionary word was used?
-+ wow whoa all theadjacent words are broken :]
-+ pronunciation is fucked and dictionarymatch is prefilled sometimes.
 + add muting options
 + review all the new algorithms
 + debug
