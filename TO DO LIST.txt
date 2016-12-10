@@ -6,6 +6,7 @@ BROKEN WORDS
 
 TO DO
 ================//
++ word counter and letter index out not synchronised.
 + debugger adjacent keys is different size than resultkeys?
 + debugger doesnt know that a dictionary word was used?
 + add muting options

@@ -169,7 +169,7 @@ namespace SETextToSpeechMod
 
         public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
         {
-if (currentWord == "GLADOS")
+if (currentWord == "STATION")
 {
     ;
 }
@@ -243,7 +243,7 @@ int test2 = resultKeys.Count;
             int errorCount = 0;
             int UsageCount = 0;
 
-            IEnumerator adjacentIndex = adjacentKeys.GetEnumerator();
+            IEnumerator adjacentIndex = adjacentKeys.GetEnumerator(); //assumes both collections will always be the same size.
             IEnumerator resultsIndex = resultKeys.GetEnumerator();
             Process[] processes;
 

@@ -39,7 +39,7 @@ namespace SETextToSpeechMod
             currentResults.Clear();            
             WordCounter.IncrementToNextLetter(); //Incrementing the WordCounter must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis. 
 
-if (WordCounter.CurrentWord == "GLADOS")
+if (WordCounter.CurrentWord == "STATION")
 {
     ;
 }
