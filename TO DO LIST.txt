@@ -6,7 +6,7 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ add muting options
++ test muting options
 
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
@@ -21,9 +21,9 @@ TO DO
 
 + make a new block with a sound emitter entity. this requires an instance of outputmanager and soundplayer!
 
-+ find out if you can move entity with mouse input
++ move sound player with VRage.Input.MyInput.Static? MyAPIGateway.Input.GetRotation()?
 
-+ test everything
++ read the log for PrettyScaryDictionary crash?
 
 + make a showcase video 
 

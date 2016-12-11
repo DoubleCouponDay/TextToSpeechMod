@@ -12,13 +12,27 @@ namespace SETextToSpeechMod
 {
     static class SoundPlayer //A stateless class equip to handle sound emitting requests and anything associated.
     {
-        const float DEFAULT_VOLUME = 0.6f;
         const int CHANCE_OF_CLANG = 10000; //cannot be zero
         const string BONK = "BONK";
         const string SPACE = "SPACE";       
 
         static MyEntity3DSoundEmitter TTSEmitter;
         static Random numberGenerator = new Random();
+
+        public static float TTSVolume
+        {
+            get { return volume; }
+
+            set
+            {
+                if (value >= 0.0f &&
+                    value <= 1.0f)
+                {
+                    volume = value;
+                }
+            }
+        }
+        static float volume = 0.6f;
 
         public static void InitialiseEmitter() //i tested with a constructor instead but it doesnt seem to work with the game?
         {
@@ -27,7 +41,7 @@ namespace SETextToSpeechMod
             TTSEmitter.CustomMaxDistance = 500.0f; //since emitter position updates every interval, the distance should be large.
             TTSEmitter.SourceChannels = 1;
             TTSEmitter.Force3D = true;
-            TTSEmitter.CustomVolume = DEFAULT_VOLUME;
+            TTSEmitter.CustomVolume = volume;
         }
 
         public static void UpdatePosition()

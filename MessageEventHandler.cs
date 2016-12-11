@@ -35,24 +35,36 @@ namespace SETextToSpeechMod
         }
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
-        {        
+        {                    
             string noEscapes = string.Format (@"{0}", messageText);
             string fixedCase = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
+            string[] choppedCommands = fixedCase.Split (' ');
 
-            switch (fixedCase)
+            if (choppedCommands.Length >= COMMANDS.CONVENTIONAL_WORD_LIMIT)
             {
-                case "[ MAREK":
-                    OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.MarekType;
-                    break;
+                switch (choppedCommands[0] + " " + choppedCommands[1])
+                {
+                    case COMMANDS.CHANGE_VOICE_TO_MAREK:
+                        OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.MarekType;
+                        break;
 
-                case "[ JOHN MADDEN":
-                    OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.HawkingType;
-                    break;
+                    case COMMANDS.CHANGE_VOICE_TO_HAWKING:
+                        OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.HawkingType;
+                        break;
 
-                case "[ GLADOS":
-                    OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.GLADOSType;
-                    break;
-            }      
+                    case COMMANDS.CHANGE_VOICE_TO_GLADOS:
+                        OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.GLADOSType;
+                        break;
+
+                    case COMMANDS.MUTE_PLAYER:
+                        AttendanceManager.ChangeMuteStatusOfPlayer (choppedCommands[2], true);
+                        break;
+
+                    case COMMANDS.UNMUTE_PLAYER:
+                        AttendanceManager.ChangeMuteStatusOfPlayer (choppedCommands[2], false);
+                        break;
+                }
+            }
             string signatureBuild = OutputManager.LocalPlayersVoice.ToString();
             int leftoverSpace = POSSIBLE_OUTPUTS.AutoSignatureSize - OutputManager.LocalPlayersVoice.ToString().Length;
 
@@ -65,7 +77,10 @@ namespace SETextToSpeechMod
 
             for (int i = 0; i < AttendanceManager.Players.Count; i++)
             {                                       
-                MyAPIGateway.Multiplayer.SendMessageTo (packet_ID, bytes, AttendanceManager.Players[i].SteamUserId, true); //everyone will get this trigger including you.
+                if (AttendanceManager.PlayersMuteStatuses[AttendanceManager.Players[i].DisplayName] == false)
+                {
+                    MyAPIGateway.Multiplayer.SendMessageTo (packet_ID, bytes, AttendanceManager.Players[i].SteamUserId, true); //everyone will get this trigger including you.
+                }                
             }
         }
 
@@ -109,6 +124,17 @@ namespace SETextToSpeechMod
             MyAPIGateway.Utilities.MessageEntered -= OnMessageEntered;
             MyAPIGateway.Multiplayer.UnregisterMessageHandler (packet_ID, OnReceivedPacket);            
         }
+    }
+
+    public struct COMMANDS
+    {
+        public const string CHANGE_VOICE_TO_MAREK = "[ MAREK";
+        public const string CHANGE_VOICE_TO_HAWKING = "[ MADDEN";
+        public const string CHANGE_VOICE_TO_GLADOS = "[ GLADOS";
+        public const string MUTE_PLAYER = "[ MUTE ";
+        public const string UNMUTE_PLAYER = "[ UNMUTE ";
+
+        public const int CONVENTIONAL_WORD_LIMIT = 3;
     }
 }
 
