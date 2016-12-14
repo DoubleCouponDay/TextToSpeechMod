@@ -1,6 +1,6 @@
 Total Words: 203
 Total Incorrect: 1
-Previous Incorrect: 0
+Previous Incorrect: 1
 From Dictionary: 0
 Lowercase Keys: 0
 Wrong Format Matchers: 0

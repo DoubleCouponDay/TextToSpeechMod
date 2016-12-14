@@ -6,6 +6,8 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+using VRage.Game.ModAPI;
+
 namespace SETextToSpeechMod
 {
     class OptionalDebugger
@@ -112,15 +114,14 @@ namespace SETextToSpeechMod
         static void Main()
         {
             OptionalDebugger debugger = new OptionalDebugger();
-            MessageEventHandler entryPoint = new MessageEventHandler();
+            ChatManager entryPoint = new ChatManager (true);
             Encoding encode = Encoding.Unicode;
-
-            OutputManager.Debugging = true;
-
-            string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.
-            string upperCase = testString.ToUpper();                     
-            string signatureBuild = OutputManager.LocalPlayersVoice.ToString();
-            int leftoverSpace = POSSIBLE_OUTPUTS.AutoSignatureSize - OutputManager.LocalPlayersVoice.ToString().Length;
+            AttendanceManager.Debugging = true;                        
+            entryPoint.Initialise();
+            string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.            
+            string upperCase = testString.ToUpper();   
+            string signatureBuild = entryPoint.OutputManager.LocalPlayersVoice.ToString();
+            int leftoverSpace = POSSIBLE_OUTPUTS.AutoSignatureSize - entryPoint.OutputManager.LocalPlayersVoice.ToString().Length;
 
             for (int i = 0; i < leftoverSpace; i++)
             {
@@ -130,14 +131,16 @@ namespace SETextToSpeechMod
             byte[] packet = encode.GetBytes (packaged);
             entryPoint.OnReceivedPacket (packet);
 
-            while (OutputManager.RunSpeechPlayback)
+            
+
+            while (entryPoint.OutputManager.RunSpeechPlayback)
             {
-                OutputManager.Run();              
-                debugger.StoreResults (OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, 
-                                       OutputManager.Speeches[5].Results, 
-                                       OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
+                entryPoint.UpdateBeforeSimulation();              
+                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, 
+                                       entryPoint.OutputManager.Speeches[5].Results, 
+                                       entryPoint.OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
             }                               
-            debugger.PrintResults (OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
+            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
         }
 
         public string RollOutAdjacentWords()

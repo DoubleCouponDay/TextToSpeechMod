@@ -175,10 +175,11 @@
     <Compile Include="GLADOSVoice.cs" />
     <Compile Include="HawkingVoice.cs" />
     <Compile Include="OutputManager.cs" />
+    <Compile Include="SpeechBlock.cs" />
     <Compile Include="VoiceTemplate.cs" />
     <Compile Include="MarekVoice.cs" />
     <Compile Include="PrettyScaryDictionary.cs" />
-    <Compile Include="MessageEventHandler.cs" />
+    <Compile Include="ChatManager.cs" />
     <Compile Include="Pronunciation.cs" />
     <Compile Include="WordIsolator.cs" />
     <Compile Include="SentenceFactory.cs" />

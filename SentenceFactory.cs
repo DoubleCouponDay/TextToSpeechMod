@@ -58,15 +58,17 @@ namespace SETextToSpeechMod
         public Pronunciation Pronunciation { get; private set; }   
         protected List <TimelineClip> timeline = new List <TimelineClip>();      
         protected Random rng = new Random();
+        private SoundPlayer soundPlayerRef; 
 
-        public SentenceFactory()
+        public SentenceFactory (SoundPlayer inputEmitter)
         {            
             Loading = false;
             FinishedPlaying = true;
             Pronunciation = new Pronunciation();
             resultsField = new List <string>();
-            timeline.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;
-                                                           //also i dont expect there to ever be more phonemes than letters. It will only resize in rare, designer created, occasions.
+            timeline.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;            
+            soundPlayerRef = inputEmitter; //the reason im using a pointer is there is no need for a SoundPlayer per SentenceFactory.
+                                                             
             allSizes = new int[]
             {
                 smallSize,
@@ -101,7 +103,7 @@ namespace SETextToSpeechMod
             resultsField.Clear();
 
             Pronunciation.FactoryReset();
-            timeline.Clear();
+            timeline.Clear();            
         }
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
@@ -127,7 +129,7 @@ namespace SETextToSpeechMod
 
             else 
             {
-                FinishedPlaying = SoundPlayer.PlaySentence (timeline, currentTick);
+                FinishedPlaying = soundPlayerRef.PlaySentence (timeline, currentTick);
                 currentTick++;
             }    
         } 

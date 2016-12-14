@@ -28,6 +28,6 @@
             new int[] { 0, 1, 2, },          
         };
 
-        public GLADOSVoice() : base(){}
+        public GLADOSVoice (SoundPlayer inputEmitter) : base (inputEmitter){}
     }
 }

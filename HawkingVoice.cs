@@ -32,7 +32,7 @@
         };
         string sentenceEndPhonemeID = "-E";
 
-        public HawkingVoice() : base(){}
+        public HawkingVoice (SoundPlayer inputEmitter) : base (inputEmitter){}
 
         //the point of extending this method is to create a special kind of phoneme at the end of every sentence.
         protected override void AddIntonations (int timelineIndex)
