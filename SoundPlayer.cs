@@ -23,10 +23,12 @@ namespace SETextToSpeechMod
         private float volume = 0.6f;
             
         private bool debugging;
+        private bool playInRealisticMode;
 
-        public SoundPlayer (bool isDebugging)
+        public SoundPlayer (bool isDebugging, bool inputRealisticModeOption)
         {
-            debugging = isDebugging;
+            this.debugging = isDebugging;
+            this.playInRealisticMode = inputRealisticModeOption;                 
             Initialise();
         }
 
@@ -38,7 +40,7 @@ namespace SETextToSpeechMod
                 TTSEmitter = new MyEntity3DSoundEmitter (emitterEntity as MyEntity);
                 TTSEmitter.CustomMaxDistance = 500.0f; //since emitter position updates every interval, the distance should be large.
                 TTSEmitter.SourceChannels = 1;
-                TTSEmitter.Force3D = true;
+                TTSEmitter.Force2D = true;
                 TTSEmitter.CustomVolume = volume;
             }
         }
@@ -107,8 +109,8 @@ namespace SETextToSpeechMod
         {
             if (debugging == false)
             {
-                MySoundPair sound = new MySoundPair (clip);
-                TTSEmitter.PlaySound (sound, false, false, false, true, false); //this overload enables sound in realistic mode.
+MySoundPair sound = new MySoundPair ("AEE-G 0");
+                TTSEmitter.PlaySound (sound, false, false, false, playInRealisticMode, false); //this overload enables sound in realistic mode.
             }
         }
     }

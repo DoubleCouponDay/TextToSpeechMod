@@ -6,20 +6,28 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ review changes for bugs created by latest refactoring
-+ figure out how to implement new buttons and a text box
++ push to github
++ start using pavilion to get stereo test working ie breakpoints everywhere
+
++ adjust madden phonemes pitch using melodyne trial
+
++ think of good object builder for block
 
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
 + use melodyne free trial to create pitch for those two? how many notes?
 + record exclamation point endings and question mark endings
 + publish
++ sync with pavilion
 
 + benchmark struct performance
 + test voices and tune them up.
 + fully implement and study intonation selecting algorithm
 
-+ move sound player with VRage.Input.MyInput.Static? MyAPIGateway.Input.GetRotation()?
++ test sounds are 2D?
+
++ block should always play in realistic mode.
++ figure out how to implement new buttons and a text box.
 
 + read the log for PrettyScaryDictionary crash?
 

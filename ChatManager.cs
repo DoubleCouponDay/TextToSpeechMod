@@ -35,7 +35,7 @@ namespace SETextToSpeechMod
         public void Initialise() //this wouldnt work as a constructor because im guessing some assets arent available during load time.
         {
             initialised = true;   
-            soundPlayer = new SoundPlayer (debugging);        
+            soundPlayer = new SoundPlayer (debugging, true);        
             OutputManager = new OutputManager (soundPlayer, debugging);    
 
             if (debugging == false)

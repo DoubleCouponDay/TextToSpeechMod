@@ -354,3 +354,7 @@ C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\System.Reflection.Metadata.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\SpaceEngineers.ObjectBuilders.XmlSerializers.dll
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\SE TextToSpeechMod.csprojResolveAssemblyReference.cache
+C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Newtonsoft.Json.dll
+C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Microsoft.IdentityModel.Logging.dll
