@@ -1,0 +1,10 @@
+MOD_ERROR: Text To Speech mod, in file: 
+Compilation of C:\Users\power\AppData\Roaming\SpaceEngineers\Mods\Text To Speech mod_Folder required here failed:
+MOD_ERROR: Text To Speech mod, in file: 
+C:\Users\power\AppData\Roaming\SpaceEngineers\Mods\Text To Speech mod\Data\Scripts\Folder required here\ChatManager.cs(159,47): Error: The type or member 'Type Type.GetType(string typeName)' is prohibited
+MOD_ERROR: Text To Speech mod, in file: 
+C:\Users\power\AppData\Roaming\SpaceEngineers\Mods\Text To Speech mod\Data\Scripts\Folder required here\OutputManager.cs(124,51): Error: The type or member 'bool Type.Equals(Type o)' is prohibited
+MOD_ERROR: Text To Speech mod, in file: 
+C:\Users\power\AppData\Roaming\SpaceEngineers\Mods\Text To Speech mod\Data\Scripts\Folder required here\OutputManager.cs(79,39): Error: The type or member 'Activator' is prohibited
+MOD_ERROR: Text To Speech mod, in file: 
+C:\Users\power\AppData\Roaming\SpaceEngineers\Mods\Text To Speech mod\Data\Scripts\Folder required here\OutputManager.cs(79,49): Error: The type or member 'object Activator.CreateInstance(Type type, params object[] args)' is prohibited

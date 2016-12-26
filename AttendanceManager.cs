@@ -5,7 +5,7 @@ using Sandbox.ModAPI;
 
 namespace SETextToSpeechMod
 {
-    static class AttendanceManager
+    public static class AttendanceManager
     {   
         private static List <IMyPlayer> playersField = new List <IMyPlayer>();      
         public static IList <IMyPlayer> Players
@@ -19,7 +19,7 @@ namespace SETextToSpeechMod
         /// <summary>
         /// CAN BE NULL
         /// </summary>
-        public static IMyPlayer LocalPlayer;
+        public static IMyPlayer LocalPlayer { get; private set; }
 
         private static Dictionary <string, bool> muteStatusesField = new Dictionary <string, bool>();
         public static IReadOnlyDictionary <string, bool> PlayersMuteStatuses

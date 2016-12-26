@@ -3,11 +3,12 @@ using System.Text; //location of encoding/decoding.
 
 using Sandbox.ModAPI; //location of MyAPIGateway.
 using VRage.Game.Components; //location of MySessionComponentBase.
+using VRage.Utils;
 
 namespace SETextToSpeechMod
 {   
     [MySessionComponentDescriptor (MyUpdateOrder.BeforeSimulation)] //adds an attribute tag telling the game to run my script.
-    class ChatManager : MySessionComponentBase 
+    public class ChatManager : MySessionComponentBase 
     {
         const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of your steam mod as packet ID
 
@@ -45,10 +46,12 @@ namespace SETextToSpeechMod
                 AttendanceManager.UpdatePlayers();            
                 MyAPIGateway.Utilities.ShowMessage ("TextToSpeechMod:", "If you find a broken word, please tell the designer.");
             }
-        }
+        } 
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
-        {                    
+        { 
+MyLog test = new MyLog();
+                                           
             string noEscapes = string.Format (@"{0}", messageText);
             string fixedCase = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
             ExecuteCommandIfValid (fixedCase);
@@ -64,6 +67,7 @@ namespace SETextToSpeechMod
 
             if (MyAPIGateway.Multiplayer.MultiplayerActive)
             {
+test.WriteLine ("PENIS");
                 for (int i = 0; i < AttendanceManager.Players.Count; i++)
                 {
                     if (AttendanceManager.PlayersMuteStatuses[AttendanceManager.Players[i].DisplayName] == false)
@@ -75,6 +79,7 @@ namespace SETextToSpeechMod
 
             else
             {
+test.WriteLine ("VAGINA");
                 OnReceivedPacket (ConvertedToPacket);
             }
         }

@@ -6,13 +6,7 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ push to github
-+ start using pavilion to get stereo test working ie breakpoints everywhere
-
 + adjust madden phonemes pitch using melodyne trial
-
-+ think of good object builder for block
-
 + last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
 + use melodyne free trial to create pitch for those two? how many notes?
@@ -20,16 +14,18 @@ TO DO
 + publish
 + sync with pavilion
 
++ glados and madden sbc files
+
++ activator and type is prohibited. refactor? error dump is in documentation folder
 + benchmark struct performance
 + test voices and tune them up.
 + fully implement and study intonation selecting algorithm
 
-+ test sounds are 2D?
-
++ think of good object builder for block
 + block should always play in realistic mode.
 + figure out how to implement new buttons and a text box.
 
-+ read the log for PrettyScaryDictionary crash?
++ read the log for PrettyScaryDictionary crash
 
 + test everything
 

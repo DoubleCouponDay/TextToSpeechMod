@@ -6,14 +6,12 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using VRage.Game.ModAPI;
-
 namespace SETextToSpeechMod
 {
-    class OptionalDebugger
+    public class OptionalDebugger
     {         
-        //const string currentComputer = "pavilion";
-        const string currentComputer = "thinkpad";
+        const string currentComputer = "pavilion";
+        //const string currentComputer = "thinkpad";
 
         const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
         const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";

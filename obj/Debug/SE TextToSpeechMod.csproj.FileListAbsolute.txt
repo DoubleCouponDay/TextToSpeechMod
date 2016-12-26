@@ -358,3 +358,7 @@ C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Microsoft.IdentityModel.Tokens.dll
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Newtonsoft.Json.dll
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Microsoft.IdentityModel.Logging.dll
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Newtonsoft.Json.dll
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Microsoft.IdentityModel.Logging.dll

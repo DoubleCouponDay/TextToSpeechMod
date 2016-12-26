@@ -9,8 +9,8 @@ using System.Collections.Generic;
 
 namespace SETextToSpeechMod
 {
-    [MyEntityComponentDescriptor (typeof (MyObjectBuilder_), new string[] {"Speech Block (Small)", "Speech Block (Large)"})]
-    class SpeechBlock : MyGameLogicComponent
+    //[MyEntityComponentDescriptor (typeof (MyObjectBuilder_), new string[] {"Speech Block (Small)", "Speech Block (Large)"})]
+    public class SpeechBlock : MyGameLogicComponent
     {        
         private MyObjectBuilder_EntityBase objectbuilder;
         private SoundPlayer soundPlayer;

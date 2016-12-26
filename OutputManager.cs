@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace SETextToSpeechMod
 {
-    class OutputManager
+    public class OutputManager
     {
         public const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
