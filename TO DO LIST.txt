@@ -17,12 +17,6 @@ TO DO
 + glados and madden sbc files
 
 + activator and type is prohibited. refactor? error dump is in documentation folder
-
-class MyFactory<T> where T: class, new() {
-    public T Create() {
-        return new T();
-    }
-}
 + benchmark struct performance
 + test voices and tune them up.
 + fully implement and study intonation selecting algorithm

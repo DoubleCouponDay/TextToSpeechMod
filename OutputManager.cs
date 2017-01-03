@@ -64,8 +64,21 @@ namespace SETextToSpeechMod
             for (int i = 0; i < POSSIBLE_OUTPUTS.Collection.Count; i++)
             {
                 for (int k = 0; k < TOTAL_SIMULTANEOUS_SPEECHES; k++)
-                {     
-                    speechesField.Add (Activator.CreateInstance (POSSIBLE_OUTPUTS.Collection[i], soundPlayerRef) as SentenceFactory);
+                {
+                    if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.MarekType)
+                    {
+                        Speeches.Add (new MarekVoice (soundPlayerRef));                                       
+                    }
+
+                    else if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.HawkingType)
+                    {
+                        Speeches.Add (new HawkingVoice (soundPlayerRef));                                       
+                    }
+
+                    else if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.GLADOSType)
+                    {
+                        Speeches.Add (new GLADOSVoice (soundPlayerRef));                                       
+                    }   
                 }                
             }
         }
