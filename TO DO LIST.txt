@@ -12,11 +12,17 @@ TO DO
 + use melodyne free trial to create pitch for those two? how many notes?
 + record exclamation point endings and question mark endings
 + publish
-+ sync with pavilion
++ sync with pavilion 
 
 + glados and madden sbc files
 
 + activator and type is prohibited. refactor? error dump is in documentation folder
+
+class MyFactory<T> where T: class, new() {
+    public T Create() {
+        return new T();
+    }
+}
 + benchmark struct performance
 + test voices and tune them up.
 + fully implement and study intonation selecting algorithm
