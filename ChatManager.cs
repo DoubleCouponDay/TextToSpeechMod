@@ -49,9 +49,7 @@ namespace SETextToSpeechMod
         } 
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
-        { 
-MyLog test = new MyLog();
-                                           
+        {                                            
             string noEscapes = string.Format (@"{0}", messageText);
             string fixedCase = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
             ExecuteCommandIfValid (fixedCase);
@@ -67,7 +65,6 @@ MyLog test = new MyLog();
 
             if (MyAPIGateway.Multiplayer.MultiplayerActive)
             {
-test.WriteLine ("PENIS");
                 for (int i = 0; i < AttendanceManager.Players.Count; i++)
                 {
                     if (AttendanceManager.PlayersMuteStatuses[AttendanceManager.Players[i].DisplayName] == false)
@@ -79,7 +76,6 @@ test.WriteLine ("PENIS");
 
             else
             {
-test.WriteLine ("VAGINA");
                 OnReceivedPacket (ConvertedToPacket);
             }
         }
@@ -146,8 +142,7 @@ test.WriteLine ("VAGINA");
 
             else
             {
-                Type signatureConverted = Type.GetType (signature);
-                OutputManager.CreateNewSpeech (signatureConverted, decoded);
+                OutputManager.CreateNewSpeech (signature, decoded);
             }   
         }
 

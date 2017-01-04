@@ -14,9 +14,6 @@ namespace SETextToSpeechMod
         int timer;
         int[] typeIndexes;        
 
-        /// <summary>
-        /// The only accepted types are contained in public POSSIBLE_OUTPUTS 
-        /// </summary>
         public Type LocalPlayersVoice
         {
             get
@@ -26,10 +23,7 @@ namespace SETextToSpeechMod
 
             set
             {
-                if (GetOutputTypesIndex (value) != DOESNT_EXIST)
-                {
-                    localVoiceField = value;
-                }
+                localVoiceField = value;
             }
         }
         Type localVoiceField = POSSIBLE_OUTPUTS.HawkingType;      
@@ -67,18 +61,18 @@ namespace SETextToSpeechMod
                 {
                     if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.MarekType)
                     {
-                        Speeches.Add (new MarekVoice (soundPlayerRef));                                       
+                        speechesField.Add (new MarekVoice (soundPlayerRef));                                       
                     }
 
                     else if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.HawkingType)
                     {
-                        Speeches.Add (new HawkingVoice (soundPlayerRef));                                       
+                        speechesField.Add (new HawkingVoice (soundPlayerRef));                                       
                     }
 
                     else if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.GLADOSType)
                     {
-                        Speeches.Add (new GLADOSVoice (soundPlayerRef));                                       
-                    }   
+                        speechesField.Add (new GLADOSVoice (soundPlayerRef));                                       
+                    }                      
                 }                
             }
         }
@@ -117,13 +111,13 @@ namespace SETextToSpeechMod
         /// </summary>
         /// <param name="scrutinizedType"></param>
         /// <returns></returns>
-        private int GetOutputTypesIndex (Type scrutinizedType)
+        private int GetOutputTypesIndex (string scrutinizedTypeName)
         {
             int outcome = DOESNT_EXIST;
 
             for (int i = 0; i < POSSIBLE_OUTPUTS.Collection.Count; i++)
             {
-                if (POSSIBLE_OUTPUTS.Collection[i].Equals (scrutinizedType))
+                if (POSSIBLE_OUTPUTS.Collection[i].FullName == scrutinizedTypeName)
                 {
                     outcome = i;
                 }
@@ -136,9 +130,9 @@ namespace SETextToSpeechMod
         /// </summary>
         /// <param name="validVoiceType"></param>
         /// <param name="sentence"></param>
-        public void CreateNewSpeech (Type validVoiceType, string inputSentence)
+        public void CreateNewSpeech (string validVoiceTypeName, string inputSentence)
         {
-            int currentTypeIndex = GetOutputTypesIndex (validVoiceType);
+            int currentTypeIndex = GetOutputTypesIndex (validVoiceTypeName);
 
             if (currentTypeIndex != DOESNT_EXIST)
             {
@@ -158,7 +152,7 @@ namespace SETextToSpeechMod
 
     public struct POSSIBLE_OUTPUTS
     {        
-        public static Type MarekType { get; private set; }
+        public static Type MarekType { get; }
         public static Type HawkingType { get; }
         public static Type GLADOSType { get; }
         
@@ -191,4 +185,12 @@ namespace SETextToSpeechMod
             }
         }
     } 
+
+    public class GenericClass <T> where T : SentenceFactory, new()
+    {
+        public T Create()
+        {
+            return new T();
+        }
+    }
 }

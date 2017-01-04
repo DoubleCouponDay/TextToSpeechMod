@@ -210,6 +210,21 @@
             Indicates whether dampeners are currently enabled.
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.MoveIndicator">
+            <summary>
+            Directional input from user/autopilot. Values can be very large with high controller sensitivity
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.RotationIndicator">
+            <summary>
+            Pitch, yaw input from user/autopilot. Values can be very large with high controller sensitivity
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.RollIndicator">
+            <summary>
+            Roll input from user/autopilot. Values can be very large with high controller sensitivity
+            </summary>
+        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.GetFilterList(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})">
             <summary>
             Gets the items currently being allowed through or rejected, depending on the <see cref="P:Sandbox.ModAPI.Ingame.IMyConveyorSorter.Mode"/>.

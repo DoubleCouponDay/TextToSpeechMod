@@ -11,12 +11,13 @@ TO DO
 + some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
 + use melodyne free trial to create pitch for those two? how many notes?
 + record exclamation point endings and question mark endings
++ convert all to .XWM
 + publish
 + sync with pavilion 
 
 + glados and madden sbc files
 
-+ activator and type is prohibited. refactor? error dump is in documentation folder
++ test the whitelist workaround was successful
 + benchmark struct performance
 + test voices and tune them up.
 + fully implement and study intonation selecting algorithm
@@ -32,3 +33,5 @@ TO DO
 + make a showcase video 
 
 + FINISH
+
++ turret evasion script depends on thrusters with name. replace with block orientation

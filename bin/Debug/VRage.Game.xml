@@ -7689,9 +7689,19 @@
             If you wish to receive Keen Software House newsletter, please provide your email.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCampaignBeforeExit">
+            <summary>
+            Are you sure you want to quit? All progress from the last checkpoint will be lost.
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.ScreenGraphicsOptions_ModelQuality">
             <summary>
             Model quality
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.IncompatibleDataNotification">
+            <summary>
+            Server has incompatible game data.
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
