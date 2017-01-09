@@ -6,16 +6,36 @@ BROKEN WORDS
 
 TO DO
 ================//
++ rerecord ERR-E
++ record exclamations
++ record questions
++ re replace all no pitch phonemes
++ share the new no pitch files and change their names using BulkFileRenamer
++ replace hawking work folder
+
 + adjust madden phonemes pitch using melodyne trial
-+ last i remember there were a bunch of hawking sentence ending phonemes that couldnt adjust pitch. can i get away with no pitch gradients for sentence endings?
-+ some of my phonemes are way to short. maybe there is another program i could use to get tempo adjustments?
-+ use melodyne free trial to create pitch for those two? how many notes?
-+ record exclamation point endings and question mark endings
-+ convert all to .XWM
-+ publish
+    adjust range according to lowest / highest in common depending on how good they sound
+
++ replace hawking work folder
++ convert hawking and glados to .XWM .... if it asks you to override an audio file you know you accidentally pitch shifted a non pitch clip
 + sync with pavilion 
++ install powershell and write publishing script
++ put mod compiling code in the script 
+    https://github.com/Phoenix84/SEWorkshopTool
+
+    (x86)\Steam\steamapps\common\SpaceEngineers\Bin64\SEWorkshopTool.exe" --upload --compile --mods ShipyardMod
+    @echo off
+    pause
+
++ publish new xwm files including new textures
+
++ record exclamation point endings and question mark endings
++ sync with pavilion then publish
 
 + glados and madden sbc files
++ add marek audio and sbc files to mirrored build again
++ publish
++ test to see if game accepts them
 
 + test the whitelist workaround was successful
 + benchmark struct performance
@@ -23,15 +43,13 @@ TO DO
 + fully implement and study intonation selecting algorithm
 
 + think of good object builder for block
-+ block should always play in realistic mode.
++ block should not play in realistic mode.
 + figure out how to implement new buttons and a text box.
 
-+ read the log for PrettyScaryDictionary crash
++ read the log for PrettyScaryDictionary crash. feasible to use?
 
 + test everything
 
 + make a showcase video 
 
 + FINISH
-
-+ turret evasion script depends on thrusters with name. replace with block orientation
