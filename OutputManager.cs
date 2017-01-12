@@ -185,12 +185,4 @@ namespace SETextToSpeechMod
             }
         }
     } 
-
-    public class GenericClass <T> where T : SentenceFactory, new()
-    {
-        public T Create()
-        {
-            return new T();
-        }
-    }
 }

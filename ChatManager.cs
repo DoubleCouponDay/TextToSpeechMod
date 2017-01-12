@@ -82,9 +82,9 @@ namespace SETextToSpeechMod
 
         private void ExecuteCommandIfValid (string upperCaseSentence)
         {
-            for (int i = 0; i < COMMANDS.VOICE_COLLECTION.Length; i++)
+            for (int i = 0; i < COMMANDS.VoiceCollection.Length; i++)
             {
-                if (upperCaseSentence.Contains (COMMANDS.VOICE_COLLECTION[i]))
+                if (upperCaseSentence.Contains (COMMANDS.VoiceCollection[i]))
                 {
                     OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.Collection[i];
                     return;
@@ -176,7 +176,7 @@ namespace SETextToSpeechMod
         public const string CHANGE_VOICE_TO_HAWKING = "[ JOHN MADDEN";
         public const string CHANGE_VOICE_TO_GLADOS = "[ GLADOS";       
 
-        public static readonly string[] VOICE_COLLECTION = {
+        public static readonly string[] VoiceCollection = {
             CHANGE_VOICE_TO_MAREK,
             CHANGE_VOICE_TO_HAWKING,
             CHANGE_VOICE_TO_GLADOS,

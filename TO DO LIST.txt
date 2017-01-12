@@ -6,17 +6,10 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ rerecord ERR-E
-+ record exclamations
-+ record questions
-+ re replace all no pitch phonemes
-+ share the new no pitch files and change their names using BulkFileRenamer
-+ replace hawking work folder
-
-+ adjust madden phonemes pitch using melodyne trial
++ melodyne isnt enough. whats an alternative?
     adjust range according to lowest / highest in common depending on how good they sound
++ delete hawking folder and move phonemes folder to projects git folder. google drive sucks!
 
-+ replace hawking work folder
 + convert hawking and glados to .XWM .... if it asks you to override an audio file you know you accidentally pitch shifted a non pitch clip
 + sync with pavilion 
 + install powershell and write publishing script
@@ -38,8 +31,9 @@ TO DO
 + test to see if game accepts them
 
 + test the whitelist workaround was successful
-+ benchmark struct performance
 + test voices and tune them up.
++ test performance
++ make sure ending phonemes are seen as vowels only in the code
 + fully implement and study intonation selecting algorithm
 
 + think of good object builder for block
@@ -47,6 +41,8 @@ TO DO
 + figure out how to implement new buttons and a text box.
 
 + read the log for PrettyScaryDictionary crash. feasible to use?
+
++ basic number support.
 
 + test everything
 
