@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Model Name="LOD3">
+  <Parameter Name="Centered">false</Parameter>
+  <Parameter Name="RescaleFactor">1</Parameter>
+  <Parameter Name="RescaleToLengthInMeters">false</Parameter>
+  <Parameter Name="SpecularPower">10</Parameter>
+  <Parameter Name="SpecularShininess">0.8</Parameter>
+  <Material Name="03 - mat">
+    <Parameter Name="SpecularIntensity">1.745</Parameter>
+    <Parameter Name="SpecularPower">20</Parameter>
+    <Parameter Name="DiffuseColorX">255</Parameter>
+    <Parameter Name="DiffuseColorY">255</Parameter>
+    <Parameter Name="DiffuseColorZ">255</Parameter>
+    <Parameter Name="Technique">MESH</Parameter>
+	<Parameter Name="ColorMetalTexture">Textures\SS_TTS_cm.dds</Parameter>
+    <Parameter Name="NormalGlossTexture">Textures\SS_TTS_ng.dds</Parameter>
+    <Parameter Name="AddMapsTexture">Textures\SS_TTS_add.dds</Parameter>
+  </Material>
+ </Model>

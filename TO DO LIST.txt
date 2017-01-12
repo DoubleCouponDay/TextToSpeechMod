@@ -6,21 +6,13 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ melodyne isnt enough. whats an alternative?
-    adjust range according to lowest / highest in common depending on how good they sound
-+ delete hawking folder and move phonemes folder to projects git folder. google drive sucks!
++ figure out how to get SEWorkshopToolWorking
 
-+ convert hawking and glados to .XWM .... if it asks you to override an audio file you know you accidentally pitch shifted a non pitch clip
-+ sync with pavilion 
-+ install powershell and write publishing script
-+ put mod compiling code in the script 
     https://github.com/Phoenix84/SEWorkshopTool
 
     (x86)\Steam\steamapps\common\SpaceEngineers\Bin64\SEWorkshopTool.exe" --upload --compile --mods ShipyardMod
     @echo off
     pause
-
-+ publish new xwm files including new textures
 
 + record exclamation point endings and question mark endings
 + sync with pavilion then publish

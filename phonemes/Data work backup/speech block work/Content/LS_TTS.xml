@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Model Name="Object032">
+  <Parameter Name="Centered">false</Parameter>
+  <Parameter Name="RescaleFactor">1</Parameter>
+  <Parameter Name="RescaleToLengthInMeters">false</Parameter>
+  <Parameter Name="SpecularPower">10</Parameter>
+  <Parameter Name="SpecularShininess">0.8</Parameter>
+  <Material Name="module">
+    <Parameter Name="SpecularIntensity">1.745</Parameter>
+    <Parameter Name="SpecularPower">20</Parameter>
+    <Parameter Name="DiffuseColorX">255</Parameter>
+    <Parameter Name="DiffuseColorY">255</Parameter>
+    <Parameter Name="DiffuseColorZ">255</Parameter>
+    <Parameter Name="Technique">MESH</Parameter>
+	<Parameter Name="ColorMetalTexture">Textures\LS_TTS_cm.dds</Parameter>
+    <Parameter Name="NormalGlossTexture">Textures\LS_TTS_ng.dds</Parameter>
+    <Parameter Name="AddMapsTexture">Textures\LS_TTS_add.dds</Parameter>
+  </Material>
+  <LOD Distance="20">
+    <Model>Models\LS_TTS_LOD1</Model>
+  </LOD>
+  <LOD Distance="60">
+    <Model>Models\LS_TTS_LOD2</Model>
+  </LOD>
+  <LOD Distance="100">
+    <Model>Models\LS_TTS_LOD3</Model>
+  </LOD>
+ </Model>

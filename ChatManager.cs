@@ -1,9 +1,7 @@
-﻿using System;
-using System.Text; //location of encoding/decoding.
+﻿using System.Text; //location of encoding/decoding.
 
 using Sandbox.ModAPI; //location of MyAPIGateway.
 using VRage.Game.Components; //location of MySessionComponentBase.
-using VRage.Utils;
 
 namespace SETextToSpeechMod
 {   

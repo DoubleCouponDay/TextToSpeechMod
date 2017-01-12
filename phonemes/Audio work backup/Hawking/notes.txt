@@ -1,0 +1,59 @@
+VOICE CHARACTERISTICS
+===================
++ every sentence has a special ending phoneme
++ the three possible ending phonemes are -E, -!, -?, -[comma symbol]
++ full stop or space triggers -E
++ exclamation mark triggers -!
++ question mark triggers -?
++ spamming the same letter tends to have the pattern 3321 repeated
++ small sentences with one vowel are -! 
++ comma phonemes are the only ending type which require pitch 
++ a comma list tends to have the same phoneme except the last in the list which is a note lower
+
+RANGE IN PROGRESS
+====================
+A# 4 - A# 5
+
+BAD PITCH FILES
+===================== 
+IHH - fubar
+
+PHONEMES WITH NO PITCH
+======================
+BIH 
+CHI 
+DIH 
+FIH 
+GIH 
+HIH 
+JIH 
+KIH 
+KSS 
+MIH 
+NIH 
+PIH 
+SHI 
+SIH 
+THI 
+TIH 
+ZIH 
+
+PITCH PHONEMES
+======================
+AEE
+AHH
+AWW
+EEE
+EHH
+ERR
+EYE
+HOH
+IHH
+LIH
+OOO
+OWE
+RIH
+UHH
+VIH
+WIH
+YIH

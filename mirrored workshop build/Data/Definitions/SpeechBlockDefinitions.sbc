@@ -1,0 +1,118 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <!--xmlns:xsd="http://www.w3.org/2001/XMLSchema"> -->
+	<CubeBlocks>
+		<Definition>
+			<Id>
+				<TypeId></TypeId>
+				<SubtypeId>Speech Block (Small)</SubtypeId>
+			</Id>
+			<DisplayName>Speech Block (Small)</DisplayName>
+			<BlockPairName>Speech Block (Small)</BlockPairName>
+			<CubeSize>Small</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>			
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>0.0000111</RequiredPowerInput>
+			<BuildTimeSeconds>5</BuildTimeSeconds>
+			<DamageEffectId>214</DamageEffectId>
+			<DamagedSound>ParticleElectrical</DamagedSound>			
+			
+			<Icon>Textures\Icons\icon_SS.dds</Icon>
+			<Model>Models\SS_TTS.mwm</Model>
+			
+			<Size x="1" y="1" z="1" />	
+			<Center x="0" y="0" z="0" />
+			<MirroringZ>Y</MirroringZ>						
+			<AutorotateMode>OppositeDirections</AutorotateMode>		
+			<EdgeType>Light</EdgeType>	
+			
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true" />
+			</MountPoints>			
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\SS_TTS_CON1.mwm" />
+				<Model BuildPercentUpperBound="0.66" File="Models\SS_TTS_CON2.mwm" />
+				<Model BuildPercentUpperBound="1.00" File="Models\SS_TTS_CON3.mwm" />
+			</BuildProgressModels>			
+			<Components>
+				<Component Subtype="SteelPlate" Count="2" />
+				<Component Subtype="InteriorPlate" Count="6" />
+				<Component Subtype="Construction" Count="11" />
+				<Component Subtype="LargeTube" Count="2" />
+				<Component Subtype="Motor" Count="1" />
+				<Component Subtype="Computer" Count="4" />
+				<Component Subtype="Display" Count="1" />
+				<Component Subtype="SteelPlate" Count="1" />
+			</Components>
+			<CriticalComponent Subtype="Display" Index="0" />
+		</Definition>
+		
+		<Definition>
+			<Id>
+				<TypeId>TerminalBlock</TypeId>
+				<SubtypeId>Speech Block (Large)</SubtypeId>
+			</Id>
+			<DisplayName>Speech Block (Large)</DisplayName>
+			<BlockPairName>Speech (Large)</BlockPairName>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>			
+			<ResourceSinkGroup>Utility</ResourceSinkGroup>
+			<RequiredPowerInput>0.0000222</RequiredPowerInput>
+			<BuildTimeSeconds>6</BuildTimeSeconds>
+			<DamageEffectId>214</DamageEffectId>
+			<DamagedSound>ParticleElectrical</DamagedSound>			
+			
+			<Icon>Textures\Icons\icon_LS.dds</Icon>
+			<Model>Models\LS_TTS.mwm</Model>
+					
+			<Size x="1" y="1" z="1" />			
+			<Center x="0" y="0" z="0" />
+			<MirroringZ>Y</MirroringZ>	
+			<AutorotateMode>OppositeDirections</AutorotateMode>
+			<EdgeType>Light</EdgeType>		
+			
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true" />
+				<MountPoint Side="Front" StartX="0" StartY="0" EndX="1" EndY="1" />
+				<MountPoint Side="Back" StartX="0" StartY="0" EndX="1" EndY="1" />				
+				<MountPoint Side="Left" StartX="0" StartY="0" EndX="1" EndY="1" />
+				<MountPoint Side="Right" StartX="0" StartY="0" EndX="1" EndY="1" />
+			</MountPoints>						
+			<BuildProgressModels>
+				<Model BuildPercentUpperBound="0.33" File="Models\LS_TTS_CON1.mwm" />
+				<Model BuildPercentUpperBound="0.66" File="Models\LS_TTS_CON2.mwm" />
+				<Model BuildPercentUpperBound="1.00" File="Models\LS_TTS_CON3.mwm" />
+			</BuildProgressModels>						
+			<Components>
+				<Component Subype="SteelPlate" Count="11" />
+				<Component Subtype="InteriorPlate" Count="21" />
+				<Component Subtype="Construction" Count="54" />
+				<Component Subtype="Motor" Count="1" />
+				<Component Subtype="Computer" Count="22" />
+				<Component Subtype="Display" Count="1" />
+				<Component Subtype="SteelPlate" Count="10" />				
+			</Components>
+			<CriticalComponent Subtype="Display" Index="0" />
+		</Definition>						
+	</CubeBlocks>
+
+	<BlueprintClassEntries>		
+		<Entry Class="SmallBlocks" BlueprintSubtypeId="TerminalBlock/Speech Block (Small)" />
+		<Entry Class="LargeBlocks" BlueprintSubtypeId="TerminalBlock/Speech Block (Large)" />
+	</BlueprintClassEntries>
+
+	<CategoryClasses>
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId />
+			</Id>
+			<DisplayName>Text To Speech Mod</DisplayName>
+			<Name>Text To Speech Mod</Name>
+			<ItemIds>
+				<string>TerminalBlock/Speech Block (Small)</string>
+				<string>TerminalBlock/Speech Block (Large)</string>
+			</ItemIds>       
+		</Category>
+	</CategoryClasses>	
+
+</Definitions>

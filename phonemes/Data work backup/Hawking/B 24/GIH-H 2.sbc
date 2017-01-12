@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<Definitions xmlns:xsi='www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+    <SoundCategories>
+
+        <SoundCategory>
+            <Id>
+                <TypeId>SoundCategoryDefinition</TypeId>
+                <SubtypeId>GIH-H 2</SubtypeId>
+            </Id>
+
+            <Sounds>
+                <SoundDesc Id='GIH-H 2' SoundName='GIH-H 2' />
+            </Sounds>
+        </SoundCategory>
+    </SoundCategories>
+
+    <Sounds>
+        <Sound>
+            <Id>
+                <TypeId>AudioDefinition</TypeId>
+                <SubtypeId>GIH-H 2</SubtypeId>
+            </Id>
+
+            <Category>Sb</Category>
+            <MaxDistance>100</MaxDistance>
+            <Volume>1.0</Volume>
+            <Loopable>true</Loopable>
+
+            <Waves>
+                <Wave Type='D3'>
+                    <Start>Audio\Hawking\B 24\GIH-H 2.xwm</Start>
+                </Wave>
+            </Waves>
+        </Sound>
+    </Sounds>
+</Definitions>

@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<Definitions xmlns:xsi='www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+    <SoundCategories>
+
+        <SoundCategory>
+            <Id>
+                <TypeId>SoundCategoryDefinition</TypeId>
+                <SubtypeId>IHH-H 4</SubtypeId>
+            </Id>
+
+            <Sounds>
+                <SoundDesc Id='IHH-H 4' SoundName='IHH-H 4' />
+            </Sounds>
+        </SoundCategory>
+    </SoundCategories>
+
+    <Sounds>
+        <Sound>
+            <Id>
+                <TypeId>AudioDefinition</TypeId>
+                <SubtypeId>IHH-H 4</SubtypeId>
+            </Id>
+
+            <Category>Sb</Category>
+            <MaxDistance>100</MaxDistance>
+            <Volume>1.0</Volume>
+            <Loopable>true</Loopable>
+
+            <Waves>
+                <Wave Type='D3'>
+                    <Start>Audio\Hawking\C# 26\IHH-H 4.xwm</Start>
+                </Wave>
+            </Waves>
+        </Sound>
+    </Sounds>
+</Definitions>

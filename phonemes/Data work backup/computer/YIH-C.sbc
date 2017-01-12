@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <SoundCategories>
+  
+    <SoundCategory>
+      <Id>
+        <TypeId>SoundCategoryDefinition</TypeId>
+        <SubtypeId>YIH-C</SubtypeId>
+      </Id>
+      
+      <Sounds>
+        <SoundDesc Id="YIH-C" SoundName="YIH-C" />
+      </Sounds>
+      
+    </SoundCategory>
+  </SoundCategories>
+  
+    <Sounds>
+        <Sound>
+            <Id>
+                <TypeId>AudioDefinition</TypeId>
+                <SubtypeId>YIH-C</SubtypeId>
+            </Id>
+            
+            <Category>Sb</Category>
+            <MaxDistance>100</MaxDistance>
+            <Volume>1.00</Volume>
+            <Loopable>true</Loopable>
+            
+            <Waves>
+                <Wave Type="D3">
+                    <Start>Audio\computer\YIH-C.xwm</Start>
+                </Wave>
+            </Waves>
+        </Sound>
+    </Sounds>
+</Definitions> 
