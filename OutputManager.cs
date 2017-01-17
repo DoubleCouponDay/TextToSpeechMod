@@ -29,9 +29,8 @@ namespace SETextToSpeechMod
         Type localVoiceField = POSSIBLE_OUTPUTS.HawkingType;      
 
         /// <summary>
-        /// It's important to define the elements of the list only at compilation time.
-        /// Same sized groups of sentence types are ordered by their position in POSSIBLE_OUTPUTS.
-        /// </summary>
+        /// Same sized groups of sentence types are ordered by their position in struct POSSIBLE_OUTPUTS.Collection
+        /// </summary>                
         public IList <SentenceFactory> Speeches
         {
             get
@@ -39,7 +38,7 @@ namespace SETextToSpeechMod
                 return speechesField.AsReadOnly();
             }
         }
-        private List <SentenceFactory> speechesField = new List <SentenceFactory>();   
+        private List <SentenceFactory> speechesField = new List <SentenceFactory>(); //It's important to define the elements of the list only at compilation time.
 
         private SoundPlayer soundPlayerRef;
 

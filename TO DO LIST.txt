@@ -6,6 +6,8 @@ BROKEN WORDS
 
 TO DO
 ================//
++ test the byte[] method with a dummy constant array.
+
 + figure out how to get SEWorkshopToolWorking
 
     https://github.com/Phoenix84/SEWorkshopTool
@@ -32,7 +34,7 @@ TO DO
 + block should not play in realistic mode.
 + figure out how to implement new buttons and a text box.
 
-+ read the log for PrettyScaryDictionary crash. feasible to use?
++ read the log for PrettyScaryDictionary crash. async?
 
 + basic number support.
 

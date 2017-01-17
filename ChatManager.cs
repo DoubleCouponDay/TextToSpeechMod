@@ -47,7 +47,8 @@ namespace SETextToSpeechMod
         } 
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
-        {                                            
+        {      
+/*                                                  
             string noEscapes = string.Format (@"{0}", messageText);
             string fixedCase = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
             ExecuteCommandIfValid (fixedCase);
@@ -76,6 +77,14 @@ namespace SETextToSpeechMod
             {
                 OnReceivedPacket (ConvertedToPacket);
             }
+
+using (var tts = new FonixTalkEngine())
+{
+    string msg = "sup";
+    byte[] test = tts.SpeakToMemory (msg);
+    MyAPIGateway.Utilities.ShowMessage (test.ToString(), "");
+} 
+*/
         }
 
         private void ExecuteCommandIfValid (string upperCaseSentence)

@@ -219,8 +219,8 @@ namespace SETextToSpeechMod
         }
 
         public void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
-        {                                               
-            string[] previousReadings = File.ReadAllLines (resultsFile);   
+        {
+            string[] previousReadings = File.ReadAllLines(resultsFile);   
             previousReadings = previousReadings[1].Split(' '); 
    
             string[] tallies = {"Total Words: ",
@@ -318,6 +318,7 @@ namespace SETextToSpeechMod
             lines[4] = tallies[4] + lowerCaseWords;
             lines[5] = tallies[5] + wrongFormatMatchers;
             lines[6] = tallies[6] + wrongFormatNonMatchers;
+
             File.WriteAllLines (resultsFile, lines);
 
             processes = Process.GetProcessesByName ("notepad");
