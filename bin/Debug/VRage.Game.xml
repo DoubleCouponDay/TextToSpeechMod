@@ -36,6 +36,11 @@
             The name of the script is at the same index. (RunningLevelScriptNames)
             </summary>
         </member>
+        <member name="P:VRage.Game.SessionComponents.MyVisualScriptManagerSessionComponent.CampaignModPath">
+            <summary>
+            Path a campaign repository in case of modded campaign.
+            </summary>
+        </member>
         <member name="M:VRage.Game.Components.MyComponentBase.SetContainer(VRage.Game.Components.MyComponentContainer)">
             <summary>
             Sets the container of this component.
@@ -257,6 +262,21 @@
             Stripped environment definition with only visual settings
             </summary>
         </member>
+        <member name="T:VRage.Game.Entity.EntityComponents.Interfaces.IMyGameLogicComponent">
+            <summary>
+            This interface is for internal use only.
+            This basically a way to use internal members without the InternalsVisibleTo attribute.
+            The members defined here help us hide some internal logic from modders.
+            DO NOT WHITELIST THIS!
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Entity.EntityComponents.Interfaces.IMyGameLogicComponent.EntityUpdate">
+            <summary>
+            Components with this flag will update at the same time as their parent entity.
+            When the parent entity stops updating, so does the component.
+            This flag basically reverts to the old system.
+            </summary>
+        </member>
         <member name="T:VRage.Game.Components.MyAnimationControllerComponent">
             <summary>
             Entity component containing animation controller.
@@ -376,6 +396,28 @@
             Ingame (Programmable Block) interface for all entities.
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.Ingame.IMyEntity.GetInventory">
+            <summary>
+            Simply get the MyInventoryBase component stored in this entity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Ingame.IMyEntity.GetInventory(System.Int32)">
+            <summary>
+            Search for inventory component with maching index.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyEntity.HasInventory">
+            <summary>
+            Returns true if this entity has got at least one inventory. 
+            Note that one aggregate inventory can contain zero simple inventories => zero will be returned even if GetInventory() != null.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyEntity.InventoryCount">
+            <summary>
+            Returns the count of the number of inventories this entity has.
+            </summary>
+        </member>
         <member name="M:VRage.ModAPI.IMyEntity.SetEmissiveParts(System.String,VRageMath.Color,System.Single)">
             <summary>
             Sets the emissive value of a specific emissive material on entity.
@@ -392,6 +434,17 @@
             <param name="emissivity">Level of emissivity (0 is off, 1 is full brightness).</param>
             <param name="emissivePartColor">Color to emit</param>
         </member>
+        <member name="M:VRage.ModAPI.IMyEntity.GetInventory">
+            <summary>
+            Simply get the MyInventoryBase component stored in this entity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.ModAPI.IMyEntity.GetInventory(System.Int32)">
+            <summary>
+            Search for inventory component with maching index.
+            </summary>
+        </member>
         <member name="P:VRage.ModAPI.IMyEntity.Storage">
             <summary>
             Custom storage for mods. Shared with all mods.
@@ -399,6 +452,16 @@
             <remarks>Not synced, but saved with blueprints.
             Only use set accessor if value is null.
             </remarks>
+        </member>
+        <member name="P:VRage.ModAPI.IMyEntity.Synchronized">
+            <summary>
+            Gets or sets if the entity should be synced.
+            </summary>
+        </member>
+        <member name="P:VRage.ModAPI.IMyEntity.NeedsUpdate">
+            <summary>
+            Gets or sets how often the entity should be updated.
+            </summary>
         </member>
         <member name="M:VRage.Game.Entity.MyEntity.GetTopMostParent(System.Type)">
             <summary>
@@ -519,6 +582,17 @@
         <member name="P:VRage.Game.Entity.MyEntity.DisplayNameText">
             <summary>
             Display Name for GUI etc. Override in descendant classes. Usually used to display in terminal or inventory controls.
+            </summary>
+        </member>
+        <member name="T:VRage.Game.Entity.MyGameLogic">
+            <summary>
+            This is mostly a copy of the updating system present in MyEntities.
+            
+            The old style of GameLogic component was tied to entity updates. This meant that
+            when the entity removed one of its update flags, the component would stop updating 
+            with no warning.
+            
+            Here we update GameLogic components separately from the containing entity.
             </summary>
         </member>
         <member name="M:VRage.Game.Entity.UseObject.IMyUseObject.Use(VRage.Game.Entity.UseObject.UseActionEnum,VRage.ModAPI.IMyEntity)">
@@ -774,6 +848,27 @@
             If not, it should fall to ControlledObject
             </returns>
         </member>
+        <member name="P:VRage.Game.ModAPI.Interfaces.IMyCameraController.IsInFirstPersonView">
+            <summary>
+            Gets or sets if the current camera view is first person.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.DoDamage(System.Single,VRage.Utils.MyStringHash,System.Boolean,System.Nullable{VRage.Game.ModAPI.MyHitInfo},System.Int64)">
+            <summary>
+            Applies damage to an object
+            </summary>
+            <param name="damage"></param>
+            <param name="damageSource"></param>
+            <param name="sync"></param>
+            <param name="hitInfo"></param>
+            <param name="attackerId"></param>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.Integrity">
+            <summary>
+            Gets the integrity (health) of the object
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.Interfaces.IMyDestroyableObject.UseDamageSystem">
             <summary>
             When set to true, it should use MyDamageSystem damage routing.
@@ -789,6 +884,12 @@
             <param name="gasDefinitionId">Definition Id of the gas. Common example: new MyDefinitionId(typeof(MyObjectBuilder_GasProperties), "Oxygen")</param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyCharacter.Kill(System.Object)">
+            <summary>
+            Kills the character
+            </summary>
+            <param name="killData"></param>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMyCharacter.TriggerCharacterAnimationEvent(System.String,System.Boolean)">
             <summary>
             Trigger animation event in the new animation system.
@@ -799,19 +900,109 @@
             <param name="eventName">Event name.</param>
             <param name="sync">Synchronize over network</param>
         </member>
+        <member name="E:VRage.Game.ModAPI.IMyCharacter.CharacterDied">
+            <summary>
+            Event triggered when character dies
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.AimedPoint">
+            <summary>
+            Gets or, for non-player controlled characters, sets the aimed point direction.
+            </summary>
+            <remarks>For characters, which are not controlled by player, this will set the aimed point, otherwise the aimed point is determined from camera matrix</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.Definition">
+            <summary>
+            The character definition. Cast to MyCharacterDefinition.
+            </summary>
+            <remarks>Until refactoring is complete, casting this to MyCharacterDefinition is needed.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.EnvironmentOxygenLevel">
+            <summary>
+            Gets the amount of oxygen in the surrounding environment
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.BaseMass">
+            <summary>
+            Gets the base mass of the character
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.CurrentMass">
+            <summary>
+            Gets the entire mass of the character, including inventory
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMyCharacter.SuitEnergyLevel">
             <summary>
             Returns the amount of energy the suit has, values will range between 0 and 1, where 0 is no charge and 1 is full charge.
             </summary>
         </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.IsDead">
+            <summary>
+            Returns true if this character is dead
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMyCharacter.IsPlayer">
             <summary>
-            Returns true is this character is a player character, otherwise false.
+            Returns true if this character is a player character, otherwise false.
             </summary>
         </member>
         <member name="P:VRage.Game.ModAPI.IMyCharacter.IsBot">
             <summary>
-            Returns true is this character is an AI character, otherwise false.
+            Returns true if this character is an AI character, otherwise false.
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyCharacter.MovementStateChanged">
+            <summary>
+            Called when the movement state changes
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.CurrentMovementState">
+            <summary>
+            Gets the character's current movement state.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCharacter.PreviousMovementState">
+            <summary>
+            Gets the character's previous movement state.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyControllerInfo.IsLocallyControlled">
+            <summary>
+            Returns true if the local player is controlling the entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyControllerInfo.IsLocallyHumanControlled">
+            <summary>
+            Returns true if the local human player is controlling the entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyControllerInfo.IsRemotelyControlled">
+            <summary>
+            Returns true if the entity is remotely controlled
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyControllerInfo.Controller">
+            <summary>
+            Gets the controller for the entity
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyControllerInfo.ControllingIdentityId">
+            <summary>
+            Gets the controlling entity id (eg. IMyPlayer.IdentityId)
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyControllerInfo.ControlAcquired">
+            <summary>
+            Called when the entity gains a controller
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyControllerInfo.ControlReleased">
+            <summary>
+            Called when the entity loses a controller
             </summary>
         </member>
         <member name="T:VRage.Game.ModAPI.IMyCubeBlock">
@@ -824,9 +1015,81 @@
             Basic cube interface
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.Ingame.IMyCubeBlock.GetOwnerFactionTag">
+            <summary>
+            Tag of faction owning block
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.CubeGrid">
+            <summary>
+            Grid in which the block is placed
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.DefinitionDisplayNameText">
+            <summary>
+            Definition name
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.DisassembleRatio">
+            <summary>
+            Is set in definition
+            Ratio at which is the block disassembled (grinding) 
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.DisplayNameText">
+            <summary>
+            Translated block name
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.IsBeingHacked">
+            <summary>
+            Hacking of the block is in progress
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.IsFunctional">
+            <summary>
+            True if integrity is above breaking threshold
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.IsWorking">
+            <summary>
+            True if block is able to do its work depening on block type (is functional, powered, enabled, etc...)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.Max">
+            <summary>
+            Maximum coordinates of grid cells occupied by this block
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.Mass">
             <summary>
             Block mass
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.Min">
+            <summary>
+            Minimum coordinates of grid cells occupied by this block
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.NumberInGrid">
+            <summary>
+            Order in which were the blocks of same type added to grid
+            Used in default display name
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.Orientation">
+            <summary>
+            Returns block orientation in base 6 directions
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.OwnerId">
+            <summary>
+            Id of player owning block (not steam Id)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeBlock.Position">
+            <summary>
+            Position in grid coordinates
             </summary>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeBlock.CalcLocalMatrix(VRageMath.Matrix@,System.String@)">
@@ -856,17 +1119,11 @@
             <param name="copy">Set if creating a copy of block</param>
             <returns>Block object builder</returns>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeBlock.GetOwnerFactionTag">
-            <summary>
-            
-            </summary>
-            <returns>Tag of faction owning block</returns>
-        </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeBlock.GetPlayerRelationToOwner">
             <summary>
-            
+            Relation of local player to the block
             </summary>
-            <returns>Relation of local player to the block</returns>
+            <returns></returns>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeBlock.GetUserRelationToOwner(System.Int64)">
             <summary>
@@ -950,6 +1207,33 @@
             Start or stop dammage effect on cube block
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeBlock.SetEffect(System.String,System.Boolean)">
+            <summary>
+            Activate block effect listed in definition
+            </summary>
+            <param name="effectName"></param>
+            <param name="stopPrevious"></param>
+            <returns><b>true</b> if effect was started; <b>false</b> otherwise</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeBlock.SetEffect(System.String,System.Single,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Activate block effect with parameters listed in definition
+            </summary>
+            <param name="effectName"></param>
+            <param name="parameter"></param>
+            <param name="stopPrevious"></param>
+            <param name="ignoreParameter"></param>
+            <param name="removeSameNameEffects"></param>
+            <returns><b>true</b> if effect was started; <b>false</b> otherwise</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeBlock.RemoveEffect(System.String,System.Int32)">
+            <summary>
+            Removes active effect set with SetEffect
+            </summary>
+            <param name="effectName"></param>
+            <param name="exception"></param>
+            <returns>The number of effects removed</returns>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeBlock.AddUpgradeValue(System.String,System.Single)">
             <summary>
             Preferred way of registering a block for upgrades
@@ -968,67 +1252,11 @@
             Grid in which the block is placed
             </summary>
         </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.DefinitionDisplayNameText">
+        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.ResourceSink">
             <summary>
-            Definition name
+            Resource sink (draws power)
             </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.DisassembleRatio">
-            <summary>
-            Is set in definition
-            Ratio at which is the block disassembled (grinding) 
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.DisplayNameText">
-            <summary>
-            Translated block name
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.IsFunctional">
-            <summary>
-            True if integrity is above breaking threshold
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.IsWorking">
-            <summary>
-            True if block is able to do its work depening on block type (is functional, powered, enabled, etc...)
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.Max">
-            <summary>
-            Maximum coordinates of grid cells occupied by this block
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.Mass">
-            <summary>
-            Block mass
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.Min">
-            <summary>
-            Minimum coordinates of grid cells occupied by this block
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.NumberInGrid">
-            <summary>
-            Order in which were the blocks of same type added to grid
-            Used in default display name
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.Orientation">
-            <summary>
-            Returns block orientation in base 6 directions
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.OwnerId">
-            <summary>
-            Id of player owning block (not steam Id)
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeBlock.Position">
-            <summary>
-            Position in grid coordinates
-            </summary>
+            <remarks>Cast to MyResourceSinkComponent as needed.</remarks>
         </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeBlock.UpgradeValues">
             <summary>
@@ -1138,6 +1366,11 @@
             Converts world coordinates to grid space cell coordinates
             </summary>
         </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeGrid.CustomName">
+            <summary>
+            Display name of the grid (as seen in Info terminal tab)
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeGrid.GridSize">
             <summary>
             Grid size in meters
@@ -1150,7 +1383,7 @@
         </member>
         <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeGrid.IsStatic">
             <summary>
-            Station = static
+            Determines if the grid is static (unmoveable)
             </summary>
         </member>
         <member name="P:VRage.Game.ModAPI.Ingame.IMyCubeGrid.Max">
@@ -1195,11 +1428,6 @@
             Converts station to ship
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.CubeExists(VRageMath.Vector3I)">
-            <summary>
-            Returns true if there is any block occupying given position
-            </summary>
-        </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeGrid.FixTargetCube(VRageMath.Vector3I@,VRageMath.Vector3)">
             <summary>
             Clamps fractional grid position to nearest cell (prefers neighboring occupied cell before empty) 
@@ -1234,11 +1462,6 @@
         <member name="M:VRage.Game.ModAPI.IMyCubeGrid.GetLineIntersectionExactGrid(VRageMath.LineD@,VRageMath.Vector3I@,System.Double@)">
             <summary>
             Same as GetLineIntersectionExactAll just without intersected block
-            </summary>
-        </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.GridIntegerToWorld(VRageMath.Vector3I)">
-            <summary>
-            Converts grid coordinates to world space
             </summary>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeGrid.IsTouchingAnyNeighbor(VRageMath.Vector3I,VRageMath.Vector3I)">
@@ -1367,6 +1590,37 @@
             <param name="testBlock"></param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.CanAddCube(VRageMath.Vector3I)">
+            <summary>
+            Tests if a cubeblock can be added at the specific location
+            </summary>
+            <param name="pos"></param>
+            <returns><b>true</b> if block can be added</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.CanAddCubes(VRageMath.Vector3I,VRageMath.Vector3I)">
+            <summary>
+            Test if the range of positions are not occupied by any blocks
+            </summary>
+            <param name="min">Start position</param>
+            <param name="max">End position</param>
+            <returns><b>true</b> if blocks can be added in that range</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.SplitByPlane(VRageMath.PlaneD)">
+            <summary>
+            Split grid along a plane
+            </summary>
+            <param name="plane"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.Split(System.Collections.Generic.List{VRage.Game.ModAPI.IMySlimBlock},System.Boolean)">
+            <summary>
+            Split grid
+            </summary>
+            <param name="blocks">List of blocks to split into new grid</param>
+            <param name="sync">Pass <b>true</b> if on server to sync this to clients.</param>
+            <returns>New grid</returns>
+            <remarks>To sync to clients, this must be called on the server with sync = true.</remarks>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeGrid.BigOwners">
             <summary>
             List of players with majority of blocks on grid
@@ -1377,30 +1631,89 @@
             List of players with any blocks on grid
             </summary>
         </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.GridSize">
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.IsRespawnGrid">
             <summary>
-            Grid size in meters
-            </summary>
-        </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.GridSizeEnum">
-            <summary>
-            Grid size enumeration
+            Gets or sets if this grid is a respawn grid (can be cleaned up automatically when player leaves)
             </summary>
         </member>
         <member name="P:VRage.Game.ModAPI.IMyCubeGrid.IsStatic">
             <summary>
-            Station = static
+            Gets or sets if the grid is static (station)
+            </summary>
+            <remarks>Be careful not to set it on stations which are embedded in voxels!</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.CustomName">
+            <summary>
+            Display name of the grid (as seen in Info terminal tab)
             </summary>
         </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.Max">
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnBlockAdded">
             <summary>
-            Maximum coordinates of blocks in grid
+            Called when a block is added to the grid
             </summary>
         </member>
-        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.Min">
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnBlockRemoved">
             <summary>
-            Minimum coordinates of blocks in grid
+            Called when a block is removed from the grid
             </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnBlockOwnershipChanged">
+            <summary>
+            Called when a block on the grid changes owner
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnGridChanged">
+            <summary>
+            Called when a grid is taken control of by a player
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnGridSplit">
+            <summary>
+            Triggered when grid is split
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnIsStaticChanged">
+            <summary>
+            Triggered when grid changes to or from static (station)
+            </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyCubeGrid.OnBlockIntegrityChanged">
+            <summary>
+            Triggered when block integrity changes (construction)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.XSymmetryPlane">
+            <summary>
+            X-Axis build symmetry plane
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.YSymmetryPlane">
+            <summary>
+            Y-Axis build symmetry plane
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.ZSymmetryPlane">
+            <summary>
+            Z-Axis build symmetry plane
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.XSymmetryOdd">
+            <summary>
+            Gets or sets if the symmetry plane is offset from the block center
+            </summary>
+            <remarks>True if symmetry plane is at block border; false if center of block</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.YSymmetryOdd">
+            <summary>
+            Gets or sets if the symmetry plane is offset from the block center
+            </summary>
+            <remarks>True if symmetry plane is at block border; false if center of block</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyCubeGrid.ZSymmetryOdd">
+            <summary>
+            Gets or sets if the symmetry plane is offset from the block center
+            </summary>
+            <remarks>True if symmetry plane is at block border; false if center of block</remarks>
         </member>
         <member name="T:VRage.Game.ModAPI.MyIntegrityChangeEnum">
             <summary>
@@ -1442,6 +1755,11 @@
             </summary>
             <param name="priority">Priority level.  Lower means higher priority.</param>
             <param name="handler">Actual handler delegate</param>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyGamePaths.ModScopeName">
+            <summary>
+            Gets the calling mod's assembly ScopeName. This name is used in storage paths (eg. 1234567.sbm_TypeName).
+            </summary>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyGps.UpdateHash">
             <summary>
@@ -1581,6 +1899,11 @@
             Checks if the chat entry box is visible.
             </summary>
         </member>
+        <member name="P:VRage.Game.ModAPI.IMyGui.IsCursorVisible">
+            <summary>
+            Checks if the cursor is visible.
+            </summary>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMyHudNotification.Show">
             <summary>
             Shows the notification on the HUD.
@@ -1613,6 +1936,53 @@
             <summary>
             Get or set the time for the notification to be shown, in miliseconds.
             </summary>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyIdentity.CharacterChanged">
+            <summary>
+            Triggered when the player's character changes.
+            </summary>
+            <remarks>First Action argument is old character; second is new character.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyIdentity.IdentityId">
+            <summary>
+            Player's unique identity id.
+            </summary>
+            <remarks>This will change when the player dies with permadeath enabled.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyIdentity.DisplayName">
+            <summary>
+            Name of player.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyIdentity.Model">
+            <summary>
+            Gets the model the player is using.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyIdentity.ColorMask">
+            <summary>
+            The player's model color mask
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyIdentity.IsDead">
+            <summary>
+            Gets if the player is dead
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyModel.GetDummies(System.Collections.Generic.IDictionary{System.String,VRage.Game.ModAPI.IMyModelDummy})">
+            <summary>
+            Gets the dummies from the model
+            </summary>
+            <param name="dummies">Dictionary of dummies, can be null to just return count</param>
+            <returns>Number of dummies in model</returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyMultiplayer.ReplicateEntityForClient(System.Int64,System.UInt64)">
+            <summary>
+            Forces the server to send an entity to a client even if it's outside of render range.
+            Pass 0 as steamId to replicate to all connected clients.
+            </summary>
+            <param name="entityId"></param>
+            <param name="steamId"></param>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyPhysics.CastLongRay(VRageMath.Vector3D,VRageMath.Vector3D,VRage.Game.ModAPI.IHitInfo@,System.Boolean)">
             <summary>
@@ -1678,6 +2048,156 @@
             Simulation ratio, when physics cannot keep up, this is smaller than 1
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.GetRelationTo(System.Int64)">
+            <summary>
+            Gets the relationship between this player and another.
+            </summary>
+            <param name="playerId">Player to test relationship against</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.AddGrid(System.Int64)">
+            <summary>
+            Adds a grid to the player's Grids list.
+            </summary>
+            <param name="gridEntityId"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.RemoveGrid(System.Int64)">
+            <summary>
+            Removes a grid from the player's Grids list.
+            </summary>
+            <param name="gridEntityId"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.GetPosition">
+            <summary>
+            Gets the player position
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.ChangeOrSwitchToColor(VRageMath.Vector3)">
+            <summary>
+            Switches to slot containing color, if present. Otherwise sets active slot to color.
+            </summary>
+            <param name="color"></param>
+            <remarks>Not synced.</remarks>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.SetDefaultColors">
+            <summary>
+            Sets build colors back to defaults.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.SpawnIntoCharacter(VRage.Game.ModAPI.IMyCharacter)">
+            <summary>
+            Spawns the player as a new character (changes the model).
+            </summary>
+            <param name="character"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.SpawnAt(VRageMath.MatrixD,VRageMath.Vector3,VRage.ModAPI.IMyEntity,System.Boolean)">
+            <summary>
+            Spawns the player at a specific place. Must be called on server.
+            </summary>
+            <param name="worldMatrix">Spawn position</param>
+            <param name="velocity">Velocity to provide to player</param>
+            <param name="spawnedBy">Entity triggering respawn (can be null)</param>
+            <param name="findFreePlace">Find a safe place to spawn near the position</param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyPlayer.SpawnAt(VRageMath.MatrixD,VRageMath.Vector3,VRage.ModAPI.IMyEntity)">
+            <summary>
+            Spawns the player at a specific place. Must be called on server.
+            </summary>
+            <param name="worldMatrix">Spawn position</param>
+            <param name="velocity">Velocity to provide to player</param>
+            <param name="spawnedBy">Entity triggering respawn (can be null)</param>
+        </member>
+        <member name="E:VRage.Game.ModAPI.IMyPlayer.IdentityChanged">
+            <summary>
+            Event triggered when the player's identity changed (eg. died w/permadeath on)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.Grids">
+            <summary>
+            List of grids where the player owns at least one block.
+            </summary>
+            <remarks>Not synced.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.Controller">
+            <summary>
+            Gets the EntityController for the player.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.SteamUserId">
+            <summary>
+            Gets the Steam user id for the player.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.DisplayName">
+            <summary>
+            Visible player name
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.IdentityId">
+            <summary>
+            Unique id for the current player identity.
+            </summary>
+            <remarks>This will change when the player dies with permadeath enabled.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.IsAdmin">
+            <summary>
+            Gets if the player is an admin on the server.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.IsPromoted">
+            <summary>
+            Gets if the player is promoted to Space Master.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.PromoteLevel">
+            <summary>
+            Gets the player's promote level
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.Character">
+            <summary>
+            Gets the Character entity for the player.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.IsBot">
+            <summary>
+            Gets if the player is a bot (non-human)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.Identity">
+            <summary>
+            Gets the identity for the player
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.RespawnShip">
+            <summary>
+            Gets the entity id for the player's respawn ship(s).
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.BuildColorSlots">
+            <summary>
+            Gets or sets all the player's build color slots
+            </summary>
+            <remarks>Not synced.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.DefaultBuildColorSlots">
+            <summary>
+            Gets the list of the default build colors.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.SelectedBuildColor">
+            <summary>
+            Gets or sets the build color for the selected slot.
+            </summary>
+            <remarks>Not synced.</remarks>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMyPlayer.SelectedBuildColorSlot">
+            <summary>
+            Gets or sets the selected slot for the build color.
+            </summary>
+            <remarks>Not synced.</remarks>
+        </member>
         <member name="T:VRage.Game.ModAPI.MyPromoteLevel">
             <summary>
             Describes what permissions a user has
@@ -1742,6 +2262,18 @@
             Do it only when necessary.
             </summary>
         </member>
+        <member name="P:VRage.Game.ModAPI.IMySession.IsCameraControlledObject">
+            <summary>
+            Gets if the current camera is the current controlled object (not spectator)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySession.IsCameraUserControlledSpectator">
+            <summary>
+            Gets if the current camera is the user controlled spectator
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMySession.PromoteLevel">
             <summary>
             Gets the local player's promote level.
@@ -1757,9 +2289,160 @@
             basic block interface
             </summary>
         </member>
+        <member name="M:VRage.Game.ModAPI.Ingame.IMySlimBlock.GetMissingComponents(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Gets the list of missing components for this block
+            </summary>
+            <param name="addToDictionary"></param>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.BlockDefinition">
+            <summary>
+            Block definition ID
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.AccumulatedDamage">
+            <summary>
+            Current accumlated damage, pending application
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.BuildIntegrity">
+            <summary>
+            Build integrity (of components)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.BuildLevelRatio">
+            <summary>
+            Ratio of BuildIntegrity and MaxIntegrity
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.CurrentDamage">
+            <summary>
+            BuildIntegrity - Integrity
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.DamageRatio">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.FatBlock">
+            <summary>
+            Gets the fatblock if there is one
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.HasDeformation">
+            <summary>
+            If this block is deformed (bones deformed)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.IsDestroyed">
+            <summary>
+            Gets if component stack is empty
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.IsFullIntegrity">
+            <summary>
+            Integrity is at maximum
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.IsFullyDismounted">
+            <summary>
+            Gets if component stack is empty
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.MaxDeformation">
+            <summary>
+            Maximum deformation of block
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.MaxIntegrity">
+            <summary>
+            The maximum integrity of block
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.Mass">
             <summary>
             Block mass
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.OwnerId">
+            <summary>
+            Fatblock owner, if present; otherwise grid owner
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.ShowParts">
+            <summary>
+            Gets if sub parts are shown
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.StockpileAllocated">
+            <summary>
+            A component stockpile has been allocated
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.StockpileEmpty">
+            <summary>
+            The component stockpile is empty (no build components)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.Position">
+            <summary>
+            Grid relative position of block
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.Ingame.IMySlimBlock.CubeGrid">
+            <summary>
+            Gets the grid the slimblock is on
+            </summary>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.ComputeScaledCenter(VRageMath.Vector3D@)">
+            <summary>
+            Gets the block center as a Vector3D, relative to grid WorldMatrix
+            </summary>
+            <param name="scaledCenter"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.ComputeScaledHalfExtents(VRageMath.Vector3@)">
+            <summary>
+            Gets the half extents for the block
+            </summary>
+            <param name="scaledHalfExtents"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.ComputeWorldCenter(VRageMath.Vector3D@)">
+            <summary>
+            Gets the world position for the center of the block
+            </summary>
+            <param name="worldCenter"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.FixBones(System.Single,System.Single)">
+            <summary>
+            Repair block deformation
+            </summary>
+            <param name="oldDamage"></param>
+            <param name="maxAllowedBoneMovement"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.FullyDismount(VRage.Game.ModAPI.IMyInventory)">
+            <summary>
+            Reset built level to 0
+            </summary>
+            <param name="outputInventory"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.GetObjectBuilder(System.Boolean)">
+            <summary>
+            Gets the object builder for the slimblock
+            </summary>
+            <param name="copy"><b>true</b> to return a copy</param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.MoveItemsFromConstructionStockpile(VRage.Game.ModAPI.IMyInventory,VRage.Game.MyItemFlags)">
+            <summary>
+            Transfer contruction components from inventory to stockpile
+            </summary>
+            <param name="toInventory"></param>
+            <param name="flags"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMySlimBlock.SpawnFirstItemInConstructionStockpile">
+            <summary>
+            Adds the first component to the stockpile
             </summary>
         </member>
         <member name="M:VRage.Game.ModAPI.IMySlimBlock.DecreaseMountLevel(System.Single,VRage.Game.ModAPI.IMyInventory,System.Boolean)">
@@ -1822,9 +2505,19 @@
             <param name="aabb"></param>
             <param name="useAABBFromBlockCubes"></param>
         </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.FatBlock">
+            <summary>
+            Gets the fatblock if there is one
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.CubeGrid">
+            <summary>
+            Gets the grid the slimblock is on
+            </summary>
+        </member>
         <member name="P:VRage.Game.ModAPI.IMySlimBlock.BlockDefinition">
             <summary>
-            The blocks definition
+            The blocks definition (cast to MyCubeBlockDefinition)
             </summary>
         </member>
         <member name="P:VRage.Game.ModAPI.IMySlimBlock.Max">
@@ -1841,6 +2534,12 @@
             <summary>
             The blocks that neighbour this block
             </summary>
+        </member>
+        <member name="P:VRage.Game.ModAPI.IMySlimBlock.Dithering">
+            <summary>
+            Sets the transparency of the block.
+            </summary>
+            <remarks>Not synced.</remarks>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyUtilities.CreateNotification(System.String,System.Int32,System.String)">
             <summary>
@@ -1870,6 +2569,20 @@
             <param name="callingType"></param>
             <returns></returns>
         </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.SerializeToBinary``1(``0)">
+            <summary>
+            Uses ProtoBuf to serialize an object into a byte array
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.SerializeFromBinary``1(System.Byte[])">
+            <summary>
+            Uses ProtoBuf to deserialize an object from a byte array
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:VRage.Game.ModAPI.IMyUtilities.ReadBinaryFileInWorldStorage(System.String,System.Type)">
             <summary>
             Read file from the current world's Storage directory.
@@ -1885,6 +2598,27 @@
             <param name="file"></param>
             <param name="callingType"></param>
             <returns></returns>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.RegisterMessageHandler(System.Int64,System.Action{System.Object})">
+            <summary>
+            Adds a handler to the mod message system.
+            </summary>
+            <param name="id"></param>
+            <param name="messageHandler"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.UnregisterMessageHandler(System.Int64,System.Action{System.Object})">
+            <summary>
+            Removes a handler from the mod message system.
+            </summary>
+            <param name="id"></param>
+            <param name="messageHandler"></param>
+        </member>
+        <member name="M:VRage.Game.ModAPI.IMyUtilities.SendModMessage(System.Int64,System.Object)">
+            <summary>
+            Allows passing data between mods on the same client.
+            </summary>
+            <param name="id"></param>
+            <param name="payload"></param>
         </member>
         <member name="M:VRage.ModAPI.IMyVoxelBase.AreAllAabbCornersInside(VRageMath.MatrixD,VRageMath.BoundingBoxD)">
             <summary>
@@ -2464,6 +3198,16 @@
             This method stops generating any new particles
             </summary>
         </member>
+        <member name="M:VRage.Game.MyParticleEffect.StopLights">
+            <summary>
+            This method stops all lights
+            </summary>
+        </member>
+        <member name="M:VRage.Game.MyParticleEffect.SetEffectTimeout(System.Single,System.Boolean)">
+            <summary>
+            Sets timer for automatic effect timeout
+            </summary>
+        </member>
         <member name="P:VRage.Game.MyParticleGeneration.Birth">
             <summary>
             Public members to easy access
@@ -2704,6 +3448,12 @@
             Sets the position.
             </summary>
             <param name="pos">The pos.</param>
+        </member>
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.GetOrientation">
+            <summary>
+            Gets the entity orientation.
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:VRage.Game.Components.MyPositionComponentBase.UpdateWorldMatrix(System.Object)">
             <summary>
@@ -7689,11 +8439,6 @@
             If you wish to receive Keen Software House newsletter, please provide your email.
             </summary>
         </member>
-        <member name="F:MyCommonTexts.MessageBoxTextCampaignBeforeExit">
-            <summary>
-            Are you sure you want to quit? All progress from the last checkpoint will be lost.
-            </summary>
-        </member>
         <member name="F:MyCommonTexts.ScreenGraphicsOptions_ModelQuality">
             <summary>
             Model quality
@@ -7702,6 +8447,16 @@
         <member name="F:MyCommonTexts.IncompatibleDataNotification">
             <summary>
             Server has incompatible game data.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MessageBoxTextCampaignBeforeExit">
+            <summary>
+            Are you sure you want to quit? All progress from the last checkpoint will be lost.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerErrorKickedByAdmins">
+            <summary>
+            You have recently been kicked from this server.
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">

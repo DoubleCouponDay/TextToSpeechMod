@@ -99,7 +99,7 @@
             Number of reserved ids, zero is also reserved, but not counted.
             </summary>
         </member>
-        <member name="M:VRage.Library.Collections.BitReaderWriter.ReadData(VRage.Library.Collections.IBitSerializable,System.Boolean)">
+        <member name="M:VRage.Library.Collections.BitReaderWriter.ReadData(VRage.Library.Collections.IBitSerializable,System.Boolean,System.Boolean)">
             <summary>
             Returns false when validation was required and failed, otherwise true.
             </summary>
@@ -365,7 +365,7 @@
             <param name="baseType">Hierarchy base type of dynamically serialized object, can be used to select serialization method (e.g. object builders have something special).</param>
             <param name="obj">Object whose type to write or read and instantiate.</param>
         </member>
-        <member name="M:VRage.Library.Collections.IBitSerializable.Serialize(VRage.Library.Collections.BitStream,System.Boolean)">
+        <member name="M:VRage.Library.Collections.IBitSerializable.Serialize(VRage.Library.Collections.BitStream,System.Boolean,System.Boolean)">
             <summary>
             When reading, returns false when validation was required and failed, otherwise true.
             </summary>
@@ -843,6 +843,50 @@
         <member name="M:System.FloatExtensions.IsValid(System.Single)">
             <summary>
             Returns true if float is not NaN or infinity.
+            </summary>
+        </member>
+        <member name="F:VRage.FileSystem.MyContentPath.Path">
+            <summary>
+            Do not set directly. Public only for Object buidler purposes.
+            </summary>
+        </member>
+        <member name="F:VRage.FileSystem.MyContentPath.ModFolder">
+            <summary>
+            Do not set directly. Public only for Object buidler purposes.
+            </summary>
+        </member>
+        <member name="M:VRage.FileSystem.MyContentPath.GetExitingFilePath">
+            <summary>
+            Helper method.
+            </summary>
+            <returns>Valid file path to existing file.</returns>
+        </member>
+        <member name="M:VRage.FileSystem.MyContentPath.SetPath(System.String,System.String)">
+            <summary>
+            Use this method to get the ModFolder automaticaly adjusted.
+            </summary>
+            <param name="path">Absolute or relative path within the content structure (Content/Mods).</param>
+        </member>
+        <member name="M:VRage.FileSystem.MyContentPath.op_Implicit(System.String)~VRage.FileSystem.MyContentPath">
+            <summary>
+            Assignment operator.
+            </summary>
+            <param name="path">Absolute path to content</param>
+            <returns></returns>
+        </member>
+        <member name="P:VRage.FileSystem.MyContentPath.Absolute">
+            <summary>
+            Returns respective absolute path.
+            </summary>
+        </member>
+        <member name="P:VRage.FileSystem.MyContentPath.RootFolder">
+            <summary>
+            Returns respective absolute path to root (Content/ModsFolder).
+            </summary>
+        </member>
+        <member name="P:VRage.FileSystem.MyContentPath.AlternatePath">
+            <summary>
+            Possible Content alternative of modded files.
             </summary>
         </member>
         <member name="M:VRage.Groups.IGroupData`1.OnCreate``1(VRage.Groups.MyGroups{`0,``0}.Group)">

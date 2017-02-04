@@ -10,8 +10,8 @@ namespace SETextToSpeechMod
 {
     public class OptionalDebugger
     {         
-        //const string currentComputer = "pavilion";
-        const string currentComputer = "thinkpad";
+        const string currentComputer = "pavilion";
+        //const string currentComputer = "thinkpad";
 
         const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
         const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
@@ -119,7 +119,7 @@ namespace SETextToSpeechMod
             string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.            
             string upperCase = testString.ToUpper();   
             string signatureBuild = entryPoint.OutputManager.LocalPlayersVoice.ToString();
-            int leftoverSpace = POSSIBLE_OUTPUTS.AutoSignatureSize - entryPoint.OutputManager.LocalPlayersVoice.ToString().Length;
+            int leftoverSpace = PossibleOutputs.AutoSignatureSize - entryPoint.OutputManager.LocalPlayersVoice.ToString().Length;
 
             for (int i = 0; i < leftoverSpace; i++)
             {

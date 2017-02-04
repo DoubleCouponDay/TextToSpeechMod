@@ -6320,14 +6320,14 @@
             A class for simpler traversal of ranges of integer vectors
             </summary>
         </member>
-        <member name="F:VRageMath.Vector3I_RangeIterator.Current">
-            <summary>
-            Do not modify, public only for optimization!
-            </summary>
-        </member>
         <member name="M:VRageMath.Vector3I_RangeIterator.#ctor(VRageMath.Vector3I@,VRageMath.Vector3I@)">
             <summary>
             Note: both start and end are inclusive
+            </summary>
+        </member>
+        <member name="P:VRageMath.Vector3I_RangeIterator.Current">
+            <summary>
+            Do not modify, public only for optimization!
             </summary>
         </member>
         <member name="M:VRageMath.Vector3I.RectangularDistance(VRageMath.Vector3I)">

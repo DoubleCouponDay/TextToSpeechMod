@@ -542,6 +542,11 @@
             E.g. can be used to get priority of grid when calling GetPriority on cube block.
             </summary>
         </member>
+        <member name="T:VRage.Replication.MyMultiplayerMinimalBase">
+            <summary>
+            This stub should be merged with MyMultiplayerBase as soon as possible and the result should be put in planned library VRage.Multiplayer.
+            </summary>
+        </member>
         <member name="M:VRage.Replication.MyReplicablesBase.RefreshChildrenHierarchy(VRage.Network.IMyReplicable)">
             <summary>
             Refreshes all children.
@@ -701,7 +706,7 @@
             <param name="frameCountWithoutSync">How long (in update frame count) has client not received sync of this state group.</param>
             <param name="forClient">Client for whom is the priority get.</param>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.EndpointId,VRage.Library.Utils.MyTimeSpan,System.Byte,System.Int32)">
+        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.EndpointId,VRage.Library.Utils.MyTimeSpan,System.Byte,System.Int32,System.Collections.Generic.HashSet{System.String})">
             <summary>
             (De)serializes group state or it's diff for client.
             When writing, you can write beyond maxBitPosition, but message won't be sent and ACKs won't be received for it.
@@ -964,6 +969,11 @@
             Network objects and states which are actively replicating to clients.
             </summary>
         </member>
+        <member name="F:VRage.Network.MyReplicationServer.m_recentClientsStates">
+            <summary>
+            Clients that recently disconnected are saved here for some time so that the server doesn't freak out in case some calls are still pending for them
+            </summary>
+        </member>
         <member name="M:VRage.Network.MyReplicationServer.PauseReplication">
             <summary>
             Stops sending replication create until resumed.
@@ -1148,22 +1158,22 @@
             Map to override definitions types
             </summary>
         </member>
-        <member name="M:VRage.Sync.SyncExtensions.ValidateNever``1(VRage.Sync.Sync{``0})">
+        <member name="M:VRage.Sync.SyncExtensions.AlwaysReject``2(VRage.Sync.Sync{``0,``1})">
             <summary>
             Sets validation handler to always return false.
             </summary>
         </member>
-        <member name="M:VRage.Sync.SyncExtensions.ValidateRange(VRage.Sync.Sync{System.Single},System.Single,System.Single)">
+        <member name="M:VRage.Sync.SyncExtensions.ValidateRange``1(VRage.Sync.Sync{System.Single,``0},System.Single,System.Single)">
             <summary>
             Sets validate handler to validate that value is in range.
             </summary>
         </member>
-        <member name="M:VRage.Sync.SyncExtensions.ValidateRange(VRage.Sync.Sync{System.Single},System.Func{System.Single},System.Func{System.Single})">
+        <member name="M:VRage.Sync.SyncExtensions.ValidateRange``1(VRage.Sync.Sync{System.Single,``0},System.Func{System.Single},System.Func{System.Single})">
             <summary>
             Sets validate handler to validate that value is in range.
             </summary>
         </member>
-        <member name="M:VRage.Sync.SyncExtensions.ValidateRange(VRage.Sync.Sync{System.Single},System.Func{VRageMath.MyBounds})">
+        <member name="M:VRage.Sync.SyncExtensions.ValidateRange``1(VRage.Sync.Sync{System.Single,``0},System.Func{VRageMath.MyBounds})">
             <summary>
             Sets validate handler to validate that value is withing bounds.
             </summary>
@@ -1179,14 +1189,65 @@
             When validation fails, value is not changed and ValueChanged is not raised.
             </summary>
         </member>
-        <member name="F:VRage.Sync.Sync`1.Validate">
+        <member name="T:VRage.Sync.SyncDirection">
+            <summary>
+            Sync variable synchronization direction.
+            </summary>
+        </member>
+        <member name="T:VRage.Sync.SyncDirection.FromServer">
+            Allow writing on server, send to client, deny writing on client.
+        </member>
+        <member name="T:VRage.Sync.Sync`2">
+            <summary>
+            Implementation of synchronized property value.
+            </summary>
+            <typeparam name="T">property type</typeparam>
+            <typeparam name="TSyncDirection">Allowed synchronization direction, can be SyncDirection.BothWays or SyncDirection.FromServer.</typeparam>
+        </member>
+        <member name="F:VRage.Sync.Sync`2.TypeSerializer">
+            <summary>
+            Static instance of type serializer for this sync property.
+            </summary>
+        </member>
+        <member name="F:VRage.Sync.Sync`2.m_value">
+            <summary>
+            Local value storage.
+            </summary>
+        </member>
+        <member name="F:VRage.Sync.Sync`2.Validate">
             <summary>
             Validate handler is raised on server after deserialization.
             </summary>
         </member>
-        <member name="M:VRage.Sync.Sync`1.ValidateAndSet(`0)">
+        <member name="M:VRage.Sync.Sync`2.ToString">
+            <summary>
+            Convert value of this sync property to string.
+            </summary>
+        </member>
+        <member name="M:VRage.Sync.Sync`2.IsValid(`0@)">
+            <summary>
+            Validate the given external value.
+            </summary>
+            <param name="value">external value of the same type as this sync property</param>
+            <returns>true if valid</returns>
+        </member>
+        <member name="M:VRage.Sync.Sync`2.SetValue(`0@,System.Boolean,System.Boolean)">
+            <summary>
+            Set the value of this sync property.
+            </summary>
+            <param name="newValue">New value to be assigned to this instance</param>
+            <param name="validate">Validate the new value</param>
+            <param name="ignoreSyncDirection">If true, value arrived from server (pass SyncDirection test).</param>
+            <returns>false if the value was not set</returns>
+        </member>
+        <member name="M:VRage.Sync.Sync`2.ValidateAndSet(`0)">
             <summary>
             Validates the value and sets it (when valid).
+            </summary>
+        </member>
+        <member name="P:VRage.Sync.Sync`2.Value">
+            <summary>
+            Value setter/getter.
             </summary>
         </member>
         <member name="T:VRage.Utils.MyDiscreteSampler`1">
@@ -1451,6 +1512,33 @@
         <member name="M:VRage.Utils.MyUtils.GetRandomTimeSpan(System.TimeSpan,System.TimeSpan)">
             <summary>
             Returns a random TimeSpan between begin (inclusive) and end (exclusive).
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyTimedItemCache">
+            <summary>
+            Temporaly stores information about item (event/place) existence. This is useful if you want to launch some actions only from time to time.
+            You ask timed cache whether your last event still takes effect.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyTimedItemCache.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="eventTimeoutMs">Time before </param>
+        </member>
+        <member name="M:VRage.Utils.MyTimedItemCache.IsItemPresent(System.Int64,System.Int32,System.Boolean)">
+            <summary>
+            Generic item. Check whether generic item exists in the timed cache. 
+            
+            autoinsert param: If the item is not found, it is inserted to the cache if the argument autoinsert is true.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyTimedItemCache.IsPlaceUsed(VRageMath.Vector3D,System.Double,System.Int32,System.Boolean)">
+            <summary>
+            Helper function. Check temporal usage of space. Check whether the place is taken. Internally converts position to generic item.
+            Please use consistent eventSpaceMapping, otherwise cache will not find your items.
+            
+            autoinsert param: If the item is not found, it is inserted to the cache if the argument autoinsert is true.
             </summary>
         </member>
         <member name="T:VRage.Utils.MyStringHash">

@@ -79,7 +79,6 @@ C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SharpDX
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SharpDX.DirectInput.dll
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SharpDX.dll
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SharpDX.DXGI.dll
-C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SharpDX.Toolkit.dll
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SharpDX.XAudio2.dll
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SimpleInjector.dll
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SpaceEngineers.Game.dll
@@ -362,3 +361,11 @@ C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\TextToSpeechMod.dll.CodeAnalysisLog.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\TextToSpeechMod.dll.lastcodeanalysissucceeded
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.dll
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Sandbox.Game.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SpaceEngineers.Game.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Input.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Render11.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Scripting.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Sandbox.Graphics.xml
+C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SpaceEngineers.ObjectBuilders.xml

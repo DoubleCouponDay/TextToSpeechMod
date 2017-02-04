@@ -20,14 +20,155 @@
             Event to append custom info.
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyDoor.OpenDoor">
+            <summary>
+            Opens the door. See <see cref="P:Sandbox.ModAPI.Ingame.IMyDoor.Status"/> to get the current status.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyDoor.CloseDoor">
+            <summary>
+            Closes the door. See <see cref="P:Sandbox.ModAPI.Ingame.IMyDoor.Status"/> to get the current status.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyDoor.ToggleDoor">
+            <summary>
+            Toggles the open state of this door. See <see cref="P:Sandbox.ModAPI.Ingame.IMyDoor.Status"/> to get the current status.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Open">
             <summary>
             Indicates whether door is opened or closed. True when door is opened.
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.Status">
+            <summary>
+            Determines the current general status of the door.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyDoor.OpenRatio">
             <summary>
-            Door state, zero is fully closed. One is fully opened.
+            The current, accurate ratio of the door's current state where 0 is fully closed and 1 is fully open.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.MoveQueueItemRequest(System.UInt32,System.Int32)">
+            <summary>
+            Moves an item in the queue to a target position in the queue.
+            </summary>
+            <param name="queueItemId"></param>
+            <param name="targetIdx"></param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.CanUseBlueprint(VRage.Game.MyDefinitionId)">
+            <summary>
+            Can this production block produce this blueprint?
+            </summary>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.AddQueueItem(VRage.Game.MyDefinitionId,VRage.MyFixedPoint)">
+            <summary>
+            Adds a blueprint to the production queue
+            </summary>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.AddQueueItem(VRage.Game.MyDefinitionId,System.Decimal)">
+            <summary>
+            Adds a blueprint to the production queue
+            </summary>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.AddQueueItem(VRage.Game.MyDefinitionId,System.Double)">
+            <summary>
+            Adds a blueprint to the production queue
+            </summary>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.InsertQueueItem(System.Int32,VRage.Game.MyDefinitionId,VRage.MyFixedPoint)">
+            <summary>
+            Inserts a blueprint into the production queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.InsertQueueItem(System.Int32,VRage.Game.MyDefinitionId,System.Decimal)">
+            <summary>
+            Inserts a blueprint into the production queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.InsertQueueItem(System.Int32,VRage.Game.MyDefinitionId,System.Double)">
+            <summary>
+            Inserts a blueprint into the production queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="blueprint">A MyDefinitionId that names the blueprint</param>
+            <param name="amount">Amount of items</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.RemoveQueueItem(System.Int32,VRage.MyFixedPoint)">
+            <summary>
+            Removes an item from the queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="amount">Amount to remove</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.RemoveQueueItem(System.Int32,System.Decimal)">
+            <summary>
+            Removes an item from the queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="amount">Amount to remove</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.RemoveQueueItem(System.Int32,System.Double)">
+            <summary>
+            Removes an item from the queue
+            </summary>
+            <param name="idx">Index of the item</param>
+            <param name="amount">Amount to remove</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.ClearQueue">
+            <summary>
+            Clears the Queue
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyProductionBlock.GetQueue(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyProductionItem})">
+            <summary>
+            Gets the current production queue
+            </summary>
+            <returns>List of MyProductionQueueItems</returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProductionBlock.InputInventory">
+            <summary>
+            Gets the input inventory.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProductionBlock.OutputInventory">
+            <summary>
+            Gets the output inventory.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProductionBlock.IsProducing">
+            <summary>
+            The device is currently producing.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProductionBlock.IsQueueEmpty">
+            <summary>
+            The production queue is empty.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProductionBlock.NextItemId">
+            <summary>
+            Gets the queue item ID of the next item to be produced.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyProductionBlock.UseConveyorSystem">
+            <summary>
+            Gets or sets whether this device should use the conveyor system to retrieve and store items.
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.IMyProductionBlock.CanUseBlueprint(VRage.Game.MyDefinitionBase)">
@@ -58,16 +199,55 @@
             </summary>
             <returns>List of MyProductionQueueItems</returns>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.RemoveQueueItem(System.Int32,VRage.MyFixedPoint)">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAssembler.CurrentProgress">
             <summary>
-            Removes an item from the queue
+            Gets the progress for the item currently in production.
             </summary>
-            <param name="idx">Index of the item</param>
-            <param name="amount">Amount to remove</param>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyProductionBlock.ClearQueue">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAssembler.Mode">
             <summary>
-            Clears the Queue
+            Gets or sets the current work mode of this assembly, whether it's assembling or disassembling.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAssembler.CooperativeMode">
+            <summary>
+            Gets or sets whether this assembler should cooperate with other assemblers by adopting parts of
+            their work queue.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAssembler.Repeating">
+            <summary>
+            Gets or sets whether this assembler should be perpetually repeating its work queue.
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyAssembler.CurrentProgressChanged">
+            <summary>
+            Called when the current item build progress changes.
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyAssembler.CurrentStateChanged">
+            <summary>
+            Called when the state of the assembler changes.
+            </summary>
+        </member>
+        <member name="E:Sandbox.ModAPI.IMyAssembler.CurrentModeChanged">
+            <summary>
+            Called when the build mode changes.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAttachableTopBlock.IsAttached">
+            <summary>
+            Gets whether the top part is attached to a base block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyAttachableTopBlock.Base">
+            <summary>
+            Gets the attached base block
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyAttachableTopBlock.Base">
+            <summary>
+            Gets the attached base block
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.Raycast(System.Double,System.Single,System.Single)">
@@ -104,12 +284,32 @@
             <param name="distance"></param>
             <returns></returns>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.CanScan(System.Double,VRageMath.Vector3D)">
+            <summary>
+            Checks if the camera can scan to the given direction and distance.
+            </summary>
+            <param name="distance"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.CanScan(VRageMath.Vector3D)">
+            <summary>
+            Checks if the camera can scan to the given target
+            </summary>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyCameraBlock.TimeUntilScan(System.Double)">
             <summary>
             Returns the number of milliseconds until the camera can do a raycast of the given distance.
             </summary>
             <param name="distance"></param>
             <returns></returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCameraBlock.IsActive">
+            <summary>
+            Determines whether this camera is currently in use.
+            </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyCameraBlock.AvailableScanRange">
             <summary>
@@ -185,29 +385,44 @@
             <param name="elevation"></param>
             <returns></returns>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.CanControlShip">
+            <summary>
+            Determines whether this specific ship controller is capable of controlling the ship it's installed on.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.IsUnderControl">
             <summary>
             Indicates whether a block is locally or remotely controlled.
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.HasWheels">
+            <summary>
+            Determines whether there are any wheels on this ship.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlWheels">
             <summary>
-            Indicates whether wheels are being controlled by this controller.
+            Gets or sets whether wheels are being controlled by this controller.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ControlThrusters">
             <summary>
-            Indicates whether thrusters are being controlled by this controller.
+            Gets or sets whether thrusters are being controlled by this controller.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.HandBrake">
             <summary>
-            Indicates the current state of the handbrake.
+            Gets or sets the current state of the handbrake.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.DampenersOverride">
             <summary>
-            Indicates whether dampeners are currently enabled.
+            Gets or sets whether dampeners are currently enabled.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.ShowHorizonIndicator">
+            <summary>
+            Gets or sets whether the horizon indicator should be displayed for this block.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.MoveIndicator">
@@ -223,6 +438,81 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.RollIndicator">
             <summary>
             Roll input from user/autopilot. Values can be very large with high controller sensitivity
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.CenterOfMass">
+            <summary>
+            Center of mass in grid coordinates
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.HasFirstPersonCamera">
+            <summary>
+            Gets if this ship controller contains a first-person camera view.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.LastPilot">
+            <summary>
+            Get the last character that was piloting the controller.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.Pilot">
+            <summary>
+            Get the character that is currently piloting the controller.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.IsShooting">
+            <summary>
+            Gets if the ship is shooting selected weapons.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.MoveIndicator">
+            <summary>
+            Gets the current movement direction indicator
+            </summary>
+            <remarks>Set by MoveAndRotate, regardless if a movement happened.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.RotationIndicator">
+            <summary>
+            Gets the current rotation direction indicator
+            </summary>
+            <remarks>Set by MoveAndRotate, regardless if a movement happened.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyShipController.RollIndicator">
+            <summary>
+            Gets the current roll direction indicator
+            </summary>
+            <remarks>Set by MoveAndRotate, regardless if a movement happened.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCockpit.IsMainCockpit">
+            <summary>
+            Determines whether this controller is the main cockpit of the shit this doesn't belong here.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCockpit.OxygenCapacity">
+            <summary>
+            Gets the maximum oxygen capacity of this cockpit.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyCockpit.OxygenFilledRatio">
+            <summary>
+            Gets the current oxygen level of this cockpit, as a value between 0 (empty) and 1 (full).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCockpit.AttachPilot(VRage.Game.ModAPI.IMyCharacter)">
+            <summary>
+            Place a pilot in the cockpit seat.
+            </summary>
+            <param name="pilot">Character to place in seat</param>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyCockpit.RemovePilot">
+            <summary>
+            Removes an attached pilot. Call on server.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyCockpit.OxygenFilledRatio">
+            <summary>
+            Gets or sets the current oxygen level of this cockpit, as a value between 0 (empty) and 1 (full).
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyConveyorSorter.GetFilterList(System.Collections.Generic.List{Sandbox.ModAPI.Ingame.MyInventoryItemFilter})">
@@ -340,6 +630,18 @@
             Inventory bag spawned when character died, container breaks, or when entity from other inventory cannot be spawned then bag spawned with the item in its inventory.
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyJumpDrive.Jump(System.Boolean)">
+            <summary>
+            Requests the jump drive to make a jump.
+            </summary>
+            <param name="usePilot">Pass <b>true</b> to use the controlling player as a direction reference, <b>false</b> to use the default ship controller. Default <b>true</b>.
+            </param>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyJumpDrive.CurrentStoredPower">
+            <summary>
+            Gets or sets the stored charge.
+            </summary>
+        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.TrackTarget(VRage.ModAPI.IMyEntity)">
             <summary>
             Tracks entity with enabled position prediction
@@ -390,6 +692,11 @@
             Indicates whether a block is locally or remotely controlled.
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.HasTarget">
+            <summary>
+            Checks if the turret is locked onto a target
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyLargeTurretBase.Elevation">
             <summary>
             Sets/gets elevation of turret, this method is not synced, you need to sync elevation manually
@@ -431,6 +738,17 @@
             Connect to target defined by SetTargetCoords
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TransmitMessage(System.String)">
+            <summary>
+            Sends a message to the programmable block associated with this antenna's partner
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.RequireLoS">
+            <summary>
+            Determines whether this particular antenna requires line of sight to function.
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TargetCoords">
             <summary>
             get target coordinates
@@ -446,14 +764,118 @@
             Target is outside movement limits of antenna
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyLaserAntenna.RequireLoS">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLaserAntenna.Status">
             <summary>
-            Flag if antenna requires LoS - for modded antenas
+            Gets the current status of this antenna.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorRotor.IsAttached">
+        <member name="M:Sandbox.ModAPI.IMyLaserAntenna.IsInRange(Sandbox.ModAPI.IMyLaserAntenna)">
             <summary>
-            Gets whether the rotor is attached to a stator/suspension block
+            Returns <b>true</b> if the specific laser antenna is within connection range.
+            </summary>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyLaserAntenna.Other">
+            <summary>
+            Gets the antenna on the remote end of the connection.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.Radius">
+            <summary>
+            Gets or sets the basic radius of the light.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.Intensity">
+            <summary>
+            Gets or sets the current intensity of the light.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.Falloff">
+            <summary>
+            Gets or sets the current falloff of the light.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.BlinkIntervalSeconds">
+            <summary>
+            Gets or sets the blinking interval of this light (in seconds).
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.BlinkLength">
+            <summary>
+            Gets or sets how much of the blinking interval should be spent with the light on, as a value between 0 and 1.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.BlinkOffset">
+            <summary>
+            Adds an offset to the blinking interval, as a value between 0 and 1.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyLightingBlock.Color">
+            <summary>
+            Gets or sets the color of the light.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.Attach">
+            <summary>
+            Attaches a nearby top part to the block
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.Detach">
+            <summary>
+            Detaches the top from the base
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.TopGrid">
+            <summary>
+            Gets the grid of the attached top part
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.Top">
+            <summary>
+            Gets the attached top part entity
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.SafetyLockSpeed">
+            <summary>
+            Gets or sets the speed at which this device will engage it's safety lock (<see cref="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.IsLocked"/>).
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.SafetyLock">
+            <summary>
+            Gets if the block is safety locked (welded)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.IsAttached">
+            <summary>
+            Gets if the block base is attached to something
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.IsLocked">
+            <summary>
+            Gets if the block is safety locked (welded)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMechanicalConnectionBlock.PendingAttachment">
+            <summary>
+            Gets if the block is looking for a top part
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyMechanicalConnectionBlock.Attach(Sandbox.ModAPI.IMyAttachableTopBlock,System.Boolean)">
+            <summary>
+            Attaches the specified top part to the base
+            </summary>
+            <param name="top"></param>
+            <param name="updateGroup">true to update grid groups</param>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMechanicalConnectionBlock.TopGrid">
+            <summary>
+            Gets the grid of the attached top part
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMechanicalConnectionBlock.Top">
+            <summary>
+            Gets the attached top part entity
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.IMyMotorRotor.Stator">
@@ -461,32 +883,63 @@
             Gets the attached stator/suspension block
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Attach">
+        <member name="P:Sandbox.ModAPI.IMyMotorRotor.Base">
             <summary>
-            Attempts to attach to a nearby rotor/wheel
+            Gets the attached stator/suspension block
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyMotorBase.Detach">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.Angle">
             <summary>
-            Detaches the rotor/wheel from the stator/suspension
+            Gets the current angle of the rotor.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorBase.IsAttached">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.Torque">
             <summary>
-            Gets if the piston top is attached to something
+            Gets or sets the torque applied when moving the rotor top
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorBase.PendingAttachment">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.BrakingTorque">
             <summary>
-            Gets if the motor stator is looking for a rotor
+            Gets or sets the torque applied when stopping the rotor top
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.IMyMotorBase.Attach(Sandbox.ModAPI.IMyMotorRotor)">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.TargetVelocity">
+            <summary>
+            Gets or sets the desired velocity of the rotor
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.LowerLimit">
+            <summary>
+            Gets or sets the lower angle limit of the rotor. Set to -361 for no limit.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.UpperLimit">
+            <summary>
+            Gets or sets the upper angle limit of the rotor. Set to 361 for no limit.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyMotorStator.Displacement">
+            <summary>
+            Gets or sets the vertical displacement of the rotor top
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyMotorBase.Attach(Sandbox.ModAPI.IMyMotorRotor,System.Boolean)">
             <summary>
             Attaches a specified nearby rotor/wheel to the stator/suspension block
             </summary>
             <param name="rotor">Entity to attach</param>
+            <param name="updateGroup">true to update grid groups</param>
             <remarks>The rotor to attach must already be in position before calling this method.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.MaxRotorAngularVelocity">
+            <summary>
+            Gets the maximum angular velocity this rotor is capable of.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyMotorBase.RotorAngularVelocity">
+            <summary>
+            Gets the current angular velocity.
+            </summary>
         </member>
         <member name="P:Sandbox.ModAPI.IMyMotorBase.RotorGrid">
             <summary>
@@ -505,44 +958,107 @@
             </summary>
             <remarks>Gets the location where the top rotor piece will attach.</remarks>
         </member>
-        <member name="T:Sandbox.ModAPI.IMyOxygenGenerator">
+        <member name="T:Sandbox.ModAPI.IMyGasGenerator">
             <summary>
-            Oxygen generator interface
+            Gas generator interface
             </summary>
         </member>
-        <member name="T:Sandbox.ModAPI.Ingame.IMyOxygenGenerator">
+        <member name="T:Sandbox.ModAPI.Ingame.IMyGasGenerator">
             <summary>
-            Oxygen generator interface
+            Gas generator interface
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyOxygenGenerator.AutoRefill">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGasGenerator.AutoRefill">
             <summary>
             Autorefill enabled
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.ProductionCapacityMultiplier">
+        <member name="P:Sandbox.ModAPI.IMyGasGenerator.ProductionCapacityMultiplier">
             <summary>
             Increase/decrese O2 produced
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.IMyOxygenGenerator.PowerConsumptionMultiplier">
+        <member name="P:Sandbox.ModAPI.IMyGasGenerator.PowerConsumptionMultiplier">
             <summary>
             Increase/decrese power consumption
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Attach">
+        <member name="M:Sandbox.ModAPI.Ingame.IMyGasTank.RefillBottles">
             <summary>
-            Attaches a nearby top part to the piston block
+            Refills any stored storage bottles.
             </summary>
         </member>
-        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Detach">
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGasTank.Stockpile">
             <summary>
-            Detaches the top from the piston
+            Gets or sets the stockpiling option for this gas tank. When stockpile is on, the
+            tank will only allow itself to be filled, it will not release any gas.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGasTank.AutoRefillBottles">
+            <summary>
+            Gets or sets whether storage bottles will be filled automatically when placed within
+            this tank.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGasTank.Capacity">
+            <summary>
+            Gets the gas capacity of this tank.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyGasTank.FilledRatio">
+            <summary>
+            Gets the current fill level of this tank as a value between 0 (empty) and 1 (full).
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyOxygenTank.GetOxygenLevel">
+            <summary>
+            Gets the current oxygen level of this tank, as a value between 0 (empty) and 1 (full).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Extend">
+            <summary>
+            Extends the piston.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Retract">
+            <summary>
+            Retracts the piston.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyPistonBase.Reverse">
+            <summary>
+            Reverses the direction of the piston.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.Velocity">
             <summary>
-            Param - limit is top
+            Gets or sets the velocity of the piston as it extends or retracts. This value can be between negative and positive <see cref="P:Sandbox.ModAPI.Ingame.IMyPistonBase.MaxVelocity"/>.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.MaxVelocity">
+            <summary>
+            Gets the maximum velocity this piston is capable of moving at.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.MinLimit">
+            <summary>
+            Gets or sets the minimum position the piston can retract to. See <see cref="P:Sandbox.ModAPI.Ingame.IMyPistonBase.LowestPosition"/> and <see cref="P:Sandbox.ModAPI.Ingame.IMyPistonBase.HighestPosition"/> for the limits of this value.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.MaxLimit">
+            <summary>
+            Gets or sets the maximum position the piston can extend to. See <see cref="P:Sandbox.ModAPI.Ingame.IMyPistonBase.LowestPosition"/> and <see cref="P:Sandbox.ModAPI.Ingame.IMyPistonBase.HighestPosition"/> for the limits of this value.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.LowestPosition">
+            <summary>
+            Gets the lowest position the piston is capable of moving to.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.HighestPosition">
+            <summary>
+            Gets the highest position the piston is capable of moving to.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.CurrentPosition">
@@ -555,37 +1071,13 @@
             Gets the current status.
             </summary>
         </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.IsAttached">
-            <summary>
-            Gets if the piston base is attached to the top piece
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.IsLocked">
-            <summary>
-            Gets if the piston is safety locked (welded)
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.Ingame.IMyPistonBase.PendingAttachment">
-            <summary>
-            Gets if the piston is looking for a top part
-            </summary>
-        </member>
-        <member name="M:Sandbox.ModAPI.IMyPistonBase.Attach(Sandbox.ModAPI.IMyPistonTop)">
+        <member name="M:Sandbox.ModAPI.IMyPistonBase.Attach(Sandbox.ModAPI.IMyPistonTop,System.Boolean)">
             <summary>
             Attaches a specified nearby top part to the piston block
             </summary>
             <param name="top">Entity to attach</param>
+            <param name="updateGroup">true to update grid groups</param>
             <remarks>The top to attach must already be in position before calling this method.</remarks>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyPistonBase.TopGrid">
-            <summary>
-            Gets the grid attached to the piston top part
-            </summary>
-        </member>
-        <member name="P:Sandbox.ModAPI.IMyPistonBase.Top">
-            <summary>
-            Gets the attached piston top part entity
-            </summary>
         </member>
         <member name="E:Sandbox.ModAPI.IMyPistonBase.AttachedEntityChanged">
             <summary>
@@ -597,11 +1089,17 @@
             Gets the attached piston block
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.IMyPistonTop.Base">
+            <summary>
+            Gets the attached stator/suspension block
+            </summary>
+        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TryRun(System.String)">
             <summary>
             Attempts to run this programmable block using the given argument. An already running
             programmable block cannot be run again.
             This is equivalent to running <c>block.ApplyAction("Run", argumentsList);</c>
+            This should be called from an ingame script. Do not use in mods.
             </summary>
             <param name="argument"></param>
             <returns><c>true</c> if the action was applied, <c>false</c> otherwise</returns>
@@ -614,6 +1112,37 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyProgrammableBlock.TerminalRunArgument">
             <summary>
             Contains the value of the default terminal argument.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProgrammableBlock.Recompile">
+            <summary>
+            Recompiles script
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProgrammableBlock.Run">
+            <summary>
+            Runs with default terminal argument
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyProgrammableBlock.Run(System.String)">
+            <summary>
+            Runs with specified argument
+            </summary>
+            <param name="argument"></param>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyProgrammableBlock.ProgramData">
+            <summary>
+            Program contents. Automatically recompiles when set, if possible.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyProgrammableBlock.StorageData">
+            <summary>
+            Program storage (server only!)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMyProgrammableBlock.HasCompileErrors">
+            <summary>
+            Returns true if the script has compile errors (server only!)
             </summary>
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyProjector.UpdateOffsetAndRotation">
@@ -656,6 +1185,12 @@
             These values are not in degrees. 1 = 90 degrees, 2 = 180 degrees
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyProjector.SetProjectedGrid(VRage.Game.MyObjectBuilder_CubeGrid)">
+            <summary>
+            Allows you to set the currently projected grid
+            </summary>
+            <param name="grid"></param>
+        </member>
         <member name="M:Sandbox.ModAPI.IMyProjector.CanBuild(VRage.Game.ModAPI.IMySlimBlock,System.Boolean)">
             <summary>
             Checks if it's possible to build this block.
@@ -684,6 +1219,15 @@
             Antenna block interface
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRadioAntenna.TransmitMessage(System.String,Sandbox.ModAPI.Ingame.MyTransmitTarget)">
+            <summary>
+            Broadcasts a message to all PB attached to the antenna system.
+            Broadcast is delayed until the start of the next tick, and only one transmission can be sent per tick.
+            Returns false if broadcasting failed for any reason.
+            </summary>
+            <param name="message"></param>
+            <param name="target"></param>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.Radius">
             <summary>
             Broadcasting/Receiving range (read-only)
@@ -697,6 +1241,16 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IsBroadcasting">
             <summary>
             Returns true if antena is broadcasting (read-only)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IgnoreAlliedBroadcast">
+            <summary>
+            Ignores broadcasts sent by friendly antenna that do not belong to you
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyRadioAntenna.IgnoreOtherBroadcast">
+            <summary>
+            Ignores broadcasts sent by neutral and enemy antenna
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyReactor.CurrentOutput">
@@ -753,6 +1307,13 @@
             <param name="type"></param>
             <param name="memberNames"></param>
         </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.GetNearestPlayer(VRageMath.Vector3D@)">
+            <summary>
+            Gets the nearest player's position. Will only work if the remote control belongs to an NPC
+            </summary>
+            <param name="playerPosition"></param>
+            <returns></returns>
+        </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyRemoteControl.ClearWaypoints">
             <summary>
             Removes all existing waypoints.
@@ -782,9 +1343,186 @@
             Determines whether the autopilot is currently enabled.
             </summary>
         </member>
+        <member name="M:Sandbox.ModAPI.IMyRemoteControl.GetNearestPlayer(VRageMath.Vector3D@)">
+            <summary>
+            Gets the nearest player's position.
+            </summary>
+            <param name="playerPosition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sandbox.ModAPI.IMyRemoteControl.GetFreeDestination(VRageMath.Vector3D,System.Single,System.Single)">
+            <summary>
+            Gets a destination and tries to fix it so that it does not collide with anything
+            </summary>
+            <param name="originalDestination">The final destination that the remote wants to get to.</param>
+            <param name="checkRadius">The maximum radius until which this method should search.</param>
+            <param name="shipRadius">The radius of our ship. Make sure that this is large enough to avoid collision. A value of 0f will use the ship's WorldVolume radius.</param>
+            <returns>Adjusted position</returns>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.MaxRange">
             <summary>
-            Param - active
+            Gets the maximum range of the sensor in any direction.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.LeftExtend">
+            <summary>
+            Gets or sets the left range of the sensor.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.RightExtend">
+            <summary>
+            Gets or sets the right range of the sensor.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.TopExtend">
+            <summary>
+            Gets or sets the top range of the sensor.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.BottomExtend">
+            <summary>
+            Gets or sets the bottom range of the sensor.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.FrontExtend">
+            <summary>
+            Gets or sets the front range of the sensor.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.BackExtend">
+            <summary>
+            Gets or sets the back range of the sensor.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.PlayProximitySound">
+            <summary>
+            Gets or sets if the proximity sound plays when an entity is detected.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectPlayers">
+            <summary>
+            Gets or sets if the sensor should detect players.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectFloatingObjects">
+            <summary>
+            Gets or sets if the sensor should detect floating objects (components, rocks).
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectSmallShips">
+            <summary>
+            Gets or sets if the sensor should detect small ships.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectLargeShips">
+            <summary>
+            Gets or sets if the sensor should detect large ships.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectStations">
+            <summary>
+            Gets or sets if the sensor should detect large stations.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectSubgrids">
+            <summary>
+            Gets or sets if the sensor should detect subgrids (eg. connected by connector).
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectAsteroids">
+            <summary>
+            Gets or sets if the sensor should detect asteroids or planets.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectOwner">
+            <summary>
+            Gets or sets if the sensor should detect the block owner.
+            </summary>
+            <remarks>Requires DetectPlayers set to <b>true</b>.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectFriendly">
+            <summary>
+            Gets or sets if the sensor should detect friendly players.
+            </summary>
+            <remarks>Requires DetectPlayers set to <b>true</b>.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectNeutral">
+            <summary>
+            Gets or sets if the sensor should detect neutral players.
+            </summary>
+            <remarks>Requires DetectPlayers set to <b>true</b>.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.DetectEnemy">
+            <summary>
+            Gets or sets if the sensor should detect enemy players.
+            </summary>
+            <remarks>Requires DetectPlayers set to <b>true</b>.</remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMySensorBlock.IsActive">
+            <summary>
+            Gets if there is any entity currently being detected.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMySensorBlock.FieldMin">
+            <summary>
+            Gets or sets the sensor mininum field as a Vector3(-L,-Bo,-F).
+            </summary>
+            <remarks>
+            -X is Left
+            -Y is Bottom
+            -Z is Front
+            </remarks>
+        </member>
+        <member name="P:Sandbox.ModAPI.IMySensorBlock.FieldMax">
+            <summary>
+            Gets or sets the sensor maximum field as a Vector3(R,T,Ba).
+            </summary>
+            <remarks>
+            X is Right
+            Y is Top
+            Z is Back
+            </remarks>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipConnector.Connect">
+            <summary>
+            Attempts to connect. If <see cref="P:Sandbox.ModAPI.Ingame.IMyShipConnector.Status"/> is anything else but <see cref="!:ConnectorStatus.Connectable"/>, this method does nothing.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipConnector.Disconnect">
+            <summary>
+            Disconnects this connector.
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyShipConnector.ToggleConnect">
+            <summary>
+            Toggles between <see cref="!:ConnectorStatus.Connected"/> and <see cref="!:ConnectorStatus.Unconnected"/>, depending on the current status.
+            Another connector must be in range for this method to have any effect.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipConnector.ThrowOut">
+            <summary>
+            Gets or sets whether this connector should throw out anything placed in its inventory.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipConnector.CollectAll">
+            <summary>
+            Gets or sets whether this connector should be pulling items into its inventory.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipConnector.PullStrength">
+            <summary>
+            Gets or sets the currently configured strength of the pull when the connector is within
+            range of another.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipConnector.Status">
+            <summary>
+            Determines the current status of the connector.
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyShipConnector.OtherConnector">
+            <summary>
+            Gets the connector this one is connected to when <see cref="P:Sandbox.ModAPI.Ingame.IMyShipConnector.Status"/> is <see cref="!:ConnectorStatus.Connected"/>.
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyShipWelder">
@@ -916,10 +1654,24 @@
             Gets the maximum thrust amount, in Newtons (N)
             </summary>
         </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyThrust.MaxEffectiveThrust">
+            <summary>
+            Gets the maximum effective thrust amount, in Newtons (N)
+            </summary>
+        </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyThrust.CurrentThrust">
             <summary>
             Gets the current thrust amount, in Newtons (N)
             </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyThrust.GridThrustDirection">
+            <summary>
+            Gets the direction of thrust, relative to ship controller (cockpit).
+            </summary>
+            <remarks>
+            For example, a value of <see cref="F:VRageMath.Vector3I.Forward">VRageMath.Vector3I.Forward</see> means the thruster will move the grid along the grid's forward direction.
+            A value of Vector3D.Zero means direction is unknown (no cockpit available).
+            </remarks>
         </member>
         <member name="T:Sandbox.ModAPI.IMyUpgradableBlock">
             <summary>
@@ -981,6 +1733,21 @@
             Gets the current number of method calls.
             </summary>
         </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyAssemblerMode">
+            <summary>
+            Determines what mode an assembler is in.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyAssemblerMode.Assembly">
+            <summary>
+            The assembler is currently set to assemble new items.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyAssemblerMode.Disassembly">
+            <summary>
+            The assembler is currently set to disassemble existing items.
+            </summary>
+        </member>
         <member name="T:Sandbox.ModAPI.Ingame.MyConveyorSorterMode">
             <summary>
             Determines the current mode of a conveyor sorter.
@@ -1004,6 +1771,41 @@
         <member name="F:Sandbox.ModAPI.Ingame.MyInventoryItemFilter.ItemId">
             <summary>
             Specifies an item to filter. Set <see cref="F:Sandbox.ModAPI.Ingame.MyInventoryItemFilter.AllSubTypes"/> to true to only check the main type part of this ID.
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus">
+            <summary>
+            Describes the current status of a laser antenna.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus.Idle">
+            <summary>
+            Not doing anything and not connected.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus.RotatingToTarget">
+            <summary>
+            Currently rotating towards the currently selected target.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus.SearchingTargetForAntenna">
+            <summary>
+            Currently searching for a laser antenna at the target.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus.Connecting">
+            <summary>
+            Currently connecting to a laser antenna.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus.Connected">
+            <summary>
+            Currently connected to a laser antenna.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyLaserAntennaStatus.OutOfRange">
+            <summary>
+            The target antenna is out of range.
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyMotorSuspension.SteerAngle">
@@ -1051,6 +1853,26 @@
             The coordinates of this waypoint
             </summary>
         </member>
+        <member name="T:Sandbox.ModAPI.Ingame.MyShipConnectorStatus">
+            <summary>
+            Describes the current status of the connector.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipConnectorStatus.Unconnected">
+            <summary>
+            This connector is not connected to anything, nor is it near anything connectable.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipConnectorStatus.Connectable">
+            <summary>
+            This connector is currently near something that it can connect to.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipConnectorStatus.Connected">
+            <summary>
+            This connector is currently connected to something.
+            </summary>
+        </member>
         <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.BaseMass">
             <summary>
             Gets the base mass of the ship.
@@ -1059,6 +1881,11 @@
         <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.TotalMass">
             <summary>
             Gets the total mass of the ship, including cargo.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.MyShipMass.PhysicalMass">
+            <summary>
+            Gets the physical mass of the ship, which accounts for inventory multiplier.
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.Ingame.MyPlanetElevation">
@@ -1210,6 +2037,31 @@
             <typeparam name="T"></typeparam>
             <param name="value"></param>
             <returns></returns>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.DoorStatus">
+            <summary>
+            Describes the current status of the door.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.DoorStatus.Opening">
+            <summary>
+            The door is in the process of being opened.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.DoorStatus.Open">
+            <summary>
+            The door is fully open.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.DoorStatus.Closing">
+            <summary>
+            The door is in the process of being closed.
+            </summary>
+        </member>
+        <member name="F:Sandbox.ModAPI.Ingame.DoorStatus.Closed">
+            <summary>
+            The door is fully closed.
+            </summary>
         </member>
         <member name="T:Sandbox.ModAPI.IMyScriptBlacklist">
             <summary>

@@ -26,10 +26,10 @@ namespace SETextToSpeechMod
                 localVoiceField = value;
             }
         }
-        Type localVoiceField = POSSIBLE_OUTPUTS.HawkingType;      
+        Type localVoiceField = PossibleOutputs.GLADOSType;
 
         /// <summary>
-        /// Same sized groups of sentence types are ordered by their position in struct POSSIBLE_OUTPUTS.Collection
+        /// Same sized groups of sentence types are ordered by their position in struct PossibleOutputs.Collection
         /// </summary>                
         public IList <SentenceFactory> Speeches
         {
@@ -45,30 +45,30 @@ namespace SETextToSpeechMod
         public OutputManager (SoundPlayer inputEmitter, bool isDebugging)
         {
             soundPlayerRef = inputEmitter;
-            FactoryReset ();
+            FactoryReset();
         }
 
         public void FactoryReset()
         {
             RunSpeechPlayback = false;
-            typeIndexes = new int[POSSIBLE_OUTPUTS.Collection.Count];
+            typeIndexes = new int[PossibleOutputs.Collection.Count];
             speechesField.Clear();
 
-            for (int i = 0; i < POSSIBLE_OUTPUTS.Collection.Count; i++)
+            for (int i = 0; i < PossibleOutputs.Collection.Count; i++)
             {
                 for (int k = 0; k < TOTAL_SIMULTANEOUS_SPEECHES; k++)
                 {
-                    if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.MarekType)
+                    if (PossibleOutputs.Collection[i] == PossibleOutputs.MarekType)
                     {
                         speechesField.Add (new MarekVoice (soundPlayerRef));                                       
                     }
-
-                    else if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.HawkingType)
+/*
+                    else if (PossibleOutputs.Collection[i] == PossibleOutputs.HawkingType)
                     {
                         speechesField.Add (new HawkingVoice (soundPlayerRef));                                       
                     }
-
-                    else if (POSSIBLE_OUTPUTS.Collection[i] == POSSIBLE_OUTPUTS.GLADOSType)
+*/
+                    else if (PossibleOutputs.Collection[i] == PossibleOutputs.GLADOSType)
                     {
                         speechesField.Add (new GLADOSVoice (soundPlayerRef));                                       
                     }                      
@@ -105,7 +105,7 @@ namespace SETextToSpeechMod
         }
 
         /// <summary>
-        /// Returns integer indicating the type is indexed in struct POSSIBLE_OUTPUTS.
+        /// Returns integer indicating the type is indexed in struct PossibleOutputs.
         /// Can be -1 if no match found.
         /// </summary>
         /// <param name="scrutinizedType"></param>
@@ -114,9 +114,9 @@ namespace SETextToSpeechMod
         {
             int outcome = DOESNT_EXIST;
 
-            for (int i = 0; i < POSSIBLE_OUTPUTS.Collection.Count; i++)
+            for (int i = 0; i < PossibleOutputs.Collection.Count; i++)
             {
-                if (POSSIBLE_OUTPUTS.Collection[i].FullName == scrutinizedTypeName)
+                if (PossibleOutputs.Collection[i].FullName == scrutinizedTypeName)
                 {
                     outcome = i;
                 }
@@ -125,7 +125,7 @@ namespace SETextToSpeechMod
         }
 
         /// <summary>
-        /// The only accepted types are contained in public struct POSSIBLE_OUTPUTS
+        /// The only accepted types are contained in public struct PossibleOutputs
         /// </summary>
         /// <param name="validVoiceType"></param>
         /// <param name="sentence"></param>
@@ -149,39 +149,5 @@ namespace SETextToSpeechMod
         }
     }
 
-    public struct POSSIBLE_OUTPUTS
-    {        
-        public static Type MarekType { get; }
-        public static Type HawkingType { get; }
-        public static Type GLADOSType { get; }
-        
-        public static IList <Type> Collection
-        {
-            get
-            {
-                return allOptionsField.AsReadOnly();
-            }
-        }
-        private static List <Type> allOptionsField;
-        public static int AutoSignatureSize { get; }
 
-        static POSSIBLE_OUTPUTS()
-        {
-            MarekType = typeof (MarekVoice);
-            HawkingType = typeof (HawkingVoice);
-            GLADOSType = typeof (GLADOSVoice);
-            allOptionsField = new List <Type>();
-            allOptionsField.Add (MarekType);
-            allOptionsField.Add (HawkingType);
-            allOptionsField.Add (GLADOSType);
-
-            for (int i = 0; i < allOptionsField.Count; i++)
-            {
-                if (allOptionsField[i].ToString().Length > AutoSignatureSize)
-                {
-                    AutoSignatureSize = allOptionsField[i].ToString().Length;
-                }
-            }
-        }
-    } 
 }

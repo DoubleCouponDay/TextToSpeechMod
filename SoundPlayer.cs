@@ -12,7 +12,7 @@ using VRage.Game.ModAPI;
 namespace SETextToSpeechMod
 {
     public class SoundPlayer
-    {
+    {    
         const int CHANCE_OF_CLANG = 10000; //cannot be zero
         const string BONK = "BONK";
         const string SPACE = "SPACE";       
@@ -21,6 +21,7 @@ namespace SETextToSpeechMod
         Random numberGenerator = new Random();
 
         private float volume = 0.6f;
+        private const float DISTANCE = 500.0f;
             
         private bool debugging;
         private bool playInRealisticMode;
@@ -38,7 +39,7 @@ namespace SETextToSpeechMod
             {
                 IMyEntity emitterEntity = new MyEntity() as IMyEntity; //couldnt instantiate MyEntity so had to use its cast.
                 TTSEmitter = new MyEntity3DSoundEmitter (emitterEntity as MyEntity);
-                TTSEmitter.CustomMaxDistance = 500.0f; //since emitter position updates every interval, the distance should be large.
+                TTSEmitter.CustomMaxDistance = DISTANCE; //since emitter position updates every interval, the distance should be large.
                 TTSEmitter.SourceChannels = 1;
                 TTSEmitter.Force2D = true;
                 TTSEmitter.CustomVolume = volume;
@@ -66,13 +67,17 @@ namespace SETextToSpeechMod
         /// <param name="newVolume"></param>
         public void UpdateVolume (float newVolume)
         {
-            if (newVolume >= 0.0f &&
+            if (newVolume >= default (float) &&
                 newVolume <= 1.0f)
             {
                 volume = newVolume;
                 MyAPIGateway.Utilities.ShowMessage ("New speech volume: ", volume.ToString());
             }
-            MyAPIGateway.Utilities.ShowMessage ("", "Cannot apply that new volume. It must be between 0.0 and 1.0");
+
+            else
+            {
+                MyAPIGateway.Utilities.ShowMessage ("", "Cannot apply that new volume. It must be between 0.0 and 1.0");
+            }            
         }
 
         public bool PlaySentence (List <TimelineClip> inputTimeline, int currentTick)
@@ -105,13 +110,14 @@ namespace SETextToSpeechMod
             return hasFinished;
         }
 
-        private void PlayClip (string clip)
+private void PlayClip (string clip)
         {
             if (debugging == false)
             {
-MySoundPair sound = new MySoundPair ("AEE-G 0");
+                MySoundPair sound = new MySoundPair (clip);                
                 TTSEmitter.PlaySound (sound, false, false, false, playInRealisticMode, false); //this overload enables sound in realistic mode.
             }
         }
     }
 }
+    

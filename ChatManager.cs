@@ -11,11 +11,13 @@ namespace SETextToSpeechMod
         const ushort packet_ID = 60452; //the convention is to use the last 4-5 digits of your steam mod as packet ID
 
         bool initialised;
-        private bool debugging;        
+        private bool debugging = false;
 
         private Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.        
         private SoundPlayer soundPlayer;
         public OutputManager OutputManager { get; private set; }
+
+        public ChatManager(){}
 
         public ChatManager (bool isDebugging)
         {
@@ -47,13 +49,12 @@ namespace SETextToSpeechMod
         } 
 
         public void OnMessageEntered (string messageText, ref bool sendToOthers)  //event handler method will run when this client posts a chat message.
-        {      
-/*                                                  
+        {                                                 
             string noEscapes = string.Format (@"{0}", messageText);
             string fixedCase = noEscapes.ToUpper(); //capitalize all letters of the input sentence so that comparison is made easier.                
             ExecuteCommandIfValid (fixedCase);
             string signatureBuild = OutputManager.LocalPlayersVoice.ToString();
-            int leftoverSpace = POSSIBLE_OUTPUTS.AutoSignatureSize - OutputManager.LocalPlayersVoice.ToString().Length;
+            int leftoverSpace = PossibleOutputs.AutoSignatureSize - OutputManager.LocalPlayersVoice.ToString().Length;
 
             for (int i = 0; i < leftoverSpace; i++)
             {
@@ -77,14 +78,6 @@ namespace SETextToSpeechMod
             {
                 OnReceivedPacket (ConvertedToPacket);
             }
-
-using (var tts = new FonixTalkEngine())
-{
-    string msg = "sup";
-    byte[] test = tts.SpeakToMemory (msg);
-    MyAPIGateway.Utilities.ShowMessage (test.ToString(), "");
-} 
-*/
         }
 
         private void ExecuteCommandIfValid (string upperCaseSentence)
@@ -93,7 +86,7 @@ using (var tts = new FonixTalkEngine())
             {
                 if (upperCaseSentence.Contains (COMMANDS.VoiceCollection[i]))
                 {
-                    OutputManager.LocalPlayersVoice = POSSIBLE_OUTPUTS.Collection[i];
+                    OutputManager.LocalPlayersVoice = PossibleOutputs.Collection[i];
                     return;
                 }
             }
@@ -157,7 +150,7 @@ using (var tts = new FonixTalkEngine())
         private string ExtractSignatureFromPacket (ref string packet)
         {
             char[] dividedMessage = packet.ToCharArray();
-            char[] signatureChars = new char[POSSIBLE_OUTPUTS.AutoSignatureSize];
+            char[] signatureChars = new char[PossibleOutputs.AutoSignatureSize];
 
             for (int i = 0; i < signatureChars.Length; i++)
             {
@@ -165,7 +158,7 @@ using (var tts = new FonixTalkEngine())
             }
             string voiceSignature = new string (signatureChars);
 
-            packet = packet.Remove (0, POSSIBLE_OUTPUTS.AutoSignatureSize);
+            packet = packet.Remove (0, PossibleOutputs.AutoSignatureSize);
             return voiceSignature;
         }
 
@@ -180,12 +173,12 @@ using (var tts = new FonixTalkEngine())
     public struct COMMANDS
     {
         public const string CHANGE_VOICE_TO_MAREK = "[ MAREK";
-        public const string CHANGE_VOICE_TO_HAWKING = "[ JOHN MADDEN";
+        //public const string CHANGE_VOICE_TO_HAWKING = "[ JOHN MADDEN";
         public const string CHANGE_VOICE_TO_GLADOS = "[ GLADOS";       
 
         public static readonly string[] VoiceCollection = {
             CHANGE_VOICE_TO_MAREK,
-            CHANGE_VOICE_TO_HAWKING,
+            //CHANGE_VOICE_TO_HAWKING,
             CHANGE_VOICE_TO_GLADOS,
         };
 

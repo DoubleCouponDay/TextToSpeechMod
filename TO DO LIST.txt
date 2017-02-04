@@ -6,39 +6,23 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ test the byte[] method with a dummy constant array.
++ plugin is off the cards. finish block and glados voice 
+	-generate glados xwm
+	-make glados sbc files
+	-make folder structure. use cloud berry
 
-+ figure out how to get SEWorkshopToolWorking
++ use hawking voice with no pitch? 
 
-    https://github.com/Phoenix84/SEWorkshopTool
-
-    (x86)\Steam\steamapps\common\SpaceEngineers\Bin64\SEWorkshopTool.exe" --upload --compile --mods ShipyardMod
-    @echo off
-    pause
-
-+ record exclamation point endings and question mark endings
-+ sync with pavilion then publish
-
-+ glados and madden sbc files
-+ add marek audio and sbc files to mirrored build again
-+ publish
-+ test to see if game accepts them
-
-+ test the whitelist workaround was successful
-+ test voices and tune them up.
-+ test performance
-+ make sure ending phonemes are seen as vowels only in the code
-+ fully implement and study intonation selecting algorithm
-
-+ think of good object builder for block
++ think of good object builder for block. cant be terminal block
 + block should not play in realistic mode.
 + figure out how to implement new buttons and a text box.
 
 + read the log for PrettyScaryDictionary crash. async?
 
-+ basic number support.
++ make basic number support.
 
-+ test everything
++ test commands
++ test block
 
 + make a showcase video 
 
