@@ -119,10 +119,7 @@ namespace SETextToSpeechMod
 
                 else
                 {
-                    for (int i = 0; i < timeline.Count; i++)
-                    {
-                        AddIntonations (i);
-                    }
+                    IterateIntonationsOnTimeLine();
                     Loading = false;
                 }        
             }
@@ -193,10 +190,19 @@ namespace SETextToSpeechMod
             syllableMeasure = 0;
         } 
 
+        protected virtual void IterateIntonationsOnTimeLine()
+        {
+            for (int i = 0; i < timeline.Count; i++)
+            {
+                AddIntonations (i);
+            }
+        }
+
         //this has been separated from the initial timeline construction because it must know the total number of phonemes first.
         protected virtual void AddIntonations (int timelineIndex)
         {        
-
+            TimelineClip previousClip = timeline[timelineIndex];
+            timeline[timelineIndex] = new TimelineClip (previousClip.StartPoint, previousClip.ClipsSound);
         }         
 
         protected void ChoosePitchPattern (int sizeIndex)

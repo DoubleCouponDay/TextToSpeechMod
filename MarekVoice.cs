@@ -9,6 +9,6 @@
 
         public MarekVoice (SoundPlayer inputEmitter) : base (inputEmitter){}
 
-        protected override void AddIntonations (int timelineIndex) { }
+        protected override void IterateIntonationsOnTimeLine() { }
     }
 }
