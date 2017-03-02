@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<Definitions xmlns:xsi='www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+    <SoundCategories>
+
+        <SoundCategory>
+            <Id>
+                <TypeId>SoundCategoryDefinition</TypeId>
+                <SubtypeId>NIH-G 3</SubtypeId>
+            </Id>
+
+            <Sounds>
+                <SoundDesc Id='NIH-G 3' SoundName='NIH-G 3' />
+            </Sounds>
+        </SoundCategory>
+    </SoundCategories>
+
+    <Sounds>
+        <Sound>
+            <Id>
+                <TypeId>AudioDefinition</TypeId>
+                <SubtypeId>NIH-G 3</SubtypeId>
+            </Id>
+
+            <Category>Sb</Category>
+            <MaxDistance>100</MaxDistance>
+            <Volume>1.0</Volume>
+            <Loopable>true</Loopable>
+
+            <Waves>
+                <Wave Type='D2'> <!-- D2 means 2d, D3 means 3D -->
+                    <Start>Audio\GLADOS\C# 5\NIH-G 3.xwm</Start>
+                </Wave>
+            </Waves>
+        </Sound>
+    </Sounds>
+</Definitions>
