@@ -1,6 +1,6 @@
 ﻿namespace SETextToSpeechMod
 {
-    public sealed class GLADOSVoice : SentenceFactory, VoiceTemplate
+    public sealed class GLADOSVoice : SentenceFactory
     {        
         public override string FileID { get { return "-G"; } }
         public override int SpaceSize { get { return 4; } }
@@ -29,5 +29,10 @@
         };
 
         public GLADOSVoice (SoundPlayer inputEmitter) : base (inputEmitter){}
+
+        protected override void AddIntonations (int timelineIndex)
+        {
+            
+        }
     }
 }

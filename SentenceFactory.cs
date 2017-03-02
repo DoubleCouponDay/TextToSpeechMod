@@ -119,10 +119,6 @@ namespace SETextToSpeechMod
 
                 else
                 {
-                    for (int i = 0; i < timeline.Count; i++)
-                    {
-                        AddIntonations (i);
-                    }
                     Loading = false;
                 }        
             }

@@ -5,25 +5,24 @@ BROKEN WORDS
 
 
 TO DO
-================//
-+ plugin is off the cards. finish block and glados voice 
-	-generate glados xwm
-	-make glados sbc files
-	-make folder structure. use cloud berry
+================//		
++ implement phoneme choosing for hawking
++ implement phoneme choosing for glados
 
-+ use hawking voice with no pitch? 
++ test
++ fix everything :^)
+
++ replace computer voice with dalek voice
 
 + think of good object builder for block. cant be terminal block
 + block should not play in realistic mode.
 + figure out how to implement new buttons and a text box.
 
-+ read the log for PrettyScaryDictionary crash. async?
++ read the log for PrettyScaryDictionary crash. multithreading?
 
 + make basic number support.
 
-+ test commands
-+ test block
-
-+ make a showcase video 
++ test
++ fix everything :^)
 
 + FINISH

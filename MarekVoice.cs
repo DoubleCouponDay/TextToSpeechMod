@@ -1,6 +1,6 @@
 ﻿namespace SETextToSpeechMod
 {
-    public sealed class MarekVoice : SentenceFactory, VoiceTemplate
+    public sealed class MarekVoice : SentenceFactory
     {
         public override string FileID { get { return "-M"; } }
         public override int SpaceSize { get { return 4; } }
