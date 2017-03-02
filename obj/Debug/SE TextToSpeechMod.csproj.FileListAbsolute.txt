@@ -369,3 +369,4 @@ C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.R
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\VRage.Scripting.xml
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\Sandbox.Graphics.xml
 C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\bin\Debug\SpaceEngineers.ObjectBuilders.xml
+C:\Users\power\Desktop\scripting\TextToSpeechMod\obj\Debug\TextToSpeechMod.pdb
