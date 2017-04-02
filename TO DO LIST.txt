@@ -48,6 +48,11 @@ TO DO
 + think of good object builder for block. cant be terminal block
 + block should not play in realistic mode.
 + figure out how to implement new buttons and a text box.
+    MyAPIGateway.TerminalControls.CustomControlGetter += TerminalControls_CustomControlGetter;
+    then
+    private static void TerminalControls_CustomControlGetter(IMyTerminalBlock block, List<IMyTerminalControl> controls)
+
+    remove needed entries from controls argument(edited)
 
 + read the log for PrettyScaryDictionary crash. multithreading?
 
