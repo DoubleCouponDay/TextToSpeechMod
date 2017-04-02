@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Diagnostics;
+using SETextToSpeechMod.LookUpTables;
 
 namespace SETextToSpeechMod
 {

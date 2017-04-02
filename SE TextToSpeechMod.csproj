@@ -172,18 +172,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceManager.cs" />
-    <Compile Include="GLADOSVoice.cs" />
-    <Compile Include="HawkingVoice.cs" />
+    <Compile Include="LookUpTables\RecognizedSymbols.cs" />
+    <Compile Include="Processing\Intonation.cs" />
+    <Compile Include="Processing\Pronunciation.cs" />
+    <Compile Include="VoiceCode\GladosVoice\GLADOSVoice.cs" />
+    <Compile Include="VoiceCode\HawkingVoice\HawkingVoice.cs" />
     <Compile Include="OutputManager.cs" />
     <Compile Include="PossibleOutputs.cs" />
+    <Compile Include="LookUpTables\Vowels.cs" />
     <Compile Include="SpeechBlock.cs" />
-    <Compile Include="VoiceTemplate.cs" />
-    <Compile Include="MarekVoice.cs" />
-    <Compile Include="PrettyScaryDictionary.cs" />
+    <Compile Include="VoiceCode\VoiceTemplate.cs" />
+    <Compile Include="VoiceCode\MarekVoice\MarekVoice.cs" />
+    <Compile Include="LookUpTables\PrettyScaryDictionary.cs" />
     <Compile Include="ChatManager.cs" />
-    <Compile Include="Pronunciation.cs" />
     <Compile Include="WordIsolator.cs" />
-    <Compile Include="SentenceFactory.cs" />
+    <Compile Include="Processing\SentenceFactory.cs" />
     <Compile Include="SoundPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OptionalDebugger.cs" />
@@ -194,6 +197,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="VoiceCode\ComputerVoice\" />
+    <Folder Include="VoiceCode\DalekVoice\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

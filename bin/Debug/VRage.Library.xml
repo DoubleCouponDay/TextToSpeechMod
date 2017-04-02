@@ -5477,13 +5477,7 @@
         <member name="M:VRage.Library.Utils.MyRandom.NextFloat">
             Returns random number between 0 and 1.
         </member>
-        <member name="M:VRage.Library.Utils.MyRandom.NextFloat(System.Int32)">
-            Returns random number between 0 and 1.
-        </member>
         <member name="M:VRage.Library.Utils.MyRandom.NextDouble">
-            Returns random number between 0 and 1.
-        </member>
-        <member name="M:VRage.Library.Utils.MyRandom.NextDouble(System.Int32)">
             Returns random number between 0 and 1.
         </member>
         <member name="T:VRage.Library.Utils.MyTimer">
