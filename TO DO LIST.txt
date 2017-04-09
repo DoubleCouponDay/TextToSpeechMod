@@ -6,39 +6,13 @@ BROKEN WORDS
 
 TO DO
 ================//		
-+ implement phoneme choosing for hawking
-	-figure out a way to get symbols out of Pronunciation:
-	summary:
-	-new intonation class.
-	-derived type for each voice.	
-	-take surroundingphrase and voice header as input.
-	-contains a table of vowel phonemes.
-	-if previous four letters contain a vowel and last letter is a recognized symbol, add the symbols header 
-
-	If I make a lookup table of recognized symbols, it will not help matching in adjacentevaluation.
-	A smarter way would be to create an intonation class which pronunciation would have an instance of.
-	then i could combine the chosen letter with whatever the method spits out.
-	Would it work with the output of dictionary? I believe so but you would need a fair amount of concatenation.
-	I suggest an instance of concatbuilder in pronunciation.
-	intonation would need the surrounding phrase as input.
-	It would then need to decide if there is a vowel phoneme nearby in order to place a symbol address.
-	otherwise, simply use a standard phoneme.
-
-	I think all words will have there last vowel within 4 letters of a symbol.
-	We will not worry about detecting end of a word; the symbol is signal enough.
- 	In order to detect a vowel I will need to make a table of vowels in the intonation class; composed of PSD phonemes.
-	
-	how am I going to make customized intonation for each voice???
-	instance on pronunciation doesnt work then since it was designed as OSFA.
-	I could make the class a public property so that different deriving types can be assigned.
-	the trade of there is do i want all voice unique code in a single class or split it across multiple different types?
-	I think im gonna go with the latter.
-
-	Dependency injection could solve this problem if i place the necessary headers at instantiation time.
-	I wont have to manually change the property. only expand the constructor for sentence factory. 
++ make sentencefactory run asynchronously
++ Pronunciations implementation of GetPhonemesIntonation() doesnt work with dictionary dump!
++ test if  // minus 1 needed to convert length to the last index for Pronunciation.SentenceEndIsInEvaluationPhrase
++ test output class to make sure removing items does not leave gaps
++ test that async task only runs 
 
 + implement phoneme choosing for glados
-
 + test
 + fix everything :^)
 

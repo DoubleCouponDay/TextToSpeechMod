@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SETextToSpeechMod
 {
@@ -62,46 +63,48 @@ namespace SETextToSpeechMod
                     {
                         speechesField.Add (new MarekVoice (soundPlayerRef));                                       
                     }
-/*
+
                     else if (PossibleOutputs.Collection[i] == PossibleOutputs.HawkingType)
                     {
-                        speechesField.Add (new HawkingVoice (soundPlayerRef));                                       
+                        speechesField.Add (new HawkingVoice (soundPlayerRef));
                     }
-*/
+
                     else if (PossibleOutputs.Collection[i] == PossibleOutputs.GLADOSType)
                     {
-                        speechesField.Add (new GLADOSVoice (soundPlayerRef));                                       
+                        speechesField.Add (new GladosVoice (soundPlayerRef));                                       
                     }                      
                 }                
             }
         }
 
-        public void Run()
-        {
-            if (RunSpeechPlayback == true)
-            {
-                RunSpeechPlayback = false; 
+        public async Task RunAsync()
+        {         
+            await Task.Run (() => {
+                if (RunSpeechPlayback == true)
+                {
+                    RunSpeechPlayback = false; 
 
-                for (int i = 0; i < speechesField.Count; i++) 
-                {                    
-                    if (speechesField[i].FinishedPlaying == false)
-                    {
-                        RunSpeechPlayback = true;
-                        speechesField[i].Run();
+                    for (int i = 0; i < speechesField.Count; i++) 
+                    {                    
+                        if (speechesField[i].FinishedPlaying == false)
+                        {
+                            RunSpeechPlayback = true;
+                            speechesField[i].Run();
+                        }
                     }
-                }
 
-                if (timer <= 0) //im hoping that a little distance will prevent the oscillating position whch annoys ear drums.
-                {
-                    timer = UPDATES_INTERVAL;
-                    soundPlayerRef.UpdatePosition (AttendanceManager.LocalPlayer);                    
-                }
+                    if (timer <= 0) //im hoping that a little distance will prevent the oscillating position whch annoys ear drums.
+                    {
+                        timer = UPDATES_INTERVAL;
+                        soundPlayerRef.UpdatePosition (AttendanceManager.LocalPlayer);                    
+                    }
 
-                else
-                {
-                    timer--;
-                }                               
-            }
+                    else
+                    {
+                        timer--;
+                    }                               
+                }
+            });
         }
 
         /// <summary>

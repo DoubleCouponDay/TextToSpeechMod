@@ -5434,6 +5434,16 @@
             <param name="seed">Any integer to be used as a seed. The seed needs not be super uniform since it will be hashed.</param>
             <returns>A float in the range [0, 1)</returns>
         </member>
+        <member name="M:VRage.Library.Utils.MyImageHeaderUtils.Read_DDS_HeaderData(System.String,VRage.Library.Utils.MyImageHeaderUtils.DDS_HEADER@)">
+            <summary>
+            Reads the header of standard DDS texture without reading the rest of its contents.
+            Checks for magic constant.
+            </summary>
+            <param name="filePath">Path to dds.</param>
+            <param name="header">Output header</param>
+            <returns>Success flag.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VRage.Library.Utils.MyImageHeaderUtils.Read_PNG_Dimensions(System.String,System.Int32@,System.Int32@)" -->
         <member name="M:VRage.Library.Utils.MyInterpolationQueue`1.DiscardOld(VRage.Library.Utils.MyTimeSpan)">
             <summary>
             Discards old samples, keeps at least 2 samples to be able to interpolate or extrapolate.

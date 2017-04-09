@@ -442,7 +442,7 @@
         </member>
         <member name="P:Sandbox.ModAPI.Ingame.IMyShipController.CenterOfMass">
             <summary>
-            Center of mass in grid coordinates
+            Center of mass in world coordinates
             </summary>
         </member>
         <member name="P:Sandbox.ModAPI.IMyShipController.HasFirstPersonCamera">
@@ -740,7 +740,8 @@
         </member>
         <member name="M:Sandbox.ModAPI.Ingame.IMyLaserAntenna.TransmitMessage(System.String)">
             <summary>
-            Sends a message to the programmable block associated with this antenna's partner
+            Sends a message to the programmable block associated with this antenna's partner.
+            Limited to 100,000 characters.
             </summary>
             <param name="message"></param>
         </member>
@@ -1224,6 +1225,7 @@
             Broadcasts a message to all PB attached to the antenna system.
             Broadcast is delayed until the start of the next tick, and only one transmission can be sent per tick.
             Returns false if broadcasting failed for any reason.
+            Limited to 100,000 characters.
             </summary>
             <param name="message"></param>
             <param name="target"></param>
@@ -1692,6 +1694,31 @@
         <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradableBlock.UpgradeCount">
             <summary>
             number of upgrades applied
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.IMyUpgradeModule">
+            <summary>
+            Interface to access upgrade module properties <see cref="T:Sandbox.ModAPI.Ingame.IMyUpgradeModule"/>
+            </summary>
+        </member>
+        <member name="T:Sandbox.ModAPI.Ingame.IMyUpgradeModule">
+            <summary>
+            Interface to access module upgrades properties
+            </summary>
+        </member>
+        <member name="M:Sandbox.ModAPI.Ingame.IMyUpgradeModule.GetUpgradeList(System.Collections.Generic.List{VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo}@)">
+            <summary>
+            Retrieve list of upgrades from this block (r/o), see <see cref="!:Sandbox.Common.ObjectBuilders.Definitions.MyUpgradeModuleInfo">MyUpgradeModuleInfo</see> for details
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradeModule.UpgradeCount">
+            <summary>
+            Retrieve number of upgrade effects this block has (r/o)
+            </summary>
+        </member>
+        <member name="P:Sandbox.ModAPI.Ingame.IMyUpgradeModule.Connections">
+            <summary>
+            Retrieve number of blocks this block is connected to (r/o)
             </summary>
         </member>
         <member name="T:Sandbox.ModAPI.Ingame.IMyGridProgramRuntimeInfo">

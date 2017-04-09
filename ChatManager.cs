@@ -2,6 +2,8 @@
 
 using Sandbox.ModAPI; //location of MyAPIGateway.
 using VRage.Game.Components; //location of MySessionComponentBase.
+using System.Threading.Tasks;
+using System;
 
 namespace SETextToSpeechMod
 {   
@@ -12,7 +14,8 @@ namespace SETextToSpeechMod
 
         bool initialised;
         private bool debugging = false;
-
+                
+        private Task asyncCallAllowed;
         private Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.        
         private SoundPlayer soundPlayer;
         public OutputManager OutputManager { get; private set; }
@@ -30,7 +33,13 @@ namespace SETextToSpeechMod
             {
                 Initialise();
             }
-            OutputManager.Run();             
+
+            if (asyncCallAllowed == null || 
+               (asyncCallAllowed?.IsCompleted != null && //Apprently && operator will not continue evaluating if its previous evaluation was false
+                asyncCallAllowed?.IsCompleted == true))
+            {
+                asyncCallAllowed = OutputManager.RunAsync();
+            }
         }
 
         public void Initialise() //this wouldnt work as a constructor because im guessing some assets arent available during load time.

@@ -1,4 +1,6 @@
-﻿namespace SETextToSpeechMod
+﻿using SETextToSpeechMod.VoiceCode.MarekVoice;
+
+namespace SETextToSpeechMod
 {
     public sealed class MarekVoice : SentenceFactory
     {
@@ -7,8 +9,6 @@
         public override int ClipLength { get { return 4; } }
         public override int SyllableSize { get { return 3; } }        
 
-        public MarekVoice (SoundPlayer inputEmitter) : base (inputEmitter){}
-
-        protected override void IterateIntonationsOnTimeLine() { }
+        public MarekVoice (SoundPlayer inputEmitter) : base (inputEmitter, new MarekIntonation()){}
     }
 }

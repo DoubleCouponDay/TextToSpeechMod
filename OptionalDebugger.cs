@@ -11,8 +11,8 @@ namespace SETextToSpeechMod
 {
     public class OptionalDebugger
     {         
-        const string currentComputer = "pavilion";
-        //const string currentComputer = "thinkpad";
+        //const string currentComputer = "pavilion";
+        const string currentComputer = "thinkpad";
 
         const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
         const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
@@ -129,17 +129,15 @@ namespace SETextToSpeechMod
             string packaged = signatureBuild + upperCase;                
             byte[] packet = encode.GetBytes (packaged);
             entryPoint.OnReceivedPacket (packet);
-
             
-
             while (entryPoint.OutputManager.RunSpeechPlayback)
             {
                 entryPoint.UpdateBeforeSimulation();              
-                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, 
-                                       entryPoint.OutputManager.Speeches[5].Results, 
-                                       entryPoint.OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
+                debugger.StoreResults (entryPoint.OutputManager.Speeches[0].Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
+                                       entryPoint.OutputManager.Speeches[0].Results, 
+                                       entryPoint.OutputManager.Speeches[0].Pronunciation.UsedDictionary);         
             }                               
-            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
+            debugger.PrintResults (entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
         }
 
         public string RollOutAdjacentWords()

@@ -6,22 +6,31 @@ namespace SETextToSpeechMod.Processing
 {
     public class Pronunciation
     {    
+        /// <summary>
+        /// The length of evaluation chunks in the AdjacentEvaluation algorithm.
+        /// </summary>
+        public const int ALGORITHM_PHRASE_SIZE = 5;
+        public const int PHRASES_FUTURE_CHARS_SIZE = 2;
+
         public WordIsolator WordIsolator {get; private set;}
+        public Intonation intonation {get; private set;}
 
         public bool UsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
         public int WrongFormatNonMatches {get; private set;}
+        public bool SentenceEndIsInEvaluationPhrase {get; private set;}
 
         string[] dictionaryMatch;
         string surroundingPhrase;
-        List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!
+        List <string> currentResults = new List <string>(); //reused a lot so dont put dictonary and adjacent results in at the same time!
 
         string tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
         int tempLetterIndex;
 
-        public Pronunciation()
-        {
+        public Pronunciation (Intonation intonationType)
+        { 
             this.WordIsolator = new WordIsolator();
+            this.intonation = intonationType;
         }
 
         public void FactoryReset()
@@ -43,9 +52,11 @@ namespace SETextToSpeechMod.Processing
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
             WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis. 
+            SentenceEndIsInEvaluationPhrase = (letterIndex >= sentence.Length - PHRASES_FUTURE_CHARS_SIZE) ? true : false;
             tempSentence = sentence;
             tempLetterIndex = letterIndex;
-            currentResults.Clear();                        
+            currentResults.Clear();        
+            surroundingPhrase = "";                             
 
             if (WordIsolator.CurrentWord != WordIsolator.SPACE.ToString())
             {
@@ -79,7 +90,12 @@ namespace SETextToSpeechMod.Processing
             else
             {
                 currentResults.Add (WordIsolator.SPACE.ToString()); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
-            }      
+            }
+
+for (int i = 0; i < currentResults.Count; i++)
+{ 
+    currentResults[i] = intonation.GetPhonemesIntonation (currentResults[i], surroundingPhrase, SentenceEndIsInEvaluationPhrase);                
+}
             return currentResults;
         }
 
@@ -1016,7 +1032,7 @@ namespace SETextToSpeechMod.Processing
 
             for (int i = 0; i < analyseDivisions.Length; i++)
             {
-                if (analyseDivisions[i].Length != 5)
+                if (analyseDivisions[i].Length != ALGORITHM_PHRASE_SIZE)
                 {
                     WrongFormatMatches++;
                 }
@@ -1027,7 +1043,7 @@ namespace SETextToSpeechMod.Processing
         //returns true when the unwanted phrase
         bool UnwantedMatchBypassed (string pattern) 
         {
-            if (pattern.Length != 5)
+            if (pattern.Length != ALGORITHM_PHRASE_SIZE)
             {
                 WrongFormatNonMatches++;
             }

@@ -4,14 +4,10 @@ using SETextToSpeechMod.Processing;
 
 namespace SETextToSpeechMod
 {   
-    public abstract class SentenceFactory : VoiceTemplate
+    public abstract class SentenceFactory
     {   
         protected const string SPACE = "SPACE";    
 
-        //voice template
-        public virtual string Name { get { return "SentenceFactory";} }
-        public virtual string FileID { get; }
-        public virtual int SpaceSize { get; }
         public virtual int ClipLength { get; }
         public virtual int SyllableSize { get; }        
 
@@ -65,7 +61,7 @@ namespace SETextToSpeechMod
         {            
             Loading = false;
             FinishedPlaying = true;
-            Pronunciation = new Pronunciation();
+            Pronunciation = new Pronunciation (intonationType);
             resultsField = new List <string>();
             timeline.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;            
             soundPlayerRef = inputEmitter; //the reason im using a pointer is there is no need for a SoundPlayer per SentenceFactory.
@@ -120,7 +116,6 @@ namespace SETextToSpeechMod
 
                 else
                 {
-                    IterateIntonationsOnTimeLine();
                     Loading = false;
                 }        
             }
@@ -142,8 +137,7 @@ namespace SETextToSpeechMod
                 {
                     if (resultsField[i] != " ")
                     {                                                   
-                        string soundChoice = resultsField[i] + FileID;
-                        AddToTimeline (soundChoice);                                            
+                        AddToTimeline (resultsField[i]);                                            
 
                         if (syllableMeasure >= SyllableSize - 1)
                         {                            
@@ -191,26 +185,7 @@ namespace SETextToSpeechMod
             syllableMeasure = 0;
         } 
 
-        protected virtual void IterateIntonationsOnTimeLine()
-        {
-            for (int i = 0; i < timeline.Count; i++)
-            {
-                AddIntonations (i);
-            }
-        }
 
-        //this has been separated from the initial timeline construction because it must know the total number of phonemes first.
-        protected virtual void AddIntonations (int timelineIndex)
-        {        
-            ;
-        }         
-
-        protected void ChoosePitchPattern (int sizeIndex)
-        {
-            int currentLimit = allPitchOptions[sizeIndex].Length;
-            int randomPattern = rng.Next (currentLimit);
-            intonationArrayChosen = allPitchOptions[sizeIndex][randomPattern];
-        }
     }
 
     public struct TimelineClip

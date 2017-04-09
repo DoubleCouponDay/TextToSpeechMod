@@ -6,8 +6,8 @@ namespace SETextToSpeechMod
     static class PossibleOutputs
     {        
         public static Type MarekType { get { return typeof (MarekVoice); } }
-        //public static Type HawkingType { get{ return typeof (HawkingVoice); } }
-        public static Type GLADOSType { get{ return typeof (GLADOSVoice); } }
+        public static Type HawkingType { get{ return typeof (HawkingVoice); } }
+        public static Type GLADOSType { get{ return typeof (GladosVoice); } }
         
         public static IList <Type> Collection
         {
@@ -18,8 +18,8 @@ namespace SETextToSpeechMod
         }
         private static List <Type> allOptionsField = new List<Type>()
         {
-            MarekType,
-            //HawkingType,
+            MarekType, //marek must be first for optionaldebugger to work
+            HawkingType,
             GLADOSType,
         };
         public static int AutoSignatureSize { get; }
