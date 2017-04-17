@@ -5,19 +5,21 @@ BROKEN WORDS
 
 
 TO DO
-================//		
-+ make sentencefactory run asynchronously
-+ Pronunciations implementation of GetPhonemesIntonation() doesnt work with dictionary dump!
-+ test if  // minus 1 needed to convert length to the last index for Pronunciation.SentenceEndIsInEvaluationPhrase
-+ test output class to make sure removing items does not leave gaps
-+ test that async task only runs 
+================//
++ make createnewspeech() async
+	-integrate cancellationtoken using taskfactory. wav2ba for reference
+
++ test output class to make sure removing items does not leave gaps		
+
++ test adjacentresults with dictionary words with values longer than their keys
++ test Intonation is accurate during dictionary dumps
 
 + implement phoneme choosing for glados
-+ test
++ test async task
++ test cancellation token source in output manager
 + fix everything :^)
 
-+ keep computer voice
-+ make dalek voice; no pitch
++ add computer voice support
 
 + think of good object builder for block. cant be terminal block
 + block should not play in realistic mode.

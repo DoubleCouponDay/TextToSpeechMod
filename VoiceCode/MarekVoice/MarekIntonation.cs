@@ -9,5 +9,11 @@ namespace SETextToSpeechMod.VoiceCode.MarekVoice
 {
     class MarekIntonation : Intonation
     {
+        public override string VoiceId { get { return "-M"; } }                
+
+        protected override string DerivedIntonationChoice (string phoneme, string surroundingPhrase, bool sentenceEndInPhrase)
+        {
+            return phoneme + VoiceId;
+        }
     }
 }

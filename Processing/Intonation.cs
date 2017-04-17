@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod.Processing
 {
-    public abstract class Intonation : VoiceTemplate
+    public abstract class Intonation
     {
         protected StringBuilder concatLite = new StringBuilder();
 
-        public abstract int ClipLength { get; }
         public abstract string VoiceId { get; }
-        public abstract int SpaceSize { get; }
-        public abstract int SyllableSize { get; }
 
         /// <summary>
         /// 

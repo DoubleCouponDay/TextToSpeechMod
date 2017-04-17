@@ -10,19 +10,24 @@ namespace SETextToSpeechMod.Processing
         /// The length of evaluation chunks in the AdjacentEvaluation algorithm.
         /// </summary>
         public const int ALGORITHM_PHRASE_SIZE = 5;
-        public const int PHRASES_FUTURE_CHARS_SIZE = 2;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const int SENTENCE_END_ZONES_LENGTH = 3;
 
         public WordIsolator WordIsolator {get; private set;}
         public Intonation intonation {get; private set;}
 
         public bool UsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
-        public int WrongFormatNonMatches {get; private set;}
-        public bool SentenceEndIsInEvaluationPhrase {get; private set;}
+        public int WrongFormatNonMatches {get; private set;}        
 
         string[] dictionaryMatch;
         string surroundingPhrase;
         List <string> currentResults = new List <string>(); //reused a lot so dont put dictonary and adjacent results in at the same time!
+
+        bool pushingDictionaryWordOut;
 
         string tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
         int tempLetterIndex;
@@ -45,18 +50,26 @@ namespace SETextToSpeechMod.Processing
             tempSentence = "";
             tempLetterIndex = 0;
 
+            pushingDictionaryWordOut = false;
+
             WordIsolator.FactoryReset();
         }
 
-        //first searches the ditionary, then tries the secondary pronunciation if no match found.
+        /// <summary>
+        /// first searches the dictionary, then tries adjacent evaluation if no match found.
+        /// </summary>
+        /// <param name="sentence"></param>
+        /// <param name="letterIndex"></param>
+        /// <returns>returns new list.</returns>
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
-            WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis. 
-            SentenceEndIsInEvaluationPhrase = (letterIndex >= sentence.Length - PHRASES_FUTURE_CHARS_SIZE) ? true : false;
+            currentResults = new List <string>();
+            WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
             tempSentence = sentence;
             tempLetterIndex = letterIndex;
             currentResults.Clear();        
-            surroundingPhrase = "";                             
+            surroundingPhrase = "";        
+            pushingDictionaryWordOut = false;                     
 
             if (WordIsolator.CurrentWord != WordIsolator.SPACE.ToString())
             {
@@ -91,11 +104,24 @@ namespace SETextToSpeechMod.Processing
             {
                 currentResults.Add (WordIsolator.SPACE.ToString()); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
             }
+            
+            if (OutputManager.IsDebugging == false)
+            {
+                bool sentenceIsEnding = (letterIndex >= sentence.Length - SENTENCE_END_ZONES_LENGTH) ? true : false;
 
-for (int i = 0; i < currentResults.Count; i++)
-{ 
-    currentResults[i] = intonation.GetPhonemesIntonation (currentResults[i], surroundingPhrase, SentenceEndIsInEvaluationPhrase);                
-}
+                for (int i = default (int); i < currentResults.Count; i++)
+                { 
+                    bool lastVowelSoon = default (bool);
+
+                    if (sentenceIsEnding && 
+                        pushingDictionaryWordOut &&
+                        i < currentResults.Count - SENTENCE_END_ZONES_LENGTH) 
+                    {
+                        lastVowelSoon = false; //prevents TakeFromDictionary() from applying the sentence end state to its entire word push.
+                    }              
+                    currentResults[i] = intonation.GetPhonemesIntonation (currentResults[i], surroundingPhrase, lastVowelSoon);
+                }
+            }
             return currentResults;
         }
 
@@ -106,6 +132,8 @@ for (int i = 0; i < currentResults.Count; i++)
 
             if (bookmark == WordIsolator.WordsIndexLimit)
             {
+                pushingDictionaryWordOut = true;
+
                 for (int i = bookmark; i < dictionaryMatch.Length; i++)
                 {                        
                     currentResults.Add (dictionaryMatch[i]);

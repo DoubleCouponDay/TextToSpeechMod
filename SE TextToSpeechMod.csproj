@@ -173,6 +173,7 @@
   <ItemGroup>
     <Compile Include="AttendanceManager.cs" />
     <Compile Include="LookUpTables\RecognizedSymbols.cs" />
+    <Compile Include="Output\SpeechTask.cs" />
     <Compile Include="Processing\Intonation.cs" />
     <Compile Include="Processing\Pronunciation.cs" />
     <Compile Include="Processing\UnconventionalPhraseException.cs" />
@@ -180,18 +181,18 @@
     <Compile Include="VoiceCode\GladosVoice\GladosVoice.cs" />
     <Compile Include="VoiceCode\HawkingVoice\HawkingIntonation.cs" />
     <Compile Include="VoiceCode\HawkingVoice\HawkingVoice.cs" />
-    <Compile Include="OutputManager.cs" />
-    <Compile Include="PossibleOutputs.cs" />
+    <Compile Include="Output\OutputManager.cs" />
+    <Compile Include="Output\PossibleOutputs.cs" />
     <Compile Include="LookUpTables\Vowels.cs" />
     <Compile Include="SpeechBlock.cs" />
     <Compile Include="VoiceCode\MarekVoice\MarekIntonation.cs" />
     <Compile Include="VoiceCode\VoiceTemplate.cs" />
     <Compile Include="VoiceCode\MarekVoice\MarekVoice.cs" />
     <Compile Include="LookUpTables\PrettyScaryDictionary.cs" />
-    <Compile Include="ChatManager.cs" />
-    <Compile Include="WordIsolator.cs" />
-    <Compile Include="Processing\SentenceFactory.cs" />
-    <Compile Include="SoundPlayer.cs" />
+    <Compile Include="ChatEntryPoint.cs" />
+    <Compile Include="Processing\WordIsolator.cs" />
+    <Compile Include="Processing\TimelineFactory.cs" />
+    <Compile Include="Output\SoundPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OptionalDebugger.cs" />
   </ItemGroup>
@@ -204,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="VoiceCode\ComputerVoice\" />
-    <Folder Include="VoiceCode\DalekVoice\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

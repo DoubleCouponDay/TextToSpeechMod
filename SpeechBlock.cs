@@ -35,7 +35,7 @@ namespace SETextToSpeechMod
 
         public override void UpdateBeforeSimulation()
         {
-            outputManager.RunAsync();
+            //outputManager.RunAsync();
             
         }
 

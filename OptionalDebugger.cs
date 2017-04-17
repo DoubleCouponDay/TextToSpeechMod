@@ -113,7 +113,7 @@ namespace SETextToSpeechMod
         static void Main()
         {
             OptionalDebugger debugger = new OptionalDebugger();
-            ChatManager entryPoint = new ChatManager (true);
+            ChatEntryPoint entryPoint = new ChatEntryPoint (true);
             Encoding encode = Encoding.Unicode;
             AttendanceManager.Debugging = true;                        
             entryPoint.Initialise();
@@ -133,11 +133,11 @@ namespace SETextToSpeechMod
             while (entryPoint.OutputManager.RunSpeechPlayback)
             {
                 entryPoint.UpdateBeforeSimulation();              
-                debugger.StoreResults (entryPoint.OutputManager.Speeches[0].Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
-                                       entryPoint.OutputManager.Speeches[0].Results, 
-                                       entryPoint.OutputManager.Speeches[0].Pronunciation.UsedDictionary);         
+                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
+                                       entryPoint.OutputManager.Speeches[5].CurrentResults, 
+                                       entryPoint.OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
             }                               
-            debugger.PrintResults (entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
+            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
         }
 
         public string RollOutAdjacentWords()

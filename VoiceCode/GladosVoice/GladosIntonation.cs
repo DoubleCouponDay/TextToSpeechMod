@@ -7,8 +7,37 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod.VoiceCode.GladosVoice
 {
-    class GladosIntonation : Intonation
+    class GladosIntonation// : Intonation
     {
+        //        protected virtual int smallSize { get { return 6; } }
+        //protected virtual int mediumSize { get { return 50; } }
+        //protected virtual int largeSize { get { return OutputManager.MAX_LETTERS; } }
+        //protected int[] allSizes;
+
+        //protected virtual int[][] smallIntonationPatterns { get; } //an intonation pattern should be designed to loop on itself. it can be any size.
+        //protected virtual int[][] mediumIntonationPatterns { get; }
+        //protected virtual int[][] largeIntonationPatterns { get; }
+        //protected int[][][] allPitchOptions;
+
+
+            //allSizes = new int[]
+            //{
+            //    smallSize,
+            //    mediumSize,
+            //    largeSize,
+            //};
+            
+            //allPitchOptions = new int[][][]     
+            //{
+            //    smallIntonationPatterns,
+            //    mediumIntonationPatterns,
+            //    largeIntonationPatterns,
+            //};
+
+        //protected virtual int voiceRange { get; }
+
+
+
         //protected void ChoosePitchPattern (int sizeIndex)
         //{
         //    int currentLimit = allPitchOptions[sizeIndex].Length;
