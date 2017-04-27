@@ -53,7 +53,7 @@ namespace SETextToSpeechMod
         const string ZIH = PrettyScaryDictionary.ZIH;
         static readonly string[] ROW = PrettyScaryDictionary.ROW; //in order to put this in the table it must be static.
 
-        readonly OrderedDictionary adjacentWords = new OrderedDictionary
+        readonly OrderedDictionary adjacentWords = new OrderedDictionary // ordered dictionary only allows you to access its values by int index; nothing more.
         {
             {"", new string[]{  }},
             {"_A_", ROW}, {"ABLE", new string[]{ AEE, BIH, LIH, }}, {"A", new string[]{ UHH, }}, {"AVAILABLE", new string[]{ UHH, VIH, AEE, LIH, UHH, BIH, LIH, }}, {"AUTOGRAPH", new string[]{ AWW, TIH, OWE, GIH, RIH, AHH, FIH, }}, {"ACTIVITIES", new string[]{ AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, }}, {"AGGRESSION", new string[]{ UHH, GIH, RIH, EHH, SHI, UHH, NIH, }}, {"ABORIGINE", new string[]{ AHH, BIH, OWE, RIH, IHH, JIH, IHH, NIH, EEE, }}, {"ANNOINT", new string[]{ UHH, NIH, AWW, EEE, NIH, TIH, }}, {"ASTRONAUT", new string[]{ AHH, SIH, TIH, RIH, OWE, NIH, AWW, TIH, }}, {"ASSAULT", new string[]{ UHH, SIH, HOH, LIH, TIH, }}, {"ABOITEAU", new string[]{ AHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABOITEAUX", new string[]{ AHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABILITY", new string[]{ UHH, BIH, IHH, LIH, IHH, TIH, EEE, }}, {"AGAIN", new string[]{ UHH, GIH, AEE, NIH, }}, {"ACTIVATE", new string[]{ AHH, KIH, TIH, IHH, VIH, AEE, TIH, }}, {"ACOUSTIC", new string[]{ UHH, KIH, OOO, SIH, TIH, IHH, KIH, }}, {"ADVANTAGE", new string[]{ AHH, DIH, VIH, AHH, NIH, TIH, IHH, JIH, }},
@@ -87,7 +87,9 @@ namespace SETextToSpeechMod
         int lowerCaseWords = 0;
         string resultsFile;
 
-        OrderedDictionary emptiesRemoved = new OrderedDictionary();            
+        bool duplicateExists = default (bool);
+
+        OrderedDictionary emptiesRemoved = new OrderedDictionary(); //needed for checking for duplicate entries
         OrderedDictionary tabledResults = new OrderedDictionary();
         ICollection adjacentKeys;
         ICollection resultKeys;
@@ -130,20 +132,40 @@ namespace SETextToSpeechMod
             byte[] packet = encode.GetBytes (packaged);
             entryPoint.OnReceivedPacket (packet);
             
-            while (entryPoint.OutputManager.RunSpeechPlayback)
+            while (entryPoint.OutputManager.IsProcessingOutputs)
             {
                 entryPoint.UpdateBeforeSimulation();              
-                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
-                                       entryPoint.OutputManager.Speeches[5].CurrentResults, 
-                                       entryPoint.OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
+                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].MainProcess.Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
+                                       entryPoint.OutputManager.Speeches[5].MainProcess.CurrentResults, 
+                                       entryPoint.OutputManager.Speeches[5].MainProcess.Pronunciation.UsedDictionary);         
             }                               
-            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
+            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].MainProcess.Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].MainProcess.Pronunciation.WrongFormatNonMatches);
         }
 
+        /// <summary>
+        /// Removes whitespace and null from the table and returns every item as a single string in alphabetical order.
+        /// </summary>
+        /// <param name="tableToRollOut"></param>
+        /// <returns></returns>
         public string RollOutAdjacentWords()
         {
-            string rolledOut = "";                
+            string rolledOut = string.Empty;
             
+foreach (KeyValuePair <string, string[]> entry in adjacentWords)
+{
+                
+
+                while ()
+                {
+
+                }
+                if (entry.Value.IsNullOrEmpty() == false &&
+                    )
+                {
+                    adjacentWords.Remove (entry.Key);
+                }
+}
+
             for (int i = 0; i < emptiesRemoved.Count; i++) 
             {                    
                 string[] currentAdjacentValue = emptiesRemoved[i] as string[];

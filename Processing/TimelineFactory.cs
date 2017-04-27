@@ -7,18 +7,18 @@ namespace SETextToSpeechMod
 {   
     public abstract class TimelineFactory
     {   
-        const  string SPACE = " ";
+        const string SPACE = " ";
 
         public abstract int ClipLength { get; }
         public abstract int SyllableSize { get; }     
         public abstract int SpaceSize { get; }   
 
         //external feedback        
-        public bool IsFresh {get; private set;}
         public bool IsBusy { get; private set;}
+        public bool HasAnOrder { get; private set;}
 
         //loading data            
-        protected string sentence;
+        protected string sentence = "";
         bool previousWasSpace;
         int syllableMeasure;          
         protected int[] intonationArrayChosen;
@@ -49,8 +49,6 @@ namespace SETextToSpeechMod
 
         public TimelineFactory (SoundPlayer inputEmitter, Intonation intonationType)
         {       
-            IsBusy = false;     
-            IsFresh = true;
             Pronunciation = new Pronunciation (intonationType);
             currentResultsField = new List <string>();
             timelinesField.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;            
@@ -58,13 +56,13 @@ namespace SETextToSpeechMod
         }
 
         /// <summary>
-        /// Initialises a new sentence.
+        /// Initialises a new sentence. You need to Run FactoryReset() before calling this.
         /// </summary>
         /// <param name="inputSentence"></param>
         public void FactoryReset (string inputSentence)
-        {
-            IsFresh = true;           
+        {       
             IsBusy = false;
+            HasAnOrder = true;
 
             sentence = inputSentence;
             
@@ -80,18 +78,21 @@ namespace SETextToSpeechMod
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
         public async Task RunAsync()
-        {    
-            IsFresh = false;           
-            IsBusy = true;
+        {                     
+            if (HasAnOrder)
+            {
+                IsBusy = true;
 
-            await Task.Run (() => { 
-                for (int i = 0; i < sentence.Length; i++)
-                {
-                    AddPhonemes (i);
-                }
-            });
-            await soundPlayerRef.PlaySentence (timelinesField); 
-            IsBusy = false;
+                await Task.Run (() => { 
+                    for (int i = 0; i < sentence.Length; i++)
+                    {
+                        AddPhonemes (i);
+                    }
+                });
+                await soundPlayerRef.PlaySentence (timelinesField);
+                IsBusy = false;
+                HasAnOrder = false;
+            }            
         } 
         
         /// <summary>

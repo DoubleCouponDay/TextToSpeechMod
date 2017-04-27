@@ -6609,12 +6609,7 @@
         </member>
         <member name="F:MyCommonTexts.JoinGame_SearchLabel">
             <summary>
-            Search game
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.JoinGame_SearchTooltip">
-            <summary>
-            At least 3 characters must be inserted to start searching
+            Search
             </summary>
         </member>
         <member name="F:MyCommonTexts.ProgressTextDownloadingMods">
@@ -8516,6 +8511,196 @@
         <member name="F:MyCommonTexts.MultiplayerErrorKickedByAdmins">
             <summary>
             You have recently been kicked from this server.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinHasPassword">
+            <summary>
+            Has Password
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinOnlinePlayers">
+            <summary>
+            Online Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinConnect">
+            <summary>
+            Connect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinDirectConnect">
+            <summary>
+            Direct Connect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinIPError">
+            <summary>
+            An error occurred when parsing the provided IP address or hostname. Check the log for more details.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Map">
+            <summary>
+            Map
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Server">
+            <summary>
+            Server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Version">
+            <summary>
+            Version
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_GameMode">
+            <summary>
+            Game Mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_InventorySizeMultiplier">
+            <summary>
+            Inventory Size Multiplier
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_MaxPlayers">
+            <summary>
+            Max Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_EnableCopyPaste">
+            <summary>
+            Copy/Paste
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_EnableSpectator">
+            <summary>
+            Spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_AutoSaveInMinutes">
+            <summary>
+            AutoSave In Minutes
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_EnableRespawnShips">
+            <summary>
+            Enable Respawn Ships / Carts
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_FloraDensityMultiplier">
+            <summary>
+            Flora Density Multiplier
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_AddFavorite">
+            <summary>
+            Add Favorite
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_IPAddress">
+            <summary>
+            IP Address
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_ModDownloadSize">
+            <summary>
+            Mod download size
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_ModError">
+            <summary>
+            Error getting mod information!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_PlayerError">
+            <summary>
+            Error getting player information!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_ServerEmpty">
+            <summary>
+            Server is empty!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Settings">
+            <summary>
+            Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_WorldSettings">
+            <summary>
+            World Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Any">
+            <summary>
+            Any
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldPause">
+            <summary>
+            Pause
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldResume">
+            <summary>
+            Resume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_SettingError">
+            <summary>
+            Error downloading server settings!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_Clear">
+            <summary>
+            Clear
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_Defaults">
+            <summary>
+            Defaults
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_EnableAdvanced">
+            <summary>
+            Enable Advanced
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_EnableAdvancedTooltip">
+            <summary>
+            Enables advanced search filters
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_EnableNumericTooltip">
+            <summary>
+            Enable or disable this filter
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_DirectConnect">
+            <summary>
+            Direct Connect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ServerDetails">
+            <summary>
+            Server Details
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_NoMods">
+            <summary>
+            Server has no mods!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_Exclusive">
+            <summary>
+            Exclusive
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_ExclusiveTooltip">
+            <summary>
+            Toggles whether a server must have: All of the selected mods (exclusive) or Any of the selected mods (inclusive)
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">

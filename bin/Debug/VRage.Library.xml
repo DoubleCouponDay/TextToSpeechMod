@@ -617,9 +617,16 @@
         <member name="F:DShowNET.Clsid.FilterGraph">
             <summary> CLSID_FilterGraph, filter Graph </summary>
         </member>
+        <member name="F:DShowNET.Clsid.WMVideoDecoderDMO">
+            <summary> WMV Decoder DMO, WMV Decoder </summary>
+        </member>
+        <member name="F:DShowNET.Clsid.WMVideoDecoderDMO_cat">
+            <summary> WMV Decoder DMO, WMV Decoder category </summary>
+        </member>
         <member name="F:DShowNET.Clsid.SampleGrabber">
             <summary> CLSID_SampleGrabber, Sample Grabber filter </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "F:DShowNET.Clsid.NullRenderer" -->
         <member name="T:DShowNET.VideoState">
             <summary>
             Describes the state of a video player
@@ -653,11 +660,6 @@
         <member name="F:DShowNET.VideoPlayer.m_mediaSeeking">
             <summary>
             The MediaSeeking interface ref
-            </summary>
-        </member>
-        <member name="F:DShowNET.VideoPlayer.filename">
-            <summary>
-            The Video File to play
             </summary>
         </member>
         <member name="F:DShowNET.VideoPlayer.m_videoDataRgba">
@@ -718,12 +720,6 @@
             Creates a new Video Player. Automatically creates the required Texture2D on the specificied GraphicsDevice.
             </summary>
             <param name="FileName">The video file to open</param>
-            <param name="graphicsDevice">XNA Graphics Device</param>
-        </member>
-        <member name="M:DShowNET.VideoPlayer.InitInterfaces">
-            <summary>
-            Initialises DirectShow interfaces
-            </summary>
         </member>
         <member name="M:DShowNET.VideoPlayer.CloseInterfaces">
             <summary>
@@ -798,11 +794,6 @@
         <member name="P:DShowNET.VideoPlayer.DurationAsTimeString">
             <summary>
             Returns the duration of the video, formatted as a time string (HH:MM:SS)
-            </summary>
-        </member>
-        <member name="P:DShowNET.VideoPlayer.FileName">
-            <summary>
-            Currently Loaded Video File
             </summary>
         </member>
         <member name="P:DShowNET.VideoPlayer.CurrentState">

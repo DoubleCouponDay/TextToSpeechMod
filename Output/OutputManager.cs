@@ -43,10 +43,11 @@ namespace SETextToSpeechMod
         TaskFactory taskFactory = new TaskFactory();
 
         public static bool IsDebugging {get; private set;}
-        public bool RunSpeechPlayback { get; private set;}        
+        public bool IsProcessingOutputs { get; private set;}        
 
         int timer;
         int[] typeIndexes;  
+        bool managerWasShutdown;
 
         public OutputManager (SoundPlayer inputEmitter, bool isDebugging)
         {
@@ -60,7 +61,7 @@ namespace SETextToSpeechMod
 
         public void FactoryReset()
         {
-            RunSpeechPlayback = false;
+            IsProcessingOutputs = false;
             typeIndexes = new int[PossibleOutputs.Collection.Count];
             speechesField.Clear();
 
@@ -88,25 +89,24 @@ namespace SETextToSpeechMod
 
         public void Run()
         {         
-            if (RunSpeechPlayback == true)
+            if (IsProcessingOutputs == true &&
+                managerWasShutdown == false)
             {
-                RunSpeechPlayback = false; 
+                IsProcessingOutputs = false; 
 
                 for (int i = 0; i < speechesField.Count; i++) 
                 {                    
-                    if (speechesField[i].Speech.IsFresh ||
-                        speechesField[i].Speech.IsBusy)
-                    {
-                        RunSpeechPlayback = true;
+                    if (speechesField[i].MainProcess.HasAnOrder && //checking this outside and inside TimelineFactory to save performance in all states
+                        speechesField[i].ReturnInfo.IsCompleted == true) //assuming asyncCalls has matching length to speechesField
+                    {                        
+                        IsProcessingOutputs = true;
+                        int savedIndex = i; //fixed strange bug where i goes out of bounds even though the for loop prevents that; Weird!
 
-                        if (speechesField[i].ReturnInfo.IsCompleted == true) //assuming asyncCalls has matching length to speechesField
-                        {
-                            taskFactory.StartNew (() => {
-                                speechesField[i].RunAsync(); //fixed bug where there was a single returned task from all speeches.
-                                }, 
-                                speechesField[i].TaskCanceller.Token
-                            );                            
-                        }
+                        taskFactory.StartNew (() => {                             
+                            speechesField[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
+                            }, 
+                            speechesField[i].TaskCanceller.Token
+                        );                            
                     }
                 }
 
@@ -146,37 +146,47 @@ namespace SETextToSpeechMod
         /// <summary>
         /// Resets the next speech within the group of the same voice type, instead of incurring performance costs but instantiating every time.
         /// The only accepted types are contained in public struct PossibleOutputs.
+        /// Returns whether creation was successful.
+        /// This can fail if you have called DisposeOfUnsafe().
         /// </summary>
         /// <param name="validVoiceType"></param>
         /// <param name="sentence"></param>
-        public void CreateNewSpeech (string validVoiceTypeName, string inputSentence)
+        public bool CreateNewSpeech (string validVoiceTypeName, string inputSentence)
         {
-            int currentTypeIndex = GetOutputTypesIndex (validVoiceTypeName);
+            bool outcome = default (bool);
 
-            if (currentTypeIndex != DOESNT_EXIST)
+            if (managerWasShutdown == false)
             {
-                RunSpeechPlayback = true;                
-                int firstTypeInstance = currentTypeIndex * TOTAL_SIMULTANEOUS_SPEECHES;
+                int currentTypeIndex = GetOutputTypesIndex (validVoiceTypeName);
 
-                if (typeIndexes[currentTypeIndex] >= TOTAL_SIMULTANEOUS_SPEECHES)
+                if (currentTypeIndex != DOESNT_EXIST)
                 {
-                    typeIndexes[currentTypeIndex] = 0;                    
-                }      
-                int newSpeechIndex = firstTypeInstance + typeIndexes[currentTypeIndex];
+                    IsProcessingOutputs = true;                
+                    int firstTypeInstance = currentTypeIndex * TOTAL_SIMULTANEOUS_SPEECHES;
 
-                
-while (asyncCalls[newSpeechIndex].IsCompleted == false) { }
-                speechesField[newSpeechIndex].Speech.FactoryReset (inputSentence); //reuses instances of sentencefactory instead of instantiating every new sentence.
-                typeIndexes[currentTypeIndex]++;                         
+                    if (typeIndexes[currentTypeIndex] >= TOTAL_SIMULTANEOUS_SPEECHES)
+                    {
+                        typeIndexes[currentTypeIndex] = 0;                    
+                    }      
+                    int newSpeechIndex = firstTypeInstance + typeIndexes[currentTypeIndex];   
+                    typeIndexes[currentTypeIndex]++;       
+                      
+                    speechesField[newSpeechIndex].TaskCanceller.Cancel();
+                    speechesField[newSpeechIndex].RenewCancellationSource();
+                    speechesField[newSpeechIndex].MainProcess.FactoryReset (inputSentence); //reuses instances of sentencefactory instead of instantiating every new sentence.                
+                    outcome = true;
+                }
             }
+            return outcome;
         }
 
         public void DisposeOfUnsafe()
         {
             for (int i = 0; i < speechesField.Count; i++)
             {
-                speechesField[i].TaskCanceller.Dispose();
+                speechesField[i].Dispose();
             }
+            managerWasShutdown = true;
         }
     }
 }

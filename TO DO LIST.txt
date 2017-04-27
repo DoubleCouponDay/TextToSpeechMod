@@ -6,10 +6,13 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ make createnewspeech() async
-	-integrate cancellationtoken using taskfactory. wav2ba for reference
++ exception enumeration already finished: optionaldebugger 248
+	solution: 
+	-use foreach on the dictionary instead of enumerator,
+	-throw exception if the two tables arent the same length
 
-+ test output class to make sure removing items does not leave gaps		
++ place optional debugger's bool duplicate exists in the result data
+		
 
 + test adjacentresults with dictionary words with values longer than their keys
 + test Intonation is accurate during dictionary dumps
