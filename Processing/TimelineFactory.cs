@@ -17,6 +17,15 @@ namespace SETextToSpeechMod
         public bool IsBusy { get; private set;}
         public bool HasAnOrder { get; private set;}
 
+        public IList <string> SentencesNonSpacedResults
+        {
+            get
+            {
+                return (IsBusy) ? null : sentencesNonSpacedField.AsReadOnly();
+            }
+        }
+        List <string> sentencesNonSpacedField = new List<string>();
+
         //loading data            
         protected string sentence = "";
         bool previousWasSpace;
@@ -31,7 +40,7 @@ namespace SETextToSpeechMod
                 return currentResultsField.AsReadOnly();
             }
         }
-        List <string> currentResultsField;
+        List <string> currentResultsField = new List <string>();
 
         public IList <TimelineClip> Timeline
         {
@@ -50,7 +59,7 @@ namespace SETextToSpeechMod
         public TimelineFactory (SoundPlayer inputEmitter, Intonation intonationType)
         {       
             Pronunciation = new Pronunciation (intonationType);
-            currentResultsField = new List <string>();
+            sentencesNonSpacedField.Capacity = OutputManager.MAX_LETTERS;
             timelinesField.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;            
             soundPlayerRef = inputEmitter; //the reason im using a pointer is there is no need for a SoundPlayer per SentenceFactory.                                                            
         }
@@ -70,6 +79,7 @@ namespace SETextToSpeechMod
             syllableMeasure = 0;
             intonationArrayChosen = null;
 
+            sentencesNonSpacedField.Clear();
             currentResultsField.Clear();
 
             Pronunciation.FactoryReset();
@@ -105,6 +115,8 @@ namespace SETextToSpeechMod
 
             for (int i = 0; i < currentResultsField.Count; i++)
             {
+                sentencesNonSpacedField.Add (currentResultsField[i]);
+
                 if (currentResultsField[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
                 {
                     if (currentResultsField[i] != SPACE)

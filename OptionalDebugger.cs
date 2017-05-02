@@ -89,6 +89,8 @@ namespace SETextToSpeechMod
 
         bool duplicateExists = default (bool);
 
+        static ChatEntryPoint entryPoint = new ChatEntryPoint (true);
+
         OrderedDictionary emptiesRemoved = new OrderedDictionary(); //needed for checking for duplicate entries
         OrderedDictionary tabledResults = new OrderedDictionary();
         ICollection adjacentKeys;
@@ -114,82 +116,78 @@ namespace SETextToSpeechMod
 
         static void Main()
         {
-            OptionalDebugger debugger = new OptionalDebugger();
-            ChatEntryPoint entryPoint = new ChatEntryPoint (true);
+            const int testVoice = default (int);
+
+            OptionalDebugger debugger = new OptionalDebugger();            
             Encoding encode = Encoding.Unicode;
             AttendanceManager.Debugging = true;                        
             entryPoint.Initialise();
+            debugger.RemoveWhiteSpaceFromTest();
             string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.            
-            string upperCase = testString.ToUpper();   
-            string signatureBuild = entryPoint.OutputManager.LocalPlayersVoice.ToString();
-            int leftoverSpace = PossibleOutputs.AutoSignatureSize - entryPoint.OutputManager.LocalPlayersVoice.ToString().Length;
-
-            for (int i = 0; i < leftoverSpace; i++)
-            {
-                signatureBuild += " ";
-            }
-            string packaged = signatureBuild + upperCase;                
-            byte[] packet = encode.GetBytes (packaged);
-            entryPoint.OnReceivedPacket (packet);
+            byte[] testPacket = debugger.GetTestPacket (testString);
+            entryPoint.OnReceivedPacket (testPacket);
             
             while (entryPoint.OutputManager.IsProcessingOutputs)
             {
-                entryPoint.UpdateBeforeSimulation();              
-                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].MainProcess.Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
-                                       entryPoint.OutputManager.Speeches[5].MainProcess.CurrentResults, 
-                                       entryPoint.OutputManager.Speeches[5].MainProcess.Pronunciation.UsedDictionary);         
-            }                               
-            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].MainProcess.Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].MainProcess.Pronunciation.WrongFormatNonMatches);
+                entryPoint.UpdateBeforeSimulation();                              
+            }
+            debugger.StoreResults(entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
+                                    entryPoint.OutputManager.Speeches[testVoice].MainProcess.CurrentResults,
+                                    entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.UsedDictionary);
+            debugger.PrintResults (entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatMatches, 
+                                    entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatNonMatches);
         }
 
         /// <summary>
-        /// Removes whitespace and null from the table and returns every item as a single string in alphabetical order.
+        /// removes null or whitespace in the test table.
+        /// This is just in case the maintainer has entered a test word with mistakes.
         /// </summary>
-        /// <param name="tableToRollOut"></param>
-        /// <returns></returns>
-        public string RollOutAdjacentWords()
+        void RemoveWhiteSpaceFromTest()
         {
-            string rolledOut = string.Empty;
-            
-foreach (KeyValuePair <string, string[]> entry in adjacentWords)
-{
-                
-
-                while ()
-                {
-
-                }
-                if (entry.Value.IsNullOrEmpty() == false &&
-                    )
+            foreach (KeyValuePair <string, string[]> entry in adjacentWords)
+            {
+                if ((entry.Key == null || 
+                    entry.Key == string.Empty) && 
+                    entry.Value.IsNullOrEmpty()) //row headers should be caught at this line                    
                 {
                     adjacentWords.Remove (entry.Key);
                 }
-}
 
-            for (int i = 0; i < emptiesRemoved.Count; i++) 
-            {                    
-                string[] currentAdjacentValue = emptiesRemoved[i] as string[];
-
-                if (currentAdjacentValue.IsNullOrEmpty())
+                else
                 {
-                    emptiesRemoved.RemoveAt (i);
-                    i--;
+                    var emptiesRemoved = new List <string> (entry.Value);
+
+                    //remove whitespace
+                    for (int i = 0; i < emptiesRemoved.Count; i++)
+                    {
+                        if (string.IsNullOrWhiteSpace (emptiesRemoved[i]))
+                        {
+                            emptiesRemoved[i] = emptiesRemoved[i].Remove (i, 1);
+                        }
+                    }
+                    adjacentWords[entry.Key] = emptiesRemoved;
                 }
             }
+        }
 
-            //these two loops need to be separate due to the nature ordered dictionary enumerators.
-            IEnumerator addingIndex = adjacentKeys.GetEnumerator(); 
-
-            for (int i = 0; i < emptiesRemoved.Count; i++) 
-            {                    
-                addingIndex.MoveNext();             
-                string key = addingIndex.Current.ToString();          
-                rolledOut += key + " ";
+        /// <summary>
+        /// returns every test word in a single string; alphabetical ordered.
+        /// </summary>
+        /// <param name="tableToRollOut"></param>
+        /// <returns></returns>
+        string RollOutAdjacentWords()
+        {
+            string rolledOut = string.Empty;
+            
+            //Remove whitespace entries just in case I wasnt paying attention while adding a word.
+            foreach (KeyValuePair <string, string[]> entry in adjacentWords)
+            {                                                    
+                rolledOut += entry.Key + " ";
             }
             return rolledOut;
         }
 
-        public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
+        void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
         {
             if (currentWord != " ")
             {
@@ -239,7 +237,22 @@ foreach (KeyValuePair <string, string[]> entry in adjacentWords)
             }
         }
 
-        public void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
+        byte[] GetTestPacket (string testSentence)
+        {
+            string upperCase = testSentence.ToUpper();   
+            string signatureBuild = entryPoint.OutputManager.LocalPlayersVoice.ToString();
+            int leftoverSpace = PossibleOutputs.AutoSignatureSize - entryPoint.OutputManager.LocalPlayersVoice.ToString().Length;
+
+            for (int i = 0; i < leftoverSpace; i++)
+            {
+                signatureBuild += " ";
+            }
+            string packaged = signatureBuild + upperCase;                
+            byte[] packet = encode.GetBytes (packaged);
+            return packet;
+        }
+
+        void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
         {
             string[] previousReadings = File.ReadAllLines(resultsFile);   
             previousReadings = previousReadings[1].Split(' '); 

@@ -103,7 +103,7 @@ namespace SETextToSpeechMod
                         int savedIndex = i; //fixed strange bug where i goes out of bounds even though the for loop prevents that; Weird!
 
                         taskFactory.StartNew (() => {                             
-                            speechesField[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
+                                speechesField[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
                             }, 
                             speechesField[i].TaskCanceller.Token
                         );                            
@@ -182,11 +182,12 @@ namespace SETextToSpeechMod
 
         public void DisposeOfUnsafe()
         {
+            managerWasShutdown = true;
+
             for (int i = 0; i < speechesField.Count; i++)
             {
                 speechesField[i].Dispose();
-            }
-            managerWasShutdown = true;
+            }            
         }
     }
 }

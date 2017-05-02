@@ -6,12 +6,18 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ exception enumeration already finished: optionaldebugger 248
-	solution: 
-	-use foreach on the dictionary instead of enumerator,
-	-throw exception if the two tables arent the same length
++ optional debugger uses outputmanager in an old way. how do i update it?
+	-the phoneme results are taken care of but getting the signal to put down some of the bool flags is challenging in in a separate thread.
+	-I could use an event which the debugger would subscribe to. Any unforseen consequences?	
 
-+ place optional debugger's bool duplicate exists in the result data
++ exception enumeration already finished: optionaldebugger line 248
+	solution: 
+	-properties arent returned every tick. need a new way of storing that info. 
+	wait until end of task?
+	-use foreach on the dictionary instead of enumerator,	
+	-throw exception if the two tables arent the same length	
+
++ place optional debugger's bool duplicate exists in the result sheet
 		
 
 + test adjacentresults with dictionary words with values longer than their keys
