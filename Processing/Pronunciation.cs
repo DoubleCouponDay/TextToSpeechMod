@@ -7,6 +7,8 @@ namespace SETextToSpeechMod.Processing
     public class Pronunciation
     {    
         public WordIsolator WordIsolator {get; private set;}
+        private readonly Intonation intonationGen;
+
 
         public bool UsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
@@ -14,14 +16,15 @@ namespace SETextToSpeechMod.Processing
 
         string[] dictionaryMatch;
         string surroundingPhrase;
-        List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!
+        List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!        
 
         string tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
         int tempLetterIndex;
 
-        public Pronunciation()
+        public Pronunciation (Intonation intonationType)
         {
             this.WordIsolator = new WordIsolator();
+            this.intonationGen = intonationType;
         }
 
         public void FactoryReset()

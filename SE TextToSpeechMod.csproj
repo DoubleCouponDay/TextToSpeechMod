@@ -176,6 +176,7 @@
     <Compile Include="Processing\Intonation.cs" />
     <Compile Include="Processing\Pronunciation.cs" />
     <Compile Include="VoiceCode\GladosVoice\GLADOSVoice.cs" />
+    <Compile Include="VoiceCode\HawkingVoice\HawkingIntonation.cs" />
     <Compile Include="VoiceCode\HawkingVoice\HawkingVoice.cs" />
     <Compile Include="OutputManager.cs" />
     <Compile Include="PossibleOutputs.cs" />

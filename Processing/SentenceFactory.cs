@@ -61,11 +61,10 @@ namespace SETextToSpeechMod
         protected Random rng = new Random();
         private SoundPlayer soundPlayerRef; 
 
-        public SentenceFactory (SoundPlayer inputEmitter, Intonation intonationType)
+        public SentenceFactory (SoundPlayer inputEmitter)
         {            
             Loading = false;
-            FinishedPlaying = true;
-            Pronunciation = new Pronunciation();
+            FinishedPlaying = true;            
             resultsField = new List <string>();
             timeline.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;            
             soundPlayerRef = inputEmitter; //the reason im using a pointer is there is no need for a SoundPlayer per SentenceFactory.
@@ -83,6 +82,11 @@ namespace SETextToSpeechMod
                 mediumIntonationPatterns,
                 largeIntonationPatterns,
             };
+        }
+
+        public void FieldConstructor (Intonation intonationType)
+        {
+            Pronunciation = new Pronunciation (intonationType);
         }
 
         public void FactoryReset (string inputSentence)

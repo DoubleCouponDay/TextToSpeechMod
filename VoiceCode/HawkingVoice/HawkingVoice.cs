@@ -1,4 +1,4 @@
-﻿namespace SETextToSpeechMod
+﻿namespace SETextToSpeechMod.VoiceCode.HawkingVoice
 {
     public sealed class HawkingVoice : SentenceFactory, VoiceTemplate
     {
@@ -11,9 +11,14 @@
         public override string FileID { get { return "-H"; } }        
         public override int SpaceSize { get { return 4; } }
         public override int ClipLength { get { return 4; } }
-        public override int SyllableSize { get { return 3; } }             
+        public override int SyllableSize { get { return 3; } }  
+        
+        protected HawkingIntonation intonation = new HawkingIntonation();
 
-        public HawkingVoice (SoundPlayer inputEmitter) : base (inputEmitter){}
+        public HawkingVoice (SoundPlayer inputEmitter) : base (inputEmitter, this.intonation)
+        {
+            
+        }
 
         //the point of extending this method is to create a special kind of phoneme at the end of every sentence.
         protected override void AddIntonations (int timelineIndex)
