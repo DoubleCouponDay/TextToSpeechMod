@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Diagnostics;
 using SETextToSpeechMod.LookUpTables;
+using SETextToSpeechMod;
 
 namespace SETextToSpeechMod
 {
@@ -87,14 +88,14 @@ namespace SETextToSpeechMod
         int lowerCaseWords = 0;
         string resultsFile;
 
-        bool duplicateExists = default (bool);
-
-        static ChatEntryPoint entryPoint = new ChatEntryPoint (true);
-
+        bool duplicateExists = default (bool);        
         OrderedDictionary emptiesRemoved = new OrderedDictionary(); //needed for checking for duplicate entries
         OrderedDictionary tabledResults = new OrderedDictionary();
+        OrderedDictionary dictionaryResults = new OrderedDictionary();
         ICollection adjacentKeys;
         ICollection resultKeys;
+        Encoding encode = Encoding.Unicode;
+        ChatEntryPoint entryPoint = new ChatEntryPoint (true); 
 
         public OptionalDebugger()
         {
@@ -116,57 +117,71 @@ namespace SETextToSpeechMod
 
         static void Main()
         {
-            const int testVoice = default (int);
-
-            OptionalDebugger debugger = new OptionalDebugger();            
-            Encoding encode = Encoding.Unicode;
-            AttendanceManager.Debugging = true;                        
-            entryPoint.Initialise();
-            debugger.RemoveWhiteSpaceFromTest();
+            const int testVoice = 5;
+            OptionalDebugger debugger = new OptionalDebugger();                        
+            AttendanceManager.Debugging = true;    
+                                                      
+            debugger.entryPoint.Initialise();
+            debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.DebuggerSentenceFinished += debugger.OnDebuggerSentenceFinished;
+            debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.DictionaryWordProcessed += debugger.StoreDictionaryWord;
+            
+            debugger.RemoveWhiteSpaceFromTestTable();
             string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.            
             byte[] testPacket = debugger.GetTestPacket (testString);
-            entryPoint.OnReceivedPacket (testPacket);
+            debugger.entryPoint.OnReceivedPacket (testPacket);
             
-            while (entryPoint.OutputManager.IsProcessingOutputs)
+            while (debugger.entryPoint.OutputManager.IsProcessingOutputs)
             {
-                entryPoint.UpdateBeforeSimulation();                              
+                debugger.entryPoint.UpdateBeforeSimulation();                              
             }
-            debugger.StoreResults(entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
-                                    entryPoint.OutputManager.Speeches[testVoice].MainProcess.CurrentResults,
-                                    entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.UsedDictionary);
-            debugger.PrintResults (entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatMatches, 
-                                    entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatNonMatches);
+            //debugger.StoreResults(entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
+            //                        entryPoint.OutputManager.Speeches[testVoice].MainProcess.CurrentResults,
+            //                        entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.UsedDictionary);
+            //debugger.PrintResults (entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatMatches, 
+            //                        entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatNonMatches);
         }
 
         /// <summary>
         /// removes null or whitespace in the test table.
         /// This is just in case the maintainer has entered a test word with mistakes.
         /// </summary>
-        void RemoveWhiteSpaceFromTest()
-        {
-            foreach (KeyValuePair <string, string[]> entry in adjacentWords)
-            {
-                if ((entry.Key == null || 
-                    entry.Key == string.Empty) && 
-                    entry.Value.IsNullOrEmpty()) //row headers should be caught at this line                    
-                {
-                    adjacentWords.Remove (entry.Key);
-                }
+        void RemoveWhiteSpaceFromTestTable()
+        {            
+            var itemsToRemove = new List<string>();
+            var itemValuesIndexesToRemove = new List <KeyValuePair <string, List <int>>>();
 
+            foreach (DictionaryEntry entry in adjacentWords)
+            {                
+                var castKey = entry.Key as string;
+
+                if (castKey == null || 
+                    castKey == string.Empty) //row headers should be caught at this line                    
+                {
+                    itemsToRemove.Add (castKey);
+                }          
+                
                 else
-                {
-                    var emptiesRemoved = new List <string> (entry.Value);
-
+                {      
+                    var castValue = new List <string> ((string[]) entry.Value);
                     //remove whitespace
-                    for (int i = 0; i < emptiesRemoved.Count; i++)
+                    for (int i = 0; i < castValue.Count; i++)
                     {
-                        if (string.IsNullOrWhiteSpace (emptiesRemoved[i]))
+                        if (string.IsNullOrWhiteSpace (castValue[i]))
                         {
-                            emptiesRemoved[i] = emptiesRemoved[i].Remove (i, 1);
+                            //castValue[i] = castValue[i].Remove (i, 1);
+                            new KeyValuePair<string, List<int> ();
+
+                            if (itemValuesIndexesToRemove.)
+                            itemValuesIndexesToRemove.Add ();
                         }
                     }
-                    adjacentWords[entry.Key] = emptiesRemoved;
+                    adjacentWords[entry.Key] = castValue;
                 }
+            }
+
+            for (int i = 0; i < itemsToRemove.Count; i++)
+            {
+                adjacentWords.Remove (itemsToRemove[i]);
             }
         }
 
@@ -178,61 +193,51 @@ namespace SETextToSpeechMod
         string RollOutAdjacentWords()
         {
             string rolledOut = string.Empty;
-            
-            //Remove whitespace entries just in case I wasnt paying attention while adding a word.
-            foreach (KeyValuePair <string, string[]> entry in adjacentWords)
+                        
+            foreach (DictionaryEntry entry in adjacentWords)
             {                                                    
                 rolledOut += entry.Key + " ";
             }
             return rolledOut;
         }
 
-        void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
+        void StoreDictionaryWord (string dictionaryWord, IList <string> allWordsPhonemes)
         {
-            if (currentWord != " ")
+            if (dictionaryWord != WordIsolator.SPACE.ToString())
             {
-                List <string> newReference = new List <string> (phonemes);                
-                currentWord += " " + UsedDictionary.ToString();
-                              
-                for (int i = 0; i < newReference.Count; i++)
-                {
-                    if (newReference[i] == " " ||
-                        newReference[i] == "")
-                    {
-                        newReference.RemoveAt (i);
-                        i--;
-                    }
-                }               
-                string[] formattedPhonemes = new string[newReference.Count];
+                var concreteCollection = new List <string> (allWordsPhonemes);
+                dictionaryResults.Add (dictionaryWord, concreteCollection);  
+            }
+        }
 
-                for (int i = 0; i < newReference.Count; i++)
-                {
-                    formattedPhonemes[i] = newReference[i];
-                }
+        /// <summary>
+        /// Overwrites the currentword's entry if it already exists.
+        /// </summary>
+        /// <param name="currentWord"></param>
+        /// <param name="allSentencesPhonemes"></param>
+        void StorePartialResults (string currentWord, IList <string> allSentencesPhonemes)
+        {            
+            var spaceString = WordIsolator.SPACE.ToString();
 
+            if (currentWord != spaceString)
+            {
                 if (tabledResults.Contains (currentWord))
                 {
-                    string[] previousEntry = tabledResults[currentWord] as string[];
-                    string[] largerAccommodation = new string[previousEntry.Length + formattedPhonemes.Length];
-                        
-                    for (int i = 0; i < largerAccommodation.Length; i++)
-                    {
-                        if (i < previousEntry.Length)
-                        {
-                            largerAccommodation[i] = previousEntry[i];
-                        }
+                    var concreteInput = new List <string>(allSentencesPhonemes);
 
-                        else
+                    for (int i = 0; i < concreteInput.Count; i++)
+                    {
+                        if (concreteInput[i] != spaceString)
                         {
-                            largerAccommodation[i] = formattedPhonemes[i - previousEntry.Length];
+                            var concreteTableValue = (List <string>) tabledResults[i];
+                            concreteTableValue.Add (concreteInput[i]);
                         }
                     }                    
-                    tabledResults[currentWord] = largerAccommodation;
                 }
 
                 else
                 {
-                    tabledResults.Add (currentWord, formattedPhonemes);
+                    tabledResults.Add (currentWord, allSentencesPhonemes);
                 }
             }
         }
@@ -250,6 +255,11 @@ namespace SETextToSpeechMod
             string packaged = signatureBuild + upperCase;                
             byte[] packet = encode.GetBytes (packaged);
             return packet;
+        }
+
+        void OnDebuggerSentenceFinished (IList <string> allPhonemes)
+        {
+            int g = 0;
         }
 
         void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)

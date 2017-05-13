@@ -10,7 +10,7 @@ namespace SETextToSpeechMod.Output
     public class SpeechTask
     {
         /// <summary>
-        /// Generation Object which is the primary focus of a SpeechTask.
+        /// Generating Object which is the primary focus of a SpeechTask.
         /// </summary>
         public TimelineFactory MainProcess { get; private set;}
 

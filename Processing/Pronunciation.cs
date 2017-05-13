@@ -57,6 +57,7 @@ namespace SETextToSpeechMod.Processing
 
         /// <summary>
         /// first searches the dictionary, then tries adjacent evaluation if no match found.
+        /// Returns new list.
         /// </summary>
         /// <param name="sentence"></param>
         /// <param name="letterIndex"></param>

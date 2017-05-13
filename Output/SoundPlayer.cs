@@ -9,6 +9,7 @@ using VRage.Game.Entity;
 using VRageMath;
 using VRage.Game.ModAPI;
 using System.Threading.Tasks;
+using SETextToSpeechMod.Processing;
 
 namespace SETextToSpeechMod
 {

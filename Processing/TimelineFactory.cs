@@ -99,6 +99,7 @@ namespace SETextToSpeechMod
                         AddPhonemes (i);
                     }
                 });
+                DebuggerSentenceFinished.Invoke (sentencesNonSpacedField);
                 await soundPlayerRef.PlaySentence (timelinesField);
                 IsBusy = false;
                 HasAnOrder = false;
@@ -112,6 +113,11 @@ namespace SETextToSpeechMod
         private void AddPhonemes (int currentIndex)
         {   
             currentResultsField = Pronunciation.GetLettersPronunciation (sentence, currentIndex);
+
+            if (Pronunciation.UsedDictionary)
+            {
+                DictionaryWordProcessed.Invoke (Pronunciation.WordIsolator.CurrentWord, currentResultsField);
+            }
 
             for (int i = 0; i < currentResultsField.Count; i++)
             {
@@ -169,6 +175,12 @@ namespace SETextToSpeechMod
             spaceOffsetTemp = SpaceSize;
             syllableMeasure = 0;
         } 
+
+        public delegate void OnDebuggerSentenceFinished (IList <string> allPhonemes);
+        public event OnDebuggerSentenceFinished DebuggerSentenceFinished;
+
+        public delegate void OnDictionaryWordProcessed (string dictionaryWord, IList <string> allWordsPhonemes);
+        public event OnDictionaryWordProcessed DictionaryWordProcessed;
     }
 
     public struct TimelineClip

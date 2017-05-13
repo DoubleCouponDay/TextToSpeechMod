@@ -4872,6 +4872,11 @@
             Name is too short (min 5 characters required)
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ErrorNameInvalid">
+            <summary>
+            Name contains invalid Windows filename characters. Please remove them and try again
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.WorldSettings_GameModeSurvival">
             <summary>
             Survival
@@ -8701,6 +8706,16 @@
         <member name="F:MyCommonTexts.ServerSearch_ExclusiveTooltip">
             <summary>
             Toggles whether a server must have: All of the selected mods (exclusive) or Any of the selected mods (inclusive)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NextNews">
+            <summary>
+            Older news
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PreviousNews">
+            <summary>
+            Newer news
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
