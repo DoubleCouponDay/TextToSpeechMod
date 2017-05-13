@@ -662,6 +662,11 @@
             Public members to easy access
             </summary>
         </member>
+        <member name="M:VRage.Game.GUI.MyAlphaBlinkBehavior.UpdateBlink">
+            <summary>
+            Call update to get new current alpha value.
+            </summary>
+        </member>
         <member name="P:VRage.Game.Gui.MyHudEntityParams.ShouldDraw">
             <summary>
             Function that checks whether indicator should be drawn.
@@ -3057,6 +3062,57 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModifierType">
+            <summary>
+            Upgrade modifier type
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModifierType.Multiplicative">
+            <summary>
+            Multiplies base value of block - to increase value by 50% set <see cref="P:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo.Modifier"/> to 1.5
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModifierType.Additive">
+            <summary>
+            Adds to base value of block - to increase value by 50% set <see cref="P:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo.Modifier"/> to 0.5
+            </summary>
+        </member>
+        <member name="T:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo">
+            <summary>
+            Module upgrade information
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo.UpgradeType">
+            <summary>
+            Name of upgrade
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo.Modifier">
+            <summary>
+            Modifier for upgrade (as decimal - 1 = 100%)
+            </summary>
+        </member>
+        <member name="P:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo.ModifierType">
+            <summary>
+            Type of modifier as <see cref="T:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModifierType"/>
+            </summary>
+        </member>
+        <member name="T:VRage.Game.ObjectBuilders.Definitions.MyObjectBuilder_UpgradeModuleDefinition">
+            <summary>
+            Upgrade module base definition
+            </summary>
+        </member>
+        <member name="F:VRage.Game.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
+            <summary>
+            Color is used to get Color(4 bytes) as well as
+            MyStringId value for localization.
+            </summary>
+        </member>
+        <member name="F:VRage.Game.ObjectBuilders.Definitions.MyObjectBuilder_UpgradeModuleDefinition.Upgrades">
+            <summary>
+            List of upgrades provided by block <see cref="T:VRage.Game.ObjectBuilders.Definitions.MyUpgradeModuleInfo"/>
+            </summary>
+        </member>
         <member name="F:VRage.Game.MyObjectBuilder_BlueprintDefinition.Result">
             <summary>
             THIS IS OBSOLETE
@@ -3213,12 +3269,12 @@
             Public members to easy access
             </summary>
         </member>
-        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.String,System.String,System.Boolean,System.Int32)">
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,VRageMath.Vector3I,System.Single,System.Nullable{VRage.Utils.MyStringId},System.Nullable{VRage.Utils.MyStringId},System.Boolean,System.Int32)">
             <summary>
             DrawTransparentBox
             </summary>
         </member>
-        <member name="M:VRage.Game.MySimpleObjectDraw.DrawWireFramedBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,System.Single,VRageMath.Vector3I,System.String,System.Boolean,System.Int32)">
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawWireFramedBox(VRageMath.MatrixD@,VRageMath.BoundingBoxD@,VRageMath.Color@,System.Single,VRageMath.Vector3I,System.Nullable{VRage.Utils.MyStringId},System.Boolean,System.Int32)">
             <summary>
             DrawWireFramedBox
             </summary>
@@ -3229,7 +3285,7 @@
             <param name="wireDivideRatio"></param>
             <param name="wireDivideRatio"></param>
         </member>
-        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentSphere(VRageMath.MatrixD@,System.Single,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,System.Int32,System.String,System.String,System.Single,System.Int32)">
+        <member name="M:VRage.Game.MySimpleObjectDraw.DrawTransparentSphere(VRageMath.MatrixD@,System.Single,VRageMath.Color@,VRage.Game.MySimpleObjectRasterizer,System.Int32,System.Nullable{VRage.Utils.MyStringId},System.Nullable{VRage.Utils.MyStringId},System.Single,System.Int32)">
             <summary>
             DrawTransparentSphere
             </summary>
@@ -3290,6 +3346,16 @@
                   But currently - we use just one camera, so it is a member.
             </summary>
         </member>
+        <member name="F:VRage.Game.Utils.MyCamera.m_fovSpring">
+            <summary>
+            FOV spring, value that is applied on top of current FOV
+            </summary>
+        </member>
+        <member name="F:VRage.Game.Utils.MyCamera.m_fovSpringDampening">
+            <summary>
+            FOV spring dampening.
+            </summary>
+        </member>
         <member name="M:VRage.Game.Utils.MyCamera.WorldToScreen(VRageMath.Vector3D@)">
             <summary>
             Gets screen coordinates of 3d world pos in 0 - 1 distance where 1.0 is screen width(for X) or height(for Y).
@@ -3332,7 +3398,7 @@
         </member>
         <member name="P:VRage.Game.Utils.MyCamera.FovWithZoom">
             <summary>
-            Gets current fov with considering if zoom is enabled
+            Gets current fov with considering if zoom is enabled. Also add current fov spring value.
             </summary>
         </member>
         <member name="P:VRage.Game.Utils.MyCamera.Position">
@@ -3743,7 +3809,7 @@
             </summary>
             <param name="entity">The entity.</param>
         </member>
-        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.AddForce(VRage.Game.Components.MyPhysicsForceType,System.Nullable{VRageMath.Vector3},System.Nullable{VRageMath.Vector3D},System.Nullable{VRageMath.Vector3})">
+        <member name="M:VRage.Game.Components.MyPhysicsComponentBase.AddForce(VRage.Game.Components.MyPhysicsForceType,System.Nullable{VRageMath.Vector3},System.Nullable{VRageMath.Vector3D},System.Nullable{VRageMath.Vector3},System.Nullable{System.Single},System.Boolean,System.Boolean)">
             <summary>
             Applies external force to the physics object.
             </summary>
@@ -3751,6 +3817,9 @@
             <param name="force">The force.</param>
             <param name="position">The position.</param>
             <param name="torque">The torque.</param>
+            <param name="maxSpeed">Clamp max speed</param>
+            <param name="applyImmediately">Apply immediately or enqueue to apply right before simulation</param>
+            <param name="activeOnly">Only apply if the object is already active</param>
         </member>
         <member name="M:VRage.Game.Components.MyPhysicsComponentBase.ApplyImpulse(VRageMath.Vector3,VRageMath.Vector3D)">
             <summary>
@@ -4803,6 +4872,11 @@
             Name is too short (min 5 characters required)
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ErrorNameInvalid">
+            <summary>
+            Name contains invalid Windows filename characters. Please remove them and try again
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.WorldSettings_GameModeSurvival">
             <summary>
             Survival
@@ -5201,11 +5275,6 @@
         <member name="F:MyCommonTexts.MessageBoxCaptionWarning">
             <summary>
             WARNING
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.MessageBoxModsMismatch">
-            <summary>
-            These mods were created in development version. They could cause issues in game
             </summary>
         </member>
         <member name="F:MyCommonTexts.MessageBoxTextOpenBrowser">
@@ -5913,31 +5982,6 @@
             A description of the world
             </summary>
         </member>
-        <member name="F:MyCommonTexts.CompressSaveGames">
-            <summary>
-            Compress saved games
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ToolTipGameOptionsCompressSaveGames">
-            <summary>
-            Whether the saved games should be compressed on the disk to save space
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.Headbob">
-            <summary>
-            Disable headbob
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ScreenOptionsGame_ShowPlayerNames">
-            <summary>
-            Show player names
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.ToolTipGameOptionsShowPlayerNames">
-            <summary>
-            Show player names above their characters. This feature must also be enabled in world settings.
-            </summary>
-        </member>
         <member name="F:MyCommonTexts.ScreenOptionsGame_UIOpacity">
             <summary>
             UI opacity
@@ -5946,6 +5990,11 @@
         <member name="F:MyCommonTexts.ScreenOptionsGame_UIBkOpacity">
             <summary>
             UI background opacity
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenOptionsGame_HUDBkOpacity">
+            <summary>
+            HUD background opacity
             </summary>
         </member>
         <member name="F:MyCommonTexts.NotificationInventoryFull">
@@ -6123,9 +6172,9 @@
             Games marked with * have incompatible game data
             </summary>
         </member>
-        <member name="F:MyCommonTexts.ScreenPlayers_GameAdmin">
+        <member name="F:MyCommonTexts.ScreenPlayers_Rank">
             <summary>
-            Game admin
+            Rank
             </summary>
         </member>
         <member name="F:MyCommonTexts.MultiplayerJoinServers">
@@ -6565,12 +6614,7 @@
         </member>
         <member name="F:MyCommonTexts.JoinGame_SearchLabel">
             <summary>
-            Search game
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.JoinGame_SearchTooltip">
-            <summary>
-            At least 3 characters must be inserted to start searching
+            Search
             </summary>
         </member>
         <member name="F:MyCommonTexts.ProgressTextDownloadingMods">
@@ -7788,6 +7832,11 @@
             Change opacity of UI dialogs background.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ToolTipGameOptionsHUDBkOpacity">
+            <summary>
+            Change opacity of HUD background.
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.WorldSettings_GameMode">
             <summary>
             Game mode
@@ -8002,16 +8051,6 @@
         <member name="F:MyCommonTexts.LoadingDialogServerIsLoadingWorld">
             <summary>
             Server is loading world
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.AnimatedRotation">
-            <summary>
-            Animated block preview
-            </summary>
-        </member>
-        <member name="F:MyCommonTexts.BuildingSizeHint">
-            <summary>
-            Show building size hint
             </summary>
         </member>
         <member name="F:MyCommonTexts.AudioSettings_ShipSoundsBasedOnSpeed">
@@ -8454,9 +8493,229 @@
             Are you sure you want to quit? All progress from the last checkpoint will be lost.
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ScreenOptionsButtonDisplay">
+            <summary>
+            Display
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Functional">
+            <summary>
+            FUNCTIONAL
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Hack">
+            <summary>
+            HACK
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.CubeBuilderNoBlueprintPermission">
+            <summary>
+            You don't have permission to blueprint this ship
+            </summary>
+        </member>
         <member name="F:MyCommonTexts.MultiplayerErrorKickedByAdmins">
             <summary>
             You have recently been kicked from this server.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinHasPassword">
+            <summary>
+            Has Password
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinOnlinePlayers">
+            <summary>
+            Online Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinConnect">
+            <summary>
+            Connect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinDirectConnect">
+            <summary>
+            Direct Connect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.MultiplayerJoinIPError">
+            <summary>
+            An error occurred when parsing the provided IP address or hostname. Check the log for more details.
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Map">
+            <summary>
+            Map
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Server">
+            <summary>
+            Server
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Version">
+            <summary>
+            Version
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_GameMode">
+            <summary>
+            Game Mode
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_InventorySizeMultiplier">
+            <summary>
+            Inventory Size Multiplier
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_MaxPlayers">
+            <summary>
+            Max Players
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_EnableCopyPaste">
+            <summary>
+            Copy/Paste
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_EnableSpectator">
+            <summary>
+            Spectator
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_AutoSaveInMinutes">
+            <summary>
+            AutoSave In Minutes
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_EnableRespawnShips">
+            <summary>
+            Enable Respawn Ships / Carts
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_FloraDensityMultiplier">
+            <summary>
+            Flora Density Multiplier
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_AddFavorite">
+            <summary>
+            Add Favorite
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_IPAddress">
+            <summary>
+            IP Address
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_ModDownloadSize">
+            <summary>
+            Mod download size
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_ModError">
+            <summary>
+            Error getting mod information!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_PlayerError">
+            <summary>
+            Error getting player information!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_ServerEmpty">
+            <summary>
+            Server is empty!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_Settings">
+            <summary>
+            Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_WorldSettings">
+            <summary>
+            World Settings
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.Any">
+            <summary>
+            Any
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldPause">
+            <summary>
+            Pause
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ScreenLoadSubscribedWorldResume">
+            <summary>
+            Resume
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_SettingError">
+            <summary>
+            Error downloading server settings!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_Clear">
+            <summary>
+            Clear
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_Defaults">
+            <summary>
+            Defaults
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_EnableAdvanced">
+            <summary>
+            Enable Advanced
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_EnableAdvancedTooltip">
+            <summary>
+            Enables advanced search filters
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_EnableNumericTooltip">
+            <summary>
+            Enable or disable this filter
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_DirectConnect">
+            <summary>
+            Direct Connect
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.JoinGame_ServerDetails">
+            <summary>
+            Server Details
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerDetails_NoMods">
+            <summary>
+            Server has no mods!
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_Exclusive">
+            <summary>
+            Exclusive
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ServerSearch_ExclusiveTooltip">
+            <summary>
+            Toggles whether a server must have: All of the selected mods (exclusive) or Any of the selected mods (inclusive)
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.NextNews">
+            <summary>
+            Older news
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.PreviousNews">
+            <summary>
+            Newer news
             </summary>
         </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
@@ -8523,12 +8782,6 @@
             <summary>
             Default faction relation to the other factions. 
             Enemies state is with highest prority and does not care if other faction want to be friend.
-            </summary>
-        </member>
-        <member name="F:VRage.Game.MyObjectBuilder_CubeBlockDefinition.Variant.Color">
-            <summary>
-            Color is used to get Color(4 bytes) as well as
-            MyStringId value for localization.
             </summary>
         </member>
         <member name="F:VRage.Game.MyObjectBuilder_CharacterDefinition.PhysicalMaterial">
@@ -8692,6 +8945,29 @@
             The distance to check whether missile will collide soon after launch with something.
             For more info, see ticket 3422.
             </summary>
+        </member>
+        <member name="T:VRage.Game.Utils.MyDebugDrawHelper">
+            <summary>
+            Set of helper functions for debug drawing.
+            </summary>
+        </member>
+        <member name="M:VRage.Game.Utils.MyDebugDrawHelper.DrawNamedPoint(VRageMath.Vector3D,System.String,System.Nullable{VRageMath.Color},System.Nullable{VRageMath.MatrixD})">
+            <summary>
+            Debug draw a point with an explanation name next to it.
+            </summary>
+            <param name="pos">world space coordinates of the point</param>
+            <param name="name">point name, caption</param>
+            <param name="color">point color, pass null to keep default white</param>
+            <param name="cameraViewMatrix">helper camera matrix, pass null to ignore camera transform - this just makes the debug draw prettier</param>
+        </member>
+        <member name="M:VRage.Game.Utils.MyDebugDrawHelper.DrawNamedColoredAxis(VRageMath.MatrixD,System.Single,System.String,System.Nullable{VRageMath.Color})">
+            <summary>
+            Draw colored named axis.
+            </summary>
+            <param name="matrix">matrix containing axes</param>
+            <param name="axisLengthScale">axis visualization length</param>
+            <param name="name">helper label</param>
+            <param name="color">helper color</param>
         </member>
         <member name="M:VRage.Game.VisualScripting.MyVisualScriptingProxy.Init">
             <summary>

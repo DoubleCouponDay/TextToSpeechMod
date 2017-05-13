@@ -5,45 +5,46 @@ BROKEN WORDS
 
 
 TO DO
-================//		
-+ implement phoneme choosing for hawking
-	-figure out a way to get symbols out of Pronunciation:
-	summary:
-	-new intonation class.
-	-derived type for each voice.	
-	-take surroundingphrase and voice header as input.
-	-contains a table of vowel phonemes.
-	-if previous four letters contain a vowel and last letter is a recognized symbol, add the symbols header 
+================//
+The separate thread's events may trigger while the store method is still working, thereby breaking the order of addition.
+The only way to keep such a situation ordered is to turn the rolled out test string into a string array, split at spaces, to iterate keys over the result dictionaries.
 
-	If I make a lookup table of recognized symbols, it will not help matching in adjacentevaluation.
-	A smarter way would be to create an intonation class which pronunciation would have an instance of.
-	then i could combine the chosen letter with whatever the method spits out.
-	Would it work with the output of dictionary? I believe so but you would need a fair amount of concatenation.
-	I suggest an instance of concatbuilder in pronunciation.
-	intonation would need the surrounding phrase as input.
-	It would then need to decide if there is a vowel phoneme nearby in order to place a symbol address.
-	otherwise, simply use a standard phoneme.
+should i use a foreach on the results or a string with the ordered keys?
 
-	I think all words will have there last vowel within 4 letters of a symbol.
-	We will not worry about detecting end of a word; the symbol is signal enough.
- 	In order to detect a vowel I will need to make a table of vowels in the intonation class; composed of PSD phonemes.
-	
-	how am I going to make customized intonation for each voice???
-	instance on pronunciation doesnt work then since it was designed as OSFA.
-	I could make the class a public property so that different deriving types can be assigned.
-	the trade of there is do i want all voice unique code in a single class or split it across multiple different types?
-	I think im gonna go with the latter.
++ cant modify an ordered table inside a foreach loop. have to take make collections with the information i need to remove whitespace items
 
-	Dependency injection could solve this problem if i place the necessary headers at instantiation time.
-	I wont have to manually change the property. only expand the constructor for sentence factory. 
++ implement logic to invoke those events
++ add spaces to entire sentence results in between words
+
++ finish refactoring optionaldebugger
+
++ optional debugger uses outputmanager in an old way. how do i update it?
+	-the phoneme results are taken care of but getting the signal to put down some of the bool flags is challenging in in a separate thread.
+	-I could use an event which the debugger would subscribe to. Any unforseen consequences?	
+
++ sentencesNonSpacedResultsFinished event
++ CurrentWordChanged event
++
+
++ exception enumeration already finished: optionaldebugger line 248
+	solution: 
+	-properties arent returned every tick. need a new way of storing that info. 
+	wait until end of task?
+	-use foreach on the dictionary instead of enumerator,	
+	-throw exception if the two tables arent the same length	
+
++ place optional debugger's bool duplicate exists in the result sheet
+		
+
++ test adjacentresults with dictionary words with values longer than their keys
++ test Intonation is accurate during dictionary dumps
 
 + implement phoneme choosing for glados
-
-+ test
++ test async task
++ test cancellation token source in output manager
 + fix everything :^)
 
-+ keep computer voice
-+ make dalek voice; no pitch
++ add computer voice support
 
 + think of good object builder for block. cant be terminal block
 + block should not play in realistic mode.

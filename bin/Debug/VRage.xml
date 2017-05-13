@@ -1291,10 +1291,52 @@
             Get filtered value.
             </summary>
         </member>
+        <member name="T:VRage.Utils.MyMaxFiltering">
+            <summary>
+            Nonlinear maximum filtering.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMaxFiltering.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="sampleCount">Number of samples used in this mean filter.</param>
+        </member>
+        <member name="M:VRage.Utils.MyMaxFiltering.Add(System.Double)">
+            <summary>
+            Add raw value to be filtered.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMaxFiltering.Get">
+            <summary>
+            Get filtered value.
+            </summary>
+        </member>
         <member name="T:VRage.Utils.MyMergeHelper">
             <summary>
             Helper class for merge funcionality. Performs comparison between
             source and other values and set on self if value is different
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyMinFiltering">
+            <summary>
+            Nonlinear minimum filtering.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMinFiltering.#ctor(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="sampleCount">Number of samples used in this mean filter.</param>
+        </member>
+        <member name="M:VRage.Utils.MyMinFiltering.Add(System.Double)">
+            <summary>
+            Add raw value to be filtered.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyMinFiltering.Get">
+            <summary>
+            Get filtered value.
             </summary>
         </member>
         <member name="P:VRage.MyVertexFormatVoxelSingleData2.MaterialAlphaIndex">
@@ -1513,6 +1555,88 @@
             <summary>
             Returns a random TimeSpan between begin (inclusive) and end (exclusive).
             </summary>
+        </member>
+        <member name="T:VRage.Utils.MyTimedItem`1">
+            <summary>
+            Item that is accessible only for defined time span.
+            </summary>
+            <typeparam name="T">item type</typeparam>
+        </member>
+        <member name="M:VRage.Utils.MyTimedItem`1.Get(System.Int32,System.Boolean)">
+            <summary>
+            Get the stored item.
+            </summary>
+            <param name="currentTime">Pass current time.</param>
+            <param name="autoRefreshTimeout">Should the storage timeout be refreshed?</param>
+            <returns>storage on success, default value of T on failure.</returns>
+        </member>
+        <member name="M:VRage.Utils.MyTimedItem`1.TryGet(System.Int32,System.Boolean,`0@)">
+            <summary>
+            Get the stored item.
+            </summary>
+            <param name="currentTime">Pass current time.</param>
+            <param name="autoRefreshTimeout">Should the storage timeout be refreshed?</param>
+            <param name="outStoredItem">item stored internally</param>
+            <returns>true on success, false on timeout</returns>
+        </member>
+        <member name="M:VRage.Utils.MyTimedItem`1.Set(System.Int32,System.Int32,`0)">
+            <summary>
+            Set the stored value.
+            </summary>
+            <param name="currentTime">Pass current time.</param>
+            <param name="itemTimeout">Period of time for which the item is accessible.</param>
+            <param name="item">Item to be stored.</param>
+        </member>
+        <member name="T:VRage.Utils.MyTickTimedItem`1">
+            <summary>
+            Item that is accessible only for defined amount of time ticks.
+            </summary>
+            <typeparam name="T">item type</typeparam>
+        </member>
+        <member name="M:VRage.Utils.MyTickTimedItem`1.Get">
+            <summary>
+            Get the stored item.
+            </summary>
+            <returns>storage on success, default value of T on failure.</returns>
+        </member>
+        <member name="M:VRage.Utils.MyTickTimedItem`1.TryGet(`0@)">
+            <summary>
+            Get the stored item.
+            </summary>
+            <param name="outStoredItem">item stored internally</param>
+            <returns>true on success, false on timeout</returns>
+        </member>
+        <member name="M:VRage.Utils.MyTickTimedItem`1.Set(System.Int32,`0)">
+            <summary>
+            Set the stored value.
+            </summary>
+            <param name="itemTickTimeout">Number of time ticks for which the item is accessible.</param>
+            <param name="item">Item to be stored.</param>
+        </member>
+        <member name="T:VRage.Utils.MyTickTimedItemF">
+            <summary>
+            Item that is accessible only for defined amount of time ticks.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyTickTimedItemF.Get">
+            <summary>
+            Get the stored item.
+            </summary>
+            <returns>storage on success, default value of T on failure.</returns>
+        </member>
+        <member name="M:VRage.Utils.MyTickTimedItemF.TryGet(System.Single@)">
+            <summary>
+            Get the stored item.
+            </summary>
+            <param name="outStoredItem">item stored internally</param>
+            <returns>true on success, false on timeout</returns>
+        </member>
+        <member name="M:VRage.Utils.MyTickTimedItemF.Set(System.Int32,System.Single)">
+            <summary>
+            Set the stored value.
+            </summary>
+            <param name="itemTickTimeout">Number of time ticks for which the item is accessible.</param>
+            <param name="item">Item to be stored.</param>
         </member>
         <member name="T:VRage.Utils.MyTimedItemCache">
             <summary>

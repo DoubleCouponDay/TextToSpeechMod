@@ -103,9 +103,6 @@ NOTE: All the positions for SOFT keyframes must be "centre-of-mass" positions. T
 Make sure that input has set its BreakableBody parent.
 
 </member>
-        <member name="M:hkpSmartListShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
         <member name="P:Havok.HkdWoodFracture.SplinterSplittingData">
 Splitting data for breaking a single 'board' into 'splinters'.
 </member>
@@ -701,18 +698,8 @@ Add a convex shape with a transform to the construction info.
 Buffer can be null, when shape won't create any triangles
 </summary>
         </member>
-        <member name="M:hkpUniformGridShape.#ctor">
+        <member name="M:hkpSmartListShape.#ctor">
 Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="M:hkpGridShape.#ctor">
-Empty constructor, to be called by the shape vtable util on SPU
-</member>
-        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
-Gets/Sets the inertia stabilization factor.
-Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
-</member>
-        <member name="P:Havok.HkConstraintData.BreachImpulse">
-Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
 </member>
         <member name="M:Havok.HkRigidBody.OnReaddedToWorld">
 Destruction will sometimes remove entities from world momentarily.
@@ -1219,5 +1206,18 @@ It doesn't matter whether managed references are release first or not.
 Managed references are released by calling Dispose().
 </summary>
         </member>
+        <member name="P:Havok.HkConstraintData.InertiaStabilizationFactor">
+Gets/Sets the inertia stabilization factor.
+Returns HK_FAILURE if stabilization factor is not supported by this constraint.		
+</member>
+        <member name="P:Havok.HkConstraintData.BreachImpulse">
+Sets/Gets the impulse above which the solver fires constraint - impulse - limit breached callbacks.		
+</member>
+        <member name="M:hkpUniformGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
+        <member name="M:hkpGridShape.#ctor">
+Empty constructor, to be called by the shape vtable util on SPU
+</member>
     </members>
 </doc>

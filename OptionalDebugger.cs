@@ -6,13 +6,14 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Diagnostics;
 using SETextToSpeechMod.LookUpTables;
+using SETextToSpeechMod;
 
 namespace SETextToSpeechMod
 {
     public class OptionalDebugger
     {         
-        const string currentComputer = "pavilion";
-        //const string currentComputer = "thinkpad";
+        //const string currentComputer = "pavilion";
+        const string currentComputer = "thinkpad";
 
         const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
         const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
@@ -53,7 +54,7 @@ namespace SETextToSpeechMod
         const string ZIH = PrettyScaryDictionary.ZIH;
         static readonly string[] ROW = PrettyScaryDictionary.ROW; //in order to put this in the table it must be static.
 
-        readonly OrderedDictionary adjacentWords = new OrderedDictionary
+        readonly OrderedDictionary adjacentWords = new OrderedDictionary // ordered dictionary only allows you to access its values by int index; nothing more.
         {
             {"", new string[]{  }},
             {"_A_", ROW}, {"ABLE", new string[]{ AEE, BIH, LIH, }}, {"A", new string[]{ UHH, }}, {"AVAILABLE", new string[]{ UHH, VIH, AEE, LIH, UHH, BIH, LIH, }}, {"AUTOGRAPH", new string[]{ AWW, TIH, OWE, GIH, RIH, AHH, FIH, }}, {"ACTIVITIES", new string[]{ AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, }}, {"AGGRESSION", new string[]{ UHH, GIH, RIH, EHH, SHI, UHH, NIH, }}, {"ABORIGINE", new string[]{ AHH, BIH, OWE, RIH, IHH, JIH, IHH, NIH, EEE, }}, {"ANNOINT", new string[]{ UHH, NIH, AWW, EEE, NIH, TIH, }}, {"ASTRONAUT", new string[]{ AHH, SIH, TIH, RIH, OWE, NIH, AWW, TIH, }}, {"ASSAULT", new string[]{ UHH, SIH, HOH, LIH, TIH, }}, {"ABOITEAU", new string[]{ AHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABOITEAUX", new string[]{ AHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABILITY", new string[]{ UHH, BIH, IHH, LIH, IHH, TIH, EEE, }}, {"AGAIN", new string[]{ UHH, GIH, AEE, NIH, }}, {"ACTIVATE", new string[]{ AHH, KIH, TIH, IHH, VIH, AEE, TIH, }}, {"ACOUSTIC", new string[]{ UHH, KIH, OOO, SIH, TIH, IHH, KIH, }}, {"ADVANTAGE", new string[]{ AHH, DIH, VIH, AHH, NIH, TIH, IHH, JIH, }},
@@ -87,10 +88,14 @@ namespace SETextToSpeechMod
         int lowerCaseWords = 0;
         string resultsFile;
 
-        OrderedDictionary emptiesRemoved = new OrderedDictionary();            
+        bool duplicateExists = default (bool);        
+        OrderedDictionary emptiesRemoved = new OrderedDictionary(); //needed for checking for duplicate entries
         OrderedDictionary tabledResults = new OrderedDictionary();
+        OrderedDictionary dictionaryResults = new OrderedDictionary();
         ICollection adjacentKeys;
         ICollection resultKeys;
+        Encoding encode = Encoding.Unicode;
+        ChatEntryPoint entryPoint = new ChatEntryPoint (true); 
 
         public OptionalDebugger()
         {
@@ -112,13 +117,134 @@ namespace SETextToSpeechMod
 
         static void Main()
         {
-            OptionalDebugger debugger = new OptionalDebugger();
-            ChatManager entryPoint = new ChatManager (true);
-            Encoding encode = Encoding.Unicode;
-            AttendanceManager.Debugging = true;                        
-            entryPoint.Initialise();
+            const int testVoice = 5;
+            OptionalDebugger debugger = new OptionalDebugger();                        
+            AttendanceManager.Debugging = true;    
+                                                      
+            debugger.entryPoint.Initialise();
+            debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.DebuggerSentenceFinished += debugger.OnDebuggerSentenceFinished;
+            debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.DictionaryWordProcessed += debugger.StoreDictionaryWord;
+            
+            debugger.RemoveWhiteSpaceFromTestTable();
             string testString = debugger.RollOutAdjacentWords(); //OptionalDebugger is designed to only take the table adjacentWords as input. replacing this string wont work.            
-            string upperCase = testString.ToUpper();   
+            byte[] testPacket = debugger.GetTestPacket (testString);
+            debugger.entryPoint.OnReceivedPacket (testPacket);
+            
+            while (debugger.entryPoint.OutputManager.IsProcessingOutputs)
+            {
+                debugger.entryPoint.UpdateBeforeSimulation();                              
+            }
+            //debugger.StoreResults(entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WordIsolator.CurrentWord, //use marek voice since we dont want intonations in the algorithm test. 
+            //                        entryPoint.OutputManager.Speeches[testVoice].MainProcess.CurrentResults,
+            //                        entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.UsedDictionary);
+            //debugger.PrintResults (entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatMatches, 
+            //                        entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatNonMatches);
+        }
+
+        /// <summary>
+        /// removes null or whitespace in the test table.
+        /// This is just in case the maintainer has entered a test word with mistakes.
+        /// </summary>
+        void RemoveWhiteSpaceFromTestTable()
+        {            
+            var itemsToRemove = new List<string>();
+            var itemValuesIndexesToRemove = new List <KeyValuePair <string, List <int>>>();
+
+            foreach (DictionaryEntry entry in adjacentWords)
+            {                
+                var castKey = entry.Key as string;
+
+                if (castKey == null || 
+                    castKey == string.Empty) //row headers should be caught at this line                    
+                {
+                    itemsToRemove.Add (castKey);
+                }          
+                
+                else
+                {      
+                    var castValue = new List <string> ((string[]) entry.Value);
+                    //remove whitespace
+                    for (int i = 0; i < castValue.Count; i++)
+                    {
+                        if (string.IsNullOrWhiteSpace (castValue[i]))
+                        {
+                            //castValue[i] = castValue[i].Remove (i, 1);
+                            new KeyValuePair<string, List<int> ();
+
+                            if (itemValuesIndexesToRemove.)
+                            itemValuesIndexesToRemove.Add ();
+                        }
+                    }
+                    adjacentWords[entry.Key] = castValue;
+                }
+            }
+
+            for (int i = 0; i < itemsToRemove.Count; i++)
+            {
+                adjacentWords.Remove (itemsToRemove[i]);
+            }
+        }
+
+        /// <summary>
+        /// returns every test word in a single string; alphabetical ordered.
+        /// </summary>
+        /// <param name="tableToRollOut"></param>
+        /// <returns></returns>
+        string RollOutAdjacentWords()
+        {
+            string rolledOut = string.Empty;
+                        
+            foreach (DictionaryEntry entry in adjacentWords)
+            {                                                    
+                rolledOut += entry.Key + " ";
+            }
+            return rolledOut;
+        }
+
+        void StoreDictionaryWord (string dictionaryWord, IList <string> allWordsPhonemes)
+        {
+            if (dictionaryWord != WordIsolator.SPACE.ToString())
+            {
+                var concreteCollection = new List <string> (allWordsPhonemes);
+                dictionaryResults.Add (dictionaryWord, concreteCollection);  
+            }
+        }
+
+        /// <summary>
+        /// Overwrites the currentword's entry if it already exists.
+        /// </summary>
+        /// <param name="currentWord"></param>
+        /// <param name="allSentencesPhonemes"></param>
+        void StorePartialResults (string currentWord, IList <string> allSentencesPhonemes)
+        {            
+            var spaceString = WordIsolator.SPACE.ToString();
+
+            if (currentWord != spaceString)
+            {
+                if (tabledResults.Contains (currentWord))
+                {
+                    var concreteInput = new List <string>(allSentencesPhonemes);
+
+                    for (int i = 0; i < concreteInput.Count; i++)
+                    {
+                        if (concreteInput[i] != spaceString)
+                        {
+                            var concreteTableValue = (List <string>) tabledResults[i];
+                            concreteTableValue.Add (concreteInput[i]);
+                        }
+                    }                    
+                }
+
+                else
+                {
+                    tabledResults.Add (currentWord, allSentencesPhonemes);
+                }
+            }
+        }
+
+        byte[] GetTestPacket (string testSentence)
+        {
+            string upperCase = testSentence.ToUpper();   
             string signatureBuild = entryPoint.OutputManager.LocalPlayersVoice.ToString();
             int leftoverSpace = PossibleOutputs.AutoSignatureSize - entryPoint.OutputManager.LocalPlayersVoice.ToString().Length;
 
@@ -128,98 +254,15 @@ namespace SETextToSpeechMod
             }
             string packaged = signatureBuild + upperCase;                
             byte[] packet = encode.GetBytes (packaged);
-            entryPoint.OnReceivedPacket (packet);
-
-            
-
-            while (entryPoint.OutputManager.RunSpeechPlayback)
-            {
-                entryPoint.UpdateBeforeSimulation();              
-                debugger.StoreResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WordIsolator.CurrentWord, 
-                                       entryPoint.OutputManager.Speeches[5].Results, 
-                                       entryPoint.OutputManager.Speeches[5].Pronunciation.UsedDictionary);         
-            }                               
-            debugger.PrintResults (entryPoint.OutputManager.Speeches[5].Pronunciation.WrongFormatMatches, entryPoint.OutputManager.Speeches[0].Pronunciation.WrongFormatNonMatches);
+            return packet;
         }
 
-        public string RollOutAdjacentWords()
+        void OnDebuggerSentenceFinished (IList <string> allPhonemes)
         {
-            string rolledOut = "";                
-            
-            for (int i = 0; i < emptiesRemoved.Count; i++) 
-            {                    
-                string[] currentAdjacentValue = emptiesRemoved[i] as string[];
-
-                if (currentAdjacentValue.IsNullOrEmpty())
-                {
-                    emptiesRemoved.RemoveAt (i);
-                    i--;
-                }
-            }
-
-            //these two loops need to be separate due to the nature ordered dictionary enumerators.
-            IEnumerator addingIndex = adjacentKeys.GetEnumerator(); 
-
-            for (int i = 0; i < emptiesRemoved.Count; i++) 
-            {                    
-                addingIndex.MoveNext();             
-                string key = addingIndex.Current.ToString();          
-                rolledOut += key + " ";
-            }
-            return rolledOut;
+            int g = 0;
         }
 
-        public void StoreResults (string currentWord, IList <string> phonemes, bool UsedDictionary)
-        {
-            if (currentWord != " ")
-            {
-                List <string> newReference = new List <string> (phonemes);                
-                currentWord += " " + UsedDictionary.ToString();
-                              
-                for (int i = 0; i < newReference.Count; i++)
-                {
-                    if (newReference[i] == " " ||
-                        newReference[i] == "")
-                    {
-                        newReference.RemoveAt (i);
-                        i--;
-                    }
-                }               
-                string[] formattedPhonemes = new string[newReference.Count];
-
-                for (int i = 0; i < newReference.Count; i++)
-                {
-                    formattedPhonemes[i] = newReference[i];
-                }
-
-                if (tabledResults.Contains (currentWord))
-                {
-                    string[] previousEntry = tabledResults[currentWord] as string[];
-                    string[] largerAccommodation = new string[previousEntry.Length + formattedPhonemes.Length];
-                        
-                    for (int i = 0; i < largerAccommodation.Length; i++)
-                    {
-                        if (i < previousEntry.Length)
-                        {
-                            largerAccommodation[i] = previousEntry[i];
-                        }
-
-                        else
-                        {
-                            largerAccommodation[i] = formattedPhonemes[i - previousEntry.Length];
-                        }
-                    }                    
-                    tabledResults[currentWord] = largerAccommodation;
-                }
-
-                else
-                {
-                    tabledResults.Add (currentWord, formattedPhonemes);
-                }
-            }
-        }
-
-        public void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
+        void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
         {
             string[] previousReadings = File.ReadAllLines(resultsFile);   
             previousReadings = previousReadings[1].Split(' '); 
