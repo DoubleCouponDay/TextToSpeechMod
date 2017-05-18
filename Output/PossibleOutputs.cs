@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SETextToSpeechMod.VoiceCode.HawkingVoice;
+using System;
 using System.Collections.Generic;
 
 namespace SETextToSpeechMod

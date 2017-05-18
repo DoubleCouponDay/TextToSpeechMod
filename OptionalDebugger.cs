@@ -147,8 +147,11 @@ namespace SETextToSpeechMod
         /// </summary>
         void RemoveWhiteSpaceFromTestTable()
         {            
-            var itemsToRemove = new List<string>();
-            var itemValuesIndexesToRemove = new List <KeyValuePair <string, List <int>>>();
+            var itemsToRemove = new List<string>(); //entire entries to remove
+
+            //modified entry values which may have only a char removed
+            //may contain more than one record of the same item
+            var itemValuesIndexesToRemove = new List <KeyValuePair <string, int>>(); 
 
             foreach (DictionaryEntry entry in adjacentWords)
             {                
@@ -163,25 +166,28 @@ namespace SETextToSpeechMod
                 else
                 {      
                     var castValue = new List <string> ((string[]) entry.Value);
-                    //remove whitespace
+ 
                     for (int i = 0; i < castValue.Count; i++)
                     {
                         if (string.IsNullOrWhiteSpace (castValue[i]))
                         {
-                            //castValue[i] = castValue[i].Remove (i, 1);
-                            new KeyValuePair<string, List<int> ();
-
-                            if (itemValuesIndexesToRemove.)
-                            itemValuesIndexesToRemove.Add ();
+                            var newRemoveIndex = new KeyValuePair<string, int> (castKey, i);
+                            itemValuesIndexesToRemove.Add (newRemoveIndex);
                         }
                     }
-                    adjacentWords[entry.Key] = castValue;
                 }
             }
 
             for (int i = 0; i < itemsToRemove.Count; i++)
             {
                 adjacentWords.Remove (itemsToRemove[i]);
+            }
+
+            for (int i = 0; i < itemValuesIndexesToRemove.Count; i++)
+            {
+                var castToRemove = (string[]) adjacentWords[itemValuesIndexesToRemove[i].Key];
+                var dynamicSort = new List <string> (castToRemove);
+                dynamicSort.RemoveAt (itemValuesIndexesToRemove[i].Value); //even though this could be optimized, there is no need for performance in OptionalDebugger 
             }
         }
 
@@ -214,7 +220,7 @@ namespace SETextToSpeechMod
         /// Overwrites the currentword's entry if it already exists.
         /// </summary>
         /// <param name="currentWord"></param>
-        /// <param name="allSentencesPhonemes"></param>
+        /// <param name="allSentencesPhonemes"></param
         void StorePartialResults (string currentWord, IList <string> allSentencesPhonemes)
         {            
             var spaceString = WordIsolator.SPACE.ToString();

@@ -121,7 +121,7 @@ namespace SETextToSpeechMod.Processing
                     {
                         lastVowelSoon = false; //prevents TakeFromDictionary() from applying the sentence end state to its entire word push.
                     }              
-                    currentResults[i] = intonation.GetPhonemesIntonation (currentResults[i], surroundingPhrase, lastVowelSoon);
+                    currentResults[i] = intonationGen.GetPhonemesIntonation (currentResults[i], surroundingPhrase, lastVowelSoon);
                 }
             }
             return currentResults;

@@ -6,15 +6,10 @@ BROKEN WORDS
 
 TO DO
 ================//
-The separate thread's events may trigger while the store method is still working, thereby breaking the order of addition.
-The only way to keep such a situation ordered is to turn the rolled out test string into a string array, split at spaces, to iterate keys over the result dictionaries.
-
-should i use a foreach on the results or a string with the ordered keys?
-
-+ cant modify an ordered table inside a foreach loop. have to take make collections with the information i need to remove whitespace items
-
++ indexoutofrangexception: pronunciation line 147 during debug analysis
 + implement logic to invoke those events
 + add spaces to entire sentence results in between words
++ print by taking the serialised words and using them as keys for accessing the results dictionary. 
 
 + finish refactoring optionaldebugger
 

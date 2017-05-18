@@ -378,3 +378,4 @@ C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\SpaceEngineers.ObjectBuilders.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.exe
 C:\Users\power\Desktop\scripting\TextToSpeechMod\obj\Debug\SE TextToSpeechMod.csprojResolveAssemblyReference.cache
+C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\DirectShowLib-2005.dll
