@@ -6,10 +6,10 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ indexoutofrangexception: pronunciation line 147 during debug analysis
-+ implement logic to invoke those events
-+ add spaces to entire sentence results in between words
 + print by taking the serialised words and using them as keys for accessing the results dictionary. 
+	-flag lowercase keys
+	-increment tallies
+	-increment nonmatchcount if switch was flipped during a comparison loop
 
 + finish refactoring optionaldebugger
 
@@ -19,7 +19,7 @@ TO DO
 
 + sentencesNonSpacedResultsFinished event
 + CurrentWordChanged event
-+
++ what are the back slashes for in HawkingIntonation?
 
 + exception enumeration already finished: optionaldebugger line 248
 	solution: 

@@ -6,30 +6,28 @@ namespace SETextToSpeechMod.Processing
 {
     public class Pronunciation
     {    
+        //Constants
         /// <summary>
         /// The length of evaluation chunks in the AdjacentEvaluation algorithm.
         /// </summary>
         public const int ALGORITHM_PHRASE_SIZE = 5;
-
-        /// <summary>
-        /// 
-        /// </summary>
         public const int SENTENCE_END_ZONES_LENGTH = 3;
+        const string SPACE = " ";
 
+        //objects
         public WordIsolator WordIsolator {get; private set;}
         private readonly Intonation intonationGen;
 
-
+        //public feedback
         public bool UsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
         public int WrongFormatNonMatches {get; private set;}        
 
+        //internal state
         string[] dictionaryMatch;
         string surroundingPhrase;
         List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!        
-
         bool pushingDictionaryWordOut;
-
         string tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
         int tempLetterIndex;
 
@@ -65,15 +63,17 @@ namespace SETextToSpeechMod.Processing
         /// <returns>returns new list.</returns>
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
         {
+            UsedDictionary = false;
+            pushingDictionaryWordOut = false;   
             currentResults = new List <string>();
             WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
             tempSentence = sentence;
             tempLetterIndex = letterIndex;
             currentResults.Clear();        
             surroundingPhrase = "";        
-            pushingDictionaryWordOut = false;                     
+                              
 
-            if (WordIsolator.CurrentWord != WordIsolator.SPACE.ToString())
+            if (WordIsolator.CurrentWord != SPACE)
             {
                 if (WordIsolator.CurrentWordIsNew == true)
                 {                    
@@ -91,7 +91,7 @@ namespace SETextToSpeechMod.Processing
                     }
                 }
 
-                else if (UsedDictionary == true)
+                else if (UsedDictionary)
                 {
                     TakeFromDictionary();
                 }
@@ -104,7 +104,7 @@ namespace SETextToSpeechMod.Processing
 
             else
             {
-                currentResults.Add (WordIsolator.SPACE.ToString()); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
+                currentResults.Add (SPACE); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
             }
             
             if (OutputManager.IsDebugging == false)
@@ -128,24 +128,28 @@ namespace SETextToSpeechMod.Processing
         }
 
         //Method returns one phoneme per run until it reaches the end of the current dictionary key. In which case it will dump all remaining.
+        //Returns nothing if there is no dictionary match
         private void TakeFromDictionary()
         {
             int bookmark = dictionaryMatch.Length - WordIsolator.LettersLeftInWord;
 
-            if (bookmark == WordIsolator.WordsIndexLimit)
+            if (bookmark >= default (int)) //Just in case ive entered dictionary values with 0 length
             {
-                pushingDictionaryWordOut = true;
+                if (bookmark == WordIsolator.WordsIndexLimit)
+                {
+                    pushingDictionaryWordOut = true;
 
-                for (int i = bookmark; i < dictionaryMatch.Length; i++)
-                {                        
-                    currentResults.Add (dictionaryMatch[i]);
+                    for (int i = bookmark; i < dictionaryMatch.Length; i++)
+                    {
+                        currentResults.Add(dictionaryMatch[i]);
+                    }
+                }
+
+                else
+                {
+                    currentResults.Add(dictionaryMatch[bookmark]);
                 }
             }
-
-            else
-            {
-                currentResults.Add (dictionaryMatch[bookmark]);
-            }   
         }
 
         /* Rule based processing algorithm which works one letter at a time.
@@ -164,10 +168,10 @@ namespace SETextToSpeechMod.Processing
             int intTwoAfter = (tempLetterIndex + 2 < tempSentence.Length) ? (tempLetterIndex + 2) : tempLetterIndex;
             int intTwoBefore = (tempLetterIndex - 2 >= 0) ? (tempLetterIndex - 2) : tempLetterIndex;
 
-            string before = (intBefore != tempLetterIndex) ? tempSentence[intBefore].ToString() : " "; //these 4 strings ensure i can correctly identify separate words.
-            string after = (intAfter != tempLetterIndex) ? tempSentence[intAfter].ToString() : " "; //using strings instead of chars saves lines since i need strings for Contains()
-            string twoBefore = (intTwoBefore != tempLetterIndex && before != " ") ? tempSentence[intTwoBefore].ToString() : " "; //the false path must return a space string because spaces signify the start/end of a word.
-            string twoAfter = (intTwoAfter != tempLetterIndex && after != " ") ? tempSentence[intTwoAfter].ToString() : " ";        
+            string before = (intBefore != tempLetterIndex) ? tempSentence[intBefore].ToString() : SPACE; //these 4 strings ensure i can correctly identify separate words.
+            string after = (intAfter != tempLetterIndex) ? tempSentence[intAfter].ToString() : SPACE; //using strings instead of chars saves lines since i need strings for Contains()
+            string twoBefore = (intTwoBefore != tempLetterIndex && before != SPACE) ? tempSentence[intTwoBefore].ToString() : SPACE; //the false path must return a space string because spaces signify the start/end of a word.
+            string twoAfter = (intTwoAfter != tempLetterIndex && after != SPACE) ? tempSentence[intTwoAfter].ToString() : SPACE;        
             string currentLetter = tempSentence[tempLetterIndex].ToString();
 
             surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatchBypassed is used in this method.
@@ -301,7 +305,7 @@ namespace SETextToSpeechMod.Processing
 
                     else if (IsMatch ("..BL.")) //able
                     {
-                        primary = " ";
+                        primary = SPACE;
                         secondary = PrettyScaryDictionary.BIH;
                     }
 
@@ -478,7 +482,7 @@ namespace SETextToSpeechMod.Processing
                                        ))
                     {   
                         primary = PrettyScaryDictionary.JIH;
-                        secondary = " "; //such as "gin", judgement, 
+                        secondary = SPACE; //such as "gin", judgement, 
                     }
             
                     else
@@ -633,7 +637,7 @@ namespace SETextToSpeechMod.Processing
 
                     else
                     {
-                        primary = " ";
+                        primary = SPACE;
                         secondary = PrettyScaryDictionary.MIH; //such as "molten", drummer,
                     }  
                     break;
@@ -655,7 +659,7 @@ namespace SETextToSpeechMod.Processing
                         
                     else
                     {
-                        primary = " ";
+                        primary = SPACE;
                         secondary = PrettyScaryDictionary.NIH;  //such as nickel,
                     }                         
                     break;
@@ -851,13 +855,13 @@ namespace SETextToSpeechMod.Processing
                     else if (UnwantedMatchBypassed ("..T.U") && //!github
                         IsMatch ("..TH.")) //think
                     {
-                        primary = " ";
+                        primary = SPACE;
                         secondary = PrettyScaryDictionary.THI;    
                     } 
 
                     else if (IsMatch (".ST..")) //emphasised T
                     {
-                        primary = " ";
+                        primary = SPACE;
                         secondary = PrettyScaryDictionary.TIH;
                     }
                         

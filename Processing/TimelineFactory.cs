@@ -17,14 +17,10 @@ namespace SETextToSpeechMod
         public bool IsBusy { get; private set;}
         public bool HasAnOrder { get; private set;}
 
-        public IList <string> SentencesNonSpacedResults
-        {
-            get
-            {
-                return (IsBusy) ? null : sentencesNonSpacedField.AsReadOnly();
-            }
-        }
-        List <string> sentencesNonSpacedField = new List<string>();
+        /// <summary>
+        /// Filled with input words and their output phonemes if project is debugging.
+        /// </summary>
+        public DebugOutputContainer PossibleDebugOutput {get; private set;}
 
         //loading data            
         protected string sentence = "";
@@ -32,15 +28,7 @@ namespace SETextToSpeechMod
         int syllableMeasure;          
         protected int[] intonationArrayChosen;
         int spaceOffsetTemp;
-
-        public IList <string> CurrentResults
-        {
-            get
-            {
-                return currentResultsField.AsReadOnly();
-            }
-        }
-        List <string> currentResultsField = new List <string>();
+        List <string> currentResults = new List <string>();
 
         public IList <TimelineClip> Timeline
         {
@@ -59,9 +47,9 @@ namespace SETextToSpeechMod
         public TimelineFactory (SoundPlayer inputEmitter, Intonation intonationType)
         {       
             Pronunciation = new Pronunciation (intonationType);
-            sentencesNonSpacedField.Capacity = OutputManager.MAX_LETTERS;
             timelinesField.Capacity = OutputManager.MAX_LETTERS; //lists resize constantly when filling. better to know its limit and prevent that to increase performance;            
             soundPlayerRef = inputEmitter; //the reason im using a pointer is there is no need for a SoundPlayer per SentenceFactory.                                                            
+            PossibleDebugOutput = new DebugOutputContainer();
         }
 
         /// <summary>
@@ -79,11 +67,11 @@ namespace SETextToSpeechMod
             syllableMeasure = 0;
             intonationArrayChosen = null;
 
-            sentencesNonSpacedField.Clear();
-            currentResultsField.Clear();
+            currentResults.Clear();
 
             Pronunciation.FactoryReset();
             timelinesField.Clear();            
+            PossibleDebugOutput.Clear();
         }
 
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
@@ -99,35 +87,36 @@ namespace SETextToSpeechMod
                         AddPhonemes (i);
                     }
                 });
-                DebuggerSentenceFinished.Invoke (sentencesNonSpacedField);
                 await soundPlayerRef.PlaySentence (timelinesField);
                 IsBusy = false;
                 HasAnOrder = false;
             }            
         } 
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="currentIndex">Index of the sentence the factory is processing.</param>
+
         private void AddPhonemes (int currentIndex)
         {   
-            currentResultsField = Pronunciation.GetLettersPronunciation (sentence, currentIndex);
+            currentResults = Pronunciation.GetLettersPronunciation (sentence, currentIndex);
 
-            if (Pronunciation.UsedDictionary)
+            if (OutputManager.IsDebugging)                
             {
-                DictionaryWordProcessed.Invoke (Pronunciation.WordIsolator.CurrentWord, currentResultsField);
+                if (Pronunciation.UsedDictionary)
+                {
+                    PossibleDebugOutput.AddDictionaryWord (Pronunciation.WordIsolator.CurrentWord, currentResults);
+                }
+
+                else
+                {
+                    PossibleDebugOutput.AddRuleBasedWord (Pronunciation.WordIsolator.CurrentWord, currentResults);
+                }                
             }
 
-            for (int i = 0; i < currentResultsField.Count; i++)
-            {
-                sentencesNonSpacedField.Add (currentResultsField[i]);
-
-                if (currentResultsField[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
+            for (int i = 0; i < currentResults.Count; i++)
+            {             
+                if (currentResults[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
                 {
-                    if (currentResultsField[i] != SPACE)
+                    if (currentResults[i] != SPACE)
                     {                                                   
-                        AddToTimeline (currentResultsField[i]);                                            
+                        AddToTimeline (currentResults[i]);                                            
 
                         if (syllableMeasure >= SyllableSize - 1)
                         {                            
@@ -175,12 +164,6 @@ namespace SETextToSpeechMod
             spaceOffsetTemp = SpaceSize;
             syllableMeasure = 0;
         } 
-
-        public delegate void OnDebuggerSentenceFinished (IList <string> allPhonemes);
-        public event OnDebuggerSentenceFinished DebuggerSentenceFinished;
-
-        public delegate void OnDictionaryWordProcessed (string dictionaryWord, IList <string> allWordsPhonemes);
-        public event OnDictionaryWordProcessed DictionaryWordProcessed;
     }
 
     public struct TimelineClip

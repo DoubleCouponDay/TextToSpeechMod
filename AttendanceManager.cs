@@ -29,7 +29,6 @@ namespace SETextToSpeechMod
                 return muteStatusesField as IReadOnlyDictionary <string, bool>;
             }
         }                      
-        public static bool Debugging {get; set; }
 
         /// <summary>
         /// Mutes or unmutes the requests player based on your bool input.
@@ -75,7 +74,7 @@ namespace SETextToSpeechMod
         {
             playersField.Clear(); //GetPlayers() just adds without overwriting so list must be cleared every time.
 
-            if (Debugging == false)
+            if (OutputManager.IsDebugging == false)
             {
                 MyAPIGateway.Multiplayer.Players.GetPlayers (playersField);
 

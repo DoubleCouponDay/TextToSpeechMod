@@ -2,8 +2,8 @@
 {
     public class WordIsolator
     {                  
-        public const string EMPTY = "";
-        public const char SPACE = ' ';
+        const string EMPTY = "";
+        const char SPACE = ' ';
         public const int NEW_WORD = 0;
         
         public string CurrentWord {get; private set;}

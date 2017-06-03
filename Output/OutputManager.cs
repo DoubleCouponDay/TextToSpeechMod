@@ -42,7 +42,8 @@ namespace SETextToSpeechMod
 
         TaskFactory taskFactory = new TaskFactory();
 
-        public static bool IsDebugging {get; private set;}
+        public static bool IsDebugging { get; private set;}
+
         public bool IsProcessingOutputs { get; private set;}        
 
         int timer;
@@ -50,11 +51,11 @@ namespace SETextToSpeechMod
         bool managerWasShutdown;
 
         public OutputManager (SoundPlayer inputEmitter, bool isDebugging)
-        {
-            if (IsDebugging == false)
+        {                             
+            if (IsDebugging == false) //Global state which cannot be switched off once set high.
             {
                 IsDebugging = isDebugging;
-            }                  
+            }  
             soundPlayerRef = inputEmitter;
             FactoryReset();
         }
