@@ -838,11 +838,13 @@
         </member>
         <member name="F:VRage.FileSystem.MyContentPath.Path">
             <summary>
+            Relative path within the Mod/Content structure.
             Do not set directly. Public only for Object buidler purposes.
             </summary>
         </member>
         <member name="F:VRage.FileSystem.MyContentPath.ModFolder">
             <summary>
+            Name of the Mod.
             Do not set directly. Public only for Object buidler purposes.
             </summary>
         </member>
@@ -1552,11 +1554,6 @@
             Gets options specifying how this work may be executed.
             </summary>
         </member>
-        <member name="T:ParallelTasks.PrioritizedScheduler">
-            <summary>
-            Sheduler that supports interruption of normal 
-            </summary>
-        </member>
         <member name="T:ParallelTasks.IWorkScheduler">
             <summary>
             An interface defining a task scheduler.
@@ -1577,6 +1574,11 @@
             <summary>
             Gets a number of threads.
             This number must be correct, because it's used to run per-thread initialization task on all threads (by using barrier)
+            </summary>
+        </member>
+        <member name="T:ParallelTasks.PrioritizedScheduler">
+            <summary>
+            Sheduler that supports interruption of normal 
             </summary>
         </member>
         <member name="M:ParallelTasks.PrioritizedScheduler.#ctor(System.Int32)">

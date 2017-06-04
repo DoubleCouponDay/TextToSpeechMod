@@ -176,6 +176,12 @@ namespace SETextToSpeechMod
             MyAPIGateway.Multiplayer.UnregisterMessageHandler (packet_ID, OnReceivedPacket);   
             OutputManager.DisposeOfUnsafe();         
         }
+
+        public void Dispose()
+        {
+            initialised = false;
+            OutputManager.DisposeOfUnsafe();
+        }
     }
 
     public struct COMMANDS

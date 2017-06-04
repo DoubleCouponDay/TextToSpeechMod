@@ -135,6 +135,7 @@ namespace SETextToSpeechMod
             debugger.StoreRuleBasedWords (debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.PossibleDebugOutput.RuleBasedWords);            
             debugger.PrintResults(debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatMatches,
                                     debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatNonMatches);
+            debugger.entryPoint.Dispose();
         }
 
         /// <summary>
@@ -286,12 +287,21 @@ namespace SETextToSpeechMod
         /// <param name="wrongFormatNonMatchers"></param>
         void PrintResults (int wrongFormatMatchers, int wrongFormatNonMatchers)
         {
-            string[] previousReadings = File.ReadAllLines(resultsFile);   
-            previousReadings = previousReadings[1].Split(' '); 
+            string[] previousReadings;
+
+            try
+            {
+                previousReadings = File.ReadAllLines(resultsFile);   
+            }
+            catch (Exception e)
+            {
+                throw new Exception ("Something went wrong when attempt to read previous data from file.");
+            }            
+            previousReadings = previousReadings[1].Split(SPACE.ToCharArray()); 
    
             string[] tallies = {"Total Words: ",
                                 "Total Incorrect: ",
-                                previousReadings[2],
+                                previousReadings[2], //hardcoded path to the previous number of incorrect words
                                 "From Dictionary: ",
                                 "Lowercase Keys: ",
                                 "Wrong Format Matchers: ",
@@ -299,8 +309,8 @@ namespace SETextToSpeechMod
                                 "",
                                 };                           
             var resultLines = new List <string>();
-            int nonMatchCount;
-            int lowerCaseWords;
+            int nonMatchCount = default (int);
+            int lowerCaseWords = default (int);
             int dictionaryWordCount = dictionaryResults.Count;
 
             Process[] processes;
@@ -311,9 +321,21 @@ namespace SETextToSpeechMod
                 bool dataIsAMatch = true;
                 string resultLine = string.Empty;
                 string currentKey = testWords[i];
-                List <string> currentInputValue = (List <string>) adjacentWords[testWords[i]];
+                List <string> currentInputValue = new List<string> ((string[]) adjacentWords[testWords[i]]);
                 List <string> currentOutputValue;
                 resultLine += currentKey;
+
+                { //Check key for lower case letters
+                    char[] indexedKey = currentKey.ToCharArray();
+
+                    for (int keyIndex = 0; keyIndex < indexedKey.Length; keyIndex++)
+                    {
+                        if (char.IsLower (indexedKey[keyIndex]))
+                        {
+                            resultLine += "____Lowercase Key____";
+                        }
+                    }
+                }
 
                 { //Select the location of the current output value
                     if (tabledResults.Contains (currentKey))
@@ -331,129 +353,63 @@ namespace SETextToSpeechMod
                     {
                         throw new Exception ("OptionalDebugger test word '" + currentKey + "' does not exist in output!");
                     }
-                }                
-                resultLine += "      { ";
+                }
 
-                for (int inputValuesIndex = 0; inputValuesIndex < currentInputValue.Count; inputValuesIndex++)
-                {
-                    if ((currentOutputValue.Count - 1) >= i &&
-                        currentInputValue[i].Equals (currentOutputValue[i]))
+                { //Store the print lines and collect data to show 
+                    bool valuesAreEqualLength = (currentInputValue.Count == currentInputValue.Count) ? true : false;
+                    resultLine += "      { ";
+
+                    for (int inputValuesIndex = 0; inputValuesIndex < currentInputValue.Count; inputValuesIndex++)
                     {
-                        dataIsAMatch = false;
-                    }                    
-                    resultLine += currentInputValue[inputValuesIndex] + ", ";
-                }
-                resultLine += "} { ";
 
-                for (int outputValuesIndex = 0; outputValuesIndex < currentOutputValue.Count; i++)
-                {
-                    resultLine += currentOutputValue[outputValuesIndex];
-                }
-                resultLine += "}";
-
-                string tempStoredResultLine = resultLine;
-                resultLine = dataIsAMatch ? "Correct ------ " : "Not Correct -- ";
-                resultLine += currentKey;
-                resultLine += tempStoredResultLine;                                
-                resultLines.Add (resultLine);
-                resultLines.Add ("");
-            }
-          
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            for (int i = tallies.Length; i < resultLines.Count; i++) //note that i skip a couple lines to save the tally.
-            {
-                bool isMatch = true;
-
-                if (char.IsLower (currentAdjacentKey[0]))
-                {
-                    lowerCaseWords++;
-                    currentAdjacentKey += "____Lowercase Key____";
-                }
-
-                if (UsedDictionary)
-                {
-                        UsageCount++;
-                        currentAdjacentKey += ;
-                }                       
-                resultLines[i] = currentAdjacentKey + "      { ";                
-
-                for (int f = 0; f < currentAdjacentValue.Length; f++)
-                {
-                    resultLines[i] += currentAdjacentValue[f] + ", ";
-
-                    if (currentAdjacentValue.Length == currentResultsValue.Length)
-                    {
-                        if (currentAdjacentValue[f] == currentResultsValue[f] &&
-                            isMatch != false)
+                        if (valuesAreEqualLength && //&& will prevent evaluation of its following expressions therefore preventing out of bounds exception.
+                            currentInputValue[i].Equals (currentOutputValue[i]))
                         {
-                            isMatch = true;
-                        }
+                            dataIsAMatch = false;
+                        }                    
+                        resultLine += currentInputValue[inputValuesIndex] + ", ";
+                    }
+                    resultLine += "} { ";
 
-                        else
-                        {
-                            isMatch = false;
-                        }
-                    }    
-                        
-                    else
+                    for (int outputValuesIndex = 0; outputValuesIndex < currentOutputValue.Count; i++)
                     {
-                        isMatch = false;
-                    }                  
+                        resultLine += currentOutputValue[outputValuesIndex];
+                    }
+                    resultLine += "}";                               
+                    string tempStoredResultLine = resultLine;
+                    resultLine = dataIsAMatch ? "Correct ------ " : "Not Correct -- ";
+                    resultLine += currentKey;
+                    resultLine += tempStoredResultLine;                                
+                    resultLines.Add (resultLine);
+                    resultLines.Add ("");
                 }
-                resultLines[i] += "} { ";
-
-                for (int k = 0; k < currentResultsValue.Length; k++)
-                {
-                    resultLines[i] += currentResultsValue[k] + ", ";
-                }
-                resultLines[i] += "} ";
-
-                switch (isMatch)
-                {
-                    case true:
-                    resultLines[i] = "Correct ------ " + resultLines[i];
-                        break;
-
-                    case false:
-                        nonMatchCount++;
-                        resultLines[i] = "Not Correct -- " + resultLines[i];
-                        break;
-                }
-                i++;
+                nonMatchCount = dataIsAMatch ? nonMatchCount : nonMatchCount + 1;
             }
-            resultLines[0] = tallies[0] + emptiesRemoved.Count;
-            resultLines[1] = tallies[1] + nonMatchCount;
-            resultLines[2] = "Previous Incorrect: " + tallies[2];
-            resultLines[3] = tallies[3] + UsageCount;
-            resultLines[4] = tallies[4] + lowerCaseWords;
-            resultLines[5] = tallies[5] + wrongFormatMatchers;
-            resultLines[6] = tallies[6] + wrongFormatNonMatchers;
 
-            File.WriteAllLines (resultsFile, resultLines);
+            { //Add tallies to the result sheet           
+                resultLines[0] = tallies[0] + emptiesRemoved.Count;
+                resultLines[1] = tallies[1] + nonMatchCount;
+                resultLines[2] = "Previous Incorrect: " + tallies[2];
+                resultLines[3] = tallies[3] + dictionaryWordCount;
+                resultLines[4] = tallies[4] + lowerCaseWords;
+                resultLines[5] = tallies[5] + wrongFormatMatchers;
+                resultLines[6] = tallies[6] + wrongFormatNonMatchers;
+            }
 
-            processes = Process.GetProcessesByName ("notepad");
+            { //Print the sheet
+                File.WriteAllLines (resultsFile, resultLines);
 
-            for (int i = 0; i < processes.Length; i++)
-            {
-                processes[i].Kill();
-            }             
-            Process.Start (resultsFile);
+                processes = Process.GetProcessesByName ("notepad");
+
+                for (int i = 0; i < processes.Length; i++)
+                {
+                    processes[i].Kill();
+                }             
+                Process.Start (resultsFile);
+            }
         }
     }
 }
+    
+
+

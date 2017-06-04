@@ -706,7 +706,7 @@
             <param name="frameCountWithoutSync">How long (in update frame count) has client not received sync of this state group.</param>
             <param name="forClient">Client for whom is the priority get.</param>
         </member>
-        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.EndpointId,VRage.Library.Utils.MyTimeSpan,System.Byte,System.Int32,System.Collections.Generic.HashSet{System.String})">
+        <member name="M:VRage.Network.IMyStateGroup.Serialize(VRage.Library.Collections.BitStream,VRage.Network.Endpoint,VRage.Library.Utils.MyTimeSpan,System.Byte,System.Int32,System.Collections.Generic.HashSet{System.String})">
             <summary>
             (De)serializes group state or it's diff for client.
             When writing, you can write beyond maxBitPosition, but message won't be sent and ACKs won't be received for it.
@@ -715,8 +715,10 @@
             </summary>
             <param name="stream">Stream to write to or read from.</param>
             <param name="forClient">When writing the client which will receive the data. When reading, it's null.</param>
+            <param name="timestamp"></param>
             <param name="packetId">Id of packet in which the data will be sent or from which the data is received.</param>
             <param name="maxBitPosition">Maximum position in bit stream where you can write data, it's inclusive.</param>
+            <param name="cachedData"></param>
         </member>
         <member name="M:VRage.Network.IMyStateGroup.OnAck(VRage.Network.MyClientStateBase,System.Byte,System.Boolean)">
             <summary>
@@ -925,7 +927,7 @@
             Local event invocation is done in optimized way without unnecessary deserialization.
             </remarks>
         </member>
-        <member name="M:VRage.Network.MyReplicationLayer.ProcessEvent(VRage.Library.Collections.BitStream,VRage.Network.CallSite,System.Object,VRage.Network.IMyNetObject,VRage.Network.EndpointId)">
+        <member name="M:VRage.Network.MyReplicationLayer.OnEvent(VRage.Library.Collections.BitStream,VRage.Network.CallSite,System.Object,VRage.Network.IMyNetObject,VRage.Network.EndpointId)">
             <summary>
             Called when event is received over network.
             Event can be validated, invoked and/or transferred to other peers.
@@ -949,7 +951,7 @@
             <param name="blockedNetId">Blocking network id.</param>
             <returns></returns>
         </member>
-        <member name="M:VRage.Network.MyReplicationClient.ProcessStateSync(VRage.MyPacket)">
+        <member name="M:VRage.Network.MyReplicationClient.OnServerStateSync(VRage.MyPacket)">
             <summary>
             Processes state sync sent by server.
             </summary>
@@ -984,12 +986,12 @@
             Hack to allow thing like: CreateCharacter, Respawn sent from server
             </summary>
         </member>
-        <member name="M:VRage.Network.MyReplicationServer.ForceReplicable(VRage.Network.IMyReplicable,VRage.Network.EndpointId)">
+        <member name="M:VRage.Network.MyReplicationServer.ForceReplicable(VRage.Network.IMyReplicable,VRage.Network.Endpoint)">
             <summary>
             Hack to allow thing like: CreateCharacter, Respawn sent from server
             </summary>
         </member>
-        <member name="M:VRage.Network.MyReplicationServer.ForceEverything(VRage.Network.EndpointId)">
+        <member name="M:VRage.Network.MyReplicationServer.ForceEverything(VRage.Network.Endpoint)">
             <summary>
             Sends everything in the world to client. Use with extreme caution!
             </summary>
@@ -1004,7 +1006,7 @@
             Returns true when current packet is closely preceding last packet (is within threshold)
             </summary>
         </member>
-        <member name="M:VRage.Network.MyReplicationServer.RefreshReplicable(VRage.Network.IMyReplicable,VRage.Network.EndpointId,VRage.Network.MyReplicationServer.ClientData)">
+        <member name="M:VRage.Network.MyReplicationServer.RefreshReplicable(VRage.Network.IMyReplicable,VRage.Network.Endpoint,VRage.Network.MyReplicationServer.ClientData)">
             <summary>
             Refreshes replicable priorities per client
             </summary>
@@ -1231,7 +1233,7 @@
             <param name="value">external value of the same type as this sync property</param>
             <returns>true if valid</returns>
         </member>
-        <member name="M:VRage.Sync.Sync`2.SetValue(`0@,System.Boolean,System.Boolean)">
+        <member name="M:VRage.Sync.Sync`2.SetValue(`0@,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Set the value of this sync property.
             </summary>
@@ -1245,9 +1247,32 @@
             Validates the value and sets it (when valid).
             </summary>
         </member>
+        <member name="M:VRage.Sync.Sync`2.SetLocalValue(`0)">
+            <summary>
+            Sets new value only locally if on client. USE ONLY WITH VALUES YOU GOT FROM THE SERVER VIA OTHER CHANNELS! (e.g. when initializing from object builder)
+            Behaves like regular set on the server
+            </summary>
+        </member>
         <member name="P:VRage.Sync.Sync`2.Value">
             <summary>
             Value setter/getter.
+            </summary>
+        </member>
+        <member name="T:VRage.Utils.MyDebugListenerProvider">
+            <summary>
+            Enables a custom behavior of Assertion debug messages.
+            Abort can be only performed by clicking the option, key press does nothing.
+            Control+Ignore will prevent the assertion from appearing.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyDebugListenerProvider.Register">
+            <summary>
+            Call this once to register custom trace listener and clear previous debug listeners.
+            </summary>
+        </member>
+        <member name="M:VRage.Utils.MyDebugListenerProvider.Unregister">
+            <summary>
+            Call this once to unregister custom listener and restore old listeners.
             </summary>
         </member>
         <member name="T:VRage.Utils.MyDiscreteSampler`1">

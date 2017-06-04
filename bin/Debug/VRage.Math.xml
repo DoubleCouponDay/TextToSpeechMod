@@ -1163,7 +1163,7 @@
             </summary>
             <param name="sphere">The BoundingSphere to check for intersection with.</param><param name="result">[OutAttribute] true if the BoundingFrustum and BoundingSphere intersect; false otherwise.</param>
         </member>
-        <member name="M:VRageMath.BoundingFrustum.Contains(VRageMath.BoundingBox)">
+        <member name="M:VRageMath.BoundingFrustum.Contains(VRageMath.BoundingBox@)">
             <summary>
             Checks whether the current BoundingFrustum contains the specified BoundingBox.
             </summary>
@@ -4684,6 +4684,8 @@
             </summary>
             <param name="aabb">The aabb.</param>
             <param name="userData">The user data.</param>
+            <param name="userFlags"></param>
+            <param name="rebalance"></param>
             <returns></returns>
         </member>
         <member name="M:VRageMath.MyDynamicAABBTreeD.RemoveProxy(System.Int32)">

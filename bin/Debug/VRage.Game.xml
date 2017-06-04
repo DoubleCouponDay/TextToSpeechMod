@@ -768,12 +768,13 @@
             Tries to dispose all disposable contexts.
             </summary>
         </member>
-        <member name="M:VRage.Game.Localization.MyLocalization.LoadBundle(VRage.Game.Localization.MyLocalization.MyBundle,System.Collections.Generic.List{VRage.Game.Localization.MyLocalizationContext})">
+        <member name="M:VRage.Game.Localization.MyLocalization.LoadBundle(VRage.Game.Localization.MyLocalization.MyBundle,System.Collections.Generic.List{VRage.Game.Localization.MyLocalizationContext},System.Boolean)">
             <summary>
             Loads bundle of files under bundle id.
             </summary>
             <param name="bundle">Data bundle.</param>
             <param name="influencedContexts">Contexts that got some new data in the process.</param>
+            <param name="disposableContexts">Created contexts will be disposable or persistent.</param>
         </member>
         <member name="M:VRage.Game.Localization.MyLocalization.UnloadBundle(VRage.Utils.MyStringId)">
             <summary>
@@ -1476,11 +1477,6 @@
             <param name="min"></param>
             <param name="max"></param>
             <returns></returns>
-        </member>
-        <member name="M:VRage.Game.ModAPI.IMyCubeGrid.IsTrash">
-            <summary>
-            Algorithm used by game to define useless grids to be deleted
-            </summary>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyCubeGrid.CanMergeCubes(VRage.Game.ModAPI.IMyCubeGrid,VRageMath.Vector3I)">
             <summary>
@@ -3471,7 +3467,12 @@
         </member>
         <member name="P:VRage.Game.Components.MyHierarchyComponentBase.Children">
             <summary>
-            Gets the childs collection.
+            Gets the children collection.
+            </summary>
+        </member>
+        <member name="P:VRage.Game.Components.MyHierarchyComponentBase.ChildrenNeedingWorldMatrix">
+            <summary>
+            Gets the children collection for spatial updates.
             </summary>
         </member>
         <member name="F:VRage.Game.Components.MySessionComponentDescriptor.Priority">
@@ -3496,7 +3497,7 @@
             <param name="worldMatrix">The world matrix.</param>
             <param name="source">The source object that caused this change or null when not important.</param>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetLocalMatrix(VRageMath.MatrixD,System.Object)">
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetLocalMatrix(VRageMath.MatrixD,System.Object,System.Boolean,System.Nullable{VRageMath.Matrix})">
             <summary>
             Sets the local matrix.
             </summary>
@@ -3509,7 +3510,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetPosition(VRageMath.Vector3D)">
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetPosition(VRageMath.Vector3D,System.Object,System.Boolean,System.Boolean)">
             <summary>
             Sets the position.
             </summary>
@@ -4104,6 +4105,11 @@
         <member name="F:VRage.ModAPI.EntityFlags.NeedsUpdateBeforeNextFrame">
             <summary>
             Entity updated once before first frame.
+            </summary>
+        </member>
+        <member name="F:VRage.ModAPI.EntityFlags.NeedsWorldMatrix">
+            <summary>
+            If child, its world matrix must be always updated
             </summary>
         </member>
         <member name="F:VRage.ModAPI.MyEntityUpdateEnum.BEFORE_NEXT_FRAME">

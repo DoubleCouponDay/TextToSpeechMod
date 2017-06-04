@@ -6,12 +6,12 @@ BROKEN WORDS
 
 TO DO
 ================//
-+ print by taking the serialised words and using them as keys for accessing the results dictionary. 
-	-flag lowercase keys
-	-increment tallies
-	-increment nonmatchcount if switch was flipped during a comparison loop
++The problem is optional debugger retrieves the information before the tasks have finished.
+my async flags are not updating at the correct time
 
 + finish refactoring optionaldebugger
+	-ASTRONAUT was never added to the return set
+	-ABLEs length has 130000 length
 
 + optional debugger uses outputmanager in an old way. how do i update it?
 	-the phoneme results are taken care of but getting the signal to put down some of the bool flags is challenging in in a separate thread.

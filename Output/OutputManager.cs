@@ -39,11 +39,9 @@ namespace SETextToSpeechMod
         }
         private readonly List <SpeechTask> speechesField = new List <SpeechTask>();
         private SoundPlayer soundPlayerRef;
-
         TaskFactory taskFactory = new TaskFactory();
 
         public static bool IsDebugging { get; private set;}
-
         public bool IsProcessingOutputs { get; private set;}        
 
         int timer;
@@ -96,18 +94,22 @@ namespace SETextToSpeechMod
                 IsProcessingOutputs = false; 
 
                 for (int i = 0; i < speechesField.Count; i++) 
-                {                    
-                    if (speechesField[i].MainProcess.HasAnOrder && //checking this outside and inside TimelineFactory to save performance in all states
-                        speechesField[i].ReturnInfo.IsCompleted == true) //assuming asyncCalls has matching length to speechesField
-                    {                        
+                {
+                    if (speechesField[i].MainProcess.HasAnOrder)
+                    {
                         IsProcessingOutputs = true;
-                        int savedIndex = i; //fixed strange bug where i goes out of bounds even though the for loop prevents that; Weird!
 
-                        taskFactory.StartNew (() => {                             
-                                speechesField[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
-                            }, 
-                            speechesField[i].TaskCanceller.Token
-                        );                            
+                        if (speechesField[i].ReturnInfo.IsCompleted == true) //assuming async calls has matching length to speechesField
+                        {                        
+                        
+                            int savedIndex = i; //fixed strange bug where i goes out of bounds even though the for loop prevents that; Weird!
+
+                            taskFactory.StartNew (() => {                             
+                                    speechesField[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
+                                }, 
+                                speechesField[i].TaskCanceller.Token
+                            );                            
+                        }
                     }
                 }
 
