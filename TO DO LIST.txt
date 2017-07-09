@@ -6,51 +6,21 @@ BROKEN WORDS
 
 TO DO
 ================//
-+The problem is optional debugger retrieves the information before the tasks have finished.
-my async flags are not updating at the correct time
-
-+ finish refactoring optionaldebugger
-	-ASTRONAUT was never added to the return set
-	-ABLEs length has 130000 length
-
-+ optional debugger uses outputmanager in an old way. how do i update it?
-	-the phoneme results are taken care of but getting the signal to put down some of the bool flags is challenging in in a separate thread.
-	-I could use an event which the debugger would subscribe to. Any unforseen consequences?	
-
-+ sentencesNonSpacedResultsFinished event
-+ CurrentWordChanged event
-+ what are the back slashes for in HawkingIntonation?
-
-+ exception enumeration already finished: optionaldebugger line 248
-	solution: 
-	-properties arent returned every tick. need a new way of storing that info. 
-	wait until end of task?
-	-use foreach on the dictionary instead of enumerator,	
-	-throw exception if the two tables arent the same length	
-
-+ place optional debugger's bool duplicate exists in the result sheet
-		
-
-+ test adjacentresults with dictionary words with values longer than their keys
-+ test Intonation is accurate during dictionary dumps
-
-+ implement phoneme choosing for glados
-+ test async task
-+ test cancellation token source in output manager
++ finish intonation for all voices
 + fix everything :^)
 
-+ add computer voice support
++ add computer voice support?
 
-+ think of good object builder for block. cant be terminal block
-+ block should not play in realistic mode.
-+ figure out how to implement new buttons and a text box.
++ new block
+	+ outputmanager may need to be refactored so that sound players location is set using injection
+	+ think of good object builder for block. cant be terminal block
+	+ block should not play in realistic mode.
+	+ figure out how to implement new buttons and a text box.
     MyAPIGateway.TerminalControls.CustomControlGetter += TerminalControls_CustomControlGetter;
     then
     private static void TerminalControls_CustomControlGetter(IMyTerminalBlock block, List<IMyTerminalControl> controls)
 
     remove needed entries from controls argument(edited)
-
-+ read the log for PrettyScaryDictionary crash. multithreading?
 
 + make basic number support.
 

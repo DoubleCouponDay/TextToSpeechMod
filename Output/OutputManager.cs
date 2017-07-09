@@ -11,8 +11,8 @@ namespace SETextToSpeechMod
         public const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
         const int TOTAL_SIMULTANEOUS_SPEECHES = 5;
-        const int DOESNT_EXIST = -1;             
-                
+        const int DOESNT_EXIST = -1;                                  
+           
         public Type LocalPlayersVoice
         {
             get
@@ -27,17 +27,15 @@ namespace SETextToSpeechMod
         }
         Type localVoiceField = PossibleOutputs.HawkingType;
         
-        /// <summary>
-        /// Same sized groups of sentence types are ordered by their position in struct PossibleOutputs.Collection
-        /// </summary>                
-        internal IList <SpeechTask> Speeches
+        public List <SpeechTask> Speeches
         {
             get
             {
-                return speechesField.AsReadOnly();
+                return speechesFields;
             }
         }
-        private readonly List <SpeechTask> speechesField = new List <SpeechTask>();
+
+        private readonly List <SpeechTask> speechesFields = new List <SpeechTask>();
         private SoundPlayer soundPlayerRef;
         TaskFactory taskFactory = new TaskFactory();
 
@@ -62,7 +60,7 @@ namespace SETextToSpeechMod
         {
             IsProcessingOutputs = false;
             typeIndexes = new int[PossibleOutputs.Collection.Count];
-            speechesField.Clear();
+            speechesFields.Clear();
 
             for (int i = 0; i < PossibleOutputs.Collection.Count; i++)
             {
@@ -70,12 +68,12 @@ namespace SETextToSpeechMod
                 {
                     if (PossibleOutputs.Collection[i] == PossibleOutputs.MarekType)
                     {
-                        speechesField.Add (new SpeechTask (new MarekVoice (soundPlayerRef)));                                       
+                        speechesFields.Add (new SpeechTask (new MarekVoice (soundPlayerRef)));                                       
                     }
 
                     else if (PossibleOutputs.Collection[i] == PossibleOutputs.HawkingType)
                     {
-                        speechesField.Add (new SpeechTask (new MarekVoice (soundPlayerRef)));                                       
+                        speechesFields.Add (new SpeechTask (new MarekVoice (soundPlayerRef)));                                       
                     }
 
                     else if (PossibleOutputs.Collection[i] == PossibleOutputs.GLADOSType)
@@ -93,21 +91,20 @@ namespace SETextToSpeechMod
             {
                 IsProcessingOutputs = false; 
 
-                for (int i = 0; i < speechesField.Count; i++) 
+                for (int i = 0; i < speechesFields.Count; i++) 
                 {
-                    if (speechesField[i].MainProcess.HasAnOrder)
+                    if (speechesFields[i].MainProcess.HasAnOrder)
                     {
                         IsProcessingOutputs = true;
 
-                        if (speechesField[i].ReturnInfo.IsCompleted == true) //assuming async calls has matching length to speechesField
-                        {                        
-                        
+                        if (speechesFields[i].ReturnInfo.Status == TaskStatus.Created) //assuming async calls has matching length to speechesField
+                        {                                                
                             int savedIndex = i; //fixed strange bug where i goes out of bounds even though the for loop prevents that; Weird!
 
                             taskFactory.StartNew (() => {                             
-                                    speechesField[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
+                                    speechesFields[savedIndex].RunAsync(); //fixed bug where there was a single returned task from all speeches.
                                 }, 
-                                speechesField[i].TaskCanceller.Token
+                                speechesFields[i].TaskCanceller.Token
                             );                            
                         }
                     }
@@ -173,10 +170,7 @@ namespace SETextToSpeechMod
                     }      
                     int newSpeechIndex = firstTypeInstance + typeIndexes[currentTypeIndex];   
                     typeIndexes[currentTypeIndex]++;       
-                      
-                    speechesField[newSpeechIndex].TaskCanceller.Cancel();
-                    speechesField[newSpeechIndex].RenewCancellationSource();
-                    speechesField[newSpeechIndex].MainProcess.FactoryReset (inputSentence); //reuses instances of sentencefactory instead of instantiating every new sentence.                
+                    speechesFields[newSpeechIndex].FactoryReset (inputSentence);                                          
                     outcome = true;
                 }
             }
@@ -187,9 +181,9 @@ namespace SETextToSpeechMod
         {
             managerWasShutdown = true;
 
-            for (int i = 0; i < speechesField.Count; i++)
+            for (int i = 0; i < speechesFields.Count; i++)
             {
-                speechesField[i].Dispose();
+                speechesFields[i].Dispose();
             }            
         }
     }

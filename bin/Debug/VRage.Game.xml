@@ -3480,17 +3480,10 @@
             Lower Priority is loaded before higher Priority
             </summary>
         </member>
-        <member name="F:VRage.Game.Components.MyPositionComponentBase.m_invalidBox">
-            <summary>
-            Internal world matrix of entity.
-            </summary>
-        </member>
         <member name="F:VRage.Game.Components.MyPositionComponentBase.m_localMatrix">
-            <summary>
             Internal local matrix relative to parent of entity.
-            </summary>
         </member>
-        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean,System.Boolean)">
+        <member name="M:VRage.Game.Components.MyPositionComponentBase.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Sets the world matrix.
             </summary>
@@ -3590,13 +3583,6 @@
             Used by game to store model here. In game this is always of type MyModel.
             Implementation should only store and return passed object.
             </summary>
-        </member>
-        <member name="M:VRage.Game.Components.MyPositionComponent.SetWorldMatrix(VRageMath.MatrixD,System.Object,System.Boolean,System.Boolean)">
-            <summary>
-            Sets the world matrix.
-            </summary>
-            <param name="worldMatrix">The world matrix.</param>
-            <param name="source">The source object that caused this change or null when not important.</param>
         </member>
         <member name="M:VRage.Game.Components.MyPositionComponent.UpdateChildren(System.Object)">
             <summary>

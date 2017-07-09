@@ -25,8 +25,7 @@ namespace SETextToSpeechMod.Output
         public SpeechTask (TimelineFactory itsSpeech)
         {
             MainProcess = itsSpeech;
-            ReturnInfo = new Task (() => {return;}); //just in case the default value of IsCompleted is not true.
-            ReturnInfo.RunSynchronously();
+            ReturnInfo = new Task (() => {return;}); //just in case the default value of IsCompleted is not true.            
             TaskCanceller = new CancellationTokenSource();
         }
 
@@ -34,6 +33,13 @@ namespace SETextToSpeechMod.Output
         {
             ReturnInfo = MainProcess.RunAsync();
             await ReturnInfo;
+        }
+
+        public void FactoryReset (string inputSentence)
+        {
+            TaskCanceller.Cancel();
+            RenewCancellationSource();
+            MainProcess.FactoryReset (inputSentence); //reuses instances of sentencefactory instead of instantiating every new sentence.                
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace SETextToSpeechMod
         }
 
         /// <summary>
-        /// Initialises a new sentence. You need to Run FactoryReset() before calling this.
+        /// Initialises a new sentence.
         /// </summary>
         /// <param name="inputSentence"></param>
         public void FactoryReset (string inputSentence)
@@ -77,7 +77,8 @@ namespace SETextToSpeechMod
         //this function will extract what phonemes it can from the sentence and save performance by taking its sweet time.
         public async Task RunAsync()
         {                     
-            if (HasAnOrder)
+            if (HasAnOrder &&
+                IsBusy == false) //prevent factory from being spammed; one run per order.
             {
                 IsBusy = true;
 
@@ -95,11 +96,53 @@ namespace SETextToSpeechMod
 
         private void AddPhonemes (int currentIndex)
         {   
-            currentResults = Pronunciation.GetLettersPronunciation (sentence, currentIndex);
+            currentResults = Pronunciation.GetLettersPronunciation (sentence, currentIndex);           
+
+            for (int i = 0; i < currentResults.Count; i++)
+            {             
+                if (currentResults[i] == string.Empty) //AdjacentEvaluation() can return an empty string sometimes.
+                {
+                    currentResults.RemoveAt(i);
+
+                    if (i == currentResults.Count)
+                    {
+                        break;
+                    }
+                }
+
+                if (currentResults[i] != SPACE)
+                {                                                   
+                    AddToTimeline (currentResults[i]);                                            
+
+                    if (syllableMeasure >= SyllableSize - 1)
+                    {                            
+                        IncrementSyllables();                       
+                    }   
+
+                    else
+                    {
+                        previousWasSpace = false;
+                        syllableMeasure++;
+                    }
+                }
+
+                else
+                {
+                    if (previousWasSpace == false) //prevents syllables and actual whitespace from combining.
+                    {
+                        IncrementSyllables();
+                    }       
+                        
+                    else
+                    {
+                        previousWasSpace = false;
+                    }                 
+                }
+            }
 
             if (OutputManager.IsDebugging)                
             {
-                if (Pronunciation.UsedDictionary)
+                if (Pronunciation.PreviousProcessUsedDictionary)
                 {
                     PossibleDebugOutput.AddDictionaryWord (Pronunciation.WordIsolator.CurrentWord, currentResults);
                 }
@@ -108,41 +151,6 @@ namespace SETextToSpeechMod
                 {
                     PossibleDebugOutput.AddRuleBasedWord (Pronunciation.WordIsolator.CurrentWord, currentResults);
                 }                
-            }
-
-            for (int i = 0; i < currentResults.Count; i++)
-            {             
-                if (currentResults[i] != "") //AdjacentEvaluation() can return an empty string sometimes.
-                {
-                    if (currentResults[i] != SPACE)
-                    {                                                   
-                        AddToTimeline (currentResults[i]);                                            
-
-                        if (syllableMeasure >= SyllableSize - 1)
-                        {                            
-                            IncrementSyllables();                       
-                        }   
-
-                        else
-                        {
-                            previousWasSpace = false;
-                            syllableMeasure++;
-                        }
-                    }
-
-                    else
-                    {
-                        if (previousWasSpace == false) //prevents syllables and actual whitespace from combining.
-                        {
-                            IncrementSyllables();
-                        }       
-                        
-                        else
-                        {
-                            previousWasSpace = false;
-                        }                 
-                    }
-                }
             }
         }
 

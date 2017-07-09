@@ -57,7 +57,7 @@ namespace SETextToSpeechMod
         const string ZIH = PrettyScaryDictionary.ZIH;
         static readonly string[] ROW = PrettyScaryDictionary.ROW; //in order to put this in the table it must be static.
 
-        readonly OrderedDictionary adjacentWords = new OrderedDictionary // ordered dictionary only allows you to access its values by int index; nothing more.
+        readonly OrderedDictionary adjacentWords = new OrderedDictionary //ordered dictionary only allows you to access its values by int index; nothing more.
         {
             {"", new string[]{  }},
             {"_A_", ROW}, {"ABLE", new string[]{ AEE, BIH, LIH, }}, {"A", new string[]{ UHH, }}, {"AVAILABLE", new string[]{ UHH, VIH, AEE, LIH, UHH, BIH, LIH, }}, {"AUTOGRAPH", new string[]{ AWW, TIH, OWE, GIH, RIH, AHH, FIH, }}, {"ACTIVITIES", new string[]{ AHH, KIH, TIH, IHH, VIH, IHH, TIH, EEE, SIH, }}, {"AGGRESSION", new string[]{ UHH, GIH, RIH, EHH, SHI, UHH, NIH, }}, {"ABORIGINE", new string[]{ AHH, BIH, OWE, RIH, IHH, JIH, IHH, NIH, EEE, }}, {"ANNOINT", new string[]{ UHH, NIH, AWW, EEE, NIH, TIH, }}, {"ASTRONAUT", new string[]{ AHH, SIH, TIH, RIH, OWE, NIH, AWW, TIH, }}, {"ASSAULT", new string[]{ UHH, SIH, HOH, LIH, TIH, }}, {"ABOITEAU", new string[]{ AHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABOITEAUX", new string[]{ AHH, BIH, AWW, EEE, TIH, OWE, }}, {"ABILITY", new string[]{ UHH, BIH, IHH, LIH, IHH, TIH, EEE, }}, {"AGAIN", new string[]{ UHH, GIH, AEE, NIH, }}, {"ACTIVATE", new string[]{ AHH, KIH, TIH, IHH, VIH, AEE, TIH, }}, {"ACOUSTIC", new string[]{ UHH, KIH, OOO, SIH, TIH, IHH, KIH, }}, {"ADVANTAGE", new string[]{ AHH, DIH, VIH, AHH, NIH, TIH, IHH, JIH, }},
@@ -94,16 +94,13 @@ namespace SETextToSpeechMod
         readonly string allTestWords;
 
         bool duplicateExists = default (bool);        
-        OrderedDictionary emptiesRemoved = new OrderedDictionary(); //needed for checking for duplicate entries
-        OrderedDictionary tabledResults = new OrderedDictionary();
+        OrderedDictionary algorithmResults = new OrderedDictionary();
         OrderedDictionary dictionaryResults = new OrderedDictionary();
         Encoding encode = Encoding.Unicode;        
         ChatEntryPoint entryPoint = new ChatEntryPoint (true); //class scope so that methods can access it.
 
         public OptionalDebugger()
         {
-            emptiesRemoved = adjacentWords;
-
             switch (currentComputer)
             {
                 case "pavilion":
@@ -146,9 +143,7 @@ namespace SETextToSpeechMod
         {            
             var itemsToRemove = new List<string>(); //entire entries to remove
 
-            //modified entry values which may have only a char removed
-            //may contain more than one record of the same item
-            var itemValuesIndexesToRemove = new List <KeyValuePair <string, int>>(); 
+            var indexesToRemove = new List <KeyValuePair <string, int>>(); 
 
             foreach (DictionaryEntry entry in adjacentWords)
             {                
@@ -169,10 +164,10 @@ namespace SETextToSpeechMod
                     {
                         for (int i = 0; i < castValue.Count; i++)
                         {
-                            if (string.IsNullOrWhiteSpace (castValue[i]))
+                            if (castValue[i] == SPACE)
                             {
                                 var newRemoveIndex = new KeyValuePair<string, int> (castKey, i);
-                                itemValuesIndexesToRemove.Add (newRemoveIndex);
+                                indexesToRemove.Add (newRemoveIndex); //I cant use RemoveWhiteSpaceFromRef() because altering the order of an ordered dictionary, inside a loop, throws exception.
                             }
                         }
                     }
@@ -189,11 +184,12 @@ namespace SETextToSpeechMod
                 adjacentWords.Remove (itemsToRemove[i]);
             }
 
-            for (int i = 0; i < itemValuesIndexesToRemove.Count; i++)
+            for (int i = 0; i < indexesToRemove.Count; i++)
             {
-                var castToRemove = (string[]) adjacentWords[itemValuesIndexesToRemove[i].Key];
-                var dynamicSort = new List <string> (castToRemove);
-                dynamicSort.RemoveAt (itemValuesIndexesToRemove[i].Value); //even though this could be optimized, there is no need for performance in OptionalDebugger 
+                var castToRemove = (string[]) adjacentWords[indexesToRemove[i].Key];
+                var easierRemoval = new List <string> (castToRemove);
+                easierRemoval.RemoveAt (indexesToRemove[i].Value); //even though this could be optimized, there is no need for performance in OptionalDebugger 
+                adjacentWords[indexesToRemove[i].Key] = easierRemoval.ToArray();
             }
         }
 
@@ -236,31 +232,33 @@ namespace SETextToSpeechMod
                 if (entry.Key != SPACE)
                 {
                     var valueCopy = new List <string> (entry.Value);
-                    RemoveSpacesFromReference (ref valueCopy); 
+                    RemoveEmptySpaceFromRef (ref valueCopy); 
 
-                    if (tabledResults.Contains (entry.Key))
+                    if (algorithmResults.Contains (entry.Key))
                     {
                         for (int i = 0; i < valueCopy.Count; i++)
                         {
-                            ((List <string>) tabledResults[entry.Key]).Add (valueCopy[i]);
+                            ((List <string>) algorithmResults[entry.Key]).Add (valueCopy[i]);
                         }                        
                     }
 
                     else
                     {                                                                      
-                        tabledResults.Add (entry.Key, valueCopy);
+                        algorithmResults.Add (entry.Key, valueCopy);
                     }
                 }
             }
         }
 
-        void RemoveSpacesFromReference (ref List <string> listToReference)
+        void RemoveEmptySpaceFromRef (ref List <string> listToReference)
         {
             for (int i = 0; i < listToReference.Count; i++)
             {
-                if (listToReference[i] == SPACE)
+                if (listToReference[i] == SPACE ||
+                    listToReference[i] == string.Empty)
                 {
                     listToReference.RemoveAt (i);
+                    i--;
                 }
             }
         }
@@ -293,9 +291,10 @@ namespace SETextToSpeechMod
             {
                 previousReadings = File.ReadAllLines(resultsFile);   
             }
-            catch (Exception e)
+
+            catch (Exception notUsed)
             {
-                throw new Exception ("Something went wrong when attempt to read previous data from file.");
+                throw new Exception ("Something went wrong when attempting to read previous data from file.");
             }            
             previousReadings = previousReadings[1].Split(SPACE.ToCharArray()); 
    
@@ -309,6 +308,11 @@ namespace SETextToSpeechMod
                                 "",
                                 };                           
             var resultLines = new List <string>();
+
+            for (int i = 0; i < tallies.Length; i++) //I want to make some space for the tallies in the results page
+            {
+                resultLines.Add(string.Empty);
+            }
             int nonMatchCount = default (int);
             int lowerCaseWords = default (int);
             int dictionaryWordCount = dictionaryResults.Count;
@@ -318,76 +322,35 @@ namespace SETextToSpeechMod
 
             for (int i = tallies.Length; i < (testWords.Length + tallies.Length); i++)
             {
-                bool dataIsAMatch = true;
                 string resultLine = string.Empty;
-                string currentKey = testWords[i];
-                List <string> currentInputValue = new List<string> ((string[]) adjacentWords[testWords[i]]);
-                List <string> currentOutputValue;
-                resultLine += currentKey;
+                string currentKey = testWords[i - tallies.Length];
 
-                { //Check key for lower case letters
-                    char[] indexedKey = currentKey.ToCharArray();
+                if (currentKey != string.Empty) //splitting on spaces can lead to unexpected keys
+                {
+                    List <string> currentInputValue = new List<string> ((string[]) adjacentWords[currentKey]);
+                    List <string> currentOutputValue;
+                    resultLine = currentKey;
 
-                    for (int keyIndex = 0; keyIndex < indexedKey.Length; keyIndex++)
-                    {
-                        if (char.IsLower (indexedKey[keyIndex]))
-                        {
-                            resultLine += "____Lowercase Key____";
-                        }
-                    }
+                    Tuple <string, bool> annotatedLineAndFlag = CheckKeyForLowerCase(currentKey, resultLine); 
+                    resultLine = annotatedLineAndFlag.Item1;
+                    bool containsLowerCase = annotatedLineAndFlag.Item2;    
+                                   
+                    resultLine = SelectCurrentOutputValue (currentKey, resultLine, out currentOutputValue);
+                    RemoveEmptySpaceFromRef (ref currentOutputValue);
+
+                    Tuple <string, bool> printLineAndFlag = CreatePrintLineAndAFlag (resultLine, currentInputValue, currentOutputValue);
+                    bool dataIsAMatch = printLineAndFlag.Item2;
+
+                    resultLines.Add (printLineAndFlag.Item1);
+                    resultLines.Add (string.Empty);
+                    
+                    lowerCaseWords += containsLowerCase ? 1 : 0;
+                    nonMatchCount += dataIsAMatch ? 0 : 1;
                 }
-
-                { //Select the location of the current output value
-                    if (tabledResults.Contains (currentKey))
-                    {
-                        currentOutputValue = (List <string>) tabledResults[currentKey];
-                    }
-
-                    else if (dictionaryResults.Contains (currentKey))
-                    {                    
-                        currentOutputValue = (List <string>) dictionaryResults[currentKey];
-                        resultLine += "____Used Dictionary____";                    
-                    }
-
-                    else
-                    {
-                        throw new Exception ("OptionalDebugger test word '" + currentKey + "' does not exist in output!");
-                    }
-                }
-
-                { //Store the print lines and collect data to show 
-                    bool valuesAreEqualLength = (currentInputValue.Count == currentInputValue.Count) ? true : false;
-                    resultLine += "      { ";
-
-                    for (int inputValuesIndex = 0; inputValuesIndex < currentInputValue.Count; inputValuesIndex++)
-                    {
-
-                        if (valuesAreEqualLength && //&& will prevent evaluation of its following expressions therefore preventing out of bounds exception.
-                            currentInputValue[i].Equals (currentOutputValue[i]))
-                        {
-                            dataIsAMatch = false;
-                        }                    
-                        resultLine += currentInputValue[inputValuesIndex] + ", ";
-                    }
-                    resultLine += "} { ";
-
-                    for (int outputValuesIndex = 0; outputValuesIndex < currentOutputValue.Count; i++)
-                    {
-                        resultLine += currentOutputValue[outputValuesIndex];
-                    }
-                    resultLine += "}";                               
-                    string tempStoredResultLine = resultLine;
-                    resultLine = dataIsAMatch ? "Correct ------ " : "Not Correct -- ";
-                    resultLine += currentKey;
-                    resultLine += tempStoredResultLine;                                
-                    resultLines.Add (resultLine);
-                    resultLines.Add ("");
-                }
-                nonMatchCount = dataIsAMatch ? nonMatchCount : nonMatchCount + 1;
             }
 
             { //Add tallies to the result sheet           
-                resultLines[0] = tallies[0] + emptiesRemoved.Count;
+                resultLines[0] = tallies[0] + adjacentWords.Count;
                 resultLines[1] = tallies[1] + nonMatchCount;
                 resultLines[2] = "Previous Incorrect: " + tallies[2];
                 resultLines[3] = tallies[3] + dictionaryWordCount;
@@ -407,6 +370,88 @@ namespace SETextToSpeechMod
                 }             
                 Process.Start (resultsFile);
             }
+        }
+
+        /// <summary>
+        /// Returns an annotated current line and a boolean reflecting the methods outcome.
+        /// </summary>
+        /// <returns></returns>
+        Tuple <string, bool> CheckKeyForLowerCase (string currentKey, string resultLine)
+        {
+            bool outcome = false;
+            char[] indexedKey = currentKey.ToCharArray();
+
+            for (int keyIndex = 0; keyIndex < indexedKey.Length; keyIndex++)
+            {
+                if (char.IsLower (indexedKey[keyIndex]))
+                {
+                    outcome = true;
+                    resultLine += "____Lowercase Key____";
+                    break;
+                }
+            }
+            return new Tuple<string, bool> (resultLine, outcome);
+        }
+
+        /// <summary>
+        /// Returns an annotated result line if matching set was found in a dictionary.
+        /// </summary>
+        /// <returns></returns>
+        string SelectCurrentOutputValue (string currentKey, string resultLine, out List <string> currentOutputValue)
+        {
+            string upperKey = currentKey.ToUpper();
+
+            if (algorithmResults.Contains (upperKey))
+            {
+                currentOutputValue = (List <string>) algorithmResults[upperKey];
+            }
+
+            else if (dictionaryResults.Contains (upperKey))
+            {                    
+                currentOutputValue = (List <string>) dictionaryResults[upperKey];
+                resultLine += "____Used Dictionary____";                    
+            }
+
+            else
+            {
+                throw new Exception ("OptionalDebugger test word '" + currentKey + "' does not exist in output!");
+            }
+            return resultLine;
+        }
+
+        /// <summary>
+        /// Print line is a row of information showing the comparison's result for two lists.
+        /// Flag signifies whether the two Lists match.
+        /// </summary>
+        /// <param name="currentInputValue"></param>
+        /// <param name="currentOutputValue"></param>
+        /// <returns></returns>
+        Tuple <string, bool> CreatePrintLineAndAFlag (string keyOnlyPrintLine, List<string> currentInputValue, List <string> currentOutputValue)
+        {
+            bool dataIsAMatch = true;
+            bool valuesAreEqualLength = (currentInputValue.Count == currentOutputValue.Count) ? true : false;
+            keyOnlyPrintLine += "      { ";
+
+            for (int inputValuesIndex = 0; inputValuesIndex < currentInputValue.Count; inputValuesIndex++)
+            {
+                if (valuesAreEqualLength && //&& will prevent evaluation of its following expressions therefore preventing out of bounds exception.
+                    currentInputValue[inputValuesIndex] != (currentOutputValue[inputValuesIndex]) ||
+                    valuesAreEqualLength == false)
+                {
+                    dataIsAMatch = false;
+                }                    
+                keyOnlyPrintLine += currentInputValue[inputValuesIndex] + ", ";
+            }
+            keyOnlyPrintLine += "} { ";
+
+            for (int outputValuesIndex = 0; outputValuesIndex < currentOutputValue.Count; outputValuesIndex++)
+            {
+                keyOnlyPrintLine += currentOutputValue[outputValuesIndex] + ", ";
+            }
+            keyOnlyPrintLine += "}";                               
+            string result = dataIsAMatch ? "Correct ------ " : "Not Correct -- ";
+            keyOnlyPrintLine = result + keyOnlyPrintLine;                                
+            return new Tuple<string, bool> (keyOnlyPrintLine, dataIsAMatch);
         }
     }
 }

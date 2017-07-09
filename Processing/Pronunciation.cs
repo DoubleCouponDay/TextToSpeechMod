@@ -19,7 +19,7 @@ namespace SETextToSpeechMod.Processing
         private readonly Intonation intonationGen;
 
         //public feedback
-        public bool UsedDictionary {get; private set;}
+        public bool PreviousProcessUsedDictionary {get; private set;}
         public int WrongFormatMatches {get; private set;}
         public int WrongFormatNonMatches {get; private set;}        
 
@@ -40,7 +40,7 @@ namespace SETextToSpeechMod.Processing
         public void FactoryReset()
         {
             surroundingPhrase = "";
-            UsedDictionary = false;
+            PreviousProcessUsedDictionary = false;
             WrongFormatMatches = 0;
             WrongFormatNonMatches = 0;            
             currentResults.Clear();
@@ -62,25 +62,24 @@ namespace SETextToSpeechMod.Processing
         /// <param name="letterIndex"></param>
         /// <returns>returns new list.</returns>
         public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
-        {
-            UsedDictionary = false;
+        {            
             pushingDictionaryWordOut = false;   
             currentResults = new List <string>();
             WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
             tempSentence = sentence;
             tempLetterIndex = letterIndex;
             currentResults.Clear();        
-            surroundingPhrase = "";        
-                              
+            surroundingPhrase = "";                                      
 
             if (WordIsolator.CurrentWord != SPACE)
             {
                 if (WordIsolator.CurrentWordIsNew == true)
                 {                    
                     dictionaryMatch = null;
-                    UsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordIsolator.CurrentWord, out dictionaryMatch);
+                    PreviousProcessUsedDictionary = false; //prevent false positives
+                    PreviousProcessUsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordIsolator.CurrentWord, out dictionaryMatch);
 
-                    if (UsedDictionary)
+                    if (PreviousProcessUsedDictionary)
                     {
                         TakeFromDictionary();
                     }
@@ -91,7 +90,7 @@ namespace SETextToSpeechMod.Processing
                     }
                 }
 
-                else if (UsedDictionary)
+                else if (PreviousProcessUsedDictionary)
                 {
                     TakeFromDictionary();
                 }
@@ -225,7 +224,8 @@ namespace SETextToSpeechMod.Processing
                                      "|..ADY" + //lady
                                      "|..AKY" + //flaky
                                      "|..ACY" + //stacy
-                                     "|..AME" //same
+                                     "|..AME" + //same
+                                     "|.LADO" //glados
                                      ) ||
                             
                             (UnwantedMatchBypassed (".PATI") && //!patio
@@ -727,7 +727,8 @@ namespace SETextToSpeechMod.Processing
                                      "|..OB " + //rob
                                      "|..OLD" + //told
                                      "|..OX." + //oxygen
-                                     "|..OF." //of
+                                     "|..OF." + //of
+                                     "|ADO.." //glados
                                      ) ||
 
                             (UnwantedMatchBypassed ("..OO.") && //!oolacile
