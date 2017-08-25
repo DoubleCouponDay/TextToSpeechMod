@@ -2711,13 +2711,13 @@
             <param name="material"></param>
             <param name="operation"></param>
         </member>
-        <member name="M:VRage.ModAPI.IMyVoxelBase.CreateMeteorCrater(VRageMath.Vector3D,System.Single,VRageMath.Vector3,System.Byte)">
+        <member name="M:VRage.ModAPI.IMyVoxelBase.CreateMeteorCrater(VRageMath.Vector3D,System.Single,VRageMath.Vector3,VRageMath.Vector3,System.Byte)">
             <summary>
             Creates a meteor crater on a voxel, depositing the specified material. Call on server.
             </summary>
             <param name="center"></param>
             <param name="radius"></param>
-            <param name="normal">Direction crater opens (eg. towards meteor source)</param>
+            <param name="direction">Direction crater opens (eg. towards meteor source)</param>
             <param name="materialIdx">Material to deposit.</param>
         </member>
         <member name="P:VRage.ModAPI.IMyVoxelBase.PositionLeftBottomCorner">
@@ -2788,16 +2788,16 @@
             <param name="voxelShape"></param>
             <param name="materialIdx"></param>
         </member>
-        <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.MakeCrater(VRage.ModAPI.IMyVoxelBase,VRageMath.BoundingSphereD,VRageMath.Vector3,System.Byte)">
+        <member name="M:VRage.Game.ModAPI.IMyVoxelMaps.MakeCrater(VRage.ModAPI.IMyVoxelBase,VRageMath.BoundingSphereD,VRageMath.Vector3,VRageMath.Vector3,System.Byte)">
             <summary>
             Creates a crater in a voxel, and deposits the specifid material.
             </summary>
             <param name="voxelMap"></param>
             <param name="sphere"></param>
-            <param name="normal"></param>
+            <param name="direction"></param>
             <param name="materialIdx"></param>
             <remarks>Not synced.<br/>
-            Call <see cref="M:VRage.ModAPI.IMyVoxelBase.CreateMeteorCrater(VRageMath.Vector3D,System.Single,VRageMath.Vector3,System.Byte)">IMyVoxelBase.CreateMeteorCrater</see> on the server instead for a synced operation.
+            Call <see cref="M:VRage.ModAPI.IMyVoxelBase.CreateMeteorCrater(VRageMath.Vector3D,System.Single,VRageMath.Vector3,VRageMath.Vector3,System.Byte)">IMyVoxelBase.CreateMeteorCrater</see> on the server instead for a synced operation.
             </remarks>
         </member>
         <member name="M:VRage.Game.ModAPI.IMyVoxelShape.GetWorldBoundary">
@@ -2890,7 +2890,7 @@
             Is closing of objects allowed?
             </summary>
         </member>
-        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalHandler.AddDecal(VRageRender.MyDecalRenderInfo@)">
+        <member name="M:VRage.Game.ModAPI.Interfaces.IMyDecalHandler.AddDecal(VRageRender.MyDecalRenderInfo@,System.Collections.Generic.List{System.UInt32})">
             <param name="renderData">Position and normal on local coordinates for regular actors.
             World position on voxel maps</param>
         </member>
@@ -7611,7 +7611,12 @@
         </member>
         <member name="F:MyCommonTexts.WorldSettings_VegetationDistance">
             <summary>
-            Vegetation View Distance
+            Tree draw distance
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.WorldSettings_GrassDrawDistance">
+            <summary>
+            Grass draw distance
             </summary>
         </member>
         <member name="F:MyCommonTexts.WorldSettings_GrassDensity">
@@ -8710,6 +8715,36 @@
             Newer news
             </summary>
         </member>
+        <member name="F:MyCommonTexts.ToolTipContinueGame">
+            <summary>
+            Continue from your last save
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipExitToWindows">
+            <summary>
+            Leave game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipJoinGame">
+            <summary>
+            Play online
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipLoadGame">
+            <summary>
+            Load a saved world
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipNewGame">
+            <summary>
+            Start a new game
+            </summary>
+        </member>
+        <member name="F:MyCommonTexts.ToolTipOptions">
+            <summary>
+            Change game's configuration
+            </summary>
+        </member>
         <member name="F:VRage.Game.BlueprintItem.Amount">
             <summary>
             Amount of item required or produced. For discrete objects this refers to
@@ -8916,6 +8951,25 @@
         </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.DeserializeXML(System.IO.Stream,VRage.ObjectBuilders.MyObjectBuilder_Base@,System.Type,System.Collections.Generic.Dictionary{System.String,System.String})">
             <param name="typeOverrideMap">Allows override of the type of the definition. Refer to MyDefinitionXmlSerializer</param>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.DeserializePB``1(System.String,``0@)">
+            <summary>
+            Deserialize data by protobuf
+            </summary>
+            <typeparam name="T">object builder type</typeparam>
+            <param name="path">path</param>
+            <param name="objectBuilder">instance</param>
+            <returns>false when fails</returns>
+        </member>
+        <member name="M:VRage.ObjectBuilders.MyObjectBuilderSerializer.DeserializePB``1(System.String,``0@,System.UInt64@)">
+            <summary>
+            Deserialize data by protobuf
+            </summary>
+            <typeparam name="T">object builder type</typeparam>
+            <param name="path">path</param>
+            <param name="objectBuilder">instance</param>
+            <param name="fileSize">size of the file</param>
+            <returns>false when fails</returns>
         </member>
         <member name="M:VRage.ObjectBuilders.MyObjectBuilderType.ParseBackwardsCompatible(System.String)">
             <summary>

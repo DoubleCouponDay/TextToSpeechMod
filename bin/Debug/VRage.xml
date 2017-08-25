@@ -566,7 +566,6 @@
         <member name="M:VRage.Replication.MyReplicablesBase.Refresh(VRage.Network.IMyReplicable)">
             <summary>
             Refreshes replicable, updates it's child status and parent.
-            Returns true if replicable is root.
             </summary>
         </member>
         <member name="M:VRage.Replication.MyReplicablesBase.Remove(VRage.Network.IMyReplicable)">

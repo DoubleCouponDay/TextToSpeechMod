@@ -368,13 +368,11 @@ C:\Users\power\Desktop\scripting\TextToSpeechMod\obj\Debug\TextToSpeechMod.pdb
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\TextToSpeechMod.exe
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\TextToSpeechMod.exe.CodeAnalysisLog.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\TextToSpeechMod.exe.lastcodeanalysissucceeded
-C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Sandbox.Game.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\SpaceEngineers.Game.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\VRage.Input.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\VRage.Render.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\VRage.Render11.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\VRage.Scripting.xml
-C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\Sandbox.Graphics.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\bin\Debug\SpaceEngineers.ObjectBuilders.xml
 C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\obj\Debug\TextToSpeechMod.exe
 C:\Users\power\Desktop\scripting\TextToSpeechMod\obj\Debug\SE TextToSpeechMod.csprojResolveAssemblyReference.cache

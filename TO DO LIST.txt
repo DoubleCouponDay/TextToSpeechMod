@@ -7,6 +7,15 @@ BROKEN WORDS
 TO DO
 ================//
 + finish intonation for all voices
+	+ why am I injecting intonationtype into pronunciation?
+	+ Because I apply the intonation number inside pronunciation
+	+ Tasks objective is to select the right number to append to each phoneme.
+		First I have some settings when implementing task factory; basic stuff and not finalized until testing.
+		Then I have to make a selecting algorithm in gladosIntonation.
+	+ what was my previous work trying to achieve and do I agree with it?
+		
+
+
 + fix everything :^)
 
 + add computer voice support?

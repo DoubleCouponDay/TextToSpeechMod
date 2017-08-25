@@ -23,7 +23,8 @@ namespace SETextToSpeechMod.Processing
         {
             if (surroundingPhrase.Length == Pronunciation.ALGORITHM_PHRASE_SIZE)
             {
-                return DerivedIntonationChoice (phoneme, surroundingPhrase, sentenceEndInPhrase);
+                string choice = DerivedIntonationChoice (phoneme, surroundingPhrase, sentenceEndInPhrase);
+                return choice;
             }
 
             else

@@ -106,7 +106,7 @@ namespace SETextToSpeechMod.Processing
                 currentResults.Add (SPACE); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
             }
             
-            if (OutputManager.IsDebugging == false)
+            if (OutputManager.IsDebugging == false) //debugger only checks that the correct phonemes were selected; doesnt care about intonation
             {
                 bool sentenceIsEnding = (letterIndex >= sentence.Length - SENTENCE_END_ZONES_LENGTH) ? true : false;
 
