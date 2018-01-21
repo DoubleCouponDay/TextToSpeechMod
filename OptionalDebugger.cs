@@ -111,7 +111,7 @@ namespace SETextToSpeechMod
                     resultsFile = thinkpadAddress;
                     break;
             }
-            RemoveFromTestTable(); //Remove and Rollout and paired together since readonly allTestWords can only be defined in a constructor, and Remove must happen before that happens.            
+            RemoveFromTestTable();            
             allTestWords = RollOutAdjacentWords();
         }
 
@@ -292,7 +292,7 @@ namespace SETextToSpeechMod
                 previousReadings = File.ReadAllLines(resultsFile);   
             }
 
-            catch (Exception notUsed)
+            catch
             {
                 throw new Exception ("Something went wrong when attempting to read previous data from file.");
             }            

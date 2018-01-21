@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod.LookUpTables
 {
-    class RecognizedSymbols
+    public static class RecognizedSymbols
     {
         public const string EXCLAMATION = "!";
         public const string QUESTION = "?";
