@@ -18,8 +18,8 @@ namespace SETextToSpeechMod
         //const string currentComputer = "pavilion";
         const string currentComputer = "thinkpad";
 
-        const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\AdjacentResults.txt";       
-        const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\AdjacentResults.txt";
+        const string pavilionAddress = @"C:\Users\power\Desktop\scripting\SpaceEngineersTextToSpeechMod\Logging\adjacent results.txt";       
+        const string thinkpadAddress = @"C:\Users\sjsui\Desktop\Workshop\text-to-speech-mod-for-space-engineers\adjacent results.txt";
 
         const string AEE = PrettyScaryDictionary.AEE;
         const string AHH = PrettyScaryDictionary.AHH; 
