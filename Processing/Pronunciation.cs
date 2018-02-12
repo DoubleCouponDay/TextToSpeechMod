@@ -4,7 +4,7 @@ using SETextToSpeechMod.LookUpTables;
 
 namespace SETextToSpeechMod.Processing
 {
-    public class Pronunciation
+    public class Pronunciation : ISentenceReset
     {    
         //Constants
         /// <summary>
@@ -37,21 +37,21 @@ namespace SETextToSpeechMod.Processing
             this.intonationGen = intonationType;
         }
 
-        public void FactoryReset()
+        public void FactoryReset(string newSentence)
         {
-            surroundingPhrase = "";
+            surroundingPhrase = string.Empty;
             PreviousProcessUsedDictionary = false;
             WrongFormatMatches = 0;
             WrongFormatNonMatches = 0;            
             currentResults.Clear();
             dictionaryMatch = null;
 
-            tempSentence = "";
+            tempSentence = string.Empty;
             tempLetterIndex = 0;
 
             pushingDictionaryWordOut = false;
 
-            WordIsolator.FactoryReset();
+            WordIsolator.FactoryReset(newSentence);
         }
 
         /// <summary>
@@ -65,19 +65,19 @@ namespace SETextToSpeechMod.Processing
         {            
             pushingDictionaryWordOut = false;   
             currentResults = new List <string>();
-            WordIsolator.UpdateProperties (sentence, letterIndex); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
+            WordIsolator.MoveNext(); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
             tempSentence = sentence;
             tempLetterIndex = letterIndex;
             currentResults.Clear();        
-            surroundingPhrase = "";                                      
+            surroundingPhrase = string.Empty;                                      
 
-            if (WordIsolator.CurrentWord != SPACE)
+            if (WordIsolator.Current != SPACE)
             {
                 if (WordIsolator.CurrentWordIsNew == true)
                 {                    
                     dictionaryMatch = null;
                     PreviousProcessUsedDictionary = false; //prevent false positives
-                    PreviousProcessUsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordIsolator.CurrentWord, out dictionaryMatch);
+                    PreviousProcessUsedDictionary = PrettyScaryDictionary.TTS_DICTIONARY.TryGetValue (WordIsolator.Current, out dictionaryMatch);
 
                     if (PreviousProcessUsedDictionary)
                     {

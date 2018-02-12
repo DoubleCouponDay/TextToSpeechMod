@@ -29,7 +29,7 @@ namespace SETextToSpeechMod.Processing
 
             else
             {
-                throw new UnconventionalPhraseException ("surroundingPhrase must be " + Pronunciation.ALGORITHM_PHRASE_SIZE + " characters long.");
+                throw new UnconventionalPhraseException ("surroundingPhrase must be " + Pronunciation.ALGORITHM_PHRASE_SIZE + " characters long. Developers fault."); //an internal error that can only occur if I have broken something. not user input related
             }
         }
 

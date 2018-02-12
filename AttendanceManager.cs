@@ -5,10 +5,10 @@ using Sandbox.ModAPI;
 
 namespace SETextToSpeechMod
 {
-    public static class AttendanceManager
+    public class AttendanceManager
     {   
-        private static List <IMyPlayer> playersField = new List <IMyPlayer>();      
-        public static IList <IMyPlayer> Players
+        private List <IMyPlayer> playersField = new List <IMyPlayer>();      
+        public IList <IMyPlayer> Players
         {
             get
             {
@@ -19,16 +19,28 @@ namespace SETextToSpeechMod
         /// <summary>
         /// CAN BE NULL
         /// </summary>
-        public static IMyPlayer LocalPlayer { get; private set; }
+        public IMyPlayer LocalPlayer { get; private set; }
 
-        private static Dictionary <string, bool> muteStatusesField = new Dictionary <string, bool>();
-        public static IReadOnlyDictionary <string, bool> PlayersMuteStatuses
+        private Dictionary <string, bool> muteStatusesField = new Dictionary <string, bool>();
+        public IReadOnlyDictionary <string, bool> PlayersMuteStatuses
         {
             get
             {
-                return muteStatusesField as IReadOnlyDictionary <string, bool>;
+                return (IReadOnlyDictionary<string, bool>)muteStatusesField;
             }
-        }                      
+        }         
+        
+        private static AttendanceManager instance = new AttendanceManager();
+
+        private AttendanceManager()
+        {
+
+        }
+
+        public static AttendanceManager GetSingleton()
+        {
+            return instance;
+        }
 
         /// <summary>
         /// Mutes or unmutes the requests player based on your bool input.
@@ -36,7 +48,7 @@ namespace SETextToSpeechMod
         /// <param name="player"></param>
         /// <param name="mutePlayer"></param>
         /// <returns></returns>
-        public static void ChangeMuteStatusOfPlayer (string player, bool newMuteStatus)
+        public void ChangeMuteStatusOfPlayer (string player, bool newMuteStatus)
         {
             UpdatePlayers();
 

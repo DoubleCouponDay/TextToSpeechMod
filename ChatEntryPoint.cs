@@ -4,6 +4,7 @@ using Sandbox.ModAPI; //location of MyAPIGateway.
 using VRage.Game.Components; //location of MySessionComponentBase.
 using System.Threading.Tasks;
 using System;
+using SETextToSpeechMod.LookUpTables;
 
 namespace SETextToSpeechMod
 {   
@@ -18,6 +19,8 @@ namespace SETextToSpeechMod
         private Encoding encode = Encoding.Unicode; //encoding is necessary to convert message into correct format.        
         private SoundPlayer soundPlayer;
         public OutputManager OutputManager { get; private set; }
+        private AttendanceManager attendanceManager = AttendanceManager.GetSingleton();
+        private Commands commands = Commands.GetSingleton();
 
         public ChatEntryPoint(){}
 
@@ -35,7 +38,7 @@ namespace SETextToSpeechMod
             OutputManager.Run();
         }
 
-        public void Initialise() //this wouldnt work as a constructor because im guessing some assets arent available during load time.
+        public void Initialise() //this wouldnt work as a constructor because some assets arent available during load time.
         {
             initialised = true;   
             soundPlayer = new SoundPlayer (debugging, true);        
@@ -67,11 +70,11 @@ namespace SETextToSpeechMod
 
             if (MyAPIGateway.Multiplayer.MultiplayerActive)
             {
-                for (int i = 0; i < AttendanceManager.Players.Count; i++)
+                for (int i = 0; i < attendanceManager.Players.Count; i++)
                 {
-                    if (AttendanceManager.PlayersMuteStatuses[AttendanceManager.Players[i].DisplayName] == false)
+                    if (attendanceManager.PlayersMuteStatuses[attendanceManager.Players[i].DisplayName] == false)
                     {
-                        MyAPIGateway.Multiplayer.SendMessageTo(packet_ID, ConvertedToPacket, AttendanceManager.Players[i].SteamUserId, true); //everyone will get this trigger including you.
+                        MyAPIGateway.Multiplayer.SendMessageTo(packet_ID, ConvertedToPacket, attendanceManager.Players[i].SteamUserId, true); //everyone will get this trigger including you.
                     }
                 }
             }
@@ -84,9 +87,9 @@ namespace SETextToSpeechMod
 
         private void ExecuteCommandIfValid (string upperCaseSentence)
         {
-            for (int i = 0; i < COMMANDS.VoiceCollection.Length; i++)
+            for (int i = 0; i < commands.VoiceCollection.Length; i++)
             {
-                if (upperCaseSentence.Contains (COMMANDS.VoiceCollection[i]))
+                if (upperCaseSentence.Contains (commands.VoiceCollection[i]))
                 {
                     OutputManager.LocalPlayersVoice = PossibleOutputs.Collection[i];
                     return;
@@ -94,9 +97,9 @@ namespace SETextToSpeechMod
             }
             string[] choppedCommand = upperCaseSentence.Split (' ');
 
-            if (choppedCommand.Length >= COMMANDS.MUTING_MIN_SIZE)
+            if (choppedCommand.Length >= commands.MUTING_MIN_SIZE)
             {
-                int startOfNameIndex = COMMANDS.MUTING_MIN_SIZE - 1;
+                int startOfNameIndex = commands.MUTING_MIN_SIZE - 1;
                 string interpretedInput = choppedCommand[startOfNameIndex];
 
                 for (int i = startOfNameIndex; i < choppedCommand.Length; i++)
@@ -104,17 +107,17 @@ namespace SETextToSpeechMod
                     interpretedInput +=  " " + choppedCommand[i];
                 }
 
-                if (upperCaseSentence.Contains (COMMANDS.MUTE_PLAYER))
+                if (upperCaseSentence.Contains (commands.MUTE_PLAYER))
                 {
-                    AttendanceManager.ChangeMuteStatusOfPlayer (interpretedInput, true);
+                    attendanceManager.ChangeMuteStatusOfPlayer (interpretedInput, true);
                 }
 
-                else if (upperCaseSentence.Contains (COMMANDS.UNMUTE_PLAYER))
+                else if (upperCaseSentence.Contains (commands.UNMUTE_PLAYER))
                 {
-                    AttendanceManager.ChangeMuteStatusOfPlayer (interpretedInput, false);
+                    attendanceManager.ChangeMuteStatusOfPlayer (interpretedInput, false);
                 }
 
-                else if (upperCaseSentence.Contains (COMMANDS.CHANGE_VOLUME))
+                else if (upperCaseSentence.Contains (commands.CHANGE_VOLUME))
                 {
                     float attemptedConversion; 
 
@@ -182,25 +185,6 @@ namespace SETextToSpeechMod
             initialised = false;
             OutputManager.DisposeOfUnsafe();
         }
-    }
-
-    public struct COMMANDS
-    {
-        public const string CHANGE_VOICE_TO_MAREK = "[ MAREK";
-        //public const string CHANGE_VOICE_TO_HAWKING = "[ JOHN MADDEN";
-        public const string CHANGE_VOICE_TO_GLADOS = "[ GLADOS";       
-
-        public static readonly string[] VoiceCollection = {
-            CHANGE_VOICE_TO_MAREK,
-            //CHANGE_VOICE_TO_HAWKING,
-            CHANGE_VOICE_TO_GLADOS,
-        };
-
-        public const string MUTE_PLAYER = "[ MUTE";
-        public const string UNMUTE_PLAYER = "[ UNMUTE";
-        public const int MUTING_MIN_SIZE = 3;
-
-        public const string CHANGE_VOLUME = "[ VOLUME";
     }
 }
 

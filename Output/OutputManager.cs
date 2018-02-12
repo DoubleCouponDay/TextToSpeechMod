@@ -1,4 +1,5 @@
 ﻿using SETextToSpeechMod.Output;
+using SETextToSpeechMod.Processing;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod
 {
-    public class OutputManager
+    public class OutputManager : ISentenceReset
     {
         public const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
@@ -56,7 +57,7 @@ namespace SETextToSpeechMod
             FactoryReset();
         }
 
-        public void FactoryReset()
+        public void FactoryReset(params string[] toProcess)
         {
             IsProcessingOutputs = false;
             typeIndexes = new int[PossibleOutputs.Collection.Count];
@@ -97,7 +98,7 @@ namespace SETextToSpeechMod
                     {
                         IsProcessingOutputs = true;
 
-                        if (speechesFields[i].ReturnInfo.Status == TaskStatus.Created) //assuming async calls has matching length to speechesField
+                        if (speechesFields[i].ReturnInfo.Status == TaskStatus.Created) //assuming async calls have matching length to speechesField
                         {                                                
                             int savedIndex = i; //fixed strange bug where i goes out of bounds even though the for loop prevents that; Weird!
 

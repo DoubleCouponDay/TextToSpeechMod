@@ -1,73 +1,144 @@
-﻿namespace SETextToSpeechMod
+﻿using SETextToSpeechMod.Processing;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+namespace SETextToSpeechMod
 {
-    public class WordIsolator
-    {                  
-        const string EMPTY = "";
+    public class WordIsolator:IEnumerator<string>, ISentenceReset
+    {
+        const string EMPTY = ""; //cant be set to string.Empty because it must be a constant; not readonly.
         const char SPACE = ' ';
-        public const int NEW_WORD = 0;
-        
-        public string CurrentWord {get; private set;}
-        public bool CurrentWordIsNew {get; private set;}
-        public int LettersLeftInWord {get; private set;} //all words have at least one letter therefore LettersLeftInWord can never be zero.
-        public int WordsIndexLimit {get; private set;}
+        public const int WORD_IS_SPACE = 0;
+
+        public bool CurrentWordIsNew
+        {
+            get; private set;
+        }
+        public int LettersLeftInWord
+        {
+            get; private set;
+        } //all words have at least one letter therefore LettersLeftInWord can never be zero.
+        public int WordsIndexLimit
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Default state is WordIsolator.EMPTY. MoveNext() to update.
+        /// </summary>
+        public string Current => currentWord;
+        object IEnumerator.Current => currentWord;
 
         string tempSentence;
         int tempLetterIndex;
+        private string currentWord;
 
-        public void FactoryReset()
+        public void FactoryReset(string newSentence)
         {
-            CurrentWord = EMPTY;
-            CurrentWordIsNew = false; 
-            LettersLeftInWord = NEW_WORD;       
-            
-            tempSentence = EMPTY;
-            tempLetterIndex = NEW_WORD;                             
+            currentWord = EMPTY;
+            CurrentWordIsNew = false;
+            LettersLeftInWord = newSentence.Length;
+            WordsIndexLimit = 0;
+
+            tempSentence = newSentence;
+            tempLetterIndex = WORD_IS_SPACE;
         }
 
-        public void UpdateProperties (string sentence, int letterIndex)
-        { 
-            tempSentence = sentence;
-            tempLetterIndex = letterIndex;
+        /// <summary>
+        /// not implemented.
+        /// </summary>
+        /// <exception cref="NotImplementedException">throws</exception>
+        [Obsolete]
+        public void Dispose()
+        {
+            throw new NotImplementedException("not implemented.");
+        }
 
-            string wordBuild = "";
-            int indexWorkingCopy = tempLetterIndex;
+        /// <summary>
+        /// Moves to to the next char index and updates properties based on the new position, in the sentence.
+        /// Returns bool indicating whether end of sentence was reached
+        /// </summary>
+        public bool MoveNext()
+        {
+            bool didMove = false;
 
-            if (sentence[letterIndex] != SPACE)
+            if(tempSentence.Length < tempLetterIndex)
             {
-                while (indexWorkingCopy > 0 &&
-                       tempSentence[indexWorkingCopy - 1] != ' ')
+                if(tempSentence[tempLetterIndex] != SPACE)
                 {
-                    indexWorkingCopy--; //locates the start of the word.
-                }
+                    if(CurrentWordIsNew)
+                    {
+                        ModifyStateAsNewWord();
+                    }
 
-                while (indexWorkingCopy < tempSentence.Length &&
-                       tempSentence[indexWorkingCopy] != ' ')
-                {
-                    wordBuild += tempSentence[indexWorkingCopy];
-                    indexWorkingCopy++; //locates the end of the word.
-                }
-
-                if (wordBuild == CurrentWord)
-                {
-                    CurrentWordIsNew = false;
-                    LettersLeftInWord--;
+                    else
+                    {
+                        ModifyStateAsOldWord();
+                    }
                 }
 
                 else
                 {
-                    CurrentWordIsNew = true;
-                    LettersLeftInWord = wordBuild.Length;
-                    WordsIndexLimit = wordBuild.Length - 1;
+                    ModifyStateAsSpace();
                 }
-                CurrentWord = wordBuild;
+                tempLetterIndex++; //expected to initiate the next state when GetNext() is called again.
+                LettersLeftInWord--;
+                didMove = true;
             }
 
             else
             {
-                LettersLeftInWord = NEW_WORD;
-                WordsIndexLimit = NEW_WORD;
-                CurrentWord = SPACE.ToString();
+                ModifyStateAsEnd();
             }
+            return didMove;
+        }
+
+        private void ModifyStateAsSpace()
+        {
+            CurrentWordIsNew = true;
+            LettersLeftInWord = WORD_IS_SPACE;
+            WordsIndexLimit = WORD_IS_SPACE;
+            currentWord = SPACE.ToString();
+        }
+
+        private void ModifyStateAsNewWord()
+        {
+            if(currentWord != SPACE.ToString())
+            {
+                int workingIndex = tempLetterIndex;
+                string wordBuild = string.Empty;
+
+                while(workingIndex < tempSentence.Length && //prevents outofbounds
+                        tempSentence[workingIndex] != SPACE)
+                {
+                    wordBuild += tempSentence[workingIndex];
+                    workingIndex++;
+                }
+                currentWord = wordBuild;
+            }
+            CurrentWordIsNew = false;
+            LettersLeftInWord = currentWord.Length;
+            WordsIndexLimit = tempLetterIndex + LettersLeftInWord;
+        }
+
+        private void ModifyStateAsOldWord()
+        {
+            LettersLeftInWord--;
+        }
+
+        private void ModifyStateAsEnd()
+        {
+            currentWord = EMPTY;
+        }
+
+        /// <summary>
+        /// Takes the enumerator to the first item.
+        /// </summary>
+        public void Reset()
+        {
+            FactoryReset(tempSentence);
         }
     }
 }

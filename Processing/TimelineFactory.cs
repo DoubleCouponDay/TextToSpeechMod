@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod
 {   
-    public abstract class TimelineFactory
+    public abstract class TimelineFactory : ISentenceReset
     {   
         const string SPACE = " ";
 
@@ -23,7 +23,7 @@ namespace SETextToSpeechMod
         public DebugOutputContainer PossibleDebugOutput {get; private set;}
 
         //loading data            
-        protected string sentence = "";
+        protected string sentence = string.Empty;
         bool previousWasSpace;
         int syllableMeasure;          
         protected int[] intonationArrayChosen;
@@ -69,7 +69,7 @@ namespace SETextToSpeechMod
 
             currentResults.Clear();
 
-            Pronunciation.FactoryReset();
+            Pronunciation.FactoryReset(inputSentence);
             timelinesField.Clear();            
             PossibleDebugOutput.Clear();
         }
@@ -144,12 +144,12 @@ namespace SETextToSpeechMod
             {
                 if (Pronunciation.PreviousProcessUsedDictionary)
                 {
-                    PossibleDebugOutput.AddDictionaryWord (Pronunciation.WordIsolator.CurrentWord, currentResults);
+                    PossibleDebugOutput.AddDictionaryWord (Pronunciation.WordIsolator.Current, currentResults);
                 }
 
                 else
                 {
-                    PossibleDebugOutput.AddRuleBasedWord (Pronunciation.WordIsolator.CurrentWord, currentResults);
+                    PossibleDebugOutput.AddRuleBasedWord (Pronunciation.WordIsolator.Current, currentResults);
                 }                
             }
         }
@@ -173,16 +173,4 @@ namespace SETextToSpeechMod
             syllableMeasure = 0;
         } 
     }
-
-    public struct TimelineClip
-    {
-        public int StartPoint { get; }
-        public string ClipsSound { get; }
-
-        internal TimelineClip (int inputPoint, string inputSound)
-        {
-            this.StartPoint = inputPoint;
-            this.ClipsSound = inputSound;
-        }
-    } 
 }
