@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SETextToSpeechMod.Processing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,7 @@ namespace SETextToSpeechMod.Output
             await ReturnInfo;
         }
 
-        public void FactoryReset (string inputSentence)
+        public void FactoryReset (Sentence inputSentence)
         {
             TaskCanceller.Cancel();
             RenewCancellationSource();

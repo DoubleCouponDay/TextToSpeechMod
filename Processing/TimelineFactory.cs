@@ -23,7 +23,7 @@ namespace SETextToSpeechMod
         public DebugOutputContainer PossibleDebugOutput {get; private set;}
 
         //loading data            
-        protected string sentence = string.Empty;
+        protected Sentence sentence;
         bool previousWasSpace;
         int syllableMeasure;          
         protected int[] intonationArrayChosen;
@@ -56,7 +56,7 @@ namespace SETextToSpeechMod
         /// Initialises a new sentence.
         /// </summary>
         /// <param name="inputSentence"></param>
-        public void FactoryReset (string inputSentence)
+        public void FactoryReset (Sentence inputSentence)
         {       
             IsBusy = false;
             HasAnOrder = true;
@@ -96,7 +96,7 @@ namespace SETextToSpeechMod
 
         private void AddPhonemes (int currentIndex)
         {   
-            currentResults = Pronunciation.GetLettersPronunciation (sentence, currentIndex);           
+            currentResults = Pronunciation.GetLettersPronunciation (currentIndex);           
 
             for (int i = 0; i < currentResults.Count; i++)
             {             

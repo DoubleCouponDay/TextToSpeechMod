@@ -5,6 +5,7 @@ using VRage.Game.Components; //location of MySessionComponentBase.
 using System.Threading.Tasks;
 using System;
 using SETextToSpeechMod.LookUpTables;
+using SETextToSpeechMod.Processing;
 
 namespace SETextToSpeechMod
 {   
@@ -138,6 +139,7 @@ namespace SETextToSpeechMod
         { 
             string decoded = encode.GetString (receivedPacket);
             string signature = ExtractSignatureFromPacket (ref decoded);
+            Sentence inputSentence = new Sentence(decoded);
 
             if (decoded.Length > OutputManager.MAX_LETTERS && //letter limit for mental health concerns.
                 debugging == false) 
@@ -147,7 +149,7 @@ namespace SETextToSpeechMod
 
             else
             {
-                OutputManager.CreateNewSpeech (signature, decoded);
+                OutputManager.CreateNewSpeech (signature, inputSentence);
             }   
         }
 

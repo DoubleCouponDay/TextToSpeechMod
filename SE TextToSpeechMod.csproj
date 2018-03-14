@@ -136,6 +136,7 @@
     <Compile Include="Processing\Intonation.cs" />
     <Compile Include="Processing\Pronunciation.cs" />
     <Compile Include="Processing\ISentenceReset.cs" />
+    <Compile Include="Processing\Sentence.cs" />
     <Compile Include="Processing\TimelineClip.cs" />
     <Compile Include="Processing\UnconventionalPhraseException.cs" />
     <Compile Include="VoiceCode\GladosVoice\GladosIntonation.cs" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod
 {
-    public class OutputManager : ISentenceReset
+    public class OutputManager
     {
         public const int MAX_LETTERS = 100;
         const int UPDATES_INTERVAL = 60;
@@ -38,7 +38,8 @@ namespace SETextToSpeechMod
 
         private readonly List <SpeechTask> speechesFields = new List <SpeechTask>();
         private SoundPlayer soundPlayerRef;
-        TaskFactory taskFactory = new TaskFactory();
+        TaskFactory taskFactory = new TaskFactory(); 
+        private AttendanceManager attendanceManager = AttendanceManager.GetSingleton();
 
         public static bool IsDebugging { get; private set;}
         public bool IsProcessingOutputs { get; private set;}        
@@ -57,7 +58,7 @@ namespace SETextToSpeechMod
             FactoryReset();
         }
 
-        public void FactoryReset(params string[] toProcess)
+        private void FactoryReset()
         {
             IsProcessingOutputs = false;
             typeIndexes = new int[PossibleOutputs.Collection.Count];
@@ -114,7 +115,7 @@ namespace SETextToSpeechMod
                 if (timer <= 0) //a little timer will prevent the emitter from oscillating between your eyes.
                 {
                     timer = UPDATES_INTERVAL;
-                    soundPlayerRef.UpdatePosition (AttendanceManager.LocalPlayer);                    
+                    soundPlayerRef.UpdatePosition (attendanceManager.LocalPlayer);                    
                 }
 
                 else
@@ -152,7 +153,7 @@ namespace SETextToSpeechMod
         /// </summary>
         /// <param name="validVoiceType"></param>
         /// <param name="sentence"></param>
-        public bool CreateNewSpeech (string validVoiceTypeName, string inputSentence)
+        public bool CreateNewSpeech (string validVoiceTypeName, Sentence inputSentence)
         {
             bool outcome = default (bool);
 

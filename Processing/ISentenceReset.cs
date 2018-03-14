@@ -8,6 +8,6 @@ namespace SETextToSpeechMod.Processing
 {
     interface ISentenceReset
     {
-        void FactoryReset(string newSentence);
+        void FactoryReset(Sentence newSentence);
     }
 }

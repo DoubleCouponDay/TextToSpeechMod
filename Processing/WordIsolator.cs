@@ -31,11 +31,11 @@ namespace SETextToSpeechMod
         public string Current => currentWord;
         object IEnumerator.Current => currentWord;
 
-        string tempSentence;
+        Sentence tempSentence;
         int tempLetterIndex;
         private string currentWord;
 
-        public void FactoryReset(string newSentence)
+        public void FactoryReset(Sentence newSentence)
         {
             currentWord = EMPTY;
             CurrentWordIsNew = false;

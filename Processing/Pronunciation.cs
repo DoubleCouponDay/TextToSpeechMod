@@ -28,7 +28,9 @@ namespace SETextToSpeechMod.Processing
         string surroundingPhrase;
         List <string> currentResults = new List <string>(); //re used a lot so dont put dictonary and adjacent results in at the same time!        
         bool pushingDictionaryWordOut;
-        string tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
+        readonly int sentenceLength;
+        
+        Sentence tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
         int tempLetterIndex;
 
         public Pronunciation (Intonation intonationType)
@@ -37,7 +39,7 @@ namespace SETextToSpeechMod.Processing
             this.intonationGen = intonationType;
         }
 
-        public void FactoryReset(string newSentence)
+        public void FactoryReset(Sentence newSentence)
         {
             surroundingPhrase = string.Empty;
             PreviousProcessUsedDictionary = false;
@@ -46,7 +48,7 @@ namespace SETextToSpeechMod.Processing
             currentResults.Clear();
             dictionaryMatch = null;
 
-            tempSentence = string.Empty;
+            tempSentence = newSentence;
             tempLetterIndex = 0;
 
             pushingDictionaryWordOut = false;
@@ -61,12 +63,11 @@ namespace SETextToSpeechMod.Processing
         /// <param name="sentence"></param>
         /// <param name="letterIndex"></param>
         /// <returns>returns new list.</returns>
-        public List <string> GetLettersPronunciation (string sentence, int letterIndex) 
+        public List <string> GetLettersPronunciation (int letterIndex) 
         {            
             pushingDictionaryWordOut = false;   
             currentResults = new List <string>();
             WordIsolator.MoveNext(); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
-            tempSentence = sentence;
             tempLetterIndex = letterIndex;
             currentResults.Clear();        
             surroundingPhrase = string.Empty;                                      
@@ -108,7 +109,7 @@ namespace SETextToSpeechMod.Processing
             
             if (OutputManager.IsDebugging == false) //debugger only checks that the correct phonemes were selected; doesnt care about intonation
             {
-                bool sentenceIsEnding = (letterIndex >= sentence.Length - SENTENCE_END_ZONES_LENGTH) ? true : false;
+                bool sentenceIsEnding = (letterIndex >= tempSentence.Length - SENTENCE_END_ZONES_LENGTH) ? true : false;
 
                 for (int i = default (int); i < currentResults.Count; i++)
                 { 
