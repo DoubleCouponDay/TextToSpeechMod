@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace SETextToSpeechMod
 {
-    public class WordIsolator:IEnumerator<string>, ISentenceReset
+    public class WordIsolator : IEnumerator<string>, ISentenceReset
     {
         const string EMPTY = ""; //cant be set to string.Empty because it must be a constant; not readonly.
         const char SPACE = ' ';
@@ -16,10 +16,12 @@ namespace SETextToSpeechMod
         {
             get; private set;
         }
-        public int LettersLeftInWord
+
+        public int LettersLeftInWord //all words have at least one letter therefore LettersLeftInWord can never be zero.
         {
             get; private set;
-        } //all words have at least one letter therefore LettersLeftInWord can never be zero.
+        } 
+
         public int WordsIndexLimit
         {
             get; private set;
@@ -47,13 +49,12 @@ namespace SETextToSpeechMod
         }
 
         /// <summary>
-        /// not implemented.
+        /// do not use. Not implemented.
         /// </summary>
         /// <exception cref="NotImplementedException">throws</exception>
-        [Obsolete]
         public void Dispose()
         {
-            throw new NotImplementedException("not implemented.");
+            throw new NotImplementedException(" dispose not implemented.");
         }
 
         /// <summary>

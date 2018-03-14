@@ -31,7 +31,6 @@ namespace SETextToSpeechMod.Processing
         readonly int sentenceLength;
         
         Sentence tempSentence; //temps should remain conventionally readonly for each separate letter analysis.
-        int tempLetterIndex;
 
         public Pronunciation (Intonation intonationType)
         {
@@ -68,7 +67,6 @@ namespace SETextToSpeechMod.Processing
             pushingDictionaryWordOut = false;   
             currentResults = new List <string>();
             WordIsolator.MoveNext(); //Incrementing the WordIsolator must happen at the beginning of a new letter analysis. This is so optional debugger can pick up accurate properties after each letter analysis.             
-            tempLetterIndex = letterIndex;
             currentResults.Clear();        
             surroundingPhrase = string.Empty;                                      
 
@@ -87,7 +85,7 @@ namespace SETextToSpeechMod.Processing
             
                     else
                     {
-                        AdjacentEvaluation();
+                        AdjacentEvaluation (letterIndex);
                     }
                 }
 
@@ -98,7 +96,7 @@ namespace SETextToSpeechMod.Processing
 
                 else
                 {
-                    AdjacentEvaluation();
+                    AdjacentEvaluation (letterIndex);
                 }
             }
 
@@ -156,7 +154,7 @@ namespace SETextToSpeechMod.Processing
          * It's more efficient than a dictionary attack but its structure is hard to understand without consulting the documentation.
          * The primary purpose of OptionalDebugger is to make sure this algorithm does not decrease in word coverage due to obscurity.
         */
-        private void AdjacentEvaluation()
+        private void AdjacentEvaluation (int tempLetterIndex)
         {
             //const string VOWELS = "AEIOU";
             const string CONSONANTS = "BCDFGHJKLMNPQRSTVWXYZ";
