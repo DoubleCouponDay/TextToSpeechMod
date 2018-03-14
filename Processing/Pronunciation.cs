@@ -12,7 +12,6 @@ namespace SETextToSpeechMod.Processing
         /// </summary>
         public const int ALGORITHM_PHRASE_SIZE = 5;
         public const int SENTENCE_END_ZONES_LENGTH = 3;
-        const string SPACE = " ";
 
         //objects
         public WordIsolator WordIsolator {get; private set;}
@@ -48,7 +47,6 @@ namespace SETextToSpeechMod.Processing
             dictionaryMatch = null;
 
             tempSentence = newSentence;
-            tempLetterIndex = 0;
 
             pushingDictionaryWordOut = false;
 
@@ -70,7 +68,7 @@ namespace SETextToSpeechMod.Processing
             currentResults.Clear();        
             surroundingPhrase = string.Empty;                                      
 
-            if (WordIsolator.Current != SPACE)
+            if (WordIsolator.Current != Constants.SPACE.ToString())
             {
                 if (WordIsolator.CurrentWordIsNew == true)
                 {                    
@@ -102,7 +100,7 @@ namespace SETextToSpeechMod.Processing
 
             else
             {
-                currentResults.Add (SPACE); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
+                currentResults.Add (Constants.SPACE.ToString()); //avoids setting WordIsolator.LetterIndex in this scenario since an empty space cant reset it when needed.
             }
             
             if (OutputManager.IsDebugging == false) //debugger only checks that the correct phonemes were selected; doesnt care about intonation
@@ -158,18 +156,18 @@ namespace SETextToSpeechMod.Processing
         {
             //const string VOWELS = "AEIOU";
             const string CONSONANTS = "BCDFGHJKLMNPQRSTVWXYZ";
-            string primary = "";
-            string secondary = "";
+            string primary = string.Empty;
+            string secondary = string.Empty;
 
             int intBefore = (tempLetterIndex - 1 >= 0) ? (tempLetterIndex - 1) : tempLetterIndex; //these wil prevent out-of-bounds exception.
             int intAfter = (tempLetterIndex + 1 < tempSentence.Length) ? (tempLetterIndex + 1) : tempLetterIndex; 
             int intTwoAfter = (tempLetterIndex + 2 < tempSentence.Length) ? (tempLetterIndex + 2) : tempLetterIndex;
             int intTwoBefore = (tempLetterIndex - 2 >= 0) ? (tempLetterIndex - 2) : tempLetterIndex;
 
-            string before = (intBefore != tempLetterIndex) ? tempSentence[intBefore].ToString() : SPACE; //these 4 strings ensure i can correctly identify separate words.
-            string after = (intAfter != tempLetterIndex) ? tempSentence[intAfter].ToString() : SPACE; //using strings instead of chars saves lines since i need strings for Contains()
-            string twoBefore = (intTwoBefore != tempLetterIndex && before != SPACE) ? tempSentence[intTwoBefore].ToString() : SPACE; //the false path must return a space string because spaces signify the start/end of a word.
-            string twoAfter = (intTwoAfter != tempLetterIndex && after != SPACE) ? tempSentence[intTwoAfter].ToString() : SPACE;        
+            string before = (intBefore != tempLetterIndex) ? tempSentence[intBefore].ToString() : Constants.SPACE.ToString(); //these 4 strings ensure i can correctly identify separate words.
+            string after = (intAfter != tempLetterIndex) ? tempSentence[intAfter].ToString() : Constants.SPACE.ToString(); //using strings instead of chars saves lines since i need strings for Contains()
+            string twoBefore = (intTwoBefore != tempLetterIndex && before != Constants.SPACE.ToString()) ? tempSentence[intTwoBefore].ToString() : Constants.SPACE.ToString(); //the false path must return a space string because spaces signify the start/end of a word.
+            string twoAfter = (intTwoAfter != tempLetterIndex && after != Constants.SPACE.ToString()) ? tempSentence[intTwoAfter].ToString() : Constants.SPACE.ToString();        
             string currentLetter = tempSentence[tempLetterIndex].ToString();
 
             surroundingPhrase = twoBefore + before + currentLetter + after + twoAfter; //must update here before UnwantedMatchBypassed is used in this method.
@@ -304,7 +302,7 @@ namespace SETextToSpeechMod.Processing
 
                     else if (IsMatch ("..BL.")) //able
                     {
-                        primary = SPACE;
+                        primary = Constants.SPACE.ToString();
                         secondary = PrettyScaryDictionary.BIH;
                     }
 
@@ -481,7 +479,7 @@ namespace SETextToSpeechMod.Processing
                                        ))
                     {   
                         primary = PrettyScaryDictionary.JIH;
-                        secondary = SPACE; //such as "gin", judgement, 
+                        secondary = Constants.SPACE.ToString(); //such as "gin", judgement, 
                     }
             
                     else
@@ -636,7 +634,7 @@ namespace SETextToSpeechMod.Processing
 
                     else
                     {
-                        primary = SPACE;
+                        primary = Constants.SPACE.ToString();
                         secondary = PrettyScaryDictionary.MIH; //such as "molten", drummer,
                     }  
                     break;
@@ -658,7 +656,7 @@ namespace SETextToSpeechMod.Processing
                         
                     else
                     {
-                        primary = SPACE;
+                        primary = Constants.SPACE.ToString();
                         secondary = PrettyScaryDictionary.NIH;  //such as nickel,
                     }                         
                     break;
@@ -855,13 +853,13 @@ namespace SETextToSpeechMod.Processing
                     else if (UnwantedMatchBypassed ("..T.U") && //!github
                         IsMatch ("..TH.")) //think
                     {
-                        primary = SPACE;
+                        primary = Constants.SPACE.ToString();
                         secondary = PrettyScaryDictionary.THI;    
                     } 
 
                     else if (IsMatch (".ST..")) //emphasised T
                     {
-                        primary = SPACE;
+                        primary = Constants.SPACE.ToString();
                         secondary = PrettyScaryDictionary.TIH;
                     }
                         

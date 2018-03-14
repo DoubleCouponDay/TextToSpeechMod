@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceManager.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="LookUpTables\Commands.cs" />
     <Compile Include="LookUpTables\RecognizedSymbols.cs" />
     <Compile Include="Output\SpeechTask.cs" />

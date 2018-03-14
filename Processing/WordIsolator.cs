@@ -8,8 +8,6 @@ namespace SETextToSpeechMod
 {
     public class WordIsolator : IEnumerator<string>, ISentenceReset
     {
-        const string EMPTY = ""; //cant be set to string.Empty because it must be a constant; not readonly.
-        const char SPACE = ' ';
         public const int WORD_IS_SPACE = 0;
 
         public bool CurrentWordIsNew
@@ -39,7 +37,7 @@ namespace SETextToSpeechMod
 
         public void FactoryReset(Sentence newSentence)
         {
-            currentWord = EMPTY;
+            currentWord = Constants.EMPTY;
             CurrentWordIsNew = false;
             LettersLeftInWord = newSentence.Length;
             WordsIndexLimit = 0;
@@ -67,7 +65,7 @@ namespace SETextToSpeechMod
 
             if(tempSentence.Length < tempLetterIndex)
             {
-                if(tempSentence[tempLetterIndex] != SPACE)
+                if(tempSentence[tempLetterIndex] != Constants.SPACE)
                 {
                     if(CurrentWordIsNew)
                     {
@@ -101,18 +99,18 @@ namespace SETextToSpeechMod
             CurrentWordIsNew = true;
             LettersLeftInWord = WORD_IS_SPACE;
             WordsIndexLimit = WORD_IS_SPACE;
-            currentWord = SPACE.ToString();
+            currentWord = Constants.SPACE.ToString();
         }
 
         private void ModifyStateAsNewWord()
         {
-            if(currentWord != SPACE.ToString())
+            if(currentWord != Constants.SPACE.ToString())
             {
                 int workingIndex = tempLetterIndex;
                 string wordBuild = string.Empty;
 
                 while(workingIndex < tempSentence.Length && //prevents outofbounds
-                        tempSentence[workingIndex] != SPACE)
+                        tempSentence[workingIndex] != Constants.SPACE)
                 {
                     wordBuild += tempSentence[workingIndex];
                     workingIndex++;
@@ -131,7 +129,7 @@ namespace SETextToSpeechMod
 
         private void ModifyStateAsEnd()
         {
-            currentWord = EMPTY;
+            currentWord = Constants.EMPTY;
         }
 
         /// <summary>

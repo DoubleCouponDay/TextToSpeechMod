@@ -13,8 +13,6 @@ namespace SETextToSpeechMod
 {
     public class OptionalDebugger
     {         
-        const string SPACE = " ";
-
         //const string currentComputer = "pavilion";
         const string currentComputer = "thinkpad";
 
@@ -164,7 +162,7 @@ namespace SETextToSpeechMod
                     {
                         for (int i = 0; i < castValue.Count; i++)
                         {
-                            if (castValue[i] == SPACE)
+                            if (castValue[i] == Constants.SPACE.ToString())
                             {
                                 var newRemoveIndex = new KeyValuePair<string, int> (castKey, i);
                                 indexesToRemove.Add (newRemoveIndex); //I cant use RemoveWhiteSpaceFromRef() because altering the order of an ordered dictionary, inside a loop, throws exception.
@@ -205,7 +203,7 @@ namespace SETextToSpeechMod
                         
             foreach (DictionaryEntry entry in adjacentWords)
             {                                                    
-                rolledOut += entry.Key + SPACE;
+                rolledOut += entry.Key + Constants.SPACE.ToString();
             }
             return rolledOut;
         }
@@ -214,7 +212,7 @@ namespace SETextToSpeechMod
         {
             foreach (KeyValuePair <string, List <string>> entry in dictionaryWords)
             {
-                if (entry.Key != SPACE)
+                if (entry.Key != Constants.SPACE.ToString())
                 {
                     var collectionCopy = new List<string>(entry.Value);
                     dictionaryResults.Add(entry.Key, collectionCopy);
@@ -229,7 +227,7 @@ namespace SETextToSpeechMod
             {
                 var noSpaces = new List <string>();
 
-                if (entry.Key != SPACE)
+                if (entry.Key != Constants.SPACE.ToString())
                 {
                     var valueCopy = new List <string> (entry.Value);
                     RemoveEmptySpaceFromRef (ref valueCopy); 
@@ -254,7 +252,7 @@ namespace SETextToSpeechMod
         {
             for (int i = 0; i < listToReference.Count; i++)
             {
-                if (listToReference[i] == SPACE ||
+                if (listToReference[i] == Constants.SPACE.ToString() ||
                     listToReference[i] == string.Empty)
                 {
                     listToReference.RemoveAt (i);
@@ -271,7 +269,7 @@ namespace SETextToSpeechMod
 
             for (int i = 0; i < leftoverSpace; i++)
             {
-                signatureBuild += SPACE;
+                signatureBuild += Constants.SPACE.ToString();
             }
             string packaged = signatureBuild + upperCase;                
             byte[] packet = encode.GetBytes (packaged);
@@ -296,7 +294,7 @@ namespace SETextToSpeechMod
             {
                 throw new Exception ("Something went wrong when attempting to read previous data from file.");
             }            
-            previousReadings = previousReadings[1].Split(SPACE.ToCharArray()); 
+            previousReadings = previousReadings[1].Split(Constants.SPACE); 
    
             string[] tallies = {"Total Words: ",
                                 "Total Incorrect: ",
@@ -318,7 +316,7 @@ namespace SETextToSpeechMod
             int dictionaryWordCount = dictionaryResults.Count;
 
             Process[] processes;
-            string[] testWords = allTestWords.Split (SPACE.ToCharArray());
+            string[] testWords = allTestWords.Split (Constants.SPACE);
 
             for (int i = tallies.Length; i < (testWords.Length + tallies.Length); i++)
             {

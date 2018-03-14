@@ -11,7 +11,6 @@ namespace SETextToSpeechMod.VoiceCode.GladosVoice
     class GladosIntonation : Intonation
     {
         Random rng = new Random();
-        const string SPACE = " ";
 
         int smallSize
         {
@@ -112,7 +111,7 @@ namespace SETextToSpeechMod.VoiceCode.GladosVoice
 
         protected override string DerivedIntonationChoice(string phoneme, string surroundingPhrase, bool sentenceEndInPhrase)
         {
-            string choice = VoiceId + SPACE;
+            string choice = VoiceId + Constants.SPACE.ToString();
 
             //if (phoneme != SPACE)
             //{
