@@ -8,6 +8,7 @@ using System.Diagnostics;
 using SETextToSpeechMod.LookUpTables;
 using SETextToSpeechMod;
 using SETextToSpeechMod.Processing;
+using SETextToSpeechMod.Output;
 
 namespace SETextToSpeechMod
 {
@@ -126,10 +127,11 @@ namespace SETextToSpeechMod
             {
                 debugger.entryPoint.UpdateBeforeSimulation();                              
             }
-            debugger.StoreDictionaryWords (debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.PossibleDebugOutput.DictionaryWords);
-            debugger.StoreRuleBasedWords (debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.PossibleDebugOutput.RuleBasedWords);            
-            debugger.PrintResults(debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatMatches,
-                                    debugger.entryPoint.OutputManager.Speeches[testVoice].MainProcess.Pronunciation.WrongFormatNonMatches);
+            SpeechTask currentTask = debugger.entryPoint.OutputManager.Speeches[testVoice];
+            debugger.StoreDictionaryWords (currentTask.Worker.PossibleDebugOutput.DictionaryWords);
+            debugger.StoreRuleBasedWords (currentTask.Worker.PossibleDebugOutput.RuleBasedWords);            
+            debugger.PrintResults(currentTask.Worker.Pronunciation.WrongFormatMatches,
+                                    currentTask.Worker.Pronunciation.WrongFormatNonMatches);
             debugger.entryPoint.Dispose();
         }
 

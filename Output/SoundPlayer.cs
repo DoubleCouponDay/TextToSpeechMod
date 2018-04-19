@@ -81,29 +81,27 @@ namespace SETextToSpeechMod
             }            
         }
 
-        public async Task PlaySentence (List <TimelineClip> timeline)
+        public void PlaySentence (List <TimelineClip> timeline)
         {            
             if (timeline.Count > 0)
             {
                 int currentClip = default (int);
                 var timelineClone = timeline.ToArray(); //assume that timeline is kill during Task.Run
 
-                await Task.Run (() => {
-                    for (int i = 0; i <= timelineClone[timelineClone.Length - 1].StartPoint; i++)
+                for (int i = 0; i <= timelineClone[timelineClone.Length - 1].StartPoint; i++)
+                {
+                    int rngBonk = numberGenerator.Next (CHANCE_OF_CLANG);
+
+                    if (rngBonk == CHANCE_OF_CLANG - 1) 
                     {
-                        int rngBonk = numberGenerator.Next (CHANCE_OF_CLANG);
+                        PlayClip (BONK); //repent you fucking sinner. CLANG
+                    } 
 
-                        if (rngBonk == CHANCE_OF_CLANG - 1) 
-                        {
-                            PlayClip (BONK); //repent you fucking sinner. CLANG
-                        } 
-
-                        if (i == timelineClone[currentClip].StartPoint)
-                        {
-                            PlayClip (timelineClone[currentClip].ClipsSound);
-                        }
-                    }                 
-                });
+                    if (i == timelineClone[currentClip].StartPoint)
+                    {
+                        PlayClip (timelineClone[currentClip].ClipsSound);
+                    }
+                }                 
             }       
         }
 

@@ -88,10 +88,10 @@ namespace SETextToSpeechMod
                         AddPhonemes (i);
                     }
                 });
-                await soundPlayerRef.PlaySentence (timelinesField);
+                soundPlayerRef.PlaySentence (timelinesField);
                 IsBusy = false;
                 HasAnOrder = false;
-            }            
+            }   
         } 
 
         private void AddPhonemes (int currentIndex)

@@ -8,13 +8,17 @@ using System.Threading.Tasks;
 
 namespace SETextToSpeechMod.Output
 {
-    public class SpeechTask
+    public class SpeechTask : IDisposable
     {
+        public bool IsDisposed
+        {
+            get; private set;
+        }
+
         /// <summary>
         /// Generating Object which is the primary focus of a SpeechTask.
         /// </summary>
-        public TimelineFactory MainProcess { get; private set;}
-
+        public TimelineFactory Worker { get; private set;}
         public Task ReturnInfo { get; private set;}
 
         /// <summary>
@@ -25,22 +29,21 @@ namespace SETextToSpeechMod.Output
 
         public SpeechTask (TimelineFactory itsSpeech)
         {
-            MainProcess = itsSpeech;
-            ReturnInfo = new Task (() => {return;}); //just in case the default value of IsCompleted is not true.            
+            Worker = itsSpeech;
+            ReturnInfo = new Task (() => {return;}); 
             TaskCanceller = new CancellationTokenSource();
         }
 
-        public async Task RunAsync()
+        public void Run()
         {
-            ReturnInfo = MainProcess.RunAsync();
-            await ReturnInfo;
+            ReturnInfo = Worker.RunAsync();
         }
 
         public void FactoryReset (Sentence inputSentence)
         {
             TaskCanceller.Cancel();
             RenewCancellationSource();
-            MainProcess.FactoryReset (inputSentence); //reuses instances of sentencefactory instead of instantiating every new sentence.                
+            Worker.FactoryReset (inputSentence); //reuses instances of sentencefactory instead of instantiating every new sentence.                
         }
 
         /// <summary>
@@ -54,8 +57,12 @@ namespace SETextToSpeechMod.Output
        
         public void Dispose()
         {
-            TaskCanceller.Cancel();
-            TaskCanceller.Dispose();
+            if(IsDisposed == false)
+            {
+                IsDisposed = true;
+                TaskCanceller.Cancel();
+                TaskCanceller.Dispose();
+            }
         }
     }
 }
