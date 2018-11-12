@@ -10,20 +10,21 @@ $outputdir = Read-Host -Prompt "Enter an absolute path to the Space Engineers mo
 $inputdir = ".\mirrored workshop build"
 $outputfolder = "texttospeechmod"
 $projectfile = "SE TextToSpeechMod.csproj"
-$scriptdir = "Scripts/folder required here"
+$forwardslashchar = "/"
 
 Write-Host "deploying text to speech mod..."
 
 if ($outputdir.EndsWith("/"))
 {
-    $outputfolder = $outputdir + $outputfolder
+    $outputfolder = $outputdir + $outputfolder + $forwardslashchar
 }
 
 else
 {
-    $outputfolder = $outputdir + "/" + $outputfolder
+    $outputfolder = $outputdir + $forwardslashchar + $outputfolder + $forwardslashchar
 }
-Write-Host "using output folder: " $outputfolder
+Write-Host "using output folder: $outputfolder"
+$scriptdir = $outputdirScripts + $forwardslashchar + "folder required here" + $forwardslashchar
 
 Write-Host "building the project..."
 "MSBuild.exe " + $projectfile
@@ -36,10 +37,13 @@ if ($LASTEXITCODE -ne 0)
 Write-Host "build succeeded."
 
 Write-Host "copying mirrored directory..."
-CopyItem $inputdir -Destination $outputdir -Recurse
+Copy-Item $inputdir -Destination $outputdir -Recurse
 Write-Host "mirror directory copied."
 
 Write-Host "overwriting with fresh script files..."
-
-
-
+$getscriptsliteral = "Get-ChildItem -Path '**\*.cs' -Recurse -Exclude @('.\mirrored workshop build', '.\.git', '.\bin', '.\.vs', '.\vscode', '.\obj', '.\Properties')"
+$scriptfilesaddresses = Invoke-Expression $getscriptsliteral
+Write-Host "script files that will be deployed:"
+Write-Host Invoke-Expression $getscriptsliteral " -Name"
+Copy-Item -Path $scriptfilesaddresses -Destination $scriptdir -Force
+Write-Host "mod deployed."
