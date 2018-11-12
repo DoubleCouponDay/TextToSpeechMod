@@ -7,7 +7,7 @@
 #6. profit!
 
 $outputdir = Read-Host -Prompt "Enter an absolute path to the Space Engineers mod directory: "
-$inputdir = ".\mirrored workshop build"
+$inputdir = "./mirrored workshop build"
 $outputfolder = "texttospeechmod"
 $projectfile = "SE TextToSpeechMod.csproj"
 $forwardslashchar = "/"
@@ -24,7 +24,7 @@ else
     $outputfolder = $outputdir + $forwardslashchar + $outputfolder + $forwardslashchar
 }
 Write-Host "using output folder: $outputfolder"
-$scriptdir = $outputdirScripts + $forwardslashchar + "folder required here" + $forwardslashchar
+$scriptdir = $outputfolder + "Data/Scripts/folder required here" + $forwardslashchar
 
 Write-Host "building the project..."
 "MSBuild.exe " + $projectfile
@@ -32,18 +32,23 @@ Write-Host "building the project..."
 if ($LASTEXITCODE -ne 0)
 {
     Write-Host "build failed! get it compiling in visual studio before continuing."
-    Exit-PSHostProcess
+    Write-Host "script stopped."
+    #Exit
 }
 Write-Host "build succeeded."
 
 Write-Host "copying mirrored directory..."
-Copy-Item $inputdir -Destination $outputdir -Recurse
+Copy-Item $inputdir -Destination $outputfolder -Recurse -Force
 Write-Host "mirror directory copied."
 
 Write-Host "overwriting with fresh script files..."
-$getscriptsliteral = "Get-ChildItem -Path '**\*.cs' -Recurse -Exclude @('.\mirrored workshop build', '.\.git', '.\bin', '.\.vs', '.\vscode', '.\obj', '.\Properties')"
+$excludes = @('mirrored workshop build', '.git', 'bin', '.vs', 'vscode', 'obj', 'Properties')
+$getscriptsliteral = "Get-ChildItem -Path './' -Include '*.cs' -Recurse -File -Exclude $excludes"
 $scriptfilesaddresses = Invoke-Expression $getscriptsliteral
-Write-Host "script files that will be deployed:"
-Write-Host Invoke-Expression $getscriptsliteral " -Name"
-Copy-Item -Path $scriptfilesaddresses -Destination $scriptdir -Force
+
+foreach ($item in $scriptfilesaddresses)
+{
+    Write-Host $("copying across script: " + $item.Name)
+    Copy-Item $item.FullName -Destination $scriptdir -Force    
+}
 Write-Host "mod deployed."
