@@ -44,9 +44,9 @@ $projectbuilt = Invoke-Expression $("MSBuild.exe '" + $projectfile + "' -nologo 
 
 if ($LASTEXITCODE -ne 0)
 {
-    #Write-Host "build failed! get it compiling in visual studio before continuing."
-    #Write-Host "script stopped."
-    #Exit
+    Write-Host "build failed! get it compiling in visual studio before continuing."
+    Write-Host "script stopped."
+    Exit
 }
 Write-Host "build succeeded."
 
